@@ -13,16 +13,14 @@ class AudioPlayer : NSObject, AVAudioPlayerDelegate{
     
     var audioPlayer: AVAudioPlayer?
     var audioContext: AudioContext = AudioContext()
+    var isPlaying: Bool = false
     
     override init(){
         super.init()
         audioContext.active()
     }
     
-    func playAudio(path : NSURL){
-        
-        //println("file URL \(path)")
-        //if it's ready playing an audio
+    func playAudioData(data : NSData) {
         if (audioPlayer != nil) {
             if (audioPlayer!.playing){
                 audioPlayer?.stop()
@@ -42,6 +40,42 @@ class AudioPlayer : NSObject, AVAudioPlayerDelegate{
         
         /* Let's try to retrieve the data for the recorded file */
         var playbackError:NSError?
+        
+        /* Form an audio player and make it play the recorded data */
+        audioPlayer = AVAudioPlayer(data: data, error: &playbackError)
+        
+        /* Could we instantiate the audio player? */
+        if let player = audioPlayer{
+            player.delegate = self
+            
+            /* Prepare to play and start playing */
+            if player.prepareToPlay() && player.play(){
+                isPlaying = true
+                println("Started playing the recorded audio")
+            } else {
+                println("Could not play the audio")
+            }
+            
+        } else {
+            println("Failed to create an audio player")
+        }
+    }
+    
+    func playAudio(path : NSURL){
+        
+        //println("file URL \(path)")
+        //if it's ready playing an audio
+        if (audioPlayer != nil) {
+            if (audioPlayer!.playing){
+                audioPlayer?.stop()
+            }
+            audioPlayer = nil
+        }
+        
+        
+        
+        /* Let's try to retrieve the data for the recorded file */
+        var playbackError:NSError?
         var readingError:NSError?
         
         let fileData = NSData(contentsOfURL: path,
@@ -57,6 +91,14 @@ class AudioPlayer : NSObject, AVAudioPlayerDelegate{
             
             /* Prepare to play and start playing */
             if player.prepareToPlay() && player.play(){
+                let closeToFace : Bool = UIDevice.currentDevice().proximityState
+                if closeToFace {
+                    audioContext.enableProximityMonitor()
+                    audioContext.switchPlayEarphone()
+                } else {
+                    audioContext.enableProximityMonitor()
+                    audioContext.switchPlaySpeaker()
+                }
                 println("Started playing the recorded audio")
             } else {
                 println("Could not play the audio")
@@ -70,6 +112,7 @@ class AudioPlayer : NSObject, AVAudioPlayerDelegate{
     func stopAudio(){
         if (audioPlayer != nil){
             if (audioPlayer!.playing){
+                isPlaying = false
                 println("Recording playing stopped.")
                 self.audioPlayer?.stop()
             }

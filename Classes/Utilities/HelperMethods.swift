@@ -9,47 +9,6 @@
 import Foundation
 import UIKit
 
-// display alert in current viewcontroller
-func displayAlert(title: String, message: String) {
-    
-    let alertController = UIAlertController(title: title,
-        message: message,
-        preferredStyle: UIAlertControllerStyle.Alert)
-    
-    alertController.addAction(UIAlertAction(title: "Dismiss",
-        style: UIAlertActionStyle.Default,
-        handler: nil))
-    
-    var topController = UIApplication.sharedApplication().keyWindow?.rootViewController
-    
-    if topController != nil {
-        while topController!.presentedViewController != nil {
-            topController = topController!.presentedViewController
-        }
-    }
-    
-    topController!.presentViewController(alertController, animated: true, completion: nil)
-    
-    //    UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController?.presentViewController(alertController, animated: true, completion: nil)
-}
-
-// check error code, if code = 20000, no error and return true
-func checkErrorCodeInDictionary(dict: Dictionary<String, AnyObject>?) -> Bool {
-    if let code = dict!["code"] as? String {
-        if code == "20000" {
-            println("Code = 20000, no error")
-            return true
-        } else {
-            displayAlert("Data error", dict!["message"] as! String)
-            return false
-        }
-    } else {
-        println("Can not get code from dictionary")
-        return false
-    }
-}
-
-
 // add a leftview which is an icon to a uitextview
 func addIconToUITextFieldLeftView(textField: UITextField, imageName: String) {
     var imageView = UIImageView(image: UIImage(named: imageName))
@@ -105,47 +64,6 @@ func detectCreditCardType(num: String) -> String {
     }
 }
 
-extension UIView {
-    func rotate360Degrees(duration: CFTimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.fromValue = 0.0
-        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
-        rotateAnimation.duration = duration
-        
-        if let delegate: AnyObject = completionDelegate {
-            rotateAnimation.delegate = delegate
-        }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
-    }
-}
-
-extension UIImage {
-    var rounded: UIImage {
-        let imageView = UIImageView(image: self)
-        imageView.layer.cornerRadius = size.height < size.width ? size.height/2 : size.width/2
-        imageView.layer.masksToBounds = true
-        UIGraphicsBeginImageContext(imageView.bounds.size)
-        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return result
-    }
-    var circle: UIImage {
-        let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
-        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.image = self
-        imageView.layer.cornerRadius = square.width/2
-        imageView.layer.masksToBounds = true
-        UIGraphicsBeginImageContext(imageView.bounds.size)
-        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return result
-    }
-}
-
-
 func bounceView(myView: UIView) {
     myView.transform = CGAffineTransformMakeScale(0.1, 0.1)
     UIView.animateWithDuration(2.0,
@@ -170,18 +88,6 @@ func fadeOutView(myView: UIView, t: NSTimeInterval) {
     })
 }
 
-/**
-rounded corner for only certain sides of the frame
-*/
-extension UIView {
-    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.CGPath
-        self.layer.mask = mask
-    }
-}
-
 func roundedWithWhiteBorder(myView: UIView, width: CGFloat) {
     myView.layer.borderWidth = width
     myView.layer.masksToBounds = true
@@ -200,6 +106,78 @@ func calculateHeightForString(inString:String) -> CGFloat
     return requredSize.height  //to include button's in your tableview
     
 }
+
+func audioNameWithDate () -> String {
+    let now = NSDate()
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+    let name = dateFormatter.stringFromDate(now)
+    return name
+}
+
+func addBlurView(view: UIView) {
+    var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+    var blurView = UIVisualEffectView(effect: darkBlur)
+    blurView.frame = view.bounds
+    view.insertSubview(blurView, atIndex: 0)
+}
+
+func addBlurView(view: UIView, fromImage: UIImage) {
+    var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+    var blurView = UIVisualEffectView(effect: darkBlur)
+    blurView.frame = view.bounds
+    var blurImage = UIImageView(image: fromImage)
+    blurImage.frame = view.bounds
+    view.insertSubview(blurImage, atIndex: 0)
+    view.insertSubview(blurView, aboveSubview: blurImage)
+}
+
+func addBadge(tabBar: YALFoldingTabBarController, left1: String, left2: String, right1: String, right2: String) {
+    if let button = tabBar.tabBarView.myButtons[4] as? MIBadgeButton {  // left 1
+        button.badgeString = left2
+    }
+    if let button = tabBar.tabBarView.myButtons[5] as? MIBadgeButton {  // left 2
+        button.badgeString = left1
+    }
+    if let button = tabBar.tabBarView.myButtons[6] as? MIBadgeButton {  // right 1
+        button.badgeString = right1
+    }
+    if let button = tabBar.tabBarView.myButtons[7] as? MIBadgeButton {  // right 2
+        button.badgeString = right2
+    }
+}
+
+func socialShare(#sharingText: String?, sharingImage: UIImage?, sharingURL: NSURL?) {
+    var sharingItems = [AnyObject]()
+    
+    if let text = sharingText {
+        sharingItems.append(text)
+    }
+    if let image = sharingImage {
+        sharingItems.append(image)
+    }
+    if let url = sharingURL {
+        sharingItems.append(url)
+    }
+    
+    let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+    activityViewController.excludedActivityTypes = [
+        UIActivityTypeCopyToPasteboard,
+        UIActivityTypeAirDrop,
+        UIActivityTypeAddToReadingList,
+        UIActivityTypeAssignToContact,
+        UIActivityTypePostToTencentWeibo,
+        UIActivityTypePostToVimeo,
+        UIActivityTypePrint,
+        UIActivityTypeSaveToCameraRoll,
+        UIActivityTypePostToWeibo
+    ]
+    if let vc = UIApplication.topViewController() {
+        vc.presentViewController(activityViewController, animated: true, completion: nil)
+    }
+}
+
+
 
 
 

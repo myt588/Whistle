@@ -8,27 +8,33 @@
 
 //----------------------------------------------------------------------------------------------------------
 import UIKit
+import Parse
 //----------------------------------------------------------------------------------------------------------
 
 
 //----------------------------------------------------------------------------------------------------------
-class CurrentAssistantCell: UITableViewCell
+class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
+    
 //----------------------------------------------------------------------------------------------------------
 {
     
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var portraitView                         : UIImageView!
+    @IBOutlet weak var portraitView                         : WEImageView!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
-    @IBOutlet weak var distanceIcon                         : UIImageView!
-    @IBOutlet weak var priceIcon                            : UIImageView!
+    @IBOutlet weak var wrapper                              : UIView!
+    @IBOutlet weak var lvLabel                              : WELvLabel!
+    @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var distanceLabel                        : UILabel!
     @IBOutlet weak var priceLabel                           : UILabel!
     @IBOutlet weak var lineLabel                            : UILabel!
-    @IBOutlet weak var ratingLabel                          : UILabel!
+    @IBOutlet weak var hireButton                           : UIButton!
     //----------------------------------------------------------------------------------------------------------
-    
+    private var favor                                       : PFObject!
+    private var user                                        : PFUser!
+    private var userToPass                                  : PFUser?
+    //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Initialization
     //----------------------------------------------------------------------------------------------------------
@@ -45,45 +51,88 @@ class CurrentAssistantCell: UITableViewCell
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        backgroundColor                                     = Constants.Color.Background
+        backgroundColor                                     = UIColor.clearColor()
         
         portraitView.layer.borderWidth                      = 3
         portraitView.layer.borderColor                      = Constants.Color.Border.CGColor
         portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
         
-        nameLabel.textColor                                 = Constants.Color.TextLight
-        nameLabel.shadowColor                               = Constants.Color.Shadow
-        nameLabel.shadowOffset                              = CGSizeMake(0, -1)
-        
-        ratingLabel.textColor                               = Constants.Color.TextLight
-        
-        lineLabel.textColor                                 = Constants.Color.TextLight
-        lineLabel.shadowColor                               = Constants.Color.Shadow
-        lineLabel.shadowOffset                              = CGSizeMake(0, -1)
-        
-        bannerView.backgroundColor                          = Constants.Color.ContentBackground
+        bannerView.backgroundColor                          = Constants.Color.Banner
         bannerView.alpha                                    = 0.85
-        
-        distanceIcon.layer.borderColor                      = Constants.Color.Border.CGColor
-        distanceIcon.layer.borderWidth                      = 2
-        distanceIcon.layer.cornerRadius                     = 15/2
-        distanceIcon.backgroundColor                        = Constants.Color.Border
-        let origImage1                                      = distanceIcon.image
-        let tintedImage1                                    = origImage1!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        distanceIcon.image                                  = tintedImage1
-        distanceIcon.tintColor                              =  Constants.Color.Background
-        
-        priceIcon.layer.borderColor                         = Constants.Color.Border.CGColor
-        priceIcon.layer.borderWidth                         = 2
-        priceIcon.layer.cornerRadius                        = 15/2
-        priceIcon.backgroundColor                           = Constants.Color.Border
-        let origImage2                                      = priceIcon.image
-        let tintedImage2                                    = origImage2!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        priceIcon.image                                     = tintedImage2
-        priceIcon.tintColor                                 = Constants.Color.Background
+        wrapper.alpha                                       = 0.85
         
         priceLabel.textColor                                = Constants.Color.TextLight
         distanceLabel.textColor                             = Constants.Color.TextLight
+        
+        hireButton.layer.cornerRadius                       = 20
+        hireButton.layer.borderColor                        = Constants.Color.Border.CGColor
+        hireButton.layer.borderWidth                        = 0.3
+        hireButton.setTitleColor(Constants.Color.TextLight, forState: .Normal)
+    }
+    
+    func bindData(user: PFUser?, favor: PFObject){
+        if let user = user {
+            self.user = user
+            userToPass = self.user
+            portraitView.receiveUser()
+            self.favor = favor
+            user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
+                if let user = user {
+                    var file = user[Constants.User.Portrait] as! PFFile
+                    file.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                        if error == nil {
+                            self.portraitView.image = UIImage(data: data!)!
+                        }
+                    })
+                    self.nameLabel.text = user[Constants.User.Nickname] as? String
+                    self.lineLabel.text = user[Constants.User.Status] as? String
+                    let likes = user[Constants.User.Likes] as? Double
+                    let favors = user[Constants.User.Favors] as? Double
+                    let percentage = (likes!/favors!).roundTo1
+                    //            self.ratingLabel.text = "\(Int(likes!)) (\(percentage)))"
+                } else {
+                    ParseErrorHandler.handleParseError(error)
+                }
+            })
+
+            if let address = favor[Constants.Favor.Address] as? String {
+                PFGeoPoint.geoPointForCurrentLocationInBackground({ (location, error) -> Void in
+                    if error == nil {
+                        let location2 = favor[Constants.Favor.Location] as? PFGeoPoint
+                        let distance : Double = location!.distanceInMilesTo(location2)
+                        self.distanceLabel.text = "\(distance.roundTo1) miles"
+                    }
+                })
+            }
+            if let price = favor[Constants.Favor.Price] as? Int {
+                let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
+                query.whereKey(Constants.FavorUserPivotTable.Takers, equalTo: user)
+                query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
+                query.whereKey(Constants.FavorUserPivotTable.Active, equalTo: true)
+                query.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if let object = object {
+                            if let bidPrice = object[Constants.FavorUserPivotTable.Price] as? Int {
+                                self.priceLabel.text = "\(bidPrice)"
+                            } else {
+                                self.priceLabel.text = "\(price)"
+                            }
+                        }
+                    }
+                })
+            }
+        } else {
+            println("no user loaded")
+        }
+    }
+
+    
+    // MARK: - Delegates
+    //----------------------------------------------------------------------------------------------------------
+    func passUser() -> PFUser?
+    //----------------------------------------------------------------------------------------------------------
+    {
+        return userToPass
     }
     
 }

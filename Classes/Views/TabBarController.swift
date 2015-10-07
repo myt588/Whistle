@@ -12,26 +12,21 @@ class TabBarController : YALFoldingTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
             leftItemImage: UIImage(named: "edit_icon"),
-            rightItemImage: nil)
-        let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
+            rightItemImage: UIImage(named: "tab_interest"))
+        let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
             leftItemImage: UIImage(named: "edit_icon"),
-            rightItemImage: UIImage(named: "edit_icon"))
+            rightItemImage: nil)
         self.leftBarItems = [item1, item2]
         let item3 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "chats_icon"),
-            leftItemImage: UIImage(named: "search_icon"),
-            rightItemImage: UIImage(named: "new_chat_icon"))
+            leftItemImage: UIImage(named: "new_chat_icon"),
+            rightItemImage: UIImage(named: "search_icon"))
         let item4 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "profile_icon"),
             leftItemImage: nil,
             rightItemImage: nil)
         self.rightBarItems = [item3, item4]
         self.centerButtonImage = UIImage(named: "plus_icon")
-        self.selectedIndex = 3  
         
         //customize tabBarView
         self.tabBarView.extraTabBarItemHeight = YALExtraTabBarItemsDefaultHeight
@@ -41,7 +36,5 @@ class TabBarController : YALFoldingTabBarController {
         self.tabBarViewHeight = YALTabBarViewDefaultHeight
         self.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
         self.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets
-
     }
-    
 }

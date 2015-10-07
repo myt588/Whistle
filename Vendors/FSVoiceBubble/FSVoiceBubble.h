@@ -43,4 +43,6 @@
 - (void)startAnimating;
 - (void)stopAnimating;
 
+- (NSInteger)getDuration;
+
 @end

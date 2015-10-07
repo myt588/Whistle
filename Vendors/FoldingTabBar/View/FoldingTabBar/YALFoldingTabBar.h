@@ -27,6 +27,8 @@
 - (void)extraLeftItemDidPressedInTabBarView:(YALFoldingTabBar *)tabBarView;
 - (void)extraRightItemDidPressedInTabBarView:(YALFoldingTabBar *)tabBarView;
 
+- (void)extraRightItemLongPressedInTabBarView:(YALFoldingTabBar *)tabBarView;
+
 @end
 
 typedef NS_ENUM(NSUInteger, YALTabBarState) {
@@ -49,5 +51,14 @@ typedef NS_ENUM(NSUInteger, YALTabBarState) {
 @property (nonatomic, assign) UIEdgeInsets tabBarItemsEdgeInsets;
 @property (nonatomic, assign) CGFloat extraTabBarItemHeight;
 @property (nonatomic, assign) CGFloat offsetForExtraTabBarItems;
+
+@property (nonatomic, strong) UIButton *extraLeftButton;
+@property (nonatomic, strong) UIButton *extraRightButton;
+@property (nonatomic, strong) UIButton *centerButton;
+
+@property (nonatomic, strong) NSDictionary *leftTabBarItems;
+@property (nonatomic, strong) NSDictionary *rightTabBarItems;
+
+@property (nonatomic, strong) NSMutableArray *myButtons;
 
 @end

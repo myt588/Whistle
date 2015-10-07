@@ -17,4 +17,6 @@
 - (void)extraLeftItemDidPressed;
 - (void)extraRightItemDidPressed;
 
+- (void)extraRightItemLongPressed;
+
 @end

@@ -24,6 +24,8 @@ class ProfileFavorCell: UITableViewCell
     @IBOutlet weak var dateLabel                            : UILabel!
     @IBOutlet weak var nameWhistledLabel                    : UILabel!
     @IBOutlet weak var nameAssistedLabel                    : UILabel!
+    @IBOutlet weak var priceRightLabel                      : UILabel!
+    @IBOutlet weak var priceLeftLabel                       : UILabel!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -46,6 +48,8 @@ class ProfileFavorCell: UITableViewCell
         dateLabel.text = ""
         nameWhistledLabel.text = ""
         nameAssistedLabel.text = ""
+        priceLeftLabel.text = ""
+        priceRightLabel.text = ""
         dotBottom.hidden = true
         portrait.hidden = false
         line.hidden = false
@@ -57,7 +61,7 @@ class ProfileFavorCell: UITableViewCell
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        backgroundColor                                     = Constants.Color.CellBackground
+        backgroundColor                                     = UIColor.clearColor()
         
         line.backgroundColor                                = Constants.Color.Border
         dotBottom.backgroundColor                           = Constants.Color.Border
@@ -65,7 +69,7 @@ class ProfileFavorCell: UITableViewCell
         
         portrait.layer.borderColor                          = Constants.Color.Border.CGColor
         portrait.layer.borderWidth                          = 2
-        portrait.layer.cornerRadius                         = 30
+        portrait.layer.cornerRadius                         = 40
         portrait.backgroundColor                            = Constants.Color.Border
         
         dateLabel.textColor                                 = Constants.Color.CellTextReverse
@@ -92,18 +96,19 @@ class ProfileFavorCell: UITableViewCell
         if (favor[Constants.Favor.CreatedBy] as! PFUser) == user {
             var file = user[Constants.User.Portrait] as! PFFile
             file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if error == nil {
-                    self.portrait.image = UIImage(data: data!)!
+                if let data = data {
+                    self.portrait.image = UIImage(data: data)!
                     self.nameAssistedLabel.text = favor[Constants.Favor.Content] as? String
-//                    self.nameWhistledLabel.text = 
+                    self.priceLeftLabel.text = "$15 Earned"
                 }
             })
         } else {
             var file = user[Constants.User.Portrait] as! PFFile
             file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if error == nil {
-                    self.portrait.image = UIImage(data: data!)!
+                if let data = data {
+                    self.portrait.image = UIImage(data: data)!
                     self.nameWhistledLabel.text = favor[Constants.Favor.Content] as? String
+                    self.priceRightLabel.text = "Spent $12"
                 }
             })
         }

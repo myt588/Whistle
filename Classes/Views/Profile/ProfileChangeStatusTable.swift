@@ -6,101 +6,102 @@
 //  Copyright (c) 2015 LoopCow. All rights reserved.
 //
 
+
+//----------------------------------------------------------------------------------------------------------
 import UIKit
+import Parse
+//----------------------------------------------------------------------------------------------------------
 
-class ProfileChangeStatusTable: UITableViewController {
+//----------------------------------------------------------------------------------------------------------
+class ProfileChangeStatusTable: UITableViewController, UITextViewDelegate
+//----------------------------------------------------------------------------------------------------------
+{
 
-    @IBOutlet weak var statusTextView: UITextView!
+    // MARK: - IBOutlets
+    //----------------------------------------------------------------------------------------------------------
+    @IBOutlet weak var statusTextView                       : UITextView!
+    @IBOutlet weak var wordCount                            : UILabel!
+    @IBOutlet weak var greetingLabel                        : UILabel!
+    //----------------------------------------------------------------------------------------------------------
     
-    override func viewDidLoad() {
+    
+    // MARK: - Initializations
+    //----------------------------------------------------------------------------------------------------------
+    override func viewDidLoad()
+    //----------------------------------------------------------------------------------------------------------
+    {
         super.viewDidLoad()
-        
-        var button = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action:"submit")
-        self.navigationItem.rightBarButtonItem = button
+        configBarButton()
+        configLooks()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    //----------------------------------------------------------------------------------------------------------
+    override func viewWillAppear(animated: Bool)
+    //----------------------------------------------------------------------------------------------------------
+    {
         super.viewWillAppear(true)
-        
         statusTextView.becomeFirstResponder()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    // MARK: - Functions
+    //----------------------------------------------------------------------------------------------------------
+    func configBarButton()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        var button = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action:"submit")
+        self.navigationItem.rightBarButtonItem              = button
     }
     
-    func submit() {
-        navigationController?.popViewControllerAnimated(true)
+    //----------------------------------------------------------------------------------------------------------
+    func configLooks()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        statusTextView.delegate                             = self
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func submit()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if let user = PFUser.currentUser() {
+            user[Constants.User.Status] = statusTextView.text
+            user.saveEventually({ (success, error) -> Void in
+                if success {
+                    self.navigationController?.popViewControllerAnimated(true)
+                } else {
+                    println("network error")
+                }
+            })
+        }
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
+    // MARK: - Delegates
+    //----------------------------------------------------------------------------------------------------------
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    //----------------------------------------------------------------------------------------------------------
+    {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    //----------------------------------------------------------------------------------------------------------
+    {
         return 1
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+    
+    //----------------------------------------------------------------------------------------------------------
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    //----------------------------------------------------------------------------------------------------------
+    {
+        let num: Int = count(textView.text)
+        if num - range.length + count(text) > Constants.Limit.Status {
+            return false
+        } else {
+            wordCount.text = "\(num - range.length + count(text))/\(Constants.Limit.Status)"
+            return true
+        }
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

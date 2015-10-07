@@ -17,7 +17,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate
+class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol
 //----------------------------------------------------------------------------------------------------------
 {
 
@@ -27,14 +27,17 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var locationIcon                             : UIImageView!
     @IBOutlet weak var locationLine                             : UIView!
+    @IBOutlet weak var locationHeader                           : UILabel!
     @IBOutlet weak var pickLocationButton                       : UIButton!
     @IBOutlet weak var privacyButton                            : UIButton!
     @IBOutlet weak var addressLabel                             : UILabel!
+    @IBOutlet weak var aptTextField                             : UITextField!
     //----------------------------------------------------------------------------------------------------------
     // Audio
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var audioIcon                                : UIImageView!
     @IBOutlet weak var audioLine                                : UIView!
+    @IBOutlet weak var audioHeader                              : UILabel!
     @IBOutlet weak var recordButton                             : UIButton!
     @IBOutlet weak var deleteAudioButton                        : UIButton!
     @IBOutlet weak var audioView                                : FSVoiceBubble!
@@ -43,6 +46,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var favorIcon                                : UIImageView!
     @IBOutlet weak var favorLine                                : UIView!
+    @IBOutlet weak var favorHeader                              : UILabel!
     @IBOutlet weak var favorHideButton                          : UIButton!
     @IBOutlet weak var favorTextView                            : UITextView!
     @IBOutlet weak var favorCharCountLabel                      : UILabel!
@@ -51,6 +55,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var rewardIcon                               : UIImageView!
     @IBOutlet weak var rewardLine                               : UIView!
+    @IBOutlet weak var rewardHeader                             : UILabel!
     @IBOutlet weak var rewardHideButton                         : UIButton!
     @IBOutlet weak var rewardCharCountLabel                     : UILabel!
     @IBOutlet weak var rewardTextView                           : UITextView!
@@ -59,6 +64,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var priceIcon                                : UIImageView!
     @IBOutlet weak var priceLine                                : UIView!
+    @IBOutlet weak var priceHeader                              : UILabel!
     @IBOutlet weak var plus1Button                              : UIButton!
     @IBOutlet weak var plus5Button                              : UIButton!
     @IBOutlet weak var plus10Button                             : UIButton!
@@ -71,6 +77,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var photosIcon                               : UIImageView!
     @IBOutlet weak var photosLine                               : UIView!
+    @IBOutlet weak var photosHeader                             : UILabel!
     @IBOutlet weak var photo1                                   : UIImageView!
     @IBOutlet weak var photo2                                   : UIImageView!
     @IBOutlet weak var photo3                                   : UIImageView!
@@ -85,6 +92,8 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     // Constraints
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var audioViewLengthCons                      : NSLayoutConstraint!
+    @IBOutlet weak var favorBotCons                             : NSLayoutConstraint!
+    @IBOutlet weak var rewardBotCons                            : NSLayoutConstraint!
     //----------------------------------------------------------------------------------------------------------
     
     
@@ -94,7 +103,6 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     private var recordingView                                   = UIView()
     private var hasRecording                                    = false
     private var audioRecorder                                   : AudioRecorder = AudioRecorder()
-    private var audioPlayer                                     : AudioPlayer = AudioPlayer()
     private var audioManager                                    : AudioManager = AudioManager()
     private var name                                            : NSString = "Recording"
     
@@ -108,22 +116,17 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     private var deletePhotoButtons                              = [UIButton]()
     private var images                                          = [UIImage]()
     private var imageViews                                      = [UIImageView]()
-    
-    private var audioAsset                                      = AVURLAsset()
-    private var playerView                                      = SYWaveformPlayerView()
-    
+
     private var location                                        : PFGeoPoint?
+    private var address                                         : String?
     //----------------------------------------------------------------------------------------------------------
+    private var addressIsHidden                                 : Bool = true
     private var favorContentIsHidden                            : Bool = false
     private var rewardContentIsHidden                           : Bool = false
     //----------------------------------------------------------------------------------------------------------
     private var isaudioViewHidden                               : Bool = true
     { didSet { tableView.reloadData() } }
     //----------------------------------------------------------------------------------------------------------
-    private var isImageScrollViewHidden                         : Bool = true
-    { didSet { tableView.reloadData() } }
-    //----------------------------------------------------------------------------------------------------------
-
     
     // MARK: - Initialzations
     //----------------------------------------------------------------------------------------------------------
@@ -133,15 +136,33 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         super.viewDidLoad()
         configLooks()
         
-        let now = NSDate()
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-        name = dateFormatter.stringFromDate(now)
+        name = audioNameWithDate()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationPicked:", name: "locationPicked", object: nil)
 
         addGestures()
         audioRecorder.initRecorder(name)
+        audioView.alpha = 0
         initWaveformView()
         initRecordingView()
+        
+        self.location = currentLocation
+        println(location)
+        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location!.latitude, longitude: location!.longitude) {
+            (reverseGecodeInfo, placemark, error) -> Void in
+            if error == nil {
+                println("tt")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.addressLabel.text = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
+                    self.address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
+                    self.addressIsHidden = false
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
+            } else {
+                println(error)
+            }
+        }
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -149,6 +170,8 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(true)
+        TSMessage.setDelegate(self)
+        TSMessage.setDefaultViewController(self)
         tableView.reloadData()
     }
     
@@ -159,6 +182,22 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         configShape()
     }
     
+    // MARK: - NSNotification Passing Data
+    //----------------------------------------------------------------------------------------------------------
+    func locationPicked(notification : NSNotification) {
+    //----------------------------------------------------------------------------------------------------------
+        if notification.name == "locationPicked" {
+            let location = notification.object as! Location
+            self.addressLabel.text = location.formattedAddress
+            self.aptTextField.alpha = 1
+            self.address = location.formattedAddress
+            self.location = PFGeoPoint(latitude: location.latitude!, longitude: location.longtitude!)
+            
+            addressIsHidden = false
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
     
     // MARK: - IBActions
     //----------------------------------------------------------------------------------------------------------
@@ -167,11 +206,58 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     @IBAction func send(sender: UIBarButtonItem)
     //----------------------------------------------------------------------------------------------------------
     {
-
+        
         var favor : PFObject = PFObject(className: Constants.Favor.Name)
         var fileImage : PFFile
         var fileAudio : PFFile
-        var index : Int = 0
+        var audioOrText : Bool = false
+        
+        if let location = self.location {
+            favor[Constants.Favor.Location] = location
+            if aptTextField.text != "" {
+                favor[Constants.Favor.Address] = aptTextField.text + ", " + address!
+            } else {
+                favor[Constants.Favor.Address] = address
+            }
+        } else {
+            TSMessage.showNotificationWithTitle("No Location", subtitle: "You need to add a location", type: TSMessageNotificationType.Error)
+        }
+        
+        if self.favorTextView.text != "" && self.favorTextView.text != Constants.PlaceHolder.NewFavor {
+            audioOrText = true
+            favor[Constants.Favor.Content] = self.favorTextView.text
+        }
+        
+        if self.rewardTextView.text != "" && self.rewardTextView.text != Constants.PlaceHolder.NewReward {
+            favor[Constants.Favor.Reward] = self.rewardTextView.text
+        }
+        
+        favor[Constants.Favor.Price] = self.priceTextField.text != "" ? self.priceTextField.text.toInt() : 0
+        
+        if let audio = audioManager.audioWithName(name) {
+            audioOrText = true
+            let fileAudio = PFFile(name: "Recording.m4a", data: audio)
+            fileAudio.saveInBackgroundWithBlock { (success : Bool, error : NSError?) -> Void in
+                if success {
+                    println("Audio success")
+                } else {
+                    println("error" )
+                }
+            }
+            favor[Constants.Favor.Audio] = fileAudio
+        }
+        
+        if !audioOrText {
+            TSMessage.showNotificationWithTitle("Need Data", subtitle: "Need to fill either audio or text to describe the favor.", type: TSMessageNotificationType.Error)
+            return
+        }
+        
+        for element in imageViews {
+            if element.alpha == 1 {
+                images.append(element.image!)
+            }
+        }
+        
         if self.images.count != 0 {
             for image in images {
                 let data = NSData(data: UIImagePNGRepresentation(image))
@@ -194,29 +280,13 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
             }
         }
         
-        if let audio = audioManager.audioWithName(name)  {
-            let fileAudio = PFFile(name: "Recording.m4a", data: audio)
-            fileAudio.saveInBackgroundWithBlock { (success : Bool, error : NSError?) -> Void in
-                if success {
-                    println("Audio success")
-                } else {
-                    println("error" )
-                }
-            }
-            favor[Constants.Favor.Audio] = fileAudio
-        }
-        
-//        favor[Constants.Favor.Content] = self.contentTextView.text
-        favor[Constants.Favor.Reward] = self.rewardTextView.text
-        favor[Constants.Favor.Location] = location
         favor[Constants.Favor.Status] = 0
         favor[Constants.Favor.CreatedBy] = PFUser.currentUser()
         
         favor.saveInBackgroundWithBlock {
             (success : Bool, error : NSError?) -> Void in
             if (success) {
-                println("Favor posted successfully")
-                
+                TSMessage.showNotificationWithTitle("Success", subtitle: "Favor posted successfully.", type: TSMessageNotificationType.Success)
             } else {
                 println(error!.description)
             }
@@ -237,26 +307,25 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     // START: - Location
     //----------------------------------------------------------------------------------------------------------
-    @IBAction func goToMap(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        TableMapViewController.displayMapViewController(parentController: self, blockFinish: { (selectedAddress) -> () in
-            println("mainView: \(selectedAddress.address)")
-            self.addressLabel.text = selectedAddress.address
-            self.location = PFGeoPoint(latitude: (selectedAddress.lat as NSString).doubleValue, longitude: (selectedAddress.lng as NSString).doubleValue)
-            }) { () -> () in
-        }
-    }
-   
-    //----------------------------------------------------------------------------------------------------------
     @IBAction func privacyButtonTapped(sender: UIButton)
     //----------------------------------------------------------------------------------------------------------
     {
         if sender.titleLabel?.text == "  Public" {
+            fadeOutView(sender, 0.5)
             sender.setTitle("  Friends", forState: UIControlState.Normal)
+            sender.setImage(UIImage(named: "favor_new_friends_only"), forState: .Normal)
+            sender.tintColor = Constants.Color.Background
+            fadeInView(sender, 0.5)
         } else {
+            fadeOutView(sender, 0.5)
             sender.setTitle("  Public", forState: UIControlState.Normal)
+            sender.setImage(UIImage(named: "favor_new_public"), forState: .Normal)
+            sender.tintColor = Constants.Color.Background
+            fadeInView(sender, 0.5)
         }
+        let origImage                               = sender.imageView?.image
+        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        sender.setImage(tintedImage, forState: .Normal)
     }
     //----------------------------------------------------------------------------------------------------------
     // END: - Location
@@ -268,8 +337,8 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     @IBAction func deleteAudioButtonTapped(sender: UIButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        audioView.hidden = true
-        sender.hidden = true
+        audioView.alpha = 0
+        sender.alpha = 0
         
         hasRecording = false
         audioManager.removeAudioWithName(name)
@@ -376,6 +445,9 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         //as you hold the button this would fire
         if recognizer.state == UIGestureRecognizerState.Began {
             
+            self.audioManager.removeAudioWithName(name)
+            name = audioNameWithDate()
+            self.audioRecorder.initRecorder(name)
             self.audioRecorder.startRecording()
             // add waveform view
             var window = UIApplication.sharedApplication().delegate?.window
@@ -384,6 +456,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         
         // as you release the button this would fire
         if recognizer.state == UIGestureRecognizerState.Ended {
+            
             self.audioRecorder.stopRecordng()
             // remove waveform view
             recordingView.removeFromSuperview()
@@ -391,53 +464,38 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
             
             configAudioView()
             isaudioViewHidden = false
+        
+            audioView.contentURL = audioManager.audioURLWithName(name)
+            
+            var asset = AVURLAsset(URL: audioManager.audioURLWithName(name), options: [AVURLAssetPreferPreciseDurationAndTimingKey:true])
+            var duration: CMTime = asset.duration
+            var seconds = Int(CMTimeGetSeconds(duration))
+            
+            audioViewLengthCons.constant = 50 + CGFloat(seconds)*1.67
+            
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.audioView.alpha = 1
+                self.deleteAudioButton.alpha = 1
+            }, completion: nil)
+            
+            
         }
     }
-    
     
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        tableView.backgroundColor                                   = Constants.Color.Background
-        tableView.contentInset                                      = UIEdgeInsetsMake(30, 0, 0, 0)
-        
-        var lines = [locationLine, audioLine, favorLine, rewardLine, priceLine, photosLine]
-        for element in lines {
-            element.backgroundColor                                 = Constants.Color.Border
-        }
-        
-        var icons = [locationIcon, audioIcon, favorIcon, rewardIcon, priceIcon, photosIcon]
-        for element in icons {
-            tableView.bringSubviewToFront(element)
-            element.layer.borderColor                               = Constants.Color.Border.CGColor
-            element.layer.borderWidth                               = 2
-            element.layer.cornerRadius                              = 35/2
-            element.backgroundColor                                 = Constants.Color.Border
-            let origImage                                           = element.image
-            let tintedImage                                         = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-            element.image                                           = tintedImage
-            element.tintColor                                       = Constants.Color.Background
-        }
-        
         var buttons = [pickLocationButton, privacyButton]
         for element in buttons {
-            element.setTitleColor(Constants.Color.TextLight, forState: .Normal)
-            element.layer.backgroundColor = Constants.Color.ContentBackground.CGColor
+            element.setTitleColor(Constants.Color.CellTextReverse, forState: .Normal)
+            element.layer.backgroundColor = Constants.Color.CellText.CGColor
             element.layer.cornerRadius = 12.5
+            element.tintColor = Constants.Color.CellTextReverse
         }
         
-        var labels = [addressLabel, favorCharCountLabel, rewardCharCountLabel, photoCountLabel]
-        for element in labels {
-            element.textColor = Constants.Color.CellText
-        }
-        
-        audioView.contentURL = NSBundle.mainBundle().URLForResource("Let It Go", withExtension: "mp3")
-        audioView.durationInsideBubble                              = true
-        audioView.bubbleImage                                       = UIImage(named: "fs_cap_bg")
-        audioView.waveColor                                         = Constants.Color.Background
-        audioView.animatingWaveColor                                = UIColor.grayColor()
+        deleteAudioButton.alpha                                     = 0
         
         favorTextView.tag = 1
         rewardTextView.tag = 2
@@ -446,16 +504,19 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
             element.delegate                                        = self
             element.textContainerInset                              = UIEdgeInsetsMake(10, 8, 10, 8)
             element.textColor                                       = Constants.Color.CellPlaceHolder
-            element.layer.cornerRadius                              = 12
-            element.layer.backgroundColor                           = Constants.Color.ContentBackground.CGColor
+            element.layer.cornerRadius                              = 8
             if element.tag == 1 {
-                println("Set")
                 element.text                                        = Constants.PlaceHolder.NewFavor
             }
             if element.tag == 2 {
                 element.text                                        = Constants.PlaceHolder.NewReward
             }
         }
+        
+        aptTextField.textColor                                      = Constants.Color.CellText
+        aptTextField.attributedPlaceholder = NSAttributedString(string:"Apt. No.",
+            attributes:[NSForegroundColorAttributeName: Constants.Color.PlaceHolder])
+        aptTextField.alpha                                          = 0
         
         favorHideButton.tag = 1
         rewardHideButton.tag = 2
@@ -500,7 +561,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         let addPhotoTintedImage                                     = addPhotoOrigImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         addPhotoButton.setImage(addPhotoTintedImage, forState: .Normal)
         addPhotoButton.tintColor                                    = Constants.Color.CellText
-        addPhotoButton.backgroundColor                              = Constants.Color.ContentBackground
+        addPhotoButton.backgroundColor                              = favorTextView.backgroundColor
         photosParentView.addSubview(addPhotoButton)
     }
     
@@ -569,7 +630,6 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
         
         // add label to this subview
         var label = UILabel(frame: CGRectMake(20, 0, 300, 21))
-        println(UIScreen.mainScreen().applicationFrame.height)
         label.layer.frame.origin.y += 100
         label.textColor = UIColor.whiteColor()
         label.text = "Release finger to finish recording"
@@ -616,7 +676,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
                 var sourceType = source
                 if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
                     sourceType = .PhotoLibrary
-                    println("Fallback to camera roll as a source since the simulator doesn't support taking pictures")
+                    TSMessage.showNotificationWithTitle("No Camera", subtitle: "Fallback to camera roll as a source since the simulator doesn't support taking pictures.", type: TSMessageNotificationType.Error)
                 }
                 controller.sourceType = sourceType
                 
@@ -643,8 +703,7 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
             presentViewController(controller, animated: true, completion: nil)
         }
         else {
-            let alertView = UIAlertView(title: NSLocalizedString("An error occurred", comment: "An error occurred"), message: NSLocalizedString("ImagePickerSheet needs access to the camera roll", comment: "ImagePickerSheet needs access to the camera roll"), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", comment: "OK"))
-            alertView.show()
+            TSMessage.showNotificationWithTitle("An error occurred", subtitle: "magePickerSheet needs access to the camera roll.", type: TSMessageNotificationType.Error)
         }
     }
     
@@ -700,23 +759,12 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     
     // MARK: - Delegates
     //----------------------------------------------------------------------------------------------------------
-    // Modify cell height and background color
-    //----------------------------------------------------------------------------------------------------------
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    //----------------------------------------------------------------------------------------------------------
-    {
-        var cell                                            = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.backgroundColor                                = Constants.Color.Background
-        return cell
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     //----------------------------------------------------------------------------------------------------------
     {
         switch indexPath.section {
         case 0:                                             // Location
-            return calculateHeightForString(addressLabel.text!) + 150
+            return addressIsHidden ? 90 : calculateHeightForString(addressLabel.text!) + 165
         case 1:                                             // Audio
             return 150
         case 2:                                             // Favor
@@ -748,10 +796,8 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     func textViewDidBeginEditing(textView: UITextView)
     //----------------------------------------------------------------------------------------------------------
     {
-        println(textView.text)
         if textView.tag == 1 {
             if textView.text == Constants.PlaceHolder.NewFavor {
-                println("123")
                 textView.text = ""
                 textView.textColor = Constants.Color.CellText
             }
@@ -829,6 +875,13 @@ class NewFavorTable: UITableViewController, AVAudioPlayerDelegate, AVAudioRecord
     //----------------------------------------------------------------------------------------------------------
     {
         view.endEditing(true)
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func customizeMessageView(messageView: TSMessageView!)
+        //----------------------------------------------------------------------------------------------------------
+    {
+        messageView.alpha = 0.85
     }
     
 }

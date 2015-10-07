@@ -15,6 +15,8 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
 
 #import "YALAnimatingTabBarConstants.h"
 
+#import "Whistle-Swift.h"
+
 @interface YALFoldingTabBar ()
 
 @property (nonatomic, strong) NSArray *allBarItems;
@@ -23,7 +25,7 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
 @property (nonatomic, assign) YALAnimatingState animatingState;
 @property (nonatomic, assign) BOOL isFinishedCenterButtonAnimation;
 
-@property (nonatomic, strong) UIButton *centerButton;
+//@property (nonatomic, strong) UIButton *centerButton;
 @property (nonatomic, strong) UIView *mainView;
 
 @property (nonatomic, assign) BOOL isAnimated;
@@ -41,16 +43,17 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
 @property (nonatomic, strong) NSArray *rightButtonsArray;
 
 //extra buttons 'tabBarItems' for each 'tabBarItem'
-@property (nonatomic, strong) UIButton *extraLeftButton;
-@property (nonatomic, strong) UIButton *extraRightButton;
+//@property (nonatomic, strong) UIButton *extraLeftButton;
+//@property (nonatomic, strong) UIButton *extraRightButton;
 
 //model representation of tabBarItems. also contains info for extraBarItems: image, color, etc
-@property (nonatomic, strong) NSDictionary *leftTabBarItems;
-@property (nonatomic, strong) NSDictionary *rightTabBarItems;
+//@property (nonatomic, strong) NSDictionary *leftTabBarItems;
+//@property (nonatomic, strong) NSDictionary *rightTabBarItems;
 
 //array of all buttons just for simple switching between controllers by index
 @property (nonatomic, strong) NSArray *allAdditionalButtons;
 @property (nonatomic, strong) NSMutableArray *allAdditionalButtonsBottomView;
+
 
 @end
 
@@ -64,6 +67,7 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
         _state = state;
         _selectedTabBarItemIndex = 0;
         _counter = 0;
+        _myButtons = [NSMutableArray array];
     }
     return self;
 }
@@ -190,7 +194,8 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
         YALTabBarItem *item = reverseArrayLeft[i];
         UIImage *image = item.itemImage;
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonOriginX, buttonOriginY, buttonWidth, buttonHeight)];
+        MIBadgeButton *button = [[MIBadgeButton alloc] initWithFrame:CGRectMake(buttonOriginX, buttonOriginY, buttonWidth, buttonHeight)];
+        [_myButtons addObject:button];
         
         if (numberOfLeftTabBarButtonItems == 1) {
             CGRect rect = button.frame;
@@ -243,7 +248,8 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
         YALTabBarItem *item = rightTabBarItems [i];
         UIImage *image = item.itemImage;
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonOriginX, buttonOriginY, buttonWidth, buttonHeight)];
+        MIBadgeButton *button = [[MIBadgeButton alloc] initWithFrame:CGRectMake(buttonOriginX, buttonOriginY, buttonWidth, buttonHeight)];
+        [_myButtons addObject:button];
 
         if (numberOfLeftTabBarButtonItems == 1) {
             CGRect rect = button.frame;
@@ -301,7 +307,8 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
     self.extraLeftButton.layer.masksToBounds = YES;
     
     self.extraRightButton.backgroundColor = self.tabBarColor;
-    [self.extraRightButton addTarget:self action:@selector(extraRightButtonDidPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.extraRightButton addTarget:self action:@selector(extraRightButtonDidPressed) forControlEvents:UIControlEventTouchDown];
+    [self.extraRightButton addTarget:self action:@selector(extraRightButtonLongPressed) forControlEvents:UIControlEventTouchUpInside];
     self.extraRightButton.hidden = YES;
 
     [self addSubview:self.extraRightButton];
@@ -467,6 +474,12 @@ typedef NS_ENUM(NSUInteger, YALAnimatingState) {
 - (void)extraRightButtonDidPressed {
     if ([self.delegate respondsToSelector:@selector(extraRightItemDidPressedInTabBarView:)]) {
         [self.delegate extraRightItemDidPressedInTabBarView:self];
+    }
+}
+
+- (void)extraRightButtonLongPressed {
+    if ([self.delegate respondsToSelector:@selector(extraRightItemLongPressedInTabBarView:)]) {
+        [self.delegate extraRightItemLongPressedInTabBarView:self];
     }
 }
 

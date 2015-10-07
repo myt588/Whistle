@@ -11,15 +11,20 @@ import UIKit
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-
+protocol ProfileScrollDelegate {
+    func expand()
+    func shrink()
+}
 
 //----------------------------------------------------------------------------------------------------------
-class ProfileFavorsTable: UITableViewController
+class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     var favors : NSMutableArray                                 = NSMutableArray()
+    var pointNow : CGPoint?
+    var delegate : ProfileScrollDelegate?
     //----------------------------------------------------------------------------------------------------------
     
     
@@ -30,12 +35,18 @@ class ProfileFavorsTable: UITableViewController
     {
         super.viewDidLoad()
         configLooks()
-        
-        loadFavors()
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "loadFavors", forControlEvents: UIControlEvents.ValueChanged)
     }
     
+    //----------------------------------------------------------------------------------------------------------
+    override func viewWillAppear(animated: Bool) {
+    //----------------------------------------------------------------------------------------------------------
+        super.viewWillAppear(animated)
+        if let user = PFUser.currentUser() {
+            loadFavors()
+        }
+    }
     
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
@@ -43,7 +54,7 @@ class ProfileFavorsTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     {
         tableView.backgroundColor                               = Constants.Color.TableBackground
-        tableView.contentInset                                  = UIEdgeInsetsMake(80, 0, YALTabBarViewDefaultHeight + 30, 0)
+        tableView.contentInset                                  = UIEdgeInsetsMake(35, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -84,7 +95,7 @@ class ProfileFavorsTable: UITableViewController
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     //----------------------------------------------------------------------------------------------------------
     {
-        return favors.count+2
+        return favors.count + 2
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -115,14 +126,6 @@ class ProfileFavorsTable: UITableViewController
             }
         }
         
-        
-//        if indexPath.row > 1 {
-//            let prevFavor = favors[indexPath.row-1] as! PFObject
-//            cell.bindData(favor, previousFavor: prevFavor)
-//        } else if indexPath != 0 {
-//            
-//        }
-
         return cell
     }
     
@@ -135,14 +138,33 @@ class ProfileFavorsTable: UITableViewController
         } else if indexPath.row == favors.count + 1 {
             return 30
         } else {
-            return 100
+            return 130
         }
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    //----------------------------------------------------------------------------------------------------------
+    {
         println(indexPath.row)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        pointNow = scrollView.contentOffset
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > pointNow?.y {
+            delegate?.expand()
+        }
+    }
+    
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (scrollView.contentOffset.y < -50) {
+            delegate?.shrink()
+        }
     }
     
 }

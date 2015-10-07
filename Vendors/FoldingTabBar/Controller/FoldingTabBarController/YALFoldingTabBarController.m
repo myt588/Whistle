@@ -24,6 +24,7 @@
     self = [super init];
     if (self) {
         [self setup];
+        
     }
     return self;
 }
@@ -166,6 +167,13 @@
     id<YALTabBarInteracting>viewController = [self currentInteractingViewController];
     if ([viewController respondsToSelector:@selector(extraRightItemDidPressed)]) {
         [viewController extraRightItemDidPressed];
+    }
+}
+
+- (void)extraRightItemLongPressedInTabBarView:(YALFoldingTabBar *)tabBarView {
+    id<YALTabBarInteracting>viewController = [self currentInteractingViewController];
+    if ([viewController respondsToSelector:@selector(extraRightItemLongPressed)]) {
+        [viewController extraRightItemLongPressed];
     }
 }
 

@@ -8,6 +8,7 @@ import UIKit
 
 import Bolts
 import Parse
+import Firebase
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -16,9 +17,10 @@ import Parse
 // import ParseCrashReporting
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
     var window: UIWindow?
+    var locationManager: CLLocationManager!
     
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -34,9 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = Constants.Color.NavigationBarTint
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : Constants.Color.NavigationBarTint]
         
+        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        
+        Firebase.defaultConfig().persistenceEnabled = true
         // Enable storing and querying data from Local Datastore.
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
-        Parse.enableLocalDatastore()
+        //Parse.enableLocalDatastore()
         
         // ****************************************************************************
         // Uncomment this line if you want to enable Crash Reporting
@@ -62,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true)
+        defaultACL.setPublicWriteAccess(true)
         
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
         
@@ -80,48 +88,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
-        //setupTabBar()
-        //        if application.respondsToSelector("registerUserNotificationSettings:") {
-        //            let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-        //            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        //            application.registerUserNotificationSettings(settings)
-        //            application.registerForRemoteNotifications()
-        //        } else {
-        //            let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
-        //            application.registerForRemoteNotificationTypes(types)
-        //        }
+        
+        if application.respondsToSelector("registerUserNotificationSettings:") {
+            let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
+            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }
         
         return true
-    }
-    
-    func setupTabBar() {
-        
-        let tabBarController : YALFoldingTabBarController = self.window?.rootViewController as! YALFoldingTabBarController
-        let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
-            leftItemImage: nil,
-            rightItemImage: nil)
-        let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "profile_icon"),
-            leftItemImage: UIImage(named: "edit_icon"),
-            rightItemImage: nil)
-        tabBarController.leftBarItems = [item1, item2]
-        let item3 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "chats_icon"),
-            leftItemImage: UIImage(named: "search_icon"),
-            rightItemImage: UIImage(named: "new_chat_icon"))
-        let item4 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
-            leftItemImage: nil,
-            rightItemImage: nil)
-        tabBarController.rightBarItems = [item3, item4]
-        tabBarController.centerButtonImage = UIImage(named: "plus_icon")
-        tabBarController.selectedIndex = 2
-        
-        //customize tabBarView
-        tabBarController.tabBarView.extraTabBarItemHeight = YALExtraTabBarItemsDefaultHeight
-        tabBarController.tabBarView.offsetForExtraTabBarItems = YALForExtraTabBarItemsDefaultOffset
-        tabBarController.tabBarView.backgroundColor = UIColor(red: 94.0/255.0, green: 91.0/255.0, blue: 149.0/255.0, alpha: 0)
-        tabBarController.tabBarView.tabBarColor = UIColor(red: 72.0/255.0, green: 211.0/255.0, blue: 178.0/255.0, alpha: 1)
-        tabBarController.tabBarViewHeight = YALTabBarViewDefaultHeight
-        tabBarController.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
-        tabBarController.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets
     }
     
     //--------------------------------------
@@ -151,20 +126,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        println("test")
         PFPush.handlePush(userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
-    
-    ///////////////////////////////////////////////////////////
-    // Uncomment this method if you want to use Push Notifications with Background App Refresh
-    ///////////////////////////////////////////////////////////
-    // func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    //     if application.applicationState == UIApplicationState.Inactive {
-    //         PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
-    //     }
-    // }
     
     //--------------------------------------
     // MARK: Facebook SDK Integration
@@ -178,5 +145,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
+        locationManagerStart()
         FBSDKAppEvents.activateApp()
-    }}
+    }
+    
+    func locationManagerStart() {
+        
+        locationManager                                                     = CLLocationManager()
+        locationManager.delegate                                            = self
+        locationManager.desiredAccuracy                                     = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        } else {
+            ProgressHUD.showError("Please enable location service in the setting to start use our App")
+        }
+    }
+    
+    func locationManagerStop() {
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        currentLocation = PFGeoPoint(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+    }
+    
+}
+
+

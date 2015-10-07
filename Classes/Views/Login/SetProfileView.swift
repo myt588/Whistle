@@ -6,105 +6,164 @@
 //  Copyright (c) 2015 LoopCow. All rights reserved.
 //
 
+
+//----------------------------------------------------------------------------------------------------------
 import UIKit
 import Parse
+//----------------------------------------------------------------------------------------------------------
 
 
-class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
+//----------------------------------------------------------------------------------------------------------
+class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, TSMessageViewProtocol
+//----------------------------------------------------------------------------------------------------------
+{
     
-    @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var profileImage: UIImageView!
+    // MARK: - IBOutlets
+    //----------------------------------------------------------------------------------------------------------
+    @IBOutlet weak var message                      : UILabel!
+    @IBOutlet weak var textField                    : UITextField!
+    @IBOutlet weak var profileImage                 : UIImageView!
+    @IBOutlet weak var nameView                     : UIView!
+    @IBOutlet weak var lazyLabel                    : WEContentLabel!
+    @IBOutlet weak var nameCount                    : UILabel!
+    //----------------------------------------------------------------------------------------------------------
     
+    
+    // MARK: - Variables
+    //----------------------------------------------------------------------------------------------------------
     var user: PFUser?
     var rowCount : Int = 2
-    
+    //----------------------------------------------------------------------------------------------------------
     private var imagePicker = UIImagePickerController()
     private var image : UIImage?
     private var name : String?
     private var email : String?
+    private var gender : String?
+    private var facebookId : String?
+    private var twitterId : String?
     private var needEdit : Bool = false
-    
+    //----------------------------------------------------------------------------------------------------------
     let permissions = ["public_profile", "user_friends", "email", "user_photos"]
+    //----------------------------------------------------------------------------------------------------------
     
-    required init(coder decoder: NSCoder) {
+    
+    // MARK: - Initializations
+    //----------------------------------------------------------------------------------------------------------
+    required init(coder decoder: NSCoder)
+    //----------------------------------------------------------------------------------------------------------
+    {
         user = PFUser.currentUser()
         super.init(coder: decoder)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()  
-        self.imagePicker.delegate = self
-        self.textField.delegate = self
+    //----------------------------------------------------------------------------------------------------------
+    override func viewDidLoad()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        super.viewDidLoad()
+        
+        tableView.contentInset              = UIEdgeInsetsMake(0, 0, 0, 0)
+        
+        profileImage.layer.cornerRadius     = 42.5
+        profileImage.layer.borderWidth      = 2
+        profileImage.layer.borderColor      = Constants.Color.Border.CGColor
+        
+        TSMessage.setDelegate(self)
+        TSMessage.setDefaultViewController(self)
+        
+        //------------------------------------------------------------------------------------------------------
+        imagePicker.delegate = self
+        textField.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: Constants.Notification.SetProfileView, object: nil)
+        
+        // Add gestures
+        //------------------------------------------------------------------------------------------------------
         var tap = UITapGestureRecognizer(target: self, action: "tapToSeeOptions")
-        self.profileImage.addGestureRecognizer(tap)
-        self.profileImage.userInteractionEnabled = true
-        tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
-        tableView.backgroundColor = UIColor.whiteColor()
-        let query = PFUser.query()
-        if PFFacebookUtils.isLinkedWithUser(user!) {
-            VMGearLoadingView.showGearLoadingForView(self.view)
-            self.needEdit = true
-            getFBUserData()
-        } else if PFTwitterUtils.isLinkedWithUser(user!) {
-            VMGearLoadingView.showGearLoadingForView(self.view)
-            self.needEdit = true
-            getTwitterUserData()
-        } else {
-            self.rowCount = 5
-            println("phone user")
-        }
+        profileImage.addGestureRecognizer(tap)
+        //------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------
     }
     
-    override func viewDidAppear(animated: Bool) {
+    //----------------------------------------------------------------------------------------------------------
+    override func viewDidAppear(animated: Bool)
+    //----------------------------------------------------------------------------------------------------------
+    {
+        //------------------------------------------------------------------------------------------------------
         super.viewDidAppear(animated)
-
+        //------------------------------------------------------------------------------------------------------
+        itemsToDisplay()
+        //------------------------------------------------------------------------------------------------------
     }
     
-    func loadScene(){
-        VMGearLoadingView.hideGearLoadingForView(self.view)
-        self.textField.text = self.name
-        self.profileImage.contentMode = UIViewContentMode.ScaleAspectFill
-        self.profileImage.image = Image.cropToSquare(image: self.image!)
-        self.profileImage.layer.cornerRadius = self.profileImage.layer.frame.height/2
-        self.profileImage.layer.borderWidth = 1
-        self.profileImage.layer.masksToBounds = true
-    }
-    
-    @IBAction func done(sender: UIBarButtonItem) {
+    // MARK: - IBActions
+    //----------------------------------------------------------------------------------------------------------
+    @IBAction func done(sender: UIBarButtonItem)
+    //----------------------------------------------------------------------------------------------------------
+    {
+        self.textField.endEditing(true)
         if let user = self.user {
+            
+            if textField.text == "" {
+                ProgressHUD.showError("Please enter a nickname")
+                return
+            }
+            
             self.editing = false
-            VMGearLoadingView.showGearLoadingForView(self.view)
-            var image : NSData
-            if self.profileImage.image != nil {
-                image = NSData(data: UIImagePNGRepresentation(self.profileImage.image!))
-            } else {
-                image = NSData(data: UIImagePNGRepresentation(UIImage(named: "default_user_photo")))
-            }
-            var fileImage = PFFile(name: "portrait.png", data: image)
-            fileImage.saveInBackgroundWithBlock { (success : Bool, error : NSError?) -> Void in
-                if success {
-                    println("Image success")
-                } else {
-                    println("error" )
+            SwiftSpinner.show("Just\na moment...")
+            view.userInteractionEnabled = false
+            
+            if self.profileImage.image != UIImage(named: "login_photo") {
+                var picture = Image.resizeImage(profileImage.image!, width: 300, height: 300)
+                var thumbnail = Image.resizeImage(profileImage.image!, width: 60, height: 60)
+                var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
+                filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
+                    if let error = error {
+                        ParseErrorHandler.handleParseError(error)
+                        TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+                    }
                 }
+                var fileThumbnail = PFFile(name: "thumbnail.jpg", data: NSData(data: thumbnail.mediumQualityJPEGNSData))
+                fileThumbnail.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if let error = error {
+                        ParseErrorHandler.handleParseError(error)
+                        TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+                    }
+                })
+                user[Constants.User.Portrait] = filePicture
+                user[Constants.User.Thumbnail] = fileThumbnail
             }
+            
             if email != nil {
                 user[Constants.User.Email] = self.email
             }
             
+            if gender != nil {
+                user[Constants.User.Gender] = self.gender == "male" ? 1 : 0
+            }
+            
+            if facebookId != nil {
+                user[Constants.User.FacebookId] = self.facebookId
+            }
+            
+            if twitterId != nil {
+                user[Constants.User.TwitterId] = self.twitterId
+            }
+            
             user[Constants.User.Nickname] = textField.text
-            user[Constants.User.Portrait] = fileImage
+            user[Constants.User.NicknameLower] = textField.text.lowercaseString
             user[Constants.User.Likes] = 0
-            user[Constants.User.Dislikes] = 0
             user[Constants.User.Favors] = 0
             user[Constants.User.Assists] = 0
+            user[Constants.User.Rating] = 0
+            user[Constants.User.Rates] = 0
+            user[Constants.User.Level] = 0
+            
             user.saveInBackgroundWithBlock({ (success, error) -> Void in
-                if error == nil {
-                    println("success")
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: PFUser.currentUser()!.objectId!)
-                    VMGearLoadingView.hideGearLoadingForView(self.view)
+                if let error = error {
+                    ParseErrorHandler.handleParseError(error)
+                    TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+                } else {
+                    self.view.userInteractionEnabled = false
                     self.performSegueWithIdentifier("setProfileToInit", sender: self)
                 }
             })
@@ -113,7 +172,47 @@ class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerC
             performSegueWithIdentifier("setProfileToInit", sender: self)
         }
     }
-    func getTwitterUserData(){
+    
+    
+    // MARK: - Functions
+    //----------------------------------------------------------------------------------------------------------
+    func loadScene()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        SwiftSpinner.hide()
+        self.textField.becomeFirstResponder()
+        view.userInteractionEnabled = true
+        self.textField.text = self.name
+        self.profileImage.contentMode = UIViewContentMode.ScaleAspectFill
+        self.profileImage.image = Image.cropToSquare(image: self.image!)
+        self.profileImage.layer.cornerRadius = self.profileImage.layer.frame.height/2
+        self.profileImage.layer.borderWidth = 1
+        self.profileImage.layer.masksToBounds = true
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func itemsToDisplay()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if PFFacebookUtils.isLinkedWithUser(user!) {
+            SwiftSpinner.show("Downloading\nInformation...")
+            view.userInteractionEnabled = false
+            self.needEdit = true
+            getFBUserData()
+        } else if PFTwitterUtils.isLinkedWithUser(user!) {
+            SwiftSpinner.show("Downloading\nInformation...")
+            view.userInteractionEnabled = false
+            self.needEdit = true
+            getTwitterUserData()
+        } else {
+            self.rowCount = 5
+        }
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func getTwitterUserData()
+    //----------------------------------------------------------------------------------------------------------
+    {
         var url : NSURL = NSURL(string: "https://api.twitter.com/1.1/account/verify_credentials.json")!
         var request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
         PFTwitterUtils.twitter()?.signRequest(request)
@@ -122,10 +221,12 @@ class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerC
             completionHandler: {
                 data, response, error in
                 if (error != nil) {
-                    println("error")
+                    println("network error")
                 }
                 var json = JSON(data: data)
                 self.name = json["name"].string
+                self.twitterId = json["id_str"].string
+                self.nameCount.text = "\(count(self.name!))/\(Constants.Limit.Name)"
                 let url : String = json["profile_image_url"].string!
                 ImageLoader.sharedLoader.imageForUrl(url, completionHandler:{(image: UIImage?, url: String) in
                     self.image = image
@@ -135,46 +236,57 @@ class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerC
         task.resume()
     }
     
-    func getFBUserData(){
+    //----------------------------------------------------------------------------------------------------------
+    func getFBUserData()
+    //----------------------------------------------------------------------------------------------------------
+    {
         if((FBSDKAccessToken.currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.type(large)"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.type(large), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if (error == nil){
-                    //println(result)
+                    println(result)
                     let temp = result as! NSDictionary
+                    self.facebookId = temp.objectForKey("id") as? String
                     self.email = temp.objectForKey("email") as? String
+                    self.gender = temp.objectForKey("gender") as? String
                     let url = temp.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as! String
                     ImageLoader.sharedLoader.imageForUrl(url, completionHandler:{(image: UIImage?, url: String) in
                         self.image = image
                         NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notification.SetProfileView, object: self)
                     })
                     self.name = result["name"] as? String
+                    self.nameCount.text = "\(count(self.name!))/\(Constants.Limit.Name)"
+                } else {
+                    println("network error")
                 }
             })
         }
     }
     
-    func tapToSeeOptions() {
+    //----------------------------------------------------------------------------------------------------------
+    func tapToSeeOptions()
+    //----------------------------------------------------------------------------------------------------------
+    {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         if needEdit {
             let edit = UIAlertAction(title: "Edit", style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                println("Edit photo")
+
             })
             optionMenu.addAction(edit)
         }
         let takePhoto = UIAlertAction(title: "Take Photo", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.shootPhoto()
-            println("Shoot photo")
+
         })
         let chooseFromLibrary = UIAlertAction(title: "Choose from Library", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.photoFromLibrary()
-            println("Choose From Library")
+
         })
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
             (alert: UIAlertAction!) -> Void in
-            println("Cancelled")
+
         })
         
         optionMenu.addAction(takePhoto)
@@ -183,30 +295,85 @@ class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerC
         self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
-    //MARK: - Image
-    //Start Photo Library
-    func photoFromLibrary() {
+    //----------------------------------------------------------------------------------------------------------
+    // START: - Image
+    //----------------------------------------------------------------------------------------------------------
+    // Start Photo Library
+    //----------------------------------------------------------------------------------------------------------
+    func photoFromLibrary()
+    //----------------------------------------------------------------------------------------------------------
+    {
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
         imagePicker.modalPresentationStyle = .Popover
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    //take a picture, check if we have a camera first.
-    func shootPhoto() {
+    // Take a picture, check if we have a camera first.
+    //----------------------------------------------------------------------------------------------------------
+    func shootPhoto()
+    //----------------------------------------------------------------------------------------------------------
+    {
         if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
             imagePicker.allowsEditing = true
             imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
             imagePicker.cameraCaptureMode = .Photo
             presentViewController(imagePicker, animated: true, completion: nil)
         } else {
-            JSSAlertView().danger(self, title: "No Camera", text: "Sorry, this device has no camera", buttonText: "ok")
+            TSMessage.showNotificationWithTitle("No Camera", subtitle: "Whistle needs access to the camera.", type: TSMessageNotificationType.Error)
         }
     }
     
-    //MARK: - Image Picker Delegates
-    //What to do when the picker returns with a photo
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    
+    // MARK: - Delegates
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    //----------------------------------------------------------------------------------------------------------
+    {
+        return rowCount
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    //----------------------------------------------------------------------------------------------------------
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if indexPath.section == 0 && indexPath.row == 3 {
+            SwiftSpinner.show("Directing To\nFacebook...")
+            view.userInteractionEnabled = false
+            PFFacebookUtils.linkUserInBackground(self.user!, withReadPermissions: self.permissions, block: { (success, error) -> Void in
+                if success {
+                    self.needEdit = true
+                    self.rowCount = 2
+                    self.getFBUserData()
+                } else {
+                    SwiftSpinner.hide()
+                    self.view.userInteractionEnabled = true
+                    ParseErrorHandler.handleParseError(error)
+                }
+            })
+        }
+        if indexPath.section == 0 && indexPath.row == 4 {
+            view.userInteractionEnabled = false
+            PFTwitterUtils.linkUser(self.user!, block: { (success, error) -> Void in
+                if success {
+                    self.needEdit = true
+                    self.rowCount = 2
+                    self.getTwitterUserData()
+                } else {
+                    self.view.userInteractionEnabled = true
+                    ParseErrorHandler.handleParseError(error)
+                }
+            })
+        }
+    }
+    
+    // ImagePicker delegates
+    // What to do when the picker returns with a photo
+    //----------------------------------------------------------------------------------------------------------
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    //----------------------------------------------------------------------------------------------------------
+    {
         var chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
         self.profileImage.contentMode = UIViewContentMode.ScaleAspectFit
         self.profileImage.image = Image.cropToSquare(image: chosenImage)
@@ -218,45 +385,40 @@ class SetProfileView: UITableViewController, UITableViewDelegate, UIImagePickerC
     }
     
     //What to do if the image picker cancels.
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    //----------------------------------------------------------------------------------------------------------
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    //----------------------------------------------------------------------------------------------------------
+    {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //MARK: - Table View Delegate
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.rowCount
+    // Limit the length of textField
+    //----------------------------------------------------------------------------------------------------------
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if (range.length + range.location > count(textField.text) ) { return false }
+        let newLength = count(textField.text) + count(string) - range.length
+        if newLength <= Constants.Limit.Name {
+            nameCount.text = "\(newLength)/\(Constants.Limit.Name)"
+        }
+        return newLength <= Constants.Limit.Name
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 && indexPath.row == 3 {
-            VMGearLoadingView.showGearLoadingForView(self.view)
-            PFFacebookUtils.linkUserInBackground(self.user!, withReadPermissions: self.permissions, block: { (success, error) -> Void in
-                if success {
-                    println("success")
-                    self.needEdit = true
-                    self.rowCount = 2
-                    self.getFBUserData()
-                } else {
-                    VMGearLoadingView.hideGearLoadingForView(self.view)
-                    JSSAlertView().danger(self, title: "Network Error", text: "Please retry", buttonText: "ok")
-                    println("error")
-                }
-            })
-        }
-        if indexPath.section == 0 && indexPath.row == 4 {
-            VMGearLoadingView.showGearLoadingForView(self.view)
-            PFTwitterUtils.linkUser(self.user!, block: { (success, error) -> Void in
-                if success {
-                    println("success")
-                    self.needEdit = true
-                    self.rowCount = 2
-                    self.getTwitterUserData()
-                } else {
-                    JSSAlertView().danger(self, title: "Network Error", text: "Please retry", buttonText: "ok")
-                    VMGearLoadingView.hideGearLoadingForView(self.view)
-                    println("error")
-                }
-            })
-        }
+    //----------------------------------------------------------------------------------------------------------
+    func customizeMessageView(messageView: TSMessageView!)
+    //----------------------------------------------------------------------------------------------------------
+    {
+        messageView.alpha = 0.85
     }
 }
+
+
+
+
+
+
+
+
+
+

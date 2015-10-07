@@ -32,6 +32,11 @@ class AudioManager: NSObject {
         return audioDir.URLByAppendingPathComponent("\(name).m4a")
     }
     
+    func audioPathWithName(name : NSString) -> NSString {
+        let url = audioURLWithName(name)
+        return url.absoluteString!
+    }
+    
     func audioWithName(name : NSString) -> NSData?{
         var data : NSData?
         let path = self.audioURLWithName(name)

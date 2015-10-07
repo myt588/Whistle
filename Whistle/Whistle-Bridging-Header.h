@@ -11,10 +11,6 @@
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 #import "LLARingSpinnerView.h"
-#import "VMGearLoadingView.h"
-#import "SYWaveformPlayerView.h"
-#import "PulsingHaloLayer.h"
-#import "MultiplePulsingHaloLayer.h"
 
 //Tab Bar
 #import "YALTabBarItem.h"
@@ -22,11 +18,28 @@
 #import "YALAnimatingTabBarConstants.h"
 #import "YALTabBarInteracting.h"
 
-//Chat
-#import "ChatView.h"
+#import "YALSunnyRefreshControl.h"
+
+#import "TSMessageView.h"
+#import "AMTumblrHud.h"
+
+#import "CarbonKit.h"
+#import "DGActivityIndicatorView.h"
 
 #import "JTSImageViewController.h"
-
 #import "FSVoiceBubble.h"
+
+#import "MXPullDownMenu.h"
+#import "StepperView.h"
+
+#import "RatingView.h"
+
+//Chat
+#import "ChatView.h"
+#import "RecentView.h"
+#import "AppConstant.h"
+#import "ProgressHUD.h"
+#import "push.h"
+#import "recent.h"
 
 #endif

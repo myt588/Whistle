@@ -9,7 +9,8 @@
 #import "FSVoiceBubble.h"
 #import "UIImage+FSExtension.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import <UIKit/UIKit.h>
+#import "Whistle-Swift.h"
 
 #define kFSVoiceBubbleShouldStopNotification @"FSVoiceBubbleShouldStopNotification"
 #define UIImageNamed(imageName) [[UIImage imageNamed:[NSString stringWithFormat:@"FSVoiceBubble.bundle/%@", imageName]] imageWithRenderingMode:UIImageRenderingModeAutomatic]
@@ -20,6 +21,10 @@
 @property (strong, nonatomic) AVURLAsset    *asset;
 @property (strong, nonatomic) NSArray       *animationImages;
 @property (weak  , nonatomic) UIButton      *contentButton;
+
+@property (strong, nonatomic) AudioManager  *audioManager;
+@property (strong, nonatomic) AudioPlayer   *audioPlayer;
+@property (strong, nonatomic) AudioContext  *audioContext;
 
 - (void)initialize;
 - (void)voiceClicked:(id)sender;
@@ -79,6 +84,8 @@
     _durationInsideBubble = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bubbleShouldStop:) name:kFSVoiceBubbleShouldStopNotification object:nil];
+    
+//    self.audioContext = [AudioContext init];
 }
 
 - (void)dealloc
@@ -186,6 +193,7 @@
                 _asset = nil;
                 return;
             }
+            
             NSData *data = [NSData dataWithContentsOfURL:contentURL];
             _player = [[AVAudioPlayer alloc] initWithData:data error:NULL];
             _player.delegate = self;
@@ -198,6 +206,11 @@
             });
         });
     }
+}
+
+- (NSInteger)getDuration {
+    CMTime duration = _asset.duration;
+    return CMTimeGetSeconds(duration);
 }
 
 - (BOOL)isPlaying
@@ -258,7 +271,6 @@
         UIImage *image2 = [[UIImage imageNamed:@"fs_icon_wave_2"] imageWithOverlayColor:_animatingWaveColor];
         
         _contentButton.imageView.animationImages = @[image0, image1, image2];
-        NSLog(@"hahah]2a");
         [_contentButton.imageView startAnimating];
     }
 }
@@ -277,6 +289,15 @@
         return;
     }
     if (!_player.playing) {
+//        [self configureAVAudioSession];
+        BOOL closeToFace = [UIDevice currentDevice].proximityState;
+        if (closeToFace) {
+            [_audioContext enableProximityMonitor];
+            [_audioContext switchPlayEarphone];
+        } else {
+            [_audioContext enableProximityMonitor];
+            [_audioContext switchPlaySpeaker];
+        }
         [_player play];
         [self startAnimating];
     }
@@ -297,6 +318,35 @@
         _player.currentTime = 0;
         [self stopAnimating];
     }
+}
+
+- (void) configureAVAudioSession //To play through main iPhone Speakers
+{
+    //get your app's audioSession singleton object
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    
+    //error handling
+    BOOL success;
+    NSError* error;
+    
+    //set the audioSession category.
+    //Needs to be Record or PlayAndRecord to use audioRouteOverride:
+    
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                             error:&error];
+    
+    if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
+    
+    //set the audioSession override
+    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+                                         error:&error];
+    if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    
+    //activate the audio session
+    success = [session setActive:YES error:&error];
+    if (!success) NSLog(@"AVAudioSession error activating: %@",error);
+    else NSLog(@"audioSession active");
+    
 }
 
 @end
