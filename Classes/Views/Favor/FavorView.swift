@@ -19,25 +19,6 @@ import Foundation
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-var mainFavors : NSMutableArray = NSMutableArray()
-var filteredMain : NSMutableArray = NSMutableArray()
-var edge: Edges?
-var skip: Int!
-var mainIndex: Int = 0 {
-    didSet {
-        if mainIndex > mainFavors.count - 1 {
-            mainIndex = 0
-        }
-        if mainIndex < 0 {
-            mainIndex = mainFavors.count - 1
-        }
-    }
-}
-// filter
-var didSetFilter: Bool = false
-var gender: Int?
-var distance: Double?
-var sortBy: Int?
 var currentLocation: PFGeoPoint?
 
 //----------------------------------------------------------------------------------------------------------
@@ -53,7 +34,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     @IBOutlet weak var searchButton                         : WEMapButton!
     @IBOutlet weak var refreshButton                        : WEMapButton!
     @IBOutlet weak var centerOnUserButton                   : WEMapButton!
-    @IBOutlet weak var listButton                           : WEMapButton!
     @IBOutlet weak var loadingLabel                         : WEContentLabel!
     @IBOutlet weak var circularProgress                     : KYCircularProgress!
     @IBOutlet weak var progressLabel                        : UILabel!
@@ -115,6 +95,23 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     //----------------------------------------------------------------------------------------------------------
     private var canExpand                                   = true
     
+    
+    var favors : NSMutableArray = NSMutableArray()
+    var edge: Edges?
+    var mainIndex: Int = 0 {
+        didSet {
+            if mainIndex > favors.count - 1 {
+                mainIndex = 0
+            }
+            if mainIndex < 0 {
+                mainIndex = favors.count - 1
+            }
+        }
+    }
+    
+    // filter
+    var gender: Int?
+    
     // MARK: - Initialization
     //----------------------------------------------------------------------------------------------------------
     override func viewDidLoad()
@@ -128,7 +125,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         addGestures()
         portraitImageView.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "favorPicked", name: "favorPicked", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "actionCleanup", name: NOTIFICATION_USER_LOGGED_OUT, object: nil)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -170,20 +167,20 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         let alert = WEAlertController(title: nil, message: nil, style: .ActionSheet)
         alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
         alert.addAction(SimpleAlert.Action(title: "All Gender", style: .Default) { action in
-            gender = nil
-            if let edge = edge {
+            self.gender = nil
+            if let edge = self.edge {
                 self.loadFavors(edge)
             }
         })
         alert.addAction(SimpleAlert.Action(title: "Females Only", style: .Default) { action in
-            gender = 0
-            if let edge = edge {
+            self.gender = 0
+            if let edge = self.edge {
                 self.loadFavors(edge)
             }
         })
         alert.addAction(SimpleAlert.Action(title: "Males Only", style: .Default) { action in
-            gender = 1
-            if let edge = edge {
+            self.gender = 1
+            if let edge = self.edge {
                 self.loadFavors(edge)
             }
         })
@@ -196,19 +193,20 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     {
         loadFavors(mapView.edgePoints())
     }
-    
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func listButtonTapped(sender: WEMapButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-
-    }
 
     //----------------------------------------------------------------------------------------------------------
     @IBAction func centerMapOnUserButtonTapped(sender: WEMapButton)
     //----------------------------------------------------------------------------------------------------------
     {
         centerMapOnUser()
+    }
+    
+    func actionCleanup()
+    {
+        favors.removeAllObjects()
+        edge = nil
+        mainIndex = 0
+        gender = nil
     }
     
     // MARK: - User interactions
@@ -253,12 +251,12 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
                 if displayerMode == 2 { break }
                 if !canSwipeIndex { break }
                 mainIndex++
-                switchFavor(mainFavors[mainIndex] as? PFObject)
+                switchFavor(favors[mainIndex] as? PFObject)
             case UISwipeGestureRecognizerDirection.Left:
                 if displayerMode == 2 { break }
                 if !canSwipeIndex { break }
                 mainIndex--
-                switchFavor(mainFavors[mainIndex] as? PFObject)
+                switchFavor(favors[mainIndex] as? PFObject)
             case UISwipeGestureRecognizerDirection.Up:
                 if displayerMode != 2 { println("by gesture up"); changeDisplayMode(2) }
             case UISwipeGestureRecognizerDirection.Down:
@@ -292,7 +290,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
             TSMessage.showNotificationWithTitle("Warning", subtitle: "Please select a favor first.", type: TSMessageNotificationType.Warning)
             return
         }
-        if let favor = mainFavors[mainIndex] as? PFObject {
+        if let favor = favors[mainIndex] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
                     TSMessage.showNotificationWithTitle("Warning", subtitle: "You can not pick your own favor", type: TSMessageNotificationType.Warning)
@@ -313,7 +311,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         if !didSelectFavor {
             return
         }
-        if let favor = mainFavors[mainIndex] as? PFObject {
+        if let favor = favors[mainIndex] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
                     return
@@ -339,7 +337,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
             bounceView(progressLabel)
             fadeOutView(circularProgress, 1)
             isInterested(true)
-            if let favor = mainFavors[mainIndex] as? PFObject {
+            if let favor = favors[mainIndex] as? PFObject {
                 let relationTable = PFObject(className: Constants.FavorUserPivotTable.Name)
                 relationTable[Constants.FavorUserPivotTable.Takers] = PFUser.currentUser()
                 relationTable[Constants.FavorUserPivotTable.Favor] = favor
@@ -416,6 +414,10 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         let ne = PFGeoPoint(latitude: edge.ne.latitude, longitude: edge.ne.longitude)
         let sw = PFGeoPoint(latitude: edge.sw.latitude, longitude: edge.sw.longitude)
         favorQuery.whereKey(Constants.Favor.Location, withinGeoBoxFromSouthwest: sw, toNortheast: ne)
+        favorQuery.whereKey(Constants.Favor.Status, containedIn: [
+            Status.NoTaker.hashValue,
+            Status.HasTaker.hashValue
+            ])
         favorQuery.selectKeys([
             Constants.Favor.Location,
             Constants.Favor.Status,
@@ -427,8 +429,8 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
             (objects: [AnyObject]?, error: NSError?) -> Void in
             hud.removeFromSuperview()
             if let objects = objects {
-                mainFavors.removeAllObjects()
-                mainFavors.addObjectsFromArray(objects)
+                self.favors.removeAllObjects()
+                self.favors.addObjectsFromArray(objects)
                 println("\(objects.count) favor loaded")
                 NSNotificationCenter.defaultCenter().postNotificationName("loadFavors", object: nil)
             } else {
@@ -482,7 +484,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
                 hud.removeFromSuperview()
                 self.canSwipeIndex = true
                 if let favor = favor {
-                    mainFavors.replaceObjectAtIndex(mainIndex, withObject: favor)
+                    self.favors.replaceObjectAtIndex(self.mainIndex, withObject: favor)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.interestState(favor)
                         if self.displayerMode == 1 {
@@ -523,25 +525,12 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     }
     
     //----------------------------------------------------------------------------------------------------------
-    func favorPicked()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        self.tableView!.bindData(mainFavors[mainIndex] as? PFObject)
-        configBanner(mainFavors[mainIndex] as? PFObject)
-        centerMapOnFavor()
-        changeDisplayMode(1)
-        println("picked")
-        didSelectFavor = true
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
         
-        listButton.layer.cornerRadius = 30
         centerOnUserButton.layer.cornerRadius = 20
         refreshButton.layer.cornerRadius = 20
         searchButton.layer.cornerRadius = 20
@@ -566,7 +555,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     func toggleButtonHidden()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [searchButton, refreshButton, centerOnUserButton, listButton]
+        var buttons = [searchButton, refreshButton, centerOnUserButton]
         for element in buttons {
             element.alpha = 0
         }
@@ -576,7 +565,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     func toggleButtonAppear()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [searchButton, refreshButton, centerOnUserButton, listButton]
+        var buttons = [searchButton, refreshButton, centerOnUserButton]
         for element in buttons {
             element.alpha = 1
         }
@@ -726,7 +715,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         let location: CLLocationCoordinate2D                        = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let regionRadius: CLLocationDistance                        = 200
         let coordinateRegion                                        = MKCoordinateRegionMakeWithDistance(location, regionRadius * 2.0, regionRadius * 2.0)
-        currentLocation = PFGeoPoint(latitude: latitude, longitude: longitude)
         mapView.setRegion(coordinateRegion, animated: true)
         mapChangedByUserGesture = true
     }
@@ -748,7 +736,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         var index = 0
         annotations.removeAll(keepCapacity: false)
         mapView.removeAnnotations(mapView.annotations)
-        for favor in mainFavors {
+        for favor in favors {
             let PFLocation = favor[Constants.Favor.Location] as! PFGeoPoint
             let location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: PFLocation.latitude, longitude: PFLocation.longitude)
             var annotation = FBAnnotation()
@@ -889,7 +877,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
                 annotationView.canShowCallout = false
                 let temp = annotation as! FBAnnotation
                 annotationView.index = temp.index
-                if let favor = mainFavors[temp.index] as? PFObject {
+                if let favor = favors[temp.index] as? PFObject {
                     let user = favor[Constants.Favor.CreatedBy] as! PFUser
                     user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                         if let user = user {
@@ -928,7 +916,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         }
         mapView.deselectAnnotation(view.annotation, animated: true)
         mainIndex = (view as! WEAnnotationView).index
-        switchFavor(mainFavors[mainIndex] as? PFObject)
+        switchFavor(favors[mainIndex] as? PFObject)
     }
     
     // MARK: - Map View Delegate
@@ -936,7 +924,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool)
     //----------------------------------------------------------------------------------------------------------
     {
-        if mainFavors.count != 0 {
+        if favors.count != 0 {
             NSOperationQueue().addOperationWithBlock({
                 let mapBoundsWidth = Double(self.mapView.bounds.size.width)
                 let mapRectWidth:Double = self.mapView.visibleMapRect.size.width
@@ -1006,16 +994,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     //----------------------------------------------------------------------------------------------------------
     {
         let tabBarController = self.tabBarController as? YALFoldingTabBarController
-    }
-    
-    // MARK: - Navigations
-    //----------------------------------------------------------------------------------------------------------
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if segue.identifier == "FavorView_To_FavorListTable" {
-            var vc = segue.destinationViewController as! FavorListTable
-        }
     }
     
     func expand() {

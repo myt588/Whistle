@@ -66,7 +66,7 @@ void SendPushNotification2(NSArray *members, NSString *text)
 {
 	PFUser *user = [PFUser currentUser];
 	NSString *message = [NSString stringWithFormat:@"%@: %@", user[PF_USER_FULLNAME], text];
-	
+    NSDictionary *data = @{@"alert":message, @"sound":@"default", @"badge":@"Increment", @"type":@"chat"};
 	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
 	[query whereKey:PF_USER_OBJECTID containedIn:members];
 	[query whereKey:PF_USER_OBJECTID notEqualTo:user.objectId];
@@ -74,10 +74,9 @@ void SendPushNotification2(NSArray *members, NSString *text)
 
 	PFQuery *queryInstallation = [PFInstallation query];
 	[queryInstallation whereKey:PF_INSTALLATION_USER matchesQuery:query];
-
 	PFPush *push = [[PFPush alloc] init];
 	[push setQuery:queryInstallation];
-	[push setData:@{@"alert":message, @"sound":@"default", @"badge":@"Increment"}];
+	[push setData:data];
 	[push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
 		if (error != nil)

@@ -33,6 +33,8 @@ class WEImageView: PFImageView
         super.init(coder: aDecoder)
         userInteractionEnabled = true
         
+        self.contentMode = UIViewContentMode.ScaleAspectFill
+        
         var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.addGestureRecognizer(gesture)
         

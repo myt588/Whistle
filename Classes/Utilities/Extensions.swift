@@ -176,71 +176,71 @@ extension UIImage {
     
 }
 
-extension NSMutableArray {
-    func sortByCreatedAt(order: Order) {
-        var sortedArray = sorted(mainFavors) {
-            (obj1, obj2) in
-            let p1 = obj1 as! PFObject
-            let p2 = obj2 as! PFObject
-            switch order {
-            case .Ascending:
-                return (p1.updatedAt!.compare(p2.updatedAt!) == NSComparisonResult.OrderedAscending)
-            case .Descending:
-                return (p1.updatedAt!.compare(p2.updatedAt!) == NSComparisonResult.OrderedDescending)
-            }
-        }
-        self.removeAllObjects()
-        self.addObjectsFromArray(sortedArray)
-    }
-    
-    func sortByPrice(order: Order) {
-        var sortedArray = sorted(mainFavors) {
-            (obj1, obj2) in
-            let p1 = obj1 as! PFObject
-            let p2 = obj2 as! PFObject
-            let price1 = p1[Constants.Favor.Price] as? Double
-            let price2 = p2[Constants.Favor.Price] as? Double
-            switch order {
-            case .Ascending:
-                return (price1 > price2)
-            case .Descending:
-                return (price1 < price2)
-            }
-        }
-        self.removeAllObjects()
-        self.addObjectsFromArray(sortedArray)
-    }
-    
-    func sortByDistance(order: Order) {
-        var sortedArray = sorted(mainFavors) {
-            (obj1, obj2) in
-            let p1 = obj1 as! PFObject
-            let p2 = obj2 as! PFObject
-            let item1 = p1[Constants.Favor.Distance] as? Double
-            let item2 = p2[Constants.Favor.Distance] as? Double
-            switch order {
-            case .Ascending:
-                return (item1 > item2)
-            case .Descending:
-                return (item1 < item2)
-            }
-        }
-        self.removeAllObjects()
-        self.addObjectsFromArray(sortedArray)
-    }
-    
-    func filterByGender(gender: Int) -> NSMutableArray {
-        var filteredArray = NSMutableArray()
-        for index in 0...skip - 1 {
-            let object = self[index] as! PFObject
-            if let user = object[Constants.Favor.CreatedBy] as? PFUser {
-                if let genderr = user[Constants.User.Gender] as? Int {
-                    if genderr == gender {
-                        filteredArray.addObject(object)
-                    }
-                }
-            }
-        }
-        return filteredArray
-    }
-}
+//extension NSMutableArray {
+//    func sortByCreatedAt(order: Order) {
+//        var sortedArray = sorted(mainFavors) {
+//            (obj1, obj2) in
+//            let p1 = obj1 as! PFObject
+//            let p2 = obj2 as! PFObject
+//            switch order {
+//            case .Ascending:
+//                return (p1.updatedAt!.compare(p2.updatedAt!) == NSComparisonResult.OrderedAscending)
+//            case .Descending:
+//                return (p1.updatedAt!.compare(p2.updatedAt!) == NSComparisonResult.OrderedDescending)
+//            }
+//        }
+//        self.removeAllObjects()
+//        self.addObjectsFromArray(sortedArray)
+//    }
+//    
+//    func sortByPrice(order: Order) {
+//        var sortedArray = sorted(mainFavors) {
+//            (obj1, obj2) in
+//            let p1 = obj1 as! PFObject
+//            let p2 = obj2 as! PFObject
+//            let price1 = p1[Constants.Favor.Price] as? Double
+//            let price2 = p2[Constants.Favor.Price] as? Double
+//            switch order {
+//            case .Ascending:
+//                return (price1 > price2)
+//            case .Descending:
+//                return (price1 < price2)
+//            }
+//        }
+//        self.removeAllObjects()
+//        self.addObjectsFromArray(sortedArray)
+//    }
+//    
+//    func sortByDistance(order: Order) {
+//        var sortedArray = sorted(mainFavors) {
+//            (obj1, obj2) in
+//            let p1 = obj1 as! PFObject
+//            let p2 = obj2 as! PFObject
+//            let item1 = p1[Constants.Favor.Distance] as? Double
+//            let item2 = p2[Constants.Favor.Distance] as? Double
+//            switch order {
+//            case .Ascending:
+//                return (item1 > item2)
+//            case .Descending:
+//                return (item1 < item2)
+//            }
+//        }
+//        self.removeAllObjects()
+//        self.addObjectsFromArray(sortedArray)
+//    }
+//    
+//    func filterByGender(gender: Int) -> NSMutableArray {
+//        var filteredArray = NSMutableArray()
+//        for index in 0...skip - 1 {
+//            let object = self[index] as! PFObject
+//            if let user = object[Constants.Favor.CreatedBy] as? PFUser {
+//                if let genderr = user[Constants.User.Gender] as? Int {
+//                    if genderr == gender {
+//                        filteredArray.addObject(object)
+//                    }
+//                }
+//            }
+//        }
+//        return filteredArray
+//    }
+//}

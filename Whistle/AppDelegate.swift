@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     //--------------------------------------
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         // Set Status Style
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
@@ -63,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             consumerSecret:"2ILmbqrY6VmU3IacjqFERGoKZt7DGXiZepQhHLeC0bQemhjxuv")
         // ****************************************************************************
         
-        PFUser.enableAutomaticUser()
+        // PFUser.enableAutomaticUser()
         
         let defaultACL = PFACL();
         
@@ -126,11 +125,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        println("test")
-        PFPush.handlePush(userInfo)
+        if application.applicationState == UIApplicationState.Active {
+            println("active")
+        } else {
+            if userInfo["type"] as! String == "chat" {
+                
+            }
+        }
+        //PFPush.handlePush(userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
+        
+        let installation = PFInstallation.currentInstallation()
+        if installation.badge != 0 {
+            installation.badge = 0
+        }
+        installation.saveInBackground()
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
     
     //--------------------------------------
@@ -150,7 +164,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManagerStart() {
-        
         locationManager                                                     = CLLocationManager()
         locationManager.delegate                                            = self
         locationManager.desiredAccuracy                                     = kCLLocationAccuracyBest

@@ -18,7 +18,7 @@
 void LoginUser(id target)
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-    NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:[[InitialView alloc] init]];
+    NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:[[LoginView alloc] init]];
     [target presentViewController:navigationController animated:YES completion:nil];
 }
 

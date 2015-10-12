@@ -175,6 +175,7 @@ class ProfileView: UIViewController, ProfileScrollDelegate
             file.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if let data = data {
                     self.portraitView.image = UIImage(data: data)!
+                    self.portraitView.contentMode = UIViewContentMode.ScaleAspectFill
                     self.blurImage.image = UIImage(data: data)!
                 } else {
                     ParseErrorHandler.handleParseError(error!)

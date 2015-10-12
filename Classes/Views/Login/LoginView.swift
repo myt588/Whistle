@@ -21,13 +21,12 @@ class LoginView: UIViewController, TSMessageViewProtocol
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var logoLabel                        : WEContentLabel!
-    @IBOutlet weak var phone                            : UIImageView!
     @IBOutlet weak var facebook                         : UIImageView!
-    @IBOutlet weak var twitter                          : UIImageView!
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
+    
     let permissions                                     = ["public_profile", "user_friends", "email", "user_photos"]
     //----------------------------------------------------------------------------------------------------------
     
@@ -81,17 +80,6 @@ class LoginView: UIViewController, TSMessageViewProtocol
     {
         var facebookTapped                  = UITapGestureRecognizer(target: self, action: "facebookTapped")
         facebook.addGestureRecognizer(facebookTapped)
-        var twitterTapped                   = UITapGestureRecognizer(target: self, action: "twitterTapped")
-        twitter.addGestureRecognizer(twitterTapped)
-        var phoneTapped                     = UITapGestureRecognizer(target: self, action: "phoneTapped")
-        phone.addGestureRecognizer(phoneTapped)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func phoneTapped()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        performSegueWithIdentifier("signin_with_phone", sender: self)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -104,7 +92,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
             if let user = user {
                 if user.isNew {
                     println("User signed up and logged in through Facebook!")
-                    self.userLoggedIn(user)
+                    self.requestFacebook(user)
                 } else {
                     println("User logged in through Facebook!")
                     self.userLoggedIn(user)
@@ -117,24 +105,87 @@ class LoginView: UIViewController, TSMessageViewProtocol
     }
     
     //----------------------------------------------------------------------------------------------------------
-    func twitterTapped()
+    func requestFacebook(user: PFUser)
     //----------------------------------------------------------------------------------------------------------
     {
-        PFTwitterUtils.logInWithBlock {
-            (user: PFUser?, error: NSError?) -> Void in
-            if let user = user {
-                if user.isNew {
-                    println("User signed up and logged in with Twitter!")
-                    self.userLoggedIn(user)
+        if((FBSDKAccessToken.currentAccessToken()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.type(large), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+                if (error == nil){
+                    println(result)
+                    self.requestFacebookPicture(user, userData: result as! NSDictionary)
                 } else {
-                    println("User logged in with Twitter!")
-                    self.userLoggedIn(user)
+                    println("network error")
                 }
+            })
+        }
+    }
+    
+    func requestFacebookPicture(user: PFUser, userData: NSDictionary)
+    {
+        let url = userData.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as! String
+        ImageLoader.sharedLoader.imageForUrl(url, completionHandler:{(image: UIImage?, url: String) in
+            if let image = image {
+                self.processFacebook(user, userData: userData, image: image)
             } else {
-                println("Uh oh. The user cancelled the Twitter login.")
+                
+            }
+        })
+    }
+    
+    func processFacebook(user: PFUser, userData: NSDictionary, image: UIImage)
+    {
+        var picture = ResizeImageByWidth(image, 140)
+        var thumbnail = ResizeImageByWidth(image, 60)
+        var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
+        filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
+            if let error = error {
                 ParseErrorHandler.handleParseError(error)
+                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
             }
         }
+        var fileThumbnail = PFFile(name: "thumbnail.jpg", data: NSData(data: thumbnail.mediumQualityJPEGNSData))
+        fileThumbnail.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if let error = error {
+                ParseErrorHandler.handleParseError(error)
+                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+            }
+        })
+        user[Constants.User.Portrait] = filePicture
+        user[Constants.User.Thumbnail] = fileThumbnail
+        
+        let facebookId = userData.objectForKey("id") as? String
+        let email = userData.objectForKey("email") as? String
+        let gender = userData.objectForKey("gender") as? String
+        let name = userData["name"] as? String
+        
+        if email != nil {
+            user[Constants.User.Email] = email
+        }
+        
+        if gender != nil {
+            user[Constants.User.Gender] = gender == "male" ? 1 : 0
+        }
+        
+        user[Constants.User.FacebookId] = facebookId
+        user[Constants.User.Nickname] = name
+        user[Constants.User.NicknameLower] = name!.lowercaseString
+        user[Constants.User.Likes] = 0
+        user[Constants.User.Favors] = 0
+        user[Constants.User.Assists] = 0
+        user[Constants.User.Rating] = 0
+        user[Constants.User.Rates] = 0
+        user[Constants.User.Level] = 0
+
+        user.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if let error = error {
+                ParseErrorHandler.handleParseError(error)
+                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+            } else {
+                self.view.userInteractionEnabled = false
+                self.userLoggedIn(user)
+            }
+        })
+
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -149,7 +200,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
                 ParseErrorHandler.handleParseError(error)
             }
         }
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Delegates

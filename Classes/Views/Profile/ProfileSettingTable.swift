@@ -81,20 +81,14 @@ class ProfileSettingTable: UITableViewController
     @IBAction func logoutButtonTapped(sender: UIButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        println("dd")
         PFUser.logOutInBackgroundWithBlock { (error) -> Void in
             if let error = error {
                 println("log out failed, \(error)")
             } else {
-                mainFavors.removeAllObjects()
-                edge = nil
-                mainIndex = 0
-                // filter
-                gender = nil
-                distance = nil
-                sortBy = nil
                 currentLocation = nil
-                LoginView()
+                PostNotification(NOTIFICATION_USER_LOGGED_OUT)
+                var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+                self.presentViewController(viewController, animated: true, completion: nil)
             }
         }
     }
