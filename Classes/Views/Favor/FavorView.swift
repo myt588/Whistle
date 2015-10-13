@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 LoopCow. All rights reserved.
 //
 //  TO DO
-//  MapAnnotationCustomization Based on user lvl
 //  Navigation bar changed after tap into profile view                      Check
 //  Adding Filters to fetch data from server                                Check
 //  WEImageView add enable on which views should be able to tap into profileothersview
@@ -92,13 +91,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     var favors : NSMutableArray = NSMutableArray()
     var edge: Edges?
-    var mainIndex: Int = 0 {
+    var index: Int = 0 {
         didSet {
-            if mainIndex > favors.count - 1 {
-                mainIndex = 0
+            if index > favors.count - 1 {
+                index = 0
             }
-            if mainIndex < 0 {
-                mainIndex = favors.count - 1
+            if index < 0 {
+                index = favors.count - 1
             }
         }
     }
@@ -204,7 +203,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         favors.removeAllObjects()
         edge = nil
-        mainIndex = 0
+        index = 0
         gender = nil
     }
     
@@ -241,13 +240,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             case UISwipeGestureRecognizerDirection.Right:
                 if displayerMode == 2 { break }
                 if !canSwipeIndex { break }
-                mainIndex++
-                switchFavor(favors[mainIndex] as? PFObject)
+                index++
+                switchFavor(favors[index] as? PFObject)
             case UISwipeGestureRecognizerDirection.Left:
                 if displayerMode == 2 { break }
                 if !canSwipeIndex { break }
-                mainIndex--
-                switchFavor(favors[mainIndex] as? PFObject)
+                index--
+                switchFavor(favors[index] as? PFObject)
             case UISwipeGestureRecognizerDirection.Up:
                 if displayerMode != 2 { println("by gesture up"); changeDisplayMode(2) }
             case UISwipeGestureRecognizerDirection.Down:
@@ -274,7 +273,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             TSMessage.showNotificationWithTitle("Warning", subtitle: "Please select a favor first.", type: TSMessageNotificationType.Warning)
             return
         }
-        if let favor = favors[mainIndex] as? PFObject {
+        if let favor = favors[index] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
                     TSMessage.showNotificationWithTitle("Warning", subtitle: "You can not pick your own favor", type: TSMessageNotificationType.Warning)
@@ -295,7 +294,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if !didSelectFavor {
             return
         }
-        if let favor = favors[mainIndex] as? PFObject {
+        if let favor = favors[index] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
                     return
@@ -321,7 +320,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             bounceView(progressLabel)
             fadeOutView(circularProgress, 1)
             isInterested(true)
-            if let favor = favors[mainIndex] as? PFObject {
+            if let favor = favors[index] as? PFObject {
                 let relationTable = PFObject(className: Constants.FavorUserPivotTable.Name)
                 relationTable[Constants.FavorUserPivotTable.Takers] = PFUser.currentUser()
                 relationTable[Constants.FavorUserPivotTable.Favor] = favor
@@ -470,7 +469,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 hud.removeFromSuperview()
                 self.canSwipeIndex = true
                 if let favor = favor {
-                    self.favors.replaceObjectAtIndex(self.mainIndex, withObject: favor)
+                    self.favors.replaceObjectAtIndex(self.index, withObject: favor)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.interestState(favor)
                         if self.displayerMode == 1 {
@@ -697,7 +696,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func centerMapOnFavor()
     //----------------------------------------------------------------------------------------------------------
     {
-        let location: CLLocationCoordinate2D                        = annotations[mainIndex].coordinate
+        let location: CLLocationCoordinate2D                        = annotations[index].coordinate
         let regionRadius: CLLocationDistance                        = 100
         let coordinateRegion                                        = MKCoordinateRegionMakeWithDistance(location, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
@@ -879,8 +878,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             return
         }
         mapView.deselectAnnotation(view.annotation, animated: true)
-        mainIndex = (view as! WEAnnotationView).index
-        switchFavor(favors[mainIndex] as? PFObject)
+        index = (view as! WEAnnotationView).index
+        switchFavor(favors[index] as? PFObject)
     }
     
     // MARK: - Map View Delegate

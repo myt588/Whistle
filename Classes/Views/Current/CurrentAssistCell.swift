@@ -25,7 +25,6 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
     @IBOutlet weak var headerLabel                          : WEHeader!
     @IBOutlet weak var contentLabel                         : UILabel!
     @IBOutlet weak var portraitView                         : WEImageView!
-    @IBOutlet weak var lvLabel                              : WEContentLabel!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var banner                               : UIView!
@@ -61,8 +60,6 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
         self.timeElapsedLabel.text = ""
         self.genderImage.image = nil
         self.portraitView.image = nil
-        self.lvLabel.text = ""
-        self.lvLabel.hidden = true
         self.audioView.hidden = true
         self.contentLabel.text = ""
     }

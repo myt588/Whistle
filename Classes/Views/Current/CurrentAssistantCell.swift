@@ -24,7 +24,6 @@ class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var wrapper                              : UIView!
-    @IBOutlet weak var lvLabel                              : WELvLabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var distanceLabel                        : UILabel!
     @IBOutlet weak var priceLabel                           : UILabel!

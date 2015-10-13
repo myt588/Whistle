@@ -21,7 +21,6 @@ class ProfileSettingTable: UITableViewController
     // Profile Edit
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var portrait                         : UIImageView!
-    @IBOutlet weak var id                               : UILabel!
     //----------------------------------------------------------------------------------------------------------
     // Account
     //----------------------------------------------------------------------------------------------------------
@@ -29,11 +28,6 @@ class ProfileSettingTable: UITableViewController
     @IBOutlet weak var emailKeyLabel                    : UILabel!
     @IBOutlet weak var facebookKeyLabel                 : UILabel!
     @IBOutlet weak var twitterKeyLabel                  : UILabel!
-    //----------------------------------------------------------------------------------------------------------
-    // Privacy
-    //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var friendConfSwitch                 : UISwitch!
-    @IBOutlet weak var publicSwitch                     : UISwitch!
     //----------------------------------------------------------------------------------------------------------
     // Notification
     //----------------------------------------------------------------------------------------------------------
@@ -134,10 +128,6 @@ class ProfileSettingTable: UITableViewController
                     self.portrait.image = UIImage(data: data)!
                 }
             })
-        }
-        
-        if let id = user[Constants.User.Id] as? String {
-            self.id.text = "Whistle ID: \(id)"
         }
         
         self.phoneKeyLabel.text = user[Constants.User.Phone] as? String

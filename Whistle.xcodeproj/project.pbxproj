@@ -33,10 +33,7 @@
 		893DDA151B51614600659436 /* ProfileSettingTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893DDA141B51614600659436 /* ProfileSettingTable.swift */; };
 		8944259E1B7B2DA700B3716C /* WERecentButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */; };
 		894425A01B7B899A00B3716C /* CurrentReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8944259F1B7B899A00B3716C /* CurrentReportView.swift */; };
-		894425A21B7BA4CE00B3716C /* ProfileLvView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894425A11B7BA4CE00B3716C /* ProfileLvView.swift */; };
 		894425BF1B7BAED200B3716C /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894425BE1B7BAED200B3716C /* StepperView.m */; };
-		894425C11B7BBF3600B3716C /* ProfileNextLvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894425C01B7BBF3600B3716C /* ProfileNextLvCell.swift */; };
-		894425C31B7BC58E00B3716C /* ProfileLvGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894425C21B7BC58E00B3716C /* ProfileLvGuideView.swift */; };
 		89594C1F1B3ACCFE00A8CF8B /* YALSpringAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 89594C031B3ACCFE00A8CF8B /* YALSpringAnimation.m */; };
 		89594C201B3ACCFE00A8CF8B /* CAAnimation+YALTabBarViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 89594C081B3ACCFE00A8CF8B /* CAAnimation+YALTabBarViewAnimations.m */; };
 		89594C211B3ACCFE00A8CF8B /* CATransaction+TransactionWithAnimationsAndCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89594C0C1B3ACCFE00A8CF8B /* CATransaction+TransactionWithAnimationsAndCompletion.m */; };
@@ -64,19 +61,6 @@
 		89C31D521B7D2B8D009ADF1E /* ProfileOthersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D511B7D2B8D009ADF1E /* ProfileOthersView.swift */; };
 		89C31D541B7D2D88009ADF1E /* ProfileOthersTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D531B7D2D88009ADF1E /* ProfileOthersTable.swift */; };
 		89C31D561B7D2D99009ADF1E /* ProfileOthersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D551B7D2D99009ADF1E /* ProfileOthersCell.swift */; };
-		89CB0DC11B8394D5008AB5DE /* ChatPeopleAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D841B8394D5008AB5DE /* ChatPeopleAddCell.swift */; };
-		89CB0DC21B8394D5008AB5DE /* ChatPeopleAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89CB0D851B8394D5008AB5DE /* ChatPeopleAddCell.xib */; };
-		89CB0DC31B8394D5008AB5DE /* ChatPeopleAddFromPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D861B8394D5008AB5DE /* ChatPeopleAddFromPhoneView.swift */; };
-		89CB0DC41B8394D5008AB5DE /* ChatPeopleAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D871B8394D5008AB5DE /* ChatPeopleAddView.swift */; };
-		89CB0DC51B8394D5008AB5DE /* ChatPeopleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D881B8394D5008AB5DE /* ChatPeopleSearchView.swift */; };
-		89CB0DC61B8394D5008AB5DE /* ChatPeopleSendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D891B8394D5008AB5DE /* ChatPeopleSendRequestView.swift */; };
-		89CB0DC71B8394D5008AB5DE /* ChatPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D8A1B8394D5008AB5DE /* ChatPeopleCell.swift */; };
-		89CB0DC81B8394D5008AB5DE /* ChatPeopleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89CB0D8B1B8394D5008AB5DE /* ChatPeopleCell.xib */; };
-		89CB0DC91B8394D5008AB5DE /* ChatPeopleStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D8C1B8394D5008AB5DE /* ChatPeopleStaticCell.swift */; };
-		89CB0DCA1B8394D5008AB5DE /* ChatPeopleStaticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89CB0D8D1B8394D5008AB5DE /* ChatPeopleStaticCell.xib */; };
-		89CB0DCB1B8394D5008AB5DE /* ChatPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D8E1B8394D5008AB5DE /* ChatPeopleView.swift */; };
-		89CB0DCC1B8394D5008AB5DE /* ChatPeopleRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D901B8394D5008AB5DE /* ChatPeopleRequestsView.swift */; };
-		89CB0DCD1B8394D5008AB5DE /* ChatPeopleViewRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB0D911B8394D5008AB5DE /* ChatPeopleViewRequestView.swift */; };
 		89E57F1D1B57F3FD00983D1A /* WECustomize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E57F1C1B57F3FD00983D1A /* WECustomize.swift */; };
 		89E993F81B5FAF730061AAE4 /* KYCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */; };
 		89EBA35C1B5FF2FB0011D528 /* CarbonSwipeRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EBA3591B5FF2FB0011D528 /* CarbonSwipeRefresh.m */; };
@@ -390,12 +374,9 @@
 		893DDA141B51614600659436 /* ProfileSettingTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingTable.swift; sourceTree = "<group>"; };
 		8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WERecentButtonsView.swift; sourceTree = "<group>"; };
 		8944259F1B7B899A00B3716C /* CurrentReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentReportView.swift; sourceTree = "<group>"; };
-		894425A11B7BA4CE00B3716C /* ProfileLvView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLvView.swift; sourceTree = "<group>"; };
 		894425BC1B7BAED200B3716C /* StepperConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperConstants.h; sourceTree = "<group>"; };
 		894425BD1B7BAED200B3716C /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		894425BE1B7BAED200B3716C /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
-		894425C01B7BBF3600B3716C /* ProfileNextLvCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNextLvCell.swift; sourceTree = "<group>"; };
-		894425C21B7BC58E00B3716C /* ProfileLvGuideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLvGuideView.swift; sourceTree = "<group>"; };
 		89594C021B3ACCFE00A8CF8B /* YALSpringAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YALSpringAnimation.h; sourceTree = "<group>"; };
 		89594C031B3ACCFE00A8CF8B /* YALSpringAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YALSpringAnimation.m; sourceTree = "<group>"; };
 		89594C071B3ACCFE00A8CF8B /* CAAnimation+YALTabBarViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+YALTabBarViewAnimations.h"; sourceTree = "<group>"; };
@@ -440,19 +421,6 @@
 		89C31D511B7D2B8D009ADF1E /* ProfileOthersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersView.swift; sourceTree = "<group>"; };
 		89C31D531B7D2D88009ADF1E /* ProfileOthersTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersTable.swift; sourceTree = "<group>"; };
 		89C31D551B7D2D99009ADF1E /* ProfileOthersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersCell.swift; sourceTree = "<group>"; };
-		89CB0D841B8394D5008AB5DE /* ChatPeopleAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleAddCell.swift; sourceTree = "<group>"; };
-		89CB0D851B8394D5008AB5DE /* ChatPeopleAddCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPeopleAddCell.xib; sourceTree = "<group>"; };
-		89CB0D861B8394D5008AB5DE /* ChatPeopleAddFromPhoneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleAddFromPhoneView.swift; sourceTree = "<group>"; };
-		89CB0D871B8394D5008AB5DE /* ChatPeopleAddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleAddView.swift; sourceTree = "<group>"; };
-		89CB0D881B8394D5008AB5DE /* ChatPeopleSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleSearchView.swift; sourceTree = "<group>"; };
-		89CB0D891B8394D5008AB5DE /* ChatPeopleSendRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleSendRequestView.swift; sourceTree = "<group>"; };
-		89CB0D8A1B8394D5008AB5DE /* ChatPeopleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleCell.swift; sourceTree = "<group>"; };
-		89CB0D8B1B8394D5008AB5DE /* ChatPeopleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPeopleCell.xib; sourceTree = "<group>"; };
-		89CB0D8C1B8394D5008AB5DE /* ChatPeopleStaticCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleStaticCell.swift; sourceTree = "<group>"; };
-		89CB0D8D1B8394D5008AB5DE /* ChatPeopleStaticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPeopleStaticCell.xib; sourceTree = "<group>"; };
-		89CB0D8E1B8394D5008AB5DE /* ChatPeopleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleView.swift; sourceTree = "<group>"; };
-		89CB0D901B8394D5008AB5DE /* ChatPeopleRequestsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleRequestsView.swift; sourceTree = "<group>"; };
-		89CB0D911B8394D5008AB5DE /* ChatPeopleViewRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPeopleViewRequestView.swift; sourceTree = "<group>"; };
 		89E57F1C1B57F3FD00983D1A /* WECustomize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECustomize.swift; sourceTree = "<group>"; };
 		89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KYCircularProgress.swift; sourceTree = "<group>"; };
 		89EBA3571B5FF2FB0011D528 /* CarbonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonKit.h; sourceTree = "<group>"; };
@@ -1221,45 +1189,8 @@
 				9441B43D1B89AD1A002EBEEE /* Application */,
 				9441B40D1B89AC18002EBEEE /* Utilities */,
 				945E88E51B89AAE600124816 /* Recent */,
-				89CB0D821B8394D5008AB5DE /* People */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		89CB0D821B8394D5008AB5DE /* People */ = {
-			isa = PBXGroup;
-			children = (
-				89CB0D831B8394D5008AB5DE /* Add */,
-				89CB0D8F1B8394D5008AB5DE /* Requests */,
-				89CB0D8A1B8394D5008AB5DE /* ChatPeopleCell.swift */,
-				89CB0D8B1B8394D5008AB5DE /* ChatPeopleCell.xib */,
-				89CB0D8C1B8394D5008AB5DE /* ChatPeopleStaticCell.swift */,
-				89CB0D8D1B8394D5008AB5DE /* ChatPeopleStaticCell.xib */,
-				89CB0D8E1B8394D5008AB5DE /* ChatPeopleView.swift */,
-			);
-			path = People;
-			sourceTree = "<group>";
-		};
-		89CB0D831B8394D5008AB5DE /* Add */ = {
-			isa = PBXGroup;
-			children = (
-				89CB0D841B8394D5008AB5DE /* ChatPeopleAddCell.swift */,
-				89CB0D851B8394D5008AB5DE /* ChatPeopleAddCell.xib */,
-				89CB0D861B8394D5008AB5DE /* ChatPeopleAddFromPhoneView.swift */,
-				89CB0D871B8394D5008AB5DE /* ChatPeopleAddView.swift */,
-				89CB0D881B8394D5008AB5DE /* ChatPeopleSearchView.swift */,
-				89CB0D891B8394D5008AB5DE /* ChatPeopleSendRequestView.swift */,
-			);
-			path = Add;
-			sourceTree = "<group>";
-		};
-		89CB0D8F1B8394D5008AB5DE /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				89CB0D901B8394D5008AB5DE /* ChatPeopleRequestsView.swift */,
-				89CB0D911B8394D5008AB5DE /* ChatPeopleViewRequestView.swift */,
-			);
-			path = Requests;
 			sourceTree = "<group>";
 		};
 		89E993F61B5FAF730061AAE4 /* KYCircularProgress */ = {
@@ -2077,9 +2008,6 @@
 				89755A011B407F0A00D31E2F /* ProfileChangeStatusTable.swift */,
 				893B79781B52F55300019CF7 /* ProfileASController.xib */,
 				893B797A1B52F57900019CF7 /* ProfileASController.swift */,
-				894425A11B7BA4CE00B3716C /* ProfileLvView.swift */,
-				894425C01B7BBF3600B3716C /* ProfileNextLvCell.swift */,
-				894425C21B7BC58E00B3716C /* ProfileLvGuideView.swift */,
 				89C31D4D1B7D1CCA009ADF1E /* ProfileRateTable.swift */,
 				89C31D4F1B7D1CDA009ADF1E /* ProfileRateCell.swift */,
 				89C31D511B7D2B8D009ADF1E /* ProfileOthersView.swift */,
@@ -2353,7 +2281,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89CB0DC81B8394D5008AB5DE /* ChatPeopleCell.xib in Resources */,
 				942FA44B1B2F10E90050C3E3 /* chat_videos@2x.png in Resources */,
 				9441B50B1B8A5F2A002EBEEE /* SelectMultipleView.xib in Resources */,
 				942FA44A1B2F10E90050C3E3 /* chat_stickers@2x.png in Resources */,
@@ -2376,7 +2303,6 @@
 				942FA44C1B2F10E90050C3E3 /* recent_blank@2x.png in Resources */,
 				9441B45E1B89AE34002EBEEE /* StickersCell.xib in Resources */,
 				94CFB07D1B837DF300F681D8 /* audio_record.png in Resources */,
-				89CB0DC21B8394D5008AB5DE /* ChatPeopleAddCell.xib in Resources */,
 				9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				942FA4991B2F10E90050C3E3 /* Info.plist in Resources */,
 				89F53AED1B59A14D00F0A2A2 /* YALSunnyRefreshControl.xib in Resources */,
@@ -2405,7 +2331,6 @@
 				942FA44E1B2F10E90050C3E3 /* stickers_blank@2x.png in Resources */,
 				942FA4451B2F10E90050C3E3 /* chat_audio@2x.png in Resources */,
 				942FA4481B2F10E90050C3E3 /* chat_location@2x.png in Resources */,
-				89CB0DCA1B8394D5008AB5DE /* ChatPeopleStaticCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2426,7 +2351,6 @@
 				89B290101B498ECB002741DE /* FSVoiceBubble.m in Sources */,
 				942FA4621B2F10E90050C3E3 /* UIAlertView+AFNetworking.m in Sources */,
 				9441B4F11B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
-				89CB0DC41B8394D5008AB5DE /* ChatPeopleAddView.swift in Sources */,
 				893B79801B545C5C00019CF7 /* ProfilePersonalSettingTable.swift in Sources */,
 				94B08EE01B5DA9C5007784AB /* FBQuadTreeNode.swift in Sources */,
 				94CFB0831B837EBE00F681D8 /* MBProgressHUD.m in Sources */,
@@ -2434,7 +2358,6 @@
 				94DED7CB1B3EF144002B9F3B /* ImagePreviewFlowLayout.swift in Sources */,
 				945E88EA1B89AAE600124816 /* RecentCell.m in Sources */,
 				942FA45F1B2F10E90050C3E3 /* AFURLSessionManager.m in Sources */,
-				894425C11B7BBF3600B3716C /* ProfileNextLvCell.swift in Sources */,
 				942FA4A61B2F10E90050C3E3 /* RNGridMenu.m in Sources */,
 				89C31D501B7D1CDA009ADF1E /* ProfileRateCell.swift in Sources */,
 				9441B4EF1B89AE6A002EBEEE /* JSQMessagesToolbarContentView.m in Sources */,
@@ -2459,9 +2382,7 @@
 				9441B4DC1B89AE6A002EBEEE /* JSQMediaItem.m in Sources */,
 				89F53B0A1B5C2ADD00F0A2A2 /* SwiftSpinner.swift in Sources */,
 				942FA4681B2F10E90050C3E3 /* IDMPhoto.m in Sources */,
-				89CB0DC51B8394D5008AB5DE /* ChatPeopleSearchView.swift in Sources */,
 				94CFB02E1B837B3300F681D8 /* NSData+ImageContentType.m in Sources */,
-				894425A21B7BA4CE00B3716C /* ProfileLvView.swift in Sources */,
 				9441B43A1B89AC18002EBEEE /* fileutil.m in Sources */,
 				9441B4311B89AC18002EBEEE /* PFUser+Util.m in Sources */,
 				94B08EDB1B5DA9C5007784AB /* FBAnnotationCluster.swift in Sources */,
@@ -2488,10 +2409,8 @@
 				94BB081A1B532C9700D2492B /* HTTPResponseSerializer.swift in Sources */,
 				942FA4591B2F10E90050C3E3 /* AFHTTPSessionManager.m in Sources */,
 				942FA4211B2F10E90050C3E3 /* AudioRecorder.swift in Sources */,
-				894425C31B7BC58E00B3716C /* ProfileLvGuideView.swift in Sources */,
 				9441B42E1B89AC18002EBEEE /* blocked.m in Sources */,
 				9441B4361B89AC18002EBEEE /* camera.m in Sources */,
-				89CB0DC61B8394D5008AB5DE /* ChatPeopleSendRequestView.swift in Sources */,
 				942FA46D1B2F10E90050C3E3 /* ImageLoader.swift in Sources */,
 				94CFB0321B837B3300F681D8 /* SDWebImageDownloader.m in Sources */,
 				9441B4D01B89AE6A002EBEEE /* JSQMessagesKeyboardController.m in Sources */,
@@ -2542,7 +2461,6 @@
 				948E8FB91B3DD8EC002556D0 /* LLARingSpinnerView.m in Sources */,
 				94BCF4E81B55A2BC007406F3 /* LocationPicker.swift in Sources */,
 				94CFB0391B837B3300F681D8 /* UIImage+WebP.m in Sources */,
-				89CB0DC31B8394D5008AB5DE /* ChatPeopleAddFromPhoneView.swift in Sources */,
 				89B290111B498ECB002741DE /* UIImage+FSExtension.m in Sources */,
 				89EBA35C1B5FF2FB0011D528 /* CarbonSwipeRefresh.m in Sources */,
 				9441B4611B89AE34002EBEEE /* MapView.m in Sources */,
@@ -2551,7 +2469,6 @@
 				9441B4DD1B89AE6A002EBEEE /* JSQMessage.m in Sources */,
 				94B08EDF1B5DA9C5007784AB /* FBQuadTree.swift in Sources */,
 				890D5D7F1B60057500DFD609 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */,
-				89CB0DCB1B8394D5008AB5DE /* ChatPeopleView.swift in Sources */,
 				94CFB02F1B837B3300F681D8 /* SDImageCache.m in Sources */,
 				89F53AFF1B5A2E0D00F0A2A2 /* HexColors.m in Sources */,
 				942FA46C1B2F10E90050C3E3 /* IDMZoomingScrollView.m in Sources */,
@@ -2570,7 +2487,6 @@
 				9441B50C1B8A5F2A002EBEEE /* AddressBookView.m in Sources */,
 				94CFB0331B837B3300F681D8 /* SDWebImageDownloaderOperation.m in Sources */,
 				9441B4E41B89AE6A002EBEEE /* JSQMessagesCollectionViewCell.m in Sources */,
-				89CB0DC11B8394D5008AB5DE /* ChatPeopleAddCell.swift in Sources */,
 				9441B5081B8A5F2A002EBEEE /* SelectSingleView.m in Sources */,
 				94CFB03B1B837B3300F681D8 /* UIImageView+WebCache.m in Sources */,
 				94DED7CC1B3EF144002B9F3B /* ImagePreviewTableViewCell.swift in Sources */,
@@ -2586,7 +2502,6 @@
 				942FA45C1B2F10E90050C3E3 /* AFURLConnectionOperation.m in Sources */,
 				94CFB03C1B837B3300F681D8 /* UIView+WebCacheOperation.m in Sources */,
 				94CFB0371B837B3300F681D8 /* UIImage+GIF.m in Sources */,
-				89CB0DCD1B8394D5008AB5DE /* ChatPeopleViewRequestView.swift in Sources */,
 				94B08EDC1B5DA9C5007784AB /* FBAnnotationClusterView.swift in Sources */,
 				94BB08091B5329BB00D2492B /* WEAnnotationView.swift in Sources */,
 				942FA4241B2F10E90050C3E3 /* HelperMethods.swift in Sources */,
@@ -2627,7 +2542,6 @@
 				89594C251B3ACCFE00A8CF8B /* YALFoldingTabBar.m in Sources */,
 				89C31D541B7D2D88009ADF1E /* ProfileOthersTable.swift in Sources */,
 				946FD54E1B3F25A200472E91 /* ProfileView.swift in Sources */,
-				89CB0DC71B8394D5008AB5DE /* ChatPeopleCell.swift in Sources */,
 				890D5D7A1B60057500DFD609 /* DGActivityIndicatorRotatingSquaresAnimation.m in Sources */,
 				89F53AF91B5A2D9300F0A2A2 /* TSBlurView.m in Sources */,
 				893B797B1B52F57900019CF7 /* ProfileASController.swift in Sources */,
@@ -2636,7 +2550,6 @@
 				89594C221B3ACCFE00A8CF8B /* YALAnimatingTabBarConstants.m in Sources */,
 				942FA41F1B2F10E90050C3E3 /* AudioManager.swift in Sources */,
 				94B08EDD1B5DA9C5007784AB /* FBBoundingBox.swift in Sources */,
-				89CB0DC91B8394D5008AB5DE /* ChatPeopleStaticCell.swift in Sources */,
 				89E57F1D1B57F3FD00983D1A /* WECustomize.swift in Sources */,
 				9441B4391B89AC18002EBEEE /* emoji.m in Sources */,
 				9441B4D91B89AE6A002EBEEE /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
@@ -2649,7 +2562,6 @@
 				9441B4DB1B89AE6A002EBEEE /* JSQLocationMediaItem.m in Sources */,
 				942FA4631B2F10E90050C3E3 /* UIButton+AFNetworking.m in Sources */,
 				9441B4E71B89AE6A002EBEEE /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
-				89CB0DCC1B8394D5008AB5DE /* ChatPeopleRequestsView.swift in Sources */,
 				942FA41E1B2F10E90050C3E3 /* AudioContext.swift in Sources */,
 				89E993F81B5FAF730061AAE4 /* KYCircularProgress.swift in Sources */,
 				89C31D4C1B7D0423009ADF1E /* RatingView.m in Sources */,

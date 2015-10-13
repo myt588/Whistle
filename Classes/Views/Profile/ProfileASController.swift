@@ -23,7 +23,6 @@ class ProfileASController: UIViewController
     @IBOutlet weak var portrait                         : UIImageView!
     @IBOutlet weak var nameLabel                        : UILabel!
     @IBOutlet weak var lineLabel                        : UILabel!
-    @IBOutlet weak var lvLabel                          : WEContentLabel!
     @IBOutlet weak var regionLabel                      : WEContentLabel!
     @IBOutlet weak var genderImage                      : UIImageView!
     @IBOutlet weak var rateView                         : RatingView!
@@ -67,7 +66,6 @@ class ProfileASController: UIViewController
         bg.insertSubview(blurView, atIndex: 1)
         
         portrait.layer.cornerRadius = 60
-        lvLabel.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
         
         bindData()
     }

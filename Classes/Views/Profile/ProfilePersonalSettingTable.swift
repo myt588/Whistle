@@ -21,7 +21,6 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     //----------------------------------------------------------------------------------------------------------
     // Information
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var idKeyLabel                           : UILabel!
     @IBOutlet weak var portrait                             : UIImageView!
     @IBOutlet weak var nameKeyLabel                         : UILabel!
     @IBOutlet weak var genderKeyLabel                       : UILabel!
@@ -82,12 +81,6 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
                 self.portrait.image = UIImage(data: data)!
             }
         })
-        
-        if let id = user[Constants.User.Id] as? String {
-            self.idKeyLabel.text = "\(id)"
-        } else {
-            self.idKeyLabel.text = "Not Set"
-        }
         
         self.nameKeyLabel.text = user[Constants.User.Nickname] as? String
         if let gender = user[Constants.User.Gender] as? Int {
@@ -244,32 +237,17 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if indexPath.row == 1 {
-            if idKeyLabel.text != "Not Set" {
-                return nil
-            }
-        }
         return indexPath
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 1 {
-            var vc = storyboard?.instantiateViewControllerWithIdentifier("EditSingleSetting") as! ProfileEditSingleView
-            vc.type = "ID"
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        if indexPath.row == 3 {
             pickPhoto()
         }
-        if indexPath.row == 5 {
-            var vc = storyboard?.instantiateViewControllerWithIdentifier("EditSingleSetting") as! ProfileEditSingleView
-            vc.type = "Name"
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        if indexPath.row == 6 {
+        if indexPath.row == 4 {
             genderAlert()
         }
-        if indexPath.row == 7 {
+        if indexPath.row == 5 {
             var vc = storyboard?.instantiateViewControllerWithIdentifier("RegionPicker") as! ProfileRegionPicker
             self.navigationController?.pushViewController(vc, animated: true)
         }

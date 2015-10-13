@@ -157,23 +157,6 @@
 	[action showFromTabBar:[[self tabBarController] tabBar]];
 }
 
-
-- (void)extraLeftItemDidPressed
-{
-    [self performSegueWithIdentifier:@"FriendList" sender:self];
-//    SelectSingleView *selectSingleView = [[SelectSingleView alloc] init];
-//    selectSingleView.delegate = self;
-//    NavigationController *navController = [[NavigationController alloc] initWithRootViewController:selectSingleView];
-//    [self presentViewController:navController animated:YES completion:nil];
-}
-
-- (void)extraRightItemDidPressed
-{
-    //[self performSegueWithIdentifier:@"FriendList" sender:self];
-//    PeopleView *peopleView = [[PeopleView alloc] init];
-//    [self.navigationController pushViewController:peopleView animated:YES];
-}
-
 #pragma mark - SelectSingleDelegate
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

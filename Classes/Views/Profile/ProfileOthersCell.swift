@@ -20,7 +20,6 @@ class ProfileOthersCell: WECell {
     @IBOutlet weak var nameLabel                            : WEContentLabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var portraitView                         : WEImageView!
-    @IBOutlet weak var lvLabel                              : WEContentLabel!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -82,7 +81,6 @@ class ProfileOthersCell: WECell {
                         } else {
                             self.genderImage.image = nil
                         }
-                        self.lvLabel.text = "Lv.\(user[Constants.User.Level] as! Int)"
                         self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
                         self.rateView.displayRating(user[Constants.User.Rating] as! Float)
                     }

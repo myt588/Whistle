@@ -34,7 +34,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
     @IBOutlet weak var timeElapsedLabel                     : UILabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var portraitView                         : WEImageView!
-    @IBOutlet weak var lvLabel                              : WEContentLabel!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -76,8 +75,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
         self.genderImage.image = nil
         self.portraitView.hidden = true
         self.portraitView.image = nil
-        self.lvLabel.text = ""
-        self.lvLabel.hidden = true
         self.audioView.hidden = true
         self.contentLabel.text = ""
     }
@@ -190,8 +187,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
                 if let data = data {
                     self.statusButton.hidden = true
                     self.portraitView.hidden = false
-                    self.lvLabel.hidden = false
-                    self.lvLabel.text = "Lv.100"
                     self.genderImage.hidden = false
                     self.portraitView.image = UIImage(data: data)
                 } else {

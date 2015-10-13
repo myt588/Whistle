@@ -27,7 +27,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     @IBOutlet weak var bgView                                   : UIView!
     @IBOutlet weak var portraitView                             : UIImageView!
     @IBOutlet weak var nameLabel                                : UILabel!
-    @IBOutlet weak var lvLabel                                  : WEContentLabel!
     @IBOutlet weak var lineLabel                                : UILabel!
     @IBOutlet weak var regionLabel                              : UILabel!
     @IBOutlet weak var rateView                                 : RatingView!
@@ -94,7 +93,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
             portraitView.layer.cornerRadius                     = portraitView.frame.height/2
             blurImage.frame                                     = bgView.bounds
             blurView.frame                                      = bgView.bounds
-            lvLabel.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
             containerViewOriginalFrame                          = containerView.frame
             didLayoutSubviews                                   = !didLayoutSubviews
         }
@@ -111,15 +109,8 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     
     // MARK: - Gestures
     func addGesture() {
-        var tapLvl = UITapGestureRecognizer(target: self, action: "lvTapped")
-        lvLabel.addGestureRecognizer(tapLvl)
-        
         var tapRate = UITapGestureRecognizer(target: self, action: "rateTapped")
         rateView.addGestureRecognizer(tapRate)
-    }
-    
-    func lvTapped() {
-        performSegueWithIdentifier("level", sender: self)
     }
     
     func rateTapped() {
