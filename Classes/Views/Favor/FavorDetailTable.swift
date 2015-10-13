@@ -180,13 +180,10 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             self.favor = favor
             if let address = favor[Constants.Favor.Address] as? String {
                 self.addressLabel.text = address
-                if let location = currentLocation {
-                    let location2 = favor[Constants.Favor.Location] as? PFGeoPoint
-                    let distance : Double = location.distanceInMilesTo(location2)
-                    self.distanceLabel.text = "\(distance.roundTo1) miles"
-                } else {
-                    println("can't find current location")
-                }
+                let location = CurrentLocation()
+                let location2 = favor[Constants.Favor.Location] as? PFGeoPoint
+                let distance : Double = location.distanceInMilesTo(location2)
+                self.distanceLabel.text = "\(distance.roundTo1) miles"
             }
             
             if let content = favor[Constants.Favor.Content] as? String {

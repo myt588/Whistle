@@ -177,6 +177,14 @@ func socialShare(#sharingText: String?, sharingImage: UIImage?, sharingURL: NSUR
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+func CurrentLocation() -> PFGeoPoint
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+    let app = UIApplication.sharedApplication().delegate as! AppDelegate
+    return PFGeoPoint(latitude: app.coordinate.latitude, longitude: app.coordinate.longitude)
+}
+
 
 
 

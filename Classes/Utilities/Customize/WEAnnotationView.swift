@@ -32,6 +32,7 @@ class WEAnnotationView: MKAnnotationView {
         let imageView = UIImageView(image: image)
         imageView.userInteractionEnabled = true
         imageView.frame = CGRectMake(5, 5, 35, 35)
+        imageView.contentMode                            = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds                          = true
         imageView.layer.borderWidth                      = 3
         imageView.layer.borderColor                      = Constants.Color.Border.CGColor

@@ -19,10 +19,8 @@ import Foundation
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-var currentLocation: PFGeoPoint?
-
 //----------------------------------------------------------------------------------------------------------
-class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, WEImageViewProtocol, FavorDetailScrollDelegate
+class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, WEImageViewProtocol, FavorDetailScrollDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -67,8 +65,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     private var timer                                       : NSTimer?
-    private var manager                                     : CLLocationManager!
-    private var isCenteredOnUserLocation                    = false
     private var annotations                                 = [FBAnnotation]()
     private var tableView                                   : FavorDetailTable?
     private var clusteringManager                           : FBClusteringManager?
@@ -82,9 +78,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     //----------------------------------------------------------------------------------------------------------
     private var isAnimatingDisplay                          = true
     private var didLayoutSubviews                           = false
-    private var mapChangedByUserGesture                     = false
     private var canSwipeIndex                               = true
-    private var didLoadFavor                                = false
     //----------------------------------------------------------------------------------------------------------
     private var didSelectFavor                              = false
     //----------------------------------------------------------------------------------------------------------
@@ -136,8 +130,13 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         TSMessage.setDelegate(self)
         TSMessage.setDefaultViewController(self)
         view.backgroundColor = Constants.Color.Main
-        didLoadFavor = false
         (tabBarController as? YALFoldingTabBarController)?.tabBarView.hidden = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        centerMapOnUser()
+        loadFavors(nil)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -231,14 +230,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         var swipeDown               = UISwipeGestureRecognizer(target: self, action: "respondToGestures:")
         swipeDown.direction         = UISwipeGestureRecognizerDirection.Down
         portraitImageView.addGestureRecognizer(swipeDown)
-        
-        var panGesture              = UIPanGestureRecognizer(target: self, action: "respondToGestures:")
-        panGesture.delegate = self
-        mapView.addGestureRecognizer(panGesture)
-        
-        var pinchGesture            = UIPinchGestureRecognizer(target: self, action: "respondToGestures:")
-        pinchGesture.delegate = self
-        mapView.addGestureRecognizer(pinchGesture)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -265,13 +256,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
             default:
                 break
             }
-        }
-        if let panGesture = gesture as? UIPanGestureRecognizer {
-            mapChangedByUserGesture = true
-        }
-        
-        if let pinchGesture = gesture as? UIPinchGestureRecognizer {
-            mapChangedByUserGesture = true
         }
     }
     
@@ -394,7 +378,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     //---------------------------------------------------------------------------------------------------------
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
-    func loadFavors(edge: Edges)
+    func loadFavors(edge: Edges?)
     //----------------------------------------------------------------------------------------------------------
     {
         var hud = DGActivityIndicatorView(type: DGActivityIndicatorAnimationType.TriplePulse, tintColor: Constants.Color.Banner, size: 35)
@@ -403,7 +387,7 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
         view.addSubview(hud)
         hud.startAnimating()
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
-        
+        favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
         // filters
         if let gender = gender {
             let query = PFUser.query()
@@ -411,9 +395,11 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
             favorQuery.whereKey(Constants.Favor.CreatedBy, matchesQuery: query!)
         }
         
-        let ne = PFGeoPoint(latitude: edge.ne.latitude, longitude: edge.ne.longitude)
-        let sw = PFGeoPoint(latitude: edge.sw.latitude, longitude: edge.sw.longitude)
-        favorQuery.whereKey(Constants.Favor.Location, withinGeoBoxFromSouthwest: sw, toNortheast: ne)
+//        let ne = PFGeoPoint(latitude: edge.ne.latitude, longitude: edge.ne.longitude)
+//        let sw = PFGeoPoint(latitude: edge.sw.latitude, longitude: edge.sw.longitude)
+//        favorQuery.whereKey(Constants.Favor.Location, withinGeoBoxFromSouthwest: sw, toNortheast: ne)
+        let location = CurrentLocation()
+        favorQuery.whereKey(Constants.Favor.Location, nearGeoPoint: location, withinMiles: 20)
         favorQuery.whereKey(Constants.Favor.Status, containedIn: [
             Status.NoTaker.hashValue,
             Status.HasTaker.hashValue
@@ -694,29 +680,17 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     {
         mapView.delegate                                            = self
         mapView.rotateEnabled                                       = false
-        manager                                                     = CLLocationManager()
-        manager.delegate                                            = self
-        manager.desiredAccuracy                                     = kCLLocationAccuracyBest
-        manager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            manager.startUpdatingLocation()
-        } else {
-            TSMessage.showNotificationWithTitle("Error", subtitle: "Whistle needs access to the location service.", type: TSMessageNotificationType.Error)
-        }
     }
     
     //----------------------------------------------------------------------------------------------------------
     func centerMapOnUser()
     //----------------------------------------------------------------------------------------------------------
     {
-        let latitude                                                = manager.location.coordinate.latitude
-        let longitude                                               = manager.location.coordinate.longitude
-        let location: CLLocationCoordinate2D                        = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location1                                               = CurrentLocation()
+        let location: CLLocationCoordinate2D                        = CLLocationCoordinate2D(latitude: location1.latitude, longitude: location1.longitude)
         let regionRadius: CLLocationDistance                        = 200
         let coordinateRegion                                        = MKCoordinateRegionMakeWithDistance(location, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
-        mapChangedByUserGesture = true
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -847,16 +821,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
     
     // MARK: - Delegates
     //----------------------------------------------------------------------------------------------------------
-    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-    //----------------------------------------------------------------------------------------------------------
-        if !isCenteredOnUserLocation
-        {
-            centerMapOnUser()
-            isCenteredOnUserLocation = true
-        }
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView!
     //----------------------------------------------------------------------------------------------------------
     {
@@ -932,23 +896,6 @@ class FavorView: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate,
                 let annotationArray = self.clusteringManager!.clusteredAnnotationsWithinMapRect(self.mapView.visibleMapRect, withZoomScale:scale)
                 self.clusteringManager!.displayAnnotations(annotationArray, onMapView:self.mapView)
             })
-        }
-        
-        if mapChangedByUserGesture {
-            mapChangedByUserGesture = false
-            edge = mapView.edgePoints()
-            loadFavors(mapView.edgePoints())
-        }
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if !didLoadFavor {
-            edge = mapView.edgePoints()
-            loadFavors(mapView.edgePoints())
-            didLoadFavor = true
         }
     }
     

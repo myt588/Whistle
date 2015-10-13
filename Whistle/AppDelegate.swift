@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     var window: UIWindow?
     var locationManager: CLLocationManager!
+    var coordinate: CLLocationCoordinate2D!
     
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -163,15 +164,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         FBSDKAppEvents.activateApp()
     }
     
+    //MARK: Location manager methods
+    
     func locationManagerStart() {
-        locationManager                                                     = CLLocationManager()
-        locationManager.delegate                                            = self
-        locationManager.desiredAccuracy                                     = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        
+        if self.locationManager == nil
+        {
+            locationManager                                                     = CLLocationManager()
+            locationManager.delegate                                            = self
+            locationManager.desiredAccuracy                                     = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+        }
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
         } else {
+            println("enable location service")
             ProgressHUD.showError("Please enable location service in the setting to start use our App")
         }
     }
@@ -181,7 +187,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-        currentLocation = PFGeoPoint(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+        self.coordinate = newLocation.coordinate;
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("location manager error")
     }
     
 }

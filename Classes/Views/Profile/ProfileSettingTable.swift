@@ -85,7 +85,6 @@ class ProfileSettingTable: UITableViewController
             if let error = error {
                 println("log out failed, \(error)")
             } else {
-                currentLocation = nil
                 PostNotification(NOTIFICATION_USER_LOGGED_OUT)
                 var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
                 self.presentViewController(viewController, animated: true, completion: nil)

@@ -145,13 +145,10 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         audioView.alpha = 0
         initWaveformView()
         initRecordingView()
-        
-        self.location = currentLocation
-        println(location)
-        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location!.latitude, longitude: location!.longitude) {
+        let location = CurrentLocation()
+        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location.latitude, longitude: location.longitude) {
             (reverseGecodeInfo, placemark, error) -> Void in
             if error == nil {
-                println("tt")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.addressLabel.text = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
                     self.address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String

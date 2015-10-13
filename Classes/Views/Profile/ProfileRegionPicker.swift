@@ -62,7 +62,8 @@ class ProfileRegionPicker: UIViewController, UITableViewDataSource, UITableViewD
                 self.popularCities.removeAllObjects()
                 self.popularCities.addObjectsFromArray(objects)
                 println("city count \(objects.count)")
-                self.reverseGeocode(currentLocation!.latitude, lng: currentLocation!.longitude)
+                let location = CurrentLocation()
+                self.reverseGeocode(location.latitude, lng: location.longitude)
             } else {
                 println("network error")
             }

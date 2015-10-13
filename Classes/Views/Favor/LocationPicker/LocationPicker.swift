@@ -164,13 +164,11 @@ class LocationPicker : UIViewController, MKMapViewDelegate, CLLocationManagerDel
     
     // MapView
     //----------------------------------------------------------------------------------------------------------
-    func centerMapOnUser() {
+    func centerMapOnUser()
     //----------------------------------------------------------------------------------------------------------
-        if let location = currentLocation {
-            reverseGeocode(location.latitude, lng: location.longitude, text: nil)
-        } else {
-            println("can't find current location")
-        }
+    {
+        let location = CurrentLocation()
+        reverseGeocode(location.latitude, lng: location.longitude, text: nil)
     }
     
     //----------------------------------------------------------------------------------------------------------

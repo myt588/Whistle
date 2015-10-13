@@ -19,7 +19,7 @@ struct Constants {
     //------------------------------------------------------------------------------------------------------
     struct Favor {
         static let DefaultMileRange             : Double = 5
-        static let MapPaginationLimit           : Int    = 10
+        static let MapPaginationLimit           : Int    = 1000
         static let TablePaginationLimit         : Int    = 5
         static let Name                         : String = "Favor"
         static let Content                      : String = "content"
