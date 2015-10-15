@@ -37,15 +37,5 @@ class TabBarController : YALFoldingTabBarController {
         self.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
         self.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let user = PFUser.currentUser() {
-            
-        } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
-        }
-    }
 
 }

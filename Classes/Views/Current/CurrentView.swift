@@ -47,6 +47,16 @@ class CurrentView: UIViewController, CarbonTabSwipeDelegate
         tabSwipe.setIndicatorHeight(3)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if let user = PFUser.currentUser() {
+            
+        } else {
+            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+            self.presentViewController(viewController, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Delegates
     //----------------------------------------------------------------------------------------------------------
     func tabSwipeNavigation(tabSwipe: CarbonTabSwipeNavigation!, viewControllerAtIndex index: UInt) -> UIViewController!

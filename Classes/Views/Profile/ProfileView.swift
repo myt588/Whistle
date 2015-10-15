@@ -64,10 +64,12 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if let user = PFUser.currentUser() {
             bindData(user)
         } else {
-            
+            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+            self.presentViewController(viewController, animated: true, completion: nil)
         }
     }
 

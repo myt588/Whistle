@@ -200,7 +200,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
                 ParseErrorHandler.handleParseError(error)
             }
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("Login_To_Root", sender: self)
     }
     
     // MARK: - Delegates

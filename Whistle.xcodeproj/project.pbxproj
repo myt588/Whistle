@@ -252,6 +252,8 @@
 		9478BF8E1B440AB800F3D91D /* CurrentAssistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478BF861B440AB800F3D91D /* CurrentAssistCell.swift */; };
 		9478BFA11B45110300F3D91D /* FavorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478BF9C1B45110300F3D91D /* FavorView.swift */; };
 		9478BFA31B45113B00F3D91D /* UIViewBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478BFA21B45113B00F3D91D /* UIViewBorder.swift */; };
+		947EE5C51BCFB9ED001A6AF3 /* WETagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */; };
+		947EE5C71BCFBA21001A6AF3 /* WETagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */; };
 		94884A9F1B41C9D400EB7E5B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94884A9E1B41C9D400EB7E5B /* TabBarController.swift */; };
 		94884AC81B41E3B800EB7E5B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94884AC71B41E3B800EB7E5B /* MediaPlayer.framework */; };
 		948E8FA91B3BCDFB002556D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948E8FA81B3BCDFB002556D0 /* FBSDKShareKit.framework */; };
@@ -319,8 +321,6 @@
 		94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94DED7C41B3EF144002B9F3B /* Info.plist */; };
 		94DED7CF1B3EF144002B9F3B /* PreviewSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */; };
 		94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2669D1BCDA1E700914F58 /* WECalloutView.swift */; };
-		94F266B31BCF325C00914F58 /* FavorTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B11BCF325C00914F58 /* FavorTagCell.swift */; };
-		94F266B41BCF325C00914F58 /* FavorTagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F266B21BCF325C00914F58 /* FavorTagCell.xib */; };
 		94F266B81BCF353A00914F58 /* FavorDetailTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B51BCF353A00914F58 /* FavorDetailTable.swift */; };
 		94F266B91BCF353A00914F58 /* FavorShowDetailTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B61BCF353A00914F58 /* FavorShowDetailTable.swift */; };
 		94F266BA1BCF353A00914F58 /* NewFavorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B71BCF353A00914F58 /* NewFavorTable.swift */; };
@@ -734,6 +734,8 @@
 		9478BF861B440AB800F3D91D /* CurrentAssistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentAssistCell.swift; sourceTree = "<group>"; };
 		9478BF9C1B45110300F3D91D /* FavorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorView.swift; sourceTree = "<group>"; };
 		9478BFA21B45113B00F3D91D /* UIViewBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewBorder.swift; sourceTree = "<group>"; };
+		947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WETagCollectionView.swift; sourceTree = "<group>"; };
+		947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WETagCollectionCell.swift; sourceTree = "<group>"; };
 		94884A9E1B41C9D400EB7E5B /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		94884AC71B41E3B800EB7E5B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		948E8FA81B3BCDFB002556D0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -825,8 +827,6 @@
 		94DED7C41B3EF144002B9F3B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSupplementaryView.swift; sourceTree = "<group>"; };
 		94F2669D1BCDA1E700914F58 /* WECalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECalloutView.swift; sourceTree = "<group>"; };
-		94F266B11BCF325C00914F58 /* FavorTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorTagCell.swift; sourceTree = "<group>"; };
-		94F266B21BCF325C00914F58 /* FavorTagCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavorTagCell.xib; sourceTree = "<group>"; };
 		94F266B51BCF353A00914F58 /* FavorDetailTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorDetailTable.swift; sourceTree = "<group>"; };
 		94F266B61BCF353A00914F58 /* FavorShowDetailTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorShowDetailTable.swift; sourceTree = "<group>"; };
 		94F266B71BCF353A00914F58 /* NewFavorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFavorTable.swift; sourceTree = "<group>"; };
@@ -1149,9 +1149,9 @@
 		89B28FFF1B497AAB002741DE /* Customize */ = {
 			isa = PBXGroup;
 			children = (
-				94F266B11BCF325C00914F58 /* FavorTagCell.swift */,
-				94F266B21BCF325C00914F58 /* FavorTagCell.xib */,
 				94F2669D1BCDA1E700914F58 /* WECalloutView.swift */,
+				947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */,
+				947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */,
 				893B79681B52E86300019CF7 /* WEImageView.swift */,
 				893B797D1B5456AC00019CF7 /* WEAlertController.swift */,
 				94BB08081B5329BB00D2492B /* WEAnnotationView.swift */,
@@ -2312,7 +2312,6 @@
 				942FA4F81B2F1B0E0050C3E3 /* image5.jpg in Resources */,
 				94BB081E1B532C9700D2492B /* LICENSE in Resources */,
 				942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */,
-				94F266B41BCF325C00914F58 /* FavorTagCell.xib in Resources */,
 				9441B4D21B89AE6A002EBEEE /* JSQMessagesViewController.xib in Resources */,
 				893B79791B52F55300019CF7 /* ProfileASController.xib in Resources */,
 				893B79711B52ECCF00019CF7 /* SimpleAlert.xib in Resources */,
@@ -2377,7 +2376,6 @@
 				94CFB0831B837EBE00F681D8 /* MBProgressHUD.m in Sources */,
 				942FA4AC1B2F10E90050C3E3 /* SiriWaveformView.swift in Sources */,
 				94DED7CB1B3EF144002B9F3B /* ImagePreviewFlowLayout.swift in Sources */,
-				94F266B31BCF325C00914F58 /* FavorTagCell.swift in Sources */,
 				945E88EA1B89AAE600124816 /* RecentCell.m in Sources */,
 				942FA45F1B2F10E90050C3E3 /* AFURLSessionManager.m in Sources */,
 				942FA4A61B2F10E90050C3E3 /* RNGridMenu.m in Sources */,
@@ -2580,6 +2578,7 @@
 				89F53AFC1B5A2D9300F0A2A2 /* TSMessageView.m in Sources */,
 				89F53AA91B57FB8700F0A2A2 /* WEVoiceBubble.swift in Sources */,
 				94F266B91BCF353A00914F58 /* FavorShowDetailTable.swift in Sources */,
+				947EE5C51BCFB9ED001A6AF3 /* WETagCollectionView.swift in Sources */,
 				890D5D771B60057500DFD609 /* DGActivityIndicatorFiveDotsAnimation.m in Sources */,
 				942FA4661B2F10E90050C3E3 /* UIRefreshControl+AFNetworking.m in Sources */,
 				9441B4D51B89AE6A002EBEEE /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
@@ -2600,6 +2599,7 @@
 				942FA4251B2F10E90050C3E3 /* Image.swift in Sources */,
 				94BCF4E71B55A2BC007406F3 /* LocationCell.swift in Sources */,
 				890D5D781B60057500DFD609 /* DGActivityIndicatorNineDotsAnimation.m in Sources */,
+				947EE5C71BCFBA21001A6AF3 /* WETagCollectionCell.swift in Sources */,
 				9478BF8B1B440AB800F3D91D /* CurrentSwitcher.swift in Sources */,
 				9441B4DF1B89AE6A002EBEEE /* JSQMessagesBubbleImage.m in Sources */,
 				890D5D751B60057500DFD609 /* DGActivityIndicatorCookieTerminatorAnimation.m in Sources */,

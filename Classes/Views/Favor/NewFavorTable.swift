@@ -17,7 +17,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol, UICollectionViewDataSource, UICollectionViewDelegate
+class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol
 //----------------------------------------------------------------------------------------------------------
 {
 
@@ -35,7 +35,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     // Tags
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var tagCollectionView                        : UICollectionView!
+    @IBOutlet weak var tagCollectionView                        : WETagCollectionView!
     //----------------------------------------------------------------------------------------------------------
     // Audio
     //----------------------------------------------------------------------------------------------------------
@@ -139,35 +139,28 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     {
         super.viewDidLoad()
         
-        tagCollectionView.dataSource = self
-        tagCollectionView.delegate = self
-        tagCollectionView.registerNib(UINib(nibName: "FavorTagCell", bundle: nil), forCellWithReuseIdentifier: "FavorTagCell")
+        configTags()
         configLooks()
-        
-        name = audioNameWithDate()
+        configAudio()
+        addGestures()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationPicked:", name: "locationPicked", object: nil)
-
-        addGestures()
-        audioRecorder.initRecorder(name)
-        audioView.alpha = 0
-        initWaveformView()
-        initRecordingView()
-        let location = CurrentLocation()
-        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location.latitude, longitude: location.longitude) {
-            (reverseGecodeInfo, placemark, error) -> Void in
-            if error == nil {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.addressLabel.text = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
-                    self.address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
-                    self.addressIsHidden = false
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
-                }
-            } else {
-                println(error)
-            }
-        }
+        
+//        let location = CurrentLocation()
+//        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location.latitude, longitude: location.longitude) {
+//            (reverseGecodeInfo, placemark, error) -> Void in
+//            if error == nil {
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    self.addressLabel.text = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
+//                    self.address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
+//                    self.addressIsHidden = false
+//                    self.tableView.beginUpdates()
+//                    self.tableView.endUpdates()
+//                }
+//            } else {
+//                println(error)
+//            }
+//        }
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -177,7 +170,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         super.viewWillAppear(true)
         TSMessage.setDelegate(self)
         TSMessage.setDefaultViewController(self)
-        tableView.reloadData()
+        //tableView.reloadData()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -211,6 +204,13 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func send(sender: UIBarButtonItem)
     //----------------------------------------------------------------------------------------------------------
     {
+//        for tag in tagCollectionView.tags
+//        {
+//            if tag.selected
+//            {
+//                println(tag.textContent)
+//            }
+//        }
         
         var favor : PFObject = PFObject(className: Constants.Favor.Name)
         var fileImage : PFFile
@@ -429,8 +429,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     func addGestures()
     //----------------------------------------------------------------------------------------------------------
     {
-        var tap = UITapGestureRecognizer(target: self, action: "respondToTapGesture:")
-        tableView.addGestureRecognizer(tap)
+//        var tap = UITapGestureRecognizer(target: self, action: "respondToTapGesture:")
+//        tableView.addGestureRecognizer(tap)
         
         var buttonLongPressGuesture = UILongPressGestureRecognizer(target: self, action: "handleButtonLongPressGuesture:")
         recordButton.addGestureRecognizer(buttonLongPressGuesture)
@@ -601,6 +601,24 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             addPhotoButton.layer.frame = imageViews[imageNum].layer.frame
             addPhotoButton.layer.frame.origin = imageViews[imageNum].layer.frame.origin
         }
+    }
+    
+    func configTags()
+    {
+        let tag = ["Albanie", "Allemagne", "Andorre", "Autriche-Hongrie", "Belgique", "Bulgarie", "Danemark", "Espagne", "France", "Grèce", "Italie", "Liechtenstein", "Luxembourg", "Monaco", "Monténégro", "Norvège", "Pays-Bas", "Portugal", "Roumanie", "Royaume-Uni", "Russie", "Saint-Marin", "Serbie", "Suède", "Suisse"]
+        
+        for currentTag in tag {
+            tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: currentTag))
+        }
+    }
+    
+    func configAudio()
+    {
+        name = audioNameWithDate()
+        audioRecorder.initRecorder(name)
+        audioView.alpha = 0
+        initWaveformView()
+        initRecordingView()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -889,26 +907,9 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     
     //----------------------------------------------------------------------------------------------------------
     func customizeMessageView(messageView: TSMessageView!)
-        //----------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------
     {
         messageView.alpha = 0.85
-    }
-    
-    
-    // MARK: - CollectionView Delegate
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FavorTagCell", forIndexPath: indexPath) as! FavorTagCell
-        cell.label.text = "Iamatag"
-        cell.layoutIfNeeded()
-        return cell
     }
     
 }

@@ -575,7 +575,7 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
         cell!.layer.cornerRadius = 12
         
         if contains(selectedItems, indexPath.item) {
-            selectedItems.removeAtIndex(indexPath.item)
+            selectedItems.removeObject(indexPath.item)
             cell!.layer.backgroundColor = UIColor.clearColor().CGColor
         } else {
             self.selectItem(indexPath.item, animated: true)
