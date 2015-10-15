@@ -135,8 +135,14 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        centerMapOnUser()
-        loadFavors(nil)
+        if PFUser.currentUser() != nil
+        {
+            centerMapOnUser()
+            loadFavors(nil)
+        } else {
+            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+            self.presentViewController(viewController, animated: true, completion: nil)
+        }
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -863,7 +869,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             }
             return annotationView
         }
-
         return nil
     }
 
@@ -937,10 +942,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
-//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-//        let annotationView = mapView.viewForAnnotation(userLocation)
-//        annotationView.canShowCallout = false
-//    }
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!)
+    {
+        userLocation.title = ""
+    }
     
     //----------------------------------------------------------------------------------------------------------
     func cellSizeFactorForCoordinator(coordinator:FBClusteringManager) -> CGFloat
