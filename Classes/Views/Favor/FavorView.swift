@@ -19,7 +19,7 @@ import Parse
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, WEImageViewProtocol, FavorDetailScrollDelegate
+class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, WEImageViewProtocol, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -28,12 +28,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     // Map
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var mapView                              : MKMapView!
-    @IBOutlet weak var searchButton                         : WEMapButton!
     @IBOutlet weak var refreshButton                        : WEMapButton!
     @IBOutlet weak var centerOnUserButton                   : WEMapButton!
     @IBOutlet weak var loadingLabel                         : WEContentLabel!
     @IBOutlet weak var circularProgress                     : KYCircularProgress!
     @IBOutlet weak var progressLabel                        : UILabel!
+    @IBOutlet weak var tags                                 : AKPickerView!
     //----------------------------------------------------------------------------------------------------------
     // Table
     //----------------------------------------------------------------------------------------------------------
@@ -115,6 +115,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         configContainerView()
         configMapView()
         configureCircularProgress()
+        configTags()
         addGestures()
         portraitImageView.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
@@ -165,33 +166,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     // MARK: - IBActions
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func searchButtonTapped(sender: WEMapButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        let alert = WEAlertController(title: nil, message: nil, style: .ActionSheet)
-        alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
-        alert.addAction(SimpleAlert.Action(title: "All Gender", style: .Default) { action in
-            self.gender = nil
-            if let edge = self.edge {
-                self.loadFavors(edge)
-            }
-        })
-        alert.addAction(SimpleAlert.Action(title: "Females Only", style: .Default) { action in
-            self.gender = 0
-            if let edge = self.edge {
-                self.loadFavors(edge)
-            }
-        })
-        alert.addAction(SimpleAlert.Action(title: "Males Only", style: .Default) { action in
-            self.gender = 1
-            if let edge = self.edge {
-                self.loadFavors(edge)
-            }
-        })
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
     //----------------------------------------------------------------------------------------------------------
     @IBAction func refreshButtonTapped(sender: WEMapButton)
     //----------------------------------------------------------------------------------------------------------
@@ -513,7 +487,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         addAnnotations()
-        //mapView(mapView, regionDidChangeAnimated: true)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -522,10 +495,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
-        
-        centerOnUserButton.layer.cornerRadius = 20
-        refreshButton.layer.cornerRadius = 20
-        searchButton.layer.cornerRadius = 20
+        centerOnUserButton.layer.cornerRadius = 15
+        refreshButton.layer.cornerRadius = 15
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -542,12 +513,35 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         bannerView.backgroundColor                                  = Constants.Color.Banner
         bannerView.alpha                                            = 0.85
     }
+    //----------------------------------------------------------------------------------------------------------
+    func configTags()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        tags.delegate = self
+        tags.dataSource = self
+        
+        tags.backgroundColor = UIColor.clearColor()
+        
+        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
+        var blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = tags.bounds
+        blurView.userInteractionEnabled = false
+        tags.insertSubview(blurView, atIndex: 0)
+        tags.clipsToBounds = true
+        
+        tags.layer.cornerRadius = 15
+        tags.maskDisabled = true
+        tags.font = UIFont(name: "HelveticaNeue-Light", size: 14)!
+        tags.highlightedFont = UIFont(name: "HelveticaNeue", size: 16)!
+        tags.interitemSpacing = 12
+        tags.pickerViewStyle = AKPickerViewStyle.Flat
+    }
     
     //----------------------------------------------------------------------------------------------------------
     func toggleButtonHidden()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [searchButton, refreshButton, centerOnUserButton]
+        var buttons = [refreshButton, centerOnUserButton, tags]
         for element in buttons {
             element.alpha = 0
         }
@@ -557,7 +551,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func toggleButtonAppear()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [searchButton, refreshButton, centerOnUserButton]
+        var buttons = [refreshButton, centerOnUserButton, tags]
         for element in buttons {
             element.alpha = 1
         }
@@ -947,6 +941,20 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         userLocation.title = ""
     }
     
+    // MARK: - Tags Delegate
+    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+        return 5
+    }
+    
+    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+        var tags = ["male", "female", "food", "homework", "sport", "whatever", "milf need help!", "horny little body", "new album"]
+        return tags[item]
+    }
+    
+    func pickerView(pickerView: AKPickerView, didSelectItems items: [Int]) {
+        println(items)
+    }
+    
     //----------------------------------------------------------------------------------------------------------
     func cellSizeFactorForCoordinator(coordinator:FBClusteringManager) -> CGFloat
     //----------------------------------------------------------------------------------------------------------
@@ -1003,6 +1011,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         index = notification.userInfo!["index"] as! Int
         switchFavor(favors[index] as? PFObject)
     }
+    
+    
 }
 
 

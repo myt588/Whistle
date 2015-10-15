@@ -17,7 +17,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol
+class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol, UICollectionViewDataSource, UICollectionViewDelegate
 //----------------------------------------------------------------------------------------------------------
 {
 
@@ -29,9 +29,13 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var locationLine                             : UIView!
     @IBOutlet weak var locationHeader                           : UILabel!
     @IBOutlet weak var pickLocationButton                       : UIButton!
-    @IBOutlet weak var privacyButton                            : UIButton!
     @IBOutlet weak var addressLabel                             : UILabel!
     @IBOutlet weak var aptTextField                             : UITextField!
+    @IBOutlet weak var descTextField                            : UITextField!
+    //----------------------------------------------------------------------------------------------------------
+    // Tags
+    //----------------------------------------------------------------------------------------------------------
+    @IBOutlet weak var tagCollectionView                        : UICollectionView!
     //----------------------------------------------------------------------------------------------------------
     // Audio
     //----------------------------------------------------------------------------------------------------------
@@ -121,8 +125,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     private var address                                         : String?
     //----------------------------------------------------------------------------------------------------------
     private var addressIsHidden                                 : Bool = true
-    private var favorContentIsHidden                            : Bool = false
-    private var rewardContentIsHidden                           : Bool = false
+    private var favorContentIsHidden                            : Bool = true
+    private var rewardContentIsHidden                           : Bool = true
     //----------------------------------------------------------------------------------------------------------
     private var isaudioViewHidden                               : Bool = true
     { didSet { tableView.reloadData() } }
@@ -134,6 +138,10 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidLoad()
+        
+        tagCollectionView.dataSource = self
+        tagCollectionView.delegate = self
+        tagCollectionView.registerNib(UINib(nibName: "FavorTagCell", bundle: nil), forCellWithReuseIdentifier: "FavorTagCell")
         configLooks()
         
         name = audioNameWithDate()
@@ -484,7 +492,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [pickLocationButton, privacyButton]
+        var buttons = [pickLocationButton]
         for element in buttons {
             element.setTitleColor(Constants.Color.CellTextReverse, forState: .Normal)
             element.layer.backgroundColor = Constants.Color.CellText.CGColor
@@ -510,10 +518,13 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             }
         }
         
-        aptTextField.textColor                                      = Constants.Color.CellText
-        aptTextField.attributedPlaceholder = NSAttributedString(string:"Apt. No.",
-            attributes:[NSForegroundColorAttributeName: Constants.Color.PlaceHolder])
-        aptTextField.alpha                                          = 0
+        var locationFields = [aptTextField, descTextField]
+        for element in locationFields {
+            element.textColor                                  = Constants.Color.CellText
+            element.attributedPlaceholder = NSAttributedString(string:element.placeholder!, attributes:[NSForegroundColorAttributeName: Constants.Color.PlaceHolder])
+        }
+        
+        tagCollectionView.backgroundColor                           = UIColor.clearColor()
         
         favorHideButton.tag = 1
         rewardHideButton.tag = 2
@@ -761,16 +772,18 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     {
         switch indexPath.section {
         case 0:                                             // Location
-            return addressIsHidden ? 90 : calculateHeightForString(addressLabel.text!) + 165
-        case 1:                                             // Audio
+            return addressIsHidden ? 60 : calculateHeightForString(addressLabel.text!) + 135
+        case 1:                                             // Tag
             return 150
-        case 2:                                             // Favor
+        case 2:                                             // Audio
+            return 150
+        case 3:                                             // Favor
             return favorContentIsHidden ? 60 : 250
-        case 3:                                             // Reward
+        case 4:                                             // Reward
             return rewardContentIsHidden ? 60 : 250
-        case 4:                                             // Price
+        case 5:                                             // Price
             return 100
-        case 5:                                             // Photos
+        case 6:                                             // Photos
             var rows: CGFloat?
             switch imageNum {
             case 0...2:
@@ -879,6 +892,23 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         //----------------------------------------------------------------------------------------------------------
     {
         messageView.alpha = 0.85
+    }
+    
+    
+    // MARK: - CollectionView Delegate
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FavorTagCell", forIndexPath: indexPath) as! FavorTagCell
+        cell.label.text = "Iamatag"
+        cell.layoutIfNeeded()
+        return cell
     }
     
 }

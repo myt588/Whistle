@@ -37,6 +37,7 @@ and customize the appearance of labels.
 */
 @objc public protocol AKPickerViewDelegate: UIScrollViewDelegate {
 	optional func pickerView(pickerView: AKPickerView, didSelectItem item: Int)
+    optional func pickerView(pickerView: AKPickerView, didSelectItems items: [Int])
 	optional func pickerView(pickerView: AKPickerView, marginForItem item: Int) -> CGSize
 	optional func pickerView(pickerView: AKPickerView, configureLabel label: UILabel, forItem item: Int)
 }
@@ -282,6 +283,7 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 	// MARK: Readonly Properties
 	/// Readonly. Index of currently selected item.
 	public private(set) var selectedItem: Int = 0
+    public private(set) var selectedItems: [Int] = []
 	/// Readonly. The point at which the origin of the content view is offset from the origin of the picker view.
 	public var contentOffset: CGPoint {
 		get {
@@ -569,7 +571,20 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 
 	// MARK: UICollectionViewDelegate
 	public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		self.selectItem(indexPath.item, animated: true)
+        var cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell!.layer.cornerRadius = 12
+        
+        if contains(selectedItems, indexPath.item) {
+            selectedItems.removeAtIndex(indexPath.item)
+            cell!.layer.backgroundColor = UIColor.clearColor().CGColor
+        } else {
+            self.selectItem(indexPath.item, animated: true)
+            selectedItems.append(indexPath.item)
+            cell!.layer.backgroundColor = Constants.Color.Main.CGColor
+        }
+		
+        self.delegate?.pickerView?(self, didSelectItems: selectedItems)
+        
 	}
 
 	// MARK: UIScrollViewDelegate

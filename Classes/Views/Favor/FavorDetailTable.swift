@@ -34,6 +34,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     @IBOutlet weak var plus5Button                                  : UIButton!
     @IBOutlet weak var plus10Button                                 : UIButton!
     @IBOutlet weak var clearButton                                  : UIButton!
+    @IBOutlet weak var signButton                                   : UIButton!
     //----------------------------------------------------------------------------------------------------------
     // Rewards
     //----------------------------------------------------------------------------------------------------------
@@ -81,6 +82,8 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     //----------------------------------------------------------------------------------------------------------
     var favor                                                       : PFObject!
     //----------------------------------------------------------------------------------------------------------
+    var willAdd                                                     : Bool = true
+    //----------------------------------------------------------------------------------------------------------
     // Images
     //----------------------------------------------------------------------------------------------------------
     var images                                                      = [UIImage]()
@@ -122,6 +125,17 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     
     
     // MARK: - IBActions
+    @IBAction func addOrSub(sender: UIButton) {
+        bounceView(sender)
+        if sender.titleLabel!.text == "-" {
+            sender.setTitle("+", forState: .Normal)
+            willAdd = true
+        } else {
+            sender.setTitle("-", forState: .Normal)
+            willAdd = false
+        }
+        
+    }
     //----------------------------------------------------------------------------------------------------------
     @IBAction func modifyPrice(sender: UIButton)
     //----------------------------------------------------------------------------------------------------------
@@ -129,19 +143,36 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
         tableView.bringSubviewToFront(sender)
         bounceView(sender)
         bounceView(priceLabel)
-        switch sender.titleLabel!.text! {
-        case "C":
-            let price = favor[Constants.Favor.Price] as! Int
-            priceLabel.text = "\(price)"
-        case "+10":
-            priceLabel.text = "\(priceLabel.text!.toInt()! + 10)"
-        case "+5":
-            priceLabel.text = "\(priceLabel.text!.toInt()! + 5)"
-        case "+1":
-            priceLabel.text = "\(priceLabel.text!.toInt()! + 1)"
-        default:
-            return
+        if willAdd {
+            switch sender.titleLabel!.text! {
+            case "C":
+                let price = favor[Constants.Favor.Price] as! Int
+                priceLabel.text = "\(price)"
+            case "10":
+                priceLabel.text = "\(priceLabel.text!.toInt()! + 10)"
+            case "5":
+                priceLabel.text = "\(priceLabel.text!.toInt()! + 5)"
+            case "1":
+                priceLabel.text = "\(priceLabel.text!.toInt()! + 1)"
+            default:
+                return
+            }
+        } else {
+            switch sender.titleLabel!.text! {
+            case "C":
+                let price = favor[Constants.Favor.Price] as! Int
+                priceLabel.text = "\(price)"
+            case "10":
+                priceLabel.text = "\(priceLabel.text!.toInt()! - 10)"
+            case "5":
+                priceLabel.text = "\(priceLabel.text!.toInt()! - 5)"
+            case "1":
+                priceLabel.text = "\(priceLabel.text!.toInt()! - 1)"
+            default:
+                return
+            }
         }
+        
     }
     
     
