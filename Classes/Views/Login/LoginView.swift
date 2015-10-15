@@ -109,7 +109,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
     //----------------------------------------------------------------------------------------------------------
     {
         if((FBSDKAccessToken.currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.type(large), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.height(200).width(200), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if (error == nil){
                     println(result)
                     self.requestFacebookPicture(user, userData: result as! NSDictionary)
@@ -134,7 +134,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
     
     func processFacebook(user: PFUser, userData: NSDictionary, image: UIImage)
     {
-        var picture = ResizeImageByWidth(image, 140)
+        var picture = image
         var thumbnail = ResizeImageByWidth(image, 60)
         var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
         filePicture.saveInBackgroundWithBlock { (success, error) -> Void in

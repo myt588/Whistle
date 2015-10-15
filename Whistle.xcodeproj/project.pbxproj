@@ -321,6 +321,7 @@
 		94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94DED7C41B3EF144002B9F3B /* Info.plist */; };
 		94DED7CF1B3EF144002B9F3B /* PreviewSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */; };
 		94DED7DA1B3EF1E7002B9F3B /* NewFavorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DED7D41B3EF1E7002B9F3B /* NewFavorTable.swift */; };
+		94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2669D1BCDA1E700914F58 /* WECalloutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -823,6 +824,7 @@
 		94DED7C41B3EF144002B9F3B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSupplementaryView.swift; sourceTree = "<group>"; };
 		94DED7D41B3EF1E7002B9F3B /* NewFavorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFavorTable.swift; sourceTree = "<group>"; };
+		94F2669D1BCDA1E700914F58 /* WECalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECalloutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1141,6 +1143,7 @@
 		89B28FFF1B497AAB002741DE /* Customize */ = {
 			isa = PBXGroup;
 			children = (
+				94F2669D1BCDA1E700914F58 /* WECalloutView.swift */,
 				893B79681B52E86300019CF7 /* WEImageView.swift */,
 				893B797D1B5456AC00019CF7 /* WEAlertController.swift */,
 				94BB08081B5329BB00D2492B /* WEAnnotationView.swift */,
@@ -2483,6 +2486,7 @@
 				942FA4691B2F10E90050C3E3 /* IDMPhotoBrowser.m in Sources */,
 				89594C231B3ACCFE00A8CF8B /* YALFoldingTabBarController.m in Sources */,
 				94BB08191B532C9700D2492B /* HTTPRequestSerializer.swift in Sources */,
+				94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */,
 				948E8FB11B3C3A4C002556D0 /* SwiftyJSON.swift in Sources */,
 				9441B50C1B8A5F2A002EBEEE /* AddressBookView.m in Sources */,
 				94CFB0331B837B3300F681D8 /* SDWebImageDownloaderOperation.m in Sources */,

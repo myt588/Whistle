@@ -118,6 +118,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         addGestures()
         portraitImageView.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "calloutSelected:", name: "calloutSelected", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "actionCleanup", name: NOTIFICATION_USER_LOGGED_OUT, object: nil)
     }
     
@@ -506,7 +507,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         addAnnotations()
-        mapView(mapView, regionDidChangeAnimated: true)
+        //mapView(mapView, regionDidChangeAnimated: true)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -818,22 +819,22 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         tableView?.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
-    // MARK: - Delegates
+    //----------------------------------------------------------------------------------------------------------
+    // MARK: - Map View Delegate
     //----------------------------------------------------------------------------------------------------------
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView!
     //----------------------------------------------------------------------------------------------------------
     {
         var reuseId = ""
-        if annotation.isKindOfClass(FBAnnotationCluster) {
+        if annotation is FBAnnotationCluster {
             reuseId = "Cluster"
             var clusterView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
             clusterView = FBAnnotationClusterView(annotation: annotation, reuseIdentifier: reuseId)
+            clusterView.canShowCallout = false
             return clusterView
-        } else {
+        }
+        if annotation is FBAnnotation {
             reuseId = "Pin"
-            if !(annotation is FBAnnotation) {
-                return nil
-            }
             var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? WEAnnotationView
             annotationView = WEAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             if let annotationView = annotationView {
@@ -859,30 +860,68 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         }
                     })
                 }
-            } else {
-                println("annotation error")
-                var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                pinView!.pinColor = .Green
-                return pinView
             }
             return annotationView
         }
+
+        return nil
     }
 
     //----------------------------------------------------------------------------------------------------------
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!)
     //----------------------------------------------------------------------------------------------------------
     {
-        if !(view is WEAnnotationView) {
-            return
+        if view is WEAnnotationView {
+            mapView.deselectAnnotation(view.annotation, animated: true)
+            index = (view as! WEAnnotationView).index
+            switchFavor(favors[index] as? PFObject)
         }
-        mapView.deselectAnnotation(view.annotation, animated: true)
-        index = (view as! WEAnnotationView).index
-        switchFavor(favors[index] as? PFObject)
+        
+        if view is FBAnnotationClusterView{
+            let annotations = (view.annotation as! FBAnnotationCluster).annotations
+            var users = [PFUser]()
+            for annotation in annotations
+            {
+                let index = (annotation as! FBAnnotation).index
+                let favor = favors[index] as! PFObject
+                let user = favor[Constants.Favor.CreatedBy] as! PFUser
+                user["index"] = index
+                users.append(user)
+            }
+            let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+            layout.minimumInteritemSpacing = 2
+            layout.minimumLineSpacing = 5
+            layout.itemSize = CGSize(width: 40, height: 40)
+            var frame: CGRect!
+            switch users.count
+            {
+            case 2:
+                frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+            case 3:
+                frame = CGRect(x: 0, y: 0, width: 150, height: 50)
+            case 4:
+                frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+            default:
+                frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+            }
+            let calloutView = WECalloutView(frame: frame, collectionViewLayout: layout)
+            calloutView.users = users
+            view.addSubview(calloutView)
+            calloutView.center = CGPointMake(view.bounds.size.width*0.5, -calloutView.bounds.size.height/2)
+        }
     }
     
-    // MARK: - Map View Delegate
+    func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
+        if view is FBAnnotationClusterView {
+            for a in view.subviews {
+                if a is WECalloutView {
+                    a.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
     //----------------------------------------------------------------------------------------------------------
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool)
     //----------------------------------------------------------------------------------------------------------
@@ -898,13 +937,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
-    // MARK: - UIGesture Delegate
-    //----------------------------------------------------------------------------------------------------------
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool
-    //----------------------------------------------------------------------------------------------------------
-    {
-        return true
-    }
+//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+//        let annotationView = mapView.viewForAnnotation(userLocation)
+//        annotationView.canShowCallout = false
+//    }
     
     //----------------------------------------------------------------------------------------------------------
     func cellSizeFactorForCoordinator(coordinator:FBClusteringManager) -> CGFloat
@@ -955,6 +991,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             canExpand = false
             changeDisplayMode(1)
         }
+    }
+    
+    func calloutSelected(notification: NSNotification)
+    {
+        index = notification.userInfo!["index"] as! Int
+        switchFavor(favors[index] as? PFObject)
     }
 }
 
