@@ -19,7 +19,7 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
 {
     // Parse
     private var favor: PFObject!
-    private var pivots : NSMutableArray = NSMutableArray()
+    private var pivots: NSMutableArray = NSMutableArray()
     
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------

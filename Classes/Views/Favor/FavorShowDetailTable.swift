@@ -171,13 +171,18 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
                 assistantPF = assistant
                 assistantPortrait.tag = 2
                 assistantPortrait.receiveUser(assistantPortrait)
-                self.assistantUserName.text = assistant[Constants.User.Nickname] as? String
-                var image = assistant[Constants.User.Portrait] as! PFFile
-                image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    if let data = data {
-                        self.assistantPortrait.image = UIImage(data: data)
-                    } else {
-                        println("network error")
+                assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
+                    if let assistant = assistant as? PFUser
+                    {
+                        self.assistantUserName.text = assistant[Constants.User.Nickname] as? String
+                        var image = assistant[Constants.User.Portrait] as! PFFile
+                        image.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                            if let data = data {
+                                self.assistantPortrait.image = UIImage(data: data)
+                            } else {
+                                println("network error")
+                            }
+                        })
                     }
                 })
             } else {

@@ -13,7 +13,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
+class CurrentAssistantCell: UITableViewCell
     
 //----------------------------------------------------------------------------------------------------------
 {
@@ -31,8 +31,6 @@ class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
     @IBOutlet weak var hireButton                           : UIButton!
     //----------------------------------------------------------------------------------------------------------
     private var favor                                       : PFObject!
-    private var user                                        : PFUser!
-    private var userToPass                                  : PFUser?
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Initialization
@@ -71,9 +69,7 @@ class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
     
     func bindData(user: PFUser?, favor: PFObject){
         if let user = user {
-            self.user = user
-            userToPass = self.user
-            portraitView.receiveUser()
+            self.portraitView.user = user
             self.favor = favor
             user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                 if let user = user {
@@ -124,14 +120,4 @@ class CurrentAssistantCell: UITableViewCell, WEImageViewProtocol
             println("no user loaded")
         }
     }
-
-    
-    // MARK: - Delegates
-    //----------------------------------------------------------------------------------------------------------
-    func passUser() -> PFUser?
-    //----------------------------------------------------------------------------------------------------------
-    {
-        return userToPass
-    }
-    
 }

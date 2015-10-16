@@ -400,17 +400,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         view.addSubview(hud)
         hud.startAnimating()
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
-        favorQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
+        favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
         // filters
         if let gender = gender {
             let query = PFUser.query()
             query?.whereKey(Constants.User.Gender, equalTo: gender)
             favorQuery.whereKey(Constants.Favor.CreatedBy, matchesQuery: query!)
         }
-        
-//        let ne = PFGeoPoint(latitude: edge.ne.latitude, longitude: edge.ne.longitude)
-//        let sw = PFGeoPoint(latitude: edge.sw.latitude, longitude: edge.sw.longitude)
-//        favorQuery.whereKey(Constants.Favor.Location, withinGeoBoxFromSouthwest: sw, toNortheast: ne)
         
         let location = CurrentLocation()
         if tags.count != 0
@@ -419,8 +415,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
         favorQuery.whereKey(Constants.Favor.Location, nearGeoPoint: location, withinMiles: 20)
         favorQuery.whereKey(Constants.Favor.Status, containedIn: [
-            Status.NoTaker.hashValue,
-            Status.HasTaker.hashValue
+            0, 1
             ])
         favorQuery.selectKeys([
             Constants.Favor.Location,
@@ -926,12 +921,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if view is FBAnnotationClusterView{
             let annotations = (view.annotation as! FBAnnotationCluster).annotations
             var users = [PFUser]()
+            var indexes = [Int]()
             for annotation in annotations
             {
                 let index = (annotation as! FBAnnotation).index
                 let favor = favors[index] as! PFObject
                 let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                user["index"] = index
+                indexes.append(index)
                 users.append(user)
             }
             let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -953,6 +949,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             }
             let calloutView = WECalloutView(frame: frame, collectionViewLayout: layout)
             calloutView.users = users
+            calloutView.indexes = indexes
             view.addSubview(calloutView)
             calloutView.center = CGPointMake(view.bounds.size.width*0.5, -calloutView.bounds.size.height/2)
         }

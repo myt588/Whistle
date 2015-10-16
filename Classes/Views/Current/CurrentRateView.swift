@@ -92,20 +92,28 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
             return
         }
         if let favor = self.favor {
-            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                let userReview = PFObject(className: Constants.UserReviewPivotTable.Name)
-                userReview[Constants.UserReviewPivotTable.From] = PFUser.currentUser()
-                userReview[Constants.UserReviewPivotTable.To] = user
-                userReview[Constants.UserReviewPivotTable.Because] = favor
-                userReview[Constants.UserReviewPivotTable.Comment] = textView.text
-                userReview[Constants.UserReviewPivotTable.Rating] = rating
-                userReview.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    if success {
-                        TSMessage.showNotificationWithTitle("Review", subtitle: "Your review has been posted on \(user[Constants.User.Nickname] as! String)'s wall", type: TSMessageNotificationType.Success)
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
-                })
+            let creator = favor[Constants.Favor.CreatedBy] as! PFUser
+            let assistant = favor[Constants.Favor.AssistedBy] as! PFUser
+            var user: PFUser
+            if PFUser.currentUser()!.objectId == creator.objectId
+            {
+                user = assistant
+            } else {
+                user = creator
             }
+            let userReview = PFObject(className: Constants.UserReviewPivotTable.Name)
+            userReview[Constants.UserReviewPivotTable.From] = PFUser.currentUser()
+            userReview[Constants.UserReviewPivotTable.To] = user
+            userReview[Constants.UserReviewPivotTable.Because] = favor
+            userReview[Constants.UserReviewPivotTable.Comment] = textView.text
+            userReview[Constants.UserReviewPivotTable.Rating] = rating
+            userReview.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    TSMessage.showNotificationWithTitle("Review", subtitle: "Your review has been posted on \(user[Constants.User.Nickname] as! String)'s wall", type: TSMessageNotificationType.Success)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            })
+
         } 
     }
     

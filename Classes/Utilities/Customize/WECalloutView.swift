@@ -12,6 +12,7 @@ import MapKit
 class WECalloutView: UICollectionView {
     
     var users = [PFUser]()
+    var indexes = [Int]()
     private let reuseIdentifier = "cell"
     
     // MARK: - Init
@@ -73,8 +74,7 @@ extension WECalloutView : UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.deselectItemAtIndexPath(indexPath, animated: false)
-        let user = users[indexPath.item]
-        let index = user["index"] as! Int
+        let index = indexes[indexPath.item]
         NSNotificationCenter.defaultCenter().postNotificationName("calloutSelected", object: nil, userInfo: ["index": index])
     }
     
