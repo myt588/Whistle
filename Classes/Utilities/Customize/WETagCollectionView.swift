@@ -25,7 +25,7 @@ let TagCollectionViewCellIdentifier = "TagCell"
 class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var tags: Array<Tag> = [Tag]()
-    private var _totalTagsSelected = 0
+    var _totalTagsSelected = 0
     
     var totalTagsSelected: Int {
         get {

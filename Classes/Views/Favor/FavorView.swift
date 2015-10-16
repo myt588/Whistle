@@ -33,7 +33,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var loadingLabel                         : WEContentLabel!
     @IBOutlet weak var circularProgress                     : KYCircularProgress!
     @IBOutlet weak var progressLabel                        : UILabel!
-    @IBOutlet weak var tags                                 : AKPickerView!
+    @IBOutlet weak var tagView                              : AKPickerView!
     //----------------------------------------------------------------------------------------------------------
     // Table
     //----------------------------------------------------------------------------------------------------------
@@ -89,7 +89,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var canExpand                                   = true
     
     
-    var favors : NSMutableArray = NSMutableArray()
+    var favors: NSMutableArray = NSMutableArray()
+    var tags: [PFObject] = [PFObject]()
+    var tagNames = [String]()
     var edge: Edges?
     var index: Int = 0 {
         didSet {
@@ -115,11 +117,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         configContainerView()
         configMapView()
         configureCircularProgress()
-        configTags()
+        configtagView()
         addGestures()
         portraitImageView.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "calloutSelected:", name: "calloutSelected", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "currentLocationFound", name: "currentLocationFound", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "actionCleanup", name: NOTIFICATION_USER_LOGGED_OUT, object: nil)
     }
     
@@ -138,8 +141,20 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         super.viewDidAppear(animated)
         if PFUser.currentUser() != nil
         {
-            centerMapOnUser()
-            loadFavors(nil)
+            let tabBar = tabBarController as! YALFoldingTabBarController
+//            let button = tabBar.tabBarView.centerButton as! MIBadgeButton
+//            button.badgeString = "10"
+//            let badgeLabel = MIBadgeLabel(frame: CGRectMake(0, 0, 10, 10))
+//            badgeLabel.clipsToBounds = true
+//            badgeLabel.alpha = 0.85
+//            badgeLabel.text = "10"
+//            var badgeSize: CGSize  = badgeLabel.sizeThatFits(CGSize(width: 320, height: CGFloat(FLT_MAX)))
+//            badgeSize.width = badgeSize.width < 20 ? 20 : badgeSize.width + 5
+//            var vertical: Double?, horizontal: Double?
+//            badgeLabel.frame = CGRectMake(button.bounds.size.width/2, badgeSize.height/2 - 5, badgeSize.width, badgeSize.height)
+//            button.addSubview(badgeLabel)
+
+            loadTagView()
         } else {
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
@@ -170,7 +185,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBAction func refreshButtonTapped(sender: WEMapButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        loadFavors(mapView.edgePoints())
+        loadFavors(nil, tags: tagNames)
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -186,6 +201,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         edge = nil
         index = 0
         gender = nil
+    }
+    
+    func currentLocationFound()
+    {
+        centerMapOnUser()
+        loadFavors(nil, tags: tagNames)
     }
     
     // MARK: - User interactions
@@ -314,6 +335,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         TSMessage.showNotificationWithTitle("Interested", subtitle: "Successfully interested the favor.", type: TSMessageNotificationType.Success)
                         favor[Constants.Favor.Status] = 1
                         favor.saveInBackground()
+                        let user = favor[Constants.Favor.CreatedBy] as! PFUser
+                        SendPushNotification2([user.objectId!], "Has interested in your favor")
+                        self.addFriend(user)
                     } else {
                         ParseErrorHandler.handleParseError(error)
                         TSMessage.showNotificationWithTitle("Interest Failed", subtitle: "There is some problem occured,\nPlease try again.", type: TSMessageNotificationType.Error)
@@ -321,6 +345,15 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 })
             }
         }
+    }
+    
+    func addFriend(user: PFUser)
+    {
+        let people = PFObject(className: Constants.People.Name)
+        people[Constants.People.User1] = PFUser.currentUser()!
+        people[Constants.People.User2] = user
+        people.saveInBackground()
+        StartPrivateChat(user, PFUser.currentUser()!)
     }
     
     func interestState(favor: PFObject) {
@@ -358,7 +391,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //---------------------------------------------------------------------------------------------------------
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
-    func loadFavors(edge: Edges?)
+    func loadFavors(edge: Edges?, tags: [String])
     //----------------------------------------------------------------------------------------------------------
     {
         var hud = DGActivityIndicatorView(type: DGActivityIndicatorAnimationType.TriplePulse, tintColor: Constants.Color.Banner, size: 35)
@@ -367,7 +400,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         view.addSubview(hud)
         hud.startAnimating()
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
-        favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
+        favorQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
         // filters
         if let gender = gender {
             let query = PFUser.query()
@@ -378,7 +411,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
 //        let ne = PFGeoPoint(latitude: edge.ne.latitude, longitude: edge.ne.longitude)
 //        let sw = PFGeoPoint(latitude: edge.sw.latitude, longitude: edge.sw.longitude)
 //        favorQuery.whereKey(Constants.Favor.Location, withinGeoBoxFromSouthwest: sw, toNortheast: ne)
+        
         let location = CurrentLocation()
+        if tags.count != 0
+        {
+            favorQuery.whereKey(Constants.Favor.Tag, containedIn: tags)
+        }
         favorQuery.whereKey(Constants.Favor.Location, nearGeoPoint: location, withinMiles: 20)
         favorQuery.whereKey(Constants.Favor.Status, containedIn: [
             Status.NoTaker.hashValue,
@@ -391,8 +429,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             Constants.Favor.Price
             ])
         favorQuery.limit = Constants.Favor.MapPaginationLimit
-        favorQuery.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        favorQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             hud.removeFromSuperview()
             if let objects = objects {
                 self.favors.removeAllObjects()
@@ -406,6 +443,17 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
+    func loadTagView()
+    {
+        let query = PFQuery(className: "Tag")
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if error == nil
+            {
+                self.tags = objects as! [PFObject]
+                self.tagView.reloadData()
+            }
+        }
+    }
     
     //----------------------------------------------------------------------------------------------------------
     func switchFavor(favor: PFObject?)
@@ -514,34 +562,34 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         bannerView.alpha                                            = 0.85
     }
     //----------------------------------------------------------------------------------------------------------
-    func configTags()
+    func configtagView()
     //----------------------------------------------------------------------------------------------------------
     {
-        tags.delegate = self
-        tags.dataSource = self
+        tagView.delegate = self
+        tagView.dataSource = self
         
-        tags.backgroundColor = UIColor.clearColor()
+        tagView.backgroundColor = UIColor.clearColor()
         
         var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
         var blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = tags.bounds
+        blurView.frame = tagView.bounds
         blurView.userInteractionEnabled = false
-        tags.insertSubview(blurView, atIndex: 0)
-        tags.clipsToBounds = true
+        tagView.insertSubview(blurView, atIndex: 0)
+        tagView.clipsToBounds = true
         
-        tags.layer.cornerRadius = 15
-        tags.maskDisabled = true
-        tags.font = UIFont(name: "HelveticaNeue-Light", size: 14)!
-        tags.highlightedFont = UIFont(name: "HelveticaNeue", size: 16)!
-        tags.interitemSpacing = 12
-        tags.pickerViewStyle = AKPickerViewStyle.Flat
+        tagView.layer.cornerRadius = 15
+        tagView.maskDisabled = true
+        tagView.font = UIFont(name: "HelveticaNeue-Light", size: 14)!
+        tagView.highlightedFont = UIFont(name: "HelveticaNeue", size: 16)!
+        tagView.interitemSpacing = 12
+        tagView.pickerViewStyle = AKPickerViewStyle.Flat
     }
     
     //----------------------------------------------------------------------------------------------------------
     func toggleButtonHidden()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [refreshButton, centerOnUserButton, tags]
+        var buttons = [refreshButton, centerOnUserButton, tagView]
         for element in buttons {
             element.alpha = 0
         }
@@ -551,7 +599,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func toggleButtonAppear()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [refreshButton, centerOnUserButton, tags]
+        var buttons = [refreshButton, centerOnUserButton, tagView]
         for element in buttons {
             element.alpha = 1
         }
@@ -726,7 +774,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             default:
                 break
             }
-            
             annotation.index = index
             annotations.append(annotation)
             index = index + 1
@@ -734,7 +781,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         clusteringManager = nil
         clusteringManager = FBClusteringManager()
         clusteringManager!.addAnnotations(annotations)
-        
+        mapView(mapView, regionDidChangeAnimated: true)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -941,18 +988,25 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         userLocation.title = ""
     }
     
-    // MARK: - Tags Delegate
+    // MARK: - tagView Delegate
     func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
-        return 5
+        return tags.count
     }
     
     func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
-        var tags = ["male", "female", "food", "homework", "sport", "whatever", "milf need help!", "horny little body", "new album"]
-        return tags[item]
+        if tags.count == 0 {
+            return ""
+        }
+        return tags[item]["name"] as! String
     }
     
     func pickerView(pickerView: AKPickerView, didSelectItems items: [Int]) {
-        println(items)
+        tagNames.removeAll(keepCapacity: false)
+        for item in items
+        {
+            tagNames.append(tags[item]["name"] as! String)
+        }
+        loadFavors(nil, tags: tagNames)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -976,21 +1030,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         return userToPass
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    func tabBarViewDidExpanded()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        let tabBarController = self.tabBarController as? YALFoldingTabBarController
-        addBadge(tabBarController!, "123", "234", "345", "")
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func tabBarViewWillCollapse()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        let tabBarController = self.tabBarController as? YALFoldingTabBarController
-    }
-    
     func expand() {
         if !canExpand { return }
         if displayerMode != 1 { return }
@@ -1012,7 +1051,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         switchFavor(favors[index] as? PFObject)
     }
     
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "mainToNew" {
+            var navigation = segue.destinationViewController as! UINavigationController
+            let newFavorTableView = navigation.visibleViewController as! NewFavorTable
+            newFavorTableView.tags = tags
+        }
+    }
 }
 
 

@@ -128,6 +128,7 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
                                 if ownerPrice != takerPrice {
                                     self.favor[Constants.Favor.Price] = takerPrice
                                     self.favor.saveInBackground()
+                                    SendPushNotification2([user.objectId!], "Has hired you")
                                     self.navigationController?.popViewControllerAnimated(true)
                                 }
                             }

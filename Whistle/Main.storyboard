@@ -4556,7 +4556,7 @@
                         <outlet property="refreshButton" destination="UFc-yo-AJD" id="v3T-LL-gnZ"/>
                         <outlet property="tableTopToLayoutConstraint" destination="JIO-gy-CHj" id="uoz-I7-Xyk"/>
                         <outlet property="tableTopToMapConstraint" destination="xRb-YB-qq5" id="2sQ-SS-PmK"/>
-                        <outlet property="tags" destination="MTA-73-cWh" id="EUr-r4-4w7"/>
+                        <outlet property="tagView" destination="MTA-73-cWh" id="kTz-Mp-pO5"/>
                         <segue destination="lGo-Fg-tkx" kind="presentation" identifier="mainToNew" id="W9c-K2-41d"/>
                     </connections>
                 </viewController>

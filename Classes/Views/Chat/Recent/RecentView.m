@@ -23,6 +23,7 @@
 #import "ChatView.h"
 #import "NavigationController.h"
 #import "YALFoldingTabBarController.h"
+#import "Whistle-Swift.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface RecentView()
@@ -41,9 +42,6 @@
 {
 	[super viewDidLoad];
 	self.title = @"Recent";
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(loadRecents) forControlEvents:UIControlEventValueChanged];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	recents = [[NSMutableArray alloc] init];
     //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -113,18 +111,23 @@
 }
 
 #pragma mark - Helper methods
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)updateTabCounter
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	int total = 0;
-	for (PFObject *recent in recents)
-	{
-		total += [recent[@"counter"] intValue];
-	}
-	UITabBarItem *item = self.tabBarController.tabBar.items[0];
-	item.badgeValue = (total == 0) ? nil : [NSString stringWithFormat:@"%d", total];
+    int total = 0;
+    for (PFObject *recent in recents)
+    {
+        total += [recent[@"counter"] intValue];
+    }
+    MIBadgeButton *button = ((YALFoldingTabBarController *) self.tabBarController).tabBarView.myButtons[6];
+    button.badgeString = (total == 0) ? nil : [NSString stringWithFormat:@"%d", total];
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    [UIApplication sharedApplication].applicationIconBadgeNumber = total;
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    currentInstallation.badge = total;
+    [currentInstallation saveInBackground];
 }
 
 #pragma mark - User actions

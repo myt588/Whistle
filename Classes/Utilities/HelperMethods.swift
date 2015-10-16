@@ -185,6 +185,15 @@ func CurrentLocation() -> PFGeoPoint
     return PFGeoPoint(latitude: app.coordinate.latitude, longitude: app.coordinate.longitude)
 }
 
+//func sendPushNotification(members: [String], text: String)
+//{
+//    let user = PFUser.currentUser()
+//    let message = ""
+//    let data = ["alert":message, "sound":"default", "badge":"Increment"]
+//    
+//}
+
+
 
 
 

@@ -66,7 +66,7 @@ void SendPushNotification2(NSArray *members, NSString *text)
 {
 	PFUser *user = [PFUser currentUser];
 	NSString *message = [NSString stringWithFormat:@"%@: %@", user[PF_USER_FULLNAME], text];
-    NSDictionary *data = @{@"alert":message, @"sound":@"default", @"badge":@"Increment", @"type":@"chat"};
+    NSDictionary *data = @{@"alert":message, @"sound":@"default", @"badge":@"Increment"};
 	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
 	[query whereKey:PF_USER_OBJECTID containedIn:members];
 	[query whereKey:PF_USER_OBJECTID notEqualTo:user.objectId];

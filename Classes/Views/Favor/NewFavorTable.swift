@@ -20,6 +20,8 @@ import Parse
 class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol
 //----------------------------------------------------------------------------------------------------------
 {
+    // MARK: - Public Variable
+    var tags: [PFObject] = [PFObject]()
 
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
@@ -204,13 +206,17 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func send(sender: UIBarButtonItem)
     //----------------------------------------------------------------------------------------------------------
     {
-//        for tag in tagCollectionView.tags
-//        {
-//            if tag.selected
-//            {
-//                println(tag.textContent)
-//            }
-//        }
+        var selectedTags = [String]()
+        if tagCollectionView._totalTagsSelected > 0
+        {
+            for tag in tagCollectionView.tags
+            {
+                if tag.selected
+                {
+                    selectedTags.append(tag.textContent)
+                }
+            }
+        }
         
         var favor : PFObject = PFObject(className: Constants.Favor.Name)
         var fileImage : PFFile
@@ -227,6 +233,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         } else {
             TSMessage.showNotificationWithTitle("No Location", subtitle: "You need to add a location", type: TSMessageNotificationType.Error)
         }
+        
+        favor[Constants.Favor.Tag] = selectedTags
         
         if self.favorTextView.text != "" && self.favorTextView.text != Constants.PlaceHolder.NewFavor {
             audioOrText = true
@@ -605,10 +613,9 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     
     func configTags()
     {
-        let tag = ["Albanie", "Allemagne", "Andorre", "Autriche-Hongrie", "Belgique", "Bulgarie", "Danemark", "Espagne", "France", "Grèce", "Italie", "Liechtenstein", "Luxembourg", "Monaco", "Monténégro", "Norvège", "Pays-Bas", "Portugal", "Roumanie", "Royaume-Uni", "Russie", "Saint-Marin", "Serbie", "Suède", "Suisse"]
-        
-        for currentTag in tag {
-            tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: currentTag))
+        for currentTag in tags {
+            let name = currentTag["name"] as! String
+            tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: name))
         }
     }
     

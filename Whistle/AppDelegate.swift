@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var window: UIWindow?
     var locationManager: CLLocationManager!
     var coordinate: CLLocationCoordinate2D!
+    var posted: Bool = false
     
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -130,7 +131,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             println("active")
         } else {
             if userInfo["type"] as! String == "chat" {
-                
+//                let tabBarController = self.window?.rootViewController as! TabBarController
+//                let nav = tabBarController.selectedViewController as! UINavigationController
+//                let groupId = userInfo["groupId"] as! String
+//                let chatView = ChatView(with: groupId)
+//                nav.pushViewController(chatView, animated: true)
             }
         }
         //PFPush.handlePush(userInfo)
@@ -187,7 +192,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-        self.coordinate = newLocation.coordinate;
+        self.coordinate = newLocation.coordinate
+        if !posted
+        {
+            NSNotificationCenter.defaultCenter().postNotificationName("currentLocationFound", object: nil)
+            posted = true
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
