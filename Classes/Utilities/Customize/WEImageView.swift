@@ -11,18 +11,9 @@ import Parse
 import UIKit
 
 //----------------------------------------------------------------------------------------------------------
-@objc protocol WEImageViewProtocol
-//----------------------------------------------------------------------------------------------------------
-{
-    func passUser() -> PFUser?
-    optional func passUser(sender: UIImageView) -> PFUser?
-}
-
-//----------------------------------------------------------------------------------------------------------
 class WEImageView: PFImageView
 //----------------------------------------------------------------------------------------------------------
 {
-    var delegate : WEImageViewProtocol?
     var user: PFUser?
     
     // MARK: - Init
@@ -78,18 +69,6 @@ class WEImageView: PFImageView
             vc.presentViewController(alert, animated: true, completion: nil)
         }
     }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func receiveUser()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        user = delegate?.passUser()
-    }
-    
-    func receiveUser(sender: UIImageView) {
-        user = delegate?.passUser!(sender)
-    }
-    
 }
 
 

@@ -14,7 +14,7 @@ import AVFoundation
 
 
 //----------------------------------------------------------------------------------------------------------
-class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
+class FavorShowDetailTable: UITableViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
@@ -49,8 +49,6 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
     // Parse
     //----------------------------------------------------------------------------------------------------------
     var favor                                                       : PFObject!
-    var ownerPF                                                     : PFUser?
-    var assistantPF                                                 : PFUser?
     //----------------------------------------------------------------------------------------------------------
     // Images
     //----------------------------------------------------------------------------------------------------------
@@ -77,7 +75,6 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
             element.layer.borderWidth = 3
             element.layer.cornerRadius = 40
             element.clipsToBounds = true
-            element.delegate = self
         }
         var userLabels = [favorUserLabel, assistantUserLabel]
         for element in userLabels {
@@ -152,9 +149,8 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
             }
 
             if let owner = favor[Constants.Favor.CreatedBy] as? PFUser {
-                ownerPF = owner
                 ownerPortrait.tag = 1
-                ownerPortrait.receiveUser(ownerPortrait)
+                ownerPortrait.user = owner
                 self.favorUserName.text = owner[Constants.User.Nickname] as? String
                 var image = owner[Constants.User.Portrait] as! PFFile
                 image.getDataInBackgroundWithBlock({ (data, error) -> Void in
@@ -168,9 +164,8 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
             }
             
             if let assistant = favor[Constants.Favor.AssistedBy] as? PFUser {
-                assistantPF = assistant
                 assistantPortrait.tag = 2
-                assistantPortrait.receiveUser(assistantPortrait)
+                assistantPortrait.user = assistant
                 assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
                     if let assistant = assistant as? PFUser
                     {
@@ -358,23 +353,6 @@ class FavorShowDetailTable: UITableViewController, WEImageViewProtocol
             return 44
         }
     }
-    
-    func passUser() -> PFUser? {
-        return nil
-    }
-    
-    func passUser(sender: UIImageView) -> PFUser? {
-        switch sender.tag {
-        case 1:
-            return ownerPF
-        case 2:
-            return assistantPF
-        default:
-            sender.userInteractionEnabled = false
-            return nil
-        }
-    }
-    
     
 }
 

@@ -19,7 +19,7 @@ import Parse
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, WEImageViewProtocol, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
+class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -84,8 +84,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var transitionOperator                          = WESlideTransition()
     private var isSearchHidden                              = true
     //----------------------------------------------------------------------------------------------------------
-    private var userToPass                                  : PFUser?
-    //----------------------------------------------------------------------------------------------------------
     private var canExpand                                   = true
     
     
@@ -119,7 +117,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         configureCircularProgress()
         configtagView()
         addGestures()
-        portraitImageView.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "calloutSelected:", name: "calloutSelected", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "currentLocationFound", name: "currentLocationFound", object: nil)
@@ -802,8 +799,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
         if let favor = favor {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                userToPass = user
-                portraitImageView.receiveUser()
+                portraitImageView.user = user
                 user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                     if let user = user {
                         if let image = user[Constants.User.Portrait] as? PFFile {
@@ -1018,13 +1014,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         messageView.alpha = 0.85
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func passUser() -> PFUser?
-    //----------------------------------------------------------------------------------------------------------
-    {
-        return userToPass
     }
     
     func expand() {

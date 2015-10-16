@@ -13,7 +13,7 @@ import Foundation
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsViewDelegate
+class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
 {
     
     // MARK: - IBOutlets
@@ -38,7 +38,6 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
     //----------------------------------------------------------------------------------------------------------
     private var favor                                       : PFObject!
     private var row                                         : Int!
-    private var userToPass                                  : PFUser!
     var vc                                                  : CurrentSwitcher!
     
     // MARK: - Initialization
@@ -48,7 +47,6 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
     {
         super.awakeFromNib()
         buttonsView.delegate = self
-        portraitView.delegate = self
         configLooks()
     }
     
@@ -94,8 +92,7 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
             buttonsView.takerState(status)
             
             var user : PFUser = favor[Constants.Favor.CreatedBy] as! PFUser
-            userToPass = user
-            portraitView.receiveUser()
+            portraitView.user = user
             user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                 if let user = user {
                     var image = user[Constants.User.Portrait] as! PFFile
@@ -179,13 +176,6 @@ class CurrentAssistCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVi
             
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
         }
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func passUser() -> PFUser?
-    //----------------------------------------------------------------------------------------------------------
-    {
-        return userToPass
     }
 
     func shareTapped(sender: UIButton!) {

@@ -15,7 +15,7 @@ import Parse
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsViewDelegate
+class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
 //----------------------------------------------------------------------------------------------------------
 {
 
@@ -49,7 +49,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
     //----------------------------------------------------------------------------------------------------------
     private var favor                                       : PFObject!
     private var row                                         : Int!
-    private var userToPass                                  : PFUser?
     var vc                                                  : CurrentSwitcher?
     
     // MARK: - Initialization
@@ -59,7 +58,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
     {
         super.awakeFromNib()
         buttonsView.delegate = self
-        portraitView.delegate = self
         configLooks()
     }
     
@@ -168,8 +166,7 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
     
     func showTaker(favor: PFObject) {
         if let user = favor[Constants.Favor.AssistedBy] as? PFUser {
-            userToPass = user
-            portraitView.receiveUser()
+            portraitView.user = user
             var name = user[Constants.User.Nickname] as? String
             self.statusLabel.text = "\(name!)"
             if let gender = user[Constants.User.Gender] as? Int {
@@ -202,13 +199,6 @@ class CurrentFavorCell: UITableViewCell, WEImageViewProtocol, WERecentButtonsVie
     {
         vc!.selectedIndex = sender.tag
         vc!.performSegueWithIdentifier("Current_To_Assistant", sender: self)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func passUser() -> PFUser?
-    //----------------------------------------------------------------------------------------------------------
-    {
-        return userToPass
     }
     
     func shareTapped(sender: UIButton!) {
