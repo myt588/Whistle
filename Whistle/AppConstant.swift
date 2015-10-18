@@ -163,18 +163,19 @@ struct Constants {
         //--------------------------------------------------------------------------------------------------
         // Global
         //--------------------------------------------------------------------------------------------------
-        static let Main                         : UIColor = UIColor(red:0.02, green:0.67, blue:0.67, alpha:1)
-        static let Background                   : UIColor = UIColor(red:0.32, green:0.34, blue:0.39, alpha:1)
-        static let ContentBackground            : UIColor = UIColor(red:0.45, green:0.51, blue:0.56, alpha:1)
+        static let Main                         : UIColor = UIColor(red:252.0/255, green:203.0/255, blue:0.0, alpha:1)
+        static let Main2                        : UIColor = UIColor(red: 246.0/255, green: 174.0/255, blue: 0.0, alpha: 1)
+        static let Background                   : UIColor = UIColor(red:35.0/255, green:24.0/255, blue:21.0/255, alpha:1)
+        static let ContentBackground            : UIColor = UIColor(red:63.0/255, green:69.0/255, blue:74.0/255, alpha:0.65)
         static let Shadow                       : UIColor = UIColor(red:0.75, green:0.73, blue:0.71, alpha:1)
         static let TextLight                    : UIColor = UIColor(red:1, green:0.97, blue:0.93, alpha:1)
         static let PlaceHolder                  : UIColor = UIColor(red:0.75, green:0.73, blue:0.71, alpha:1)
         static let Border                       : UIColor = UIColor(red:1, green:0.97, blue:0.93, alpha:1)
-        static let Banner                       : UIColor = UIColor(red:0.58, green:0.76, blue:0.81, alpha:1)
+        static let Banner                       : UIColor = Constants.Color.Main
         //--------------------------------------------------------------------------------------------------
         // Navigation Bar
         //--------------------------------------------------------------------------------------------------
-        static let NavigationBar                : UIColor = Constants.Color.Main
+        static let NavigationBar                : UIColor = Constants.Color.Background
         static let NavigationBarTint            : UIColor = UIColor.whiteColor()
         //--------------------------------------------------------------------------------------------------
         // Table
@@ -186,6 +187,10 @@ struct Constants {
         static let CellTextShadow               : UIColor = Constants.Color.Shadow
         static let CellPlaceHolder              : UIColor = Constants.Color.PlaceHolder
         //--------------------------------------------------------------------------------------------------
+        static let TextMain                     : UIColor = Constants.Color.Main
+        static let TextCopyright                : UIColor = UIColor(red: 192.0/255, green: 192.0/255, blue: 193.0/255, alpha: 1)
+        static let TextIndicator                : UIColor = UIColor(red: 192.0/255, green: 192.0/255, blue: 193.0/255, alpha: 1)
+        static let TextComment                  : UIColor = UIColor(red: 192.0/255, green: 192.0/255, blue: 193.0/255, alpha: 1)
     }
 
     

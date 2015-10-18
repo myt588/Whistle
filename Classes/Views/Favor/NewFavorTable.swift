@@ -148,6 +148,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationPicked:", name: "locationPicked", object: nil)
         
+        tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        
 //        let location = CurrentLocation()
 //        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location.latitude, longitude: location.longitude) {
 //            (reverseGecodeInfo, placemark, error) -> Void in
@@ -172,7 +174,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         super.viewWillAppear(true)
         TSMessage.setDelegate(self)
         TSMessage.setDefaultViewController(self)
-        //tableView.reloadData()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -370,15 +371,19 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         case 1:
             if favorContentIsHidden {
                 favorHideButton.setTitle("Skip", forState: .Normal)
+                favorTextView.alpha = 1
             } else {
                 favorHideButton.setTitle("Compose", forState: .Normal)
+                favorTextView.alpha = 0
             }
             favorContentIsHidden = !favorContentIsHidden
         case 2:
             if rewardContentIsHidden {
                 rewardHideButton.setTitle("Skip", forState: .Normal)
+                rewardTextView.alpha = 1
             } else {
                 rewardHideButton.setTitle("Compose", forState: .Normal)
+                rewardTextView.alpha = 0
             }
             rewardContentIsHidden = !rewardContentIsHidden
         default:
@@ -475,7 +480,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             recordingView.removeFromSuperview()
             hasRecording = true
             
-            configAudioView()
             isaudioViewHidden = false
         
             audioView.contentURL = audioManager.audioURLWithName(name)
@@ -502,10 +506,10 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     {
         var buttons = [pickLocationButton]
         for element in buttons {
-            element.setTitleColor(Constants.Color.CellTextReverse, forState: .Normal)
-            element.layer.backgroundColor = Constants.Color.CellText.CGColor
+            element.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            element.layer.backgroundColor = Constants.Color.Main2.CGColor
             element.layer.cornerRadius = 12.5
-            element.tintColor = Constants.Color.CellTextReverse
+//            element.tintColor = Constants.Color.CellTextReverse
         }
         
         deleteAudioButton.alpha                                     = 0
@@ -516,8 +520,10 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         for element in textViews {
             element.delegate                                        = self
             element.textContainerInset                              = UIEdgeInsetsMake(10, 8, 10, 8)
-            element.textColor                                       = Constants.Color.CellPlaceHolder
+            element.textColor                                       = Constants.Color.PlaceHolder
+            element.backgroundColor                                 = Constants.Color.ContentBackground
             element.layer.cornerRadius                              = 8
+            element.alpha = 0
             if element.tag == 1 {
                 element.text                                        = Constants.PlaceHolder.NewFavor
             }
@@ -530,6 +536,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         for element in locationFields {
             element.textColor                                  = Constants.Color.CellText
             element.attributedPlaceholder = NSAttributedString(string:element.placeholder!, attributes:[NSForegroundColorAttributeName: Constants.Color.PlaceHolder])
+            element.backgroundColor = Constants.Color.ContentBackground
         }
         
         tagCollectionView.backgroundColor                           = UIColor.clearColor()
@@ -538,7 +545,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         rewardHideButton.tag = 2
         var hideButtons = [favorHideButton, rewardHideButton]
         for element in hideButtons {
-            element.setTitleColor(Constants.Color.CellText, forState: .Normal)
+            element.setTitleColor(Constants.Color.Main2, forState: .Normal)
         }
         
         priceTextField.delegate                                     = self
@@ -592,7 +599,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             let origImage                                          = element.imageView?.image
             let tintedImage                                        = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             element.setImage(tintedImage, forState: .Normal)
-            element.tintColor                                      = Constants.Color.Background
+            element.tintColor                                      = Constants.Color.Main2
         }
         
         var priceButtonList = [plus1Button, plus5Button, plus10Button, clearButton]
@@ -669,23 +676,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         recordingView.addSubview(label)
         recordingView.bringSubviewToFront(label)
     }
-    //----------------------------------------------------------------------------------------------------------
-    // END: - Record Audio
-    //----------------------------------------------------------------------------------------------------------
-    
-    
-    //----------------------------------------------------------------------------------------------------------
-    // START: - Audio View
-    //----------------------------------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------------------
-    func configAudioView()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        
-    }
-    //----------------------------------------------------------------------------------------------------------
-    // END: - Audio View
-    //----------------------------------------------------------------------------------------------------------
     
     //----------------------------------------------------------------------------------------------------------
     // START: - Photos
@@ -797,15 +787,15 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     {
         switch indexPath.section {
         case 0:                                             // Location
-            return addressIsHidden ? 60 : calculateHeightForString(addressLabel.text!) + 135
+            return addressIsHidden ? 100 : calculateHeightForString(addressLabel.text!) + 135
         case 1:                                             // Tag
             return 150
         case 2:                                             // Audio
-            return 150
+            return 120
         case 3:                                             // Favor
-            return favorContentIsHidden ? 60 : 250
+            return favorContentIsHidden ? 80 : 250
         case 4:                                             // Reward
-            return rewardContentIsHidden ? 60 : 250
+            return rewardContentIsHidden ? 80 : 250
         case 5:                                             // Price
             return 100
         case 6:                                             // Photos

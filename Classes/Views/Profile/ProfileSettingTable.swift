@@ -110,12 +110,18 @@ class ProfileSettingTable: UITableViewController
     {
         portrait.layer.borderColor                      = Constants.Color.Border.CGColor
         portrait.layer.borderWidth                      = 2
-        portrait.layer.cornerRadius                     = 30
+        portrait.layer.cornerRadius                     = 37.5
         portrait.backgroundColor                        = Constants.Color.Border
         
         logoutButton.setTitleColor(Constants.Color.CellText, forState: .Normal)
-        logoutButton.layer.backgroundColor              = Constants.Color.ContentBackground.CGColor
+        logoutButton.layer.backgroundColor              = Constants.Color.Main2.CGColor
         logoutButton.layer.cornerRadius                 = 15
+        
+        var switches = [whistleNofitySwitch, chatNotifySwitch]
+        for element in switches {
+            element.onTintColor = Constants.Color.Main2
+            element.tintColor = UIColor.whiteColor()
+        }
     }
     
     //----------------------------------------------------------------------------------------------------------

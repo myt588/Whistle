@@ -54,14 +54,6 @@ class WERecentButtonsView: UIView
         cancel.addTarget(self, action: "cancelTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         report.setImage(UIImage(named: "favor_buttons_view_report"), forState: .Normal)
         report.addTarget(self, action: "reportTapped:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        var buttons = [share, rate, confirm, cancel, report]
-        for element in buttons {
-            element.backgroundColor = UIColor.clearColor()
-            element.layer.borderWidth = 0.5
-            element.layer.borderColor = Constants.Color.Border.CGColor
-            element.layer.cornerRadius = 20
-        }
     }
     
     func takerState(state: Int) {

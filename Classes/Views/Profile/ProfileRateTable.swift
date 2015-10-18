@@ -14,7 +14,9 @@ class ProfileRateTable: UITableViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.translucent = false
         tableView.autoresizesSubviews = true
-        tableView.estimatedRowHeight = 150
+        tableView.estimatedRowHeight = 100
+        
+        title = "Ratings"
     }
 
     // MARK: - Table view data source

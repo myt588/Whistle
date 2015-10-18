@@ -33,6 +33,8 @@ class ProfilePhoneSetting: UITableViewController, UITextFieldDelegate
         super.viewDidLoad()
         phoneNumberTextField.delegate = self
         verificationCode = ""
+        phoneNumberTextField.textColor = UIColor.whiteColor()
+        verificationTextField.textColor = UIColor.whiteColor()
         configBarButton()
     }
     

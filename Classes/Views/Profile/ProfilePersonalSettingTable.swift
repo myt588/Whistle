@@ -67,7 +67,7 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     {
         portrait.layer.borderColor                      = Constants.Color.Border.CGColor
         portrait.layer.borderWidth                      = 2
-        portrait.layer.cornerRadius                     = 30
+        portrait.layer.cornerRadius                     = 37.5
         portrait.backgroundColor                        = Constants.Color.Border
     }
     

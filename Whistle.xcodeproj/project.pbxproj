@@ -61,6 +61,7 @@
 		89C31D521B7D2B8D009ADF1E /* ProfileOthersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D511B7D2B8D009ADF1E /* ProfileOthersView.swift */; };
 		89C31D541B7D2D88009ADF1E /* ProfileOthersTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D531B7D2D88009ADF1E /* ProfileOthersTable.swift */; };
 		89C31D561B7D2D99009ADF1E /* ProfileOthersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D551B7D2D99009ADF1E /* ProfileOthersCell.swift */; };
+		89D1C9171BD3409900F284D9 /* WEFontCustomize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */; };
 		89E57F1D1B57F3FD00983D1A /* WECustomize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E57F1C1B57F3FD00983D1A /* WECustomize.swift */; };
 		89E993F81B5FAF730061AAE4 /* KYCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */; };
 		89EBA35C1B5FF2FB0011D528 /* CarbonSwipeRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EBA3591B5FF2FB0011D528 /* CarbonSwipeRefresh.m */; };
@@ -425,6 +426,7 @@
 		89C31D511B7D2B8D009ADF1E /* ProfileOthersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersView.swift; sourceTree = "<group>"; };
 		89C31D531B7D2D88009ADF1E /* ProfileOthersTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersTable.swift; sourceTree = "<group>"; };
 		89C31D551B7D2D99009ADF1E /* ProfileOthersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersCell.swift; sourceTree = "<group>"; };
+		89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEFontCustomize.swift; sourceTree = "<group>"; };
 		89E57F1C1B57F3FD00983D1A /* WECustomize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECustomize.swift; sourceTree = "<group>"; };
 		89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KYCircularProgress.swift; sourceTree = "<group>"; };
 		89EBA3571B5FF2FB0011D528 /* CarbonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonKit.h; sourceTree = "<group>"; };
@@ -1159,6 +1161,7 @@
 				89F53AA81B57FB8700F0A2A2 /* WEVoiceBubble.swift */,
 				890D5D851B60149C00DFD609 /* WESlideTransition.swift */,
 				8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */,
+				89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */,
 			);
 			path = Customize;
 			sourceTree = "<group>";
@@ -2438,6 +2441,7 @@
 				893B797E1B5456AC00019CF7 /* WEAlertController.swift in Sources */,
 				94CFB0351B837B3300F681D8 /* SDWebImagePrefetcher.m in Sources */,
 				9441B4641B89AE34002EBEEE /* AudioMediaItem.m in Sources */,
+				89D1C9171BD3409900F284D9 /* WEFontCustomize.swift in Sources */,
 				94DED7C81B3EF144002B9F3B /* ImageCollectionViewCell.swift in Sources */,
 				9441B45F1B89AE34002EBEEE /* StickersView.m in Sources */,
 				942FA49E1B2F10E90050C3E3 /* OneShotLocationManager.swift in Sources */,

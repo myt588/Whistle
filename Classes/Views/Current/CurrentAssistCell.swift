@@ -38,6 +38,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
     //----------------------------------------------------------------------------------------------------------
     private var favor                                       : PFObject!
     private var row                                         : Int!
+    var interestCell                                        : Bool = false
     var vc                                                  : CurrentSwitcher!
     
     // MARK: - Initialization
@@ -74,10 +75,8 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
         portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
         
         banner.backgroundColor                              = Constants.Color.Banner
-        banner.alpha                                        = 0.85
-        wrapper.alpha                                       = 0.85
-    
-        headerLabel.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
+        banner.layer.cornerRadius                           = 12
+        wrapper.backgroundColor                             = Constants.Color.ContentBackground
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -88,8 +87,13 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
             self.favor = favor
             self.row = row
             
-            let status = favor[Constants.Favor.Status] as! Int
-            buttonsView.takerState(status)
+            if interestCell
+            {
+                buttonsView.takerState(1)   
+            } else {
+                let status = favor[Constants.Favor.Status] as! Int
+                buttonsView.takerState(status)
+            }
             
             var user : PFUser = favor[Constants.Favor.CreatedBy] as! PFUser
             portraitView.user = user

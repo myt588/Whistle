@@ -22,7 +22,6 @@ class ProfileRateCell: WECell {
     @IBOutlet weak var nameLabel: WEContentLabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var portraitView                         : WEImageView!
-    @IBOutlet weak var lvLabel                              : WEContentLabel!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -57,14 +56,13 @@ class ProfileRateCell: WECell {
         backgroundColor = UIColor.clearColor()
         
         bannerView.backgroundColor = Constants.Color.Banner
-        bannerView.alpha = 0.85
-        wrapperView.alpha = 0.85
+        bannerView.layer.cornerRadius = 8
+        wrapperView.backgroundColor = Constants.Color.ContentBackground
+        wrapperView.alpha = 0.65
         
         portraitView.layer.borderWidth = 3
         portraitView.layer.borderColor = Constants.Color.Border.CGColor
         portraitView.layer.cornerRadius = 40
-        
-        commentHeader.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
     }
 
 }

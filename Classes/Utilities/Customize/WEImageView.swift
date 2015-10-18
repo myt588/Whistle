@@ -37,7 +37,8 @@ class WEImageView: PFImageView
     func longPressed(sender: UILongPressGestureRecognizer)
     //----------------------------------------------------------------------------------------------------------
     {
-        if sender.state == UIGestureRecognizerState.Began {
+        if sender.state == UIGestureRecognizerState.Began
+        {
             let viewController = ProfileASController()
             viewController.user = user
             let alert = WEAlertController(view: viewController.view, style: .ActionSheet)
@@ -47,7 +48,8 @@ class WEImageView: PFImageView
     
     func tapped(sender: UITapGestureRecognizer) {
         println("picture tapped")
-        if let base = UIApplication.topViewController() {
+        if let base = UIApplication.topViewController()
+        {
             var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileOthers") as! ProfileOthersView
             vc.user = self.user
             base.navigationController?.pushViewController(vc, animated: true)

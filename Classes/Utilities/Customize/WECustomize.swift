@@ -14,11 +14,12 @@ class WETable: UITableView
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        backgroundColor                             = Constants.Color.TableBackground
-        var darkBlur                                = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        var blurView                                = UIVisualEffectView(effect: darkBlur)
-        backgroundView                              = blurView
-        contentInset                                = UIEdgeInsetsMake(0, 0, YALTabBarViewDefaultHeight, 0)
+//        backgroundColor                             = Constants.Color.TableBackground
+//        var darkBlur                                = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+//        var blurView                                = UIVisualEffectView(effect: darkBlur)
+//        backgroundView                              = blurView
+        backgroundColor = Constants.Color.Background
+        contentInset = UIEdgeInsetsMake(20, 0, YALTabBarViewDefaultHeight, 0)
     }
 }
 
@@ -51,14 +52,14 @@ class WEHeaderIcon: UIImageView
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.borderColor                           = Constants.Color.Border.CGColor
-        layer.borderWidth                           = 2
-        layer.cornerRadius                          = 16
-        backgroundColor                             = Constants.Color.Border
-        let origImage                               = image
-        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        image                                       = tintedImage
-        tintColor                                   = Constants.Color.Background
+//        layer.borderColor                           = Constants.Color.Border.CGColor
+//        layer.borderWidth                           = 2
+//        layer.cornerRadius                          = 16
+//        backgroundColor                             = Constants.Color.Border
+//        let origImage                               = image
+//        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+//        image                                       = tintedImage
+//        tintColor                                   = Constants.Color.Background
     }
 }
 
@@ -68,7 +69,7 @@ class WEHeaderLine: UIImageView
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        backgroundColor                             = Constants.Color.Border
+        backgroundColor                             = Constants.Color.Main
     }
 }
 
@@ -78,7 +79,7 @@ class WEHeaderDot: UIView
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        backgroundColor                             = Constants.Color.Border
+        backgroundColor                             = Constants.Color.Main
         layer.cornerRadius                          = 6
     }
 }
@@ -183,19 +184,47 @@ class WEMapButton: UIButton
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        tintColor                                   = Constants.Color.NavigationBar
+        tintColor                                   = Constants.Color.Main
         let origImage                               = imageView!.image
         let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         setImage(tintedImage, forState: .Normal)
         
-        var darkBlur                                = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        var blurView                                = UIVisualEffectView(effect: darkBlur)
-        blurView.frame                              = bounds
-        blurView.userInteractionEnabled             = false
-        insertSubview(blurView, atIndex: 0)
-        clipsToBounds = true
+//        var darkBlur                                = UIBlurEffect(style: UIBlurEffectStyle.Light)
+//        var blurView                                = UIVisualEffectView(effect: darkBlur)
+//        blurView.frame                              = bounds
+//        blurView.userInteractionEnabled             = false
+//        insertSubview(blurView, atIndex: 0)
+//        clipsToBounds = true
         
-        alpha = 0.9
+        alpha = 1
+    }
+}
+
+class WETintImageView: UIImageView {
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        tintColor                                   = Constants.Color.Main
+        let origImage                               = image
+        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        image = tintedImage
+    }
+}
+
+class WEProfileTextField: UITextField {
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        layer.cornerRadius = 8
+        backgroundColor = Constants.Color.ContentBackground
+        textColor = UIColor.whiteColor()
+    }
+}
+
+class WEProfileTextView: UITextView {
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        layer.cornerRadius = 8
+        backgroundColor = Constants.Color.ContentBackground
+        textColor = UIColor.whiteColor()
     }
 }
 

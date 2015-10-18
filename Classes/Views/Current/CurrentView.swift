@@ -42,8 +42,8 @@ class CurrentView: UIViewController, CarbonTabSwipeDelegate
         var names = ["My Favor", "My Assist", "My Interest", "History"]
         var color = Constants.Color.Main
         tabSwipe = CarbonTabSwipeNavigation().createWithRootViewController(self, tabNames: names, tintColor: color, delegate: self)
-        tabSwipe.setNormalColor(Constants.Color.TextLight)
-        tabSwipe.setSelectedColor(Constants.Color.TextLight)
+        tabSwipe.setNormalColor(UIColor.blackColor())
+        tabSwipe.setSelectedColor(UIColor.blackColor())
         tabSwipe.setIndicatorHeight(3)
     }
     

@@ -27,6 +27,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     // Map
     //----------------------------------------------------------------------------------------------------------
+    @IBOutlet weak var topBanner                            : UIView!
     @IBOutlet weak var mapView                              : MKMapView!
     @IBOutlet weak var refreshButton                        : WEMapButton!
     @IBOutlet weak var centerOnUserButton                   : WEMapButton!
@@ -46,6 +47,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var audioView                            : FSVoiceBubble!
+    @IBOutlet weak var bannerRightView                      : UIView!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -130,7 +132,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         super.viewWillAppear(animated)
         TSMessage.setDelegate(self)
         TSMessage.setDefaultViewController(self)
-        view.backgroundColor = Constants.Color.Main
+        view.backgroundColor = Constants.Color.Background
         (tabBarController as? YALFoldingTabBarController)?.tabBarView.hidden = false
     }
     
@@ -535,8 +537,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
-        centerOnUserButton.layer.cornerRadius = 15
-        refreshButton.layer.cornerRadius = 15
+//        centerOnUserButton.layer.cornerRadius = 15
+//        refreshButton.layer.cornerRadius = 15
+        topBanner.backgroundColor = Constants.Color.Background
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -547,12 +550,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         portraitImageView.layer.borderWidth                         = 3
         portraitImageView.layer.cornerRadius                        = portraitImageView.frame.height/2
         portraitImageView.alpha                                     = 1
-        nameLabel.textColor                                         = Constants.Color.TextLight
         nameLabel.shadowOffset                                      = CGSizeMake(0, -1)
         nameLabel.layer.cornerRadius                                = 8
         bannerView.backgroundColor                                  = Constants.Color.Banner
-        bannerView.alpha                                            = 0.85
+        bannerView.roundCorners(.TopRight | .BottomRight, radius: 8)
+        bannerRightView.roundCorners(.TopRight | .BottomRight, radius: 8)
     }
+    
     //----------------------------------------------------------------------------------------------------------
     func configtagView()
     //----------------------------------------------------------------------------------------------------------
@@ -562,17 +566,19 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         
         tagView.backgroundColor = UIColor.clearColor()
         
-        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-        var blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = tagView.bounds
-        blurView.userInteractionEnabled = false
-        tagView.insertSubview(blurView, atIndex: 0)
-        tagView.clipsToBounds = true
+//        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
+//        var blurView = UIVisualEffectView(effect: darkBlur)
+//        blurView.frame = tagView.bounds
+//        blurView.userInteractionEnabled = false
+//        tagView.insertSubview(blurView, atIndex: 0)
+//        tagView.clipsToBounds = true
         
-        tagView.layer.cornerRadius = 15
+//        tagView.layer.cornerRadius = 15
         tagView.maskDisabled = true
         tagView.font = UIFont(name: "HelveticaNeue-Light", size: 14)!
-        tagView.highlightedFont = UIFont(name: "HelveticaNeue", size: 16)!
+        tagView.highlightedFont = UIFont(name: "HelveticaNeue-Light", size: 14)!
+        tagView.textColor = UIColor.whiteColor()
+        tagView.highlightedTextColor = UIColor.whiteColor()
         tagView.interitemSpacing = 12
         tagView.pickerViewStyle = AKPickerViewStyle.Flat
     }

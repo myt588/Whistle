@@ -306,7 +306,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     func setTopMargin2()
     //----------------------------------------------------------------------------------------------------------
     {
-        tableView.contentInset                                      = UIEdgeInsetsMake(100, 0, YALTabBarViewDefaultHeight + 30, 0)
+        tableView.contentInset                                      = UIEdgeInsetsMake(130, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -315,7 +315,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     func setTopMargin1()
     //----------------------------------------------------------------------------------------------------------
     {
-        tableView.contentInset                                      = UIEdgeInsetsMake(35, 0, YALTabBarViewDefaultHeight + 30, 0)
+        tableView.contentInset                                      = UIEdgeInsetsMake(60, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
     //----------------------------------------------------------------------------------------------------------

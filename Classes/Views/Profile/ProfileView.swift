@@ -78,6 +78,7 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(animated)
+//        navigationController?.navigationBar.tintColor = Constants.Color.Main2
         navigationController?.navigationBar.translucent         = true
         (tabBarController as? YALFoldingTabBarController)?.tabBarView.hidden = false
     }
@@ -131,17 +132,19 @@ class ProfileView: UIViewController, ProfileScrollDelegate
         portraitView.layer.borderColor                          = Constants.Color.TextLight.CGColor
         portraitView.layer.borderWidth                          = 2
         
-        totalView.alpha                                         = 0.92
-        totalView.backgroundColor                               = Constants.Color.Border
+        rateView.tintColor                                      = Constants.Color.Main
         
-        totalEarnLabel.layer.borderWidth                        = 0
-        totalEarnLabel.layer.cornerRadius                       = 12
-        totalEarnLabel.layer.backgroundColor                    = Constants.Color.Border.CGColor
-        totalEarnLabel.textColor                                = Constants.Color.CellBackground
-        totalSpentLabel.layer.borderWidth                       = 0
-        totalSpentLabel.layer.cornerRadius                      = 12
-        totalSpentLabel.layer.backgroundColor                   = Constants.Color.Border.CGColor
-        totalSpentLabel.textColor                               = Constants.Color.CellBackground
+        totalView.alpha                                         = 0.92
+        totalView.backgroundColor                               = Constants.Color.ContentBackground
+        
+//        totalEarnLabel.layer.borderWidth                        = 0
+//        totalEarnLabel.layer.cornerRadius                       = 12
+//        totalEarnLabel.layer.backgroundColor                    = Constants.Color.Border.CGColor
+//        totalEarnLabel.textColor                                = Constants.Color.CellBackground
+//        totalSpentLabel.layer.borderWidth                       = 0
+//        totalSpentLabel.layer.cornerRadius                      = 12
+//        totalSpentLabel.layer.backgroundColor                   = Constants.Color.Border.CGColor
+//        totalSpentLabel.textColor                               = Constants.Color.CellBackground
     }
     
     //----------------------------------------------------------------------------------------------------------

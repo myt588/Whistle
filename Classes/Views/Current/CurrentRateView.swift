@@ -14,11 +14,11 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var countLabel: WEContentLabel!
     
-    @IBOutlet weak var star1: UIImageView!
-    @IBOutlet weak var star2: UIImageView!
-    @IBOutlet weak var star3: UIImageView!
-    @IBOutlet weak var star4: UIImageView!
-    @IBOutlet weak var star5: UIImageView!
+    @IBOutlet weak var star1: WETintImageView!
+    @IBOutlet weak var star2: WETintImageView!
+    @IBOutlet weak var star3: WETintImageView!
+    @IBOutlet weak var star4: WETintImageView!
+    @IBOutlet weak var star5: WETintImageView!
     
     private var rating: Int = 0
     var favor: PFObject?
@@ -79,6 +79,7 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
         var stars = [star1, star2, star3, star4, star5]
         for element in stars {
             element.userInteractionEnabled = true
+            element.tintColor = Constants.Color.Main
         }
     }
     

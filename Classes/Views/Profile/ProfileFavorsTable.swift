@@ -53,7 +53,6 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        tableView.backgroundColor                               = Constants.Color.TableBackground
         tableView.contentInset                                  = UIEdgeInsetsMake(35, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
@@ -157,13 +156,13 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.y > pointNow?.y {
-            delegate?.expand()
+//            delegate?.expand()
         }
     }
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (scrollView.contentOffset.y < -50) {
-            delegate?.shrink()
+//            delegate?.shrink()
         }
     }
     

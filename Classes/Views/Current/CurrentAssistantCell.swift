@@ -55,16 +55,13 @@ class CurrentAssistantCell: UITableViewCell
         portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
         
         bannerView.backgroundColor                          = Constants.Color.Banner
-        bannerView.alpha                                    = 0.85
-        wrapper.alpha                                       = 0.85
+        bannerView.layer.cornerRadius                       = 12
+        wrapper.backgroundColor                             = Constants.Color.ContentBackground
         
-        priceLabel.textColor                                = Constants.Color.TextLight
-        distanceLabel.textColor                             = Constants.Color.TextLight
-        
-        hireButton.layer.cornerRadius                       = 20
-        hireButton.layer.borderColor                        = Constants.Color.Border.CGColor
-        hireButton.layer.borderWidth                        = 0.3
-        hireButton.setTitleColor(Constants.Color.TextLight, forState: .Normal)
+//        hireButton.layer.cornerRadius                       = 20
+//        hireButton.layer.borderColor                        = Constants.Color.Border.CGColor
+//        hireButton.layer.borderWidth                        = 0.3
+//        hireButton.setTitleColor(Constants.Color.TextLight, forState: .Normal)
     }
     
     func bindData(user: PFUser?, favor: PFObject){

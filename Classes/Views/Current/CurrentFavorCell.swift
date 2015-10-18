@@ -83,19 +83,19 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         backgroundColor                                     = UIColor.clearColor()
-
+        statusLabel.textColor                               = UIColor.blackColor()
+        
         bannerView.backgroundColor                          = Constants.Color.Banner
-        bannerView.alpha                                    = 0.85
-        wrapperView.alpha                                   = 0.85
+        wrapperView.backgroundColor                         = Constants.Color.ContentBackground
         
         portraitView.layer.borderWidth                      = 3
         portraitView.layer.borderColor                      = Constants.Color.Border.CGColor
-        portraitView.layer.cornerRadius                     = statusButton.layer.frame.height/2
+        portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
         
-        statusButton.layer.borderWidth                      = 3
-        statusButton.layer.borderColor                      = Constants.Color.Border.CGColor
-        statusButton.layer.cornerRadius                     = statusButton.layer.frame.height/2
-        statusButton.layer.backgroundColor                  = UIColorFromHex(0x9198A0, alpha: 1).CGColor
+//        statusButton.layer.borderWidth                      = 3
+//        statusButton.layer.borderColor                      = Constants.Color.Border.CGColor
+//        statusButton.layer.cornerRadius                     = statusButton.layer.frame.height/2
+//        statusButton.layer.backgroundColor                  = UIColorFromHex(0x9198A0, alpha: 1).CGColor
         
         favorHeader.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
     }

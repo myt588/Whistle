@@ -28,6 +28,10 @@
 	unselectedImage = [UIImage imageNamed:deselectedImage];
 	partlySelectedImage = halfSelectedImage == nil ? unselectedImage : [UIImage imageNamed:halfSelectedImage];
 	fullySelectedImage = [UIImage imageNamed:fullSelectedImage];
+    
+    unselectedImage = [unselectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    partlySelectedImage = [partlySelectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    fullySelectedImage = [fullySelectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	
 	height=0.0; width=0.0;
 	if (height < [fullySelectedImage size].height) {
@@ -52,10 +56,15 @@
 	starRating = 0;
 	lastRating = 0;
 	s1 = [[UIImageView alloc] initWithImage:unselectedImage];
+    [s1 setTintColor:[UIColor colorWithRed:252.0/255 green:203.0/255 blue:0.0 alpha:1]];
 	s2 = [[UIImageView alloc] initWithImage:unselectedImage];
+    [s2 setTintColor:[UIColor colorWithRed:252.0/255 green:203.0/255 blue:0.0 alpha:1]];
 	s3 = [[UIImageView alloc] initWithImage:unselectedImage];
+    [s3 setTintColor:[UIColor colorWithRed:252.0/255 green:203.0/255 blue:0.0 alpha:1]];
 	s4 = [[UIImageView alloc] initWithImage:unselectedImage];
+    [s4 setTintColor:[UIColor colorWithRed:252.0/255 green:203.0/255 blue:0.0 alpha:1]];
 	s5 = [[UIImageView alloc] initWithImage:unselectedImage];
+    [s5 setTintColor:[UIColor colorWithRed:252.0/255 green:203.0/255 blue:0.0 alpha:1]];
 	
 	[s1 setFrame:CGRectMake(0,         0, width, height)];
 	[s2 setFrame:CGRectMake(width,     0, width, height)];

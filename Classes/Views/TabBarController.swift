@@ -13,7 +13,7 @@ class TabBarController : YALFoldingTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
-            leftItemImage: UIImage(named: "edit_icon"),
+            leftItemImage: UIImage(named: "tab_new"),
             rightItemImage: UIImage(named: "tab_interest"))
         let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
             leftItemImage: UIImage(named: "edit_icon"),
@@ -26,13 +26,13 @@ class TabBarController : YALFoldingTabBarController {
             leftItemImage: nil,
             rightItemImage: nil)
         self.rightBarItems = [item3, item4]
-        self.centerButtonImage = UIImage(named: "plus_icon")
-        
+        self.centerButtonImage = UIImage(named: "tab_plus")
+
         //customize tabBarView
         self.tabBarView.extraTabBarItemHeight = YALExtraTabBarItemsDefaultHeight
         self.tabBarView.offsetForExtraTabBarItems = YALForExtraTabBarItemsDefaultOffset
-        self.tabBarView.backgroundColor = UIColor(red: 94.0/255.0, green: 91.0/255.0, blue: 149.0/255.0, alpha: 0)
-        self.tabBarView.tabBarColor = UIColor(red: 72.0/255.0, green: 211.0/255.0, blue: 178.0/255.0, alpha: 1)
+        self.tabBarView.backgroundColor = UIColor.clearColor()
+        self.tabBarView.tabBarColor = Constants.Color.Main
         self.tabBarViewHeight = YALTabBarViewDefaultHeight
         self.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
         self.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets

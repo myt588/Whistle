@@ -557,17 +557,17 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 		return 0.0
 	}
 
-	public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-		let number = self.collectionView(collectionView, numberOfItemsInSection: section)
-		let firstIndexPath = NSIndexPath(forItem: 0, inSection: section)
-		let firstSize = self.collectionView(collectionView, layout: collectionView.collectionViewLayout, sizeForItemAtIndexPath: firstIndexPath)
-		let lastIndexPath = NSIndexPath(forItem: number - 1, inSection: section)
-		let lastSize = self.collectionView(collectionView, layout: collectionView.collectionViewLayout, sizeForItemAtIndexPath: lastIndexPath)
-		return UIEdgeInsetsMake(
-			0, (collectionView.bounds.size.width - firstSize.width) / 2,
-			0, (collectionView.bounds.size.width - lastSize.width) / 2
-		)
-	}
+//	public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//		let number = self.collectionView(collectionView, numberOfItemsInSection: section)
+//		let firstIndexPath = NSIndexPath(forItem: 0, inSection: section)
+//		let firstSize = self.collectionView(collectionView, layout: collectionView.collectionViewLayout, sizeForItemAtIndexPath: firstIndexPath)
+//		let lastIndexPath = NSIndexPath(forItem: number - 1, inSection: section)
+//		let lastSize = self.collectionView(collectionView, layout: collectionView.collectionViewLayout, sizeForItemAtIndexPath: lastIndexPath)
+//		return UIEdgeInsetsMake(
+//			0, (collectionView.bounds.size.width - firstSize.width) / 2,
+//			0, (collectionView.bounds.size.width - lastSize.width) / 2
+//		)
+//	}
 
 	// MARK: UICollectionViewDelegate
 	public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -576,11 +576,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
         
         if contains(selectedItems, indexPath.item) {
             selectedItems.removeObject(indexPath.item)
-            cell!.layer.backgroundColor = UIColor.clearColor().CGColor
+            cell!.addBottomBorderWithHeight(3, color: Constants.Color.Background)
         } else {
             self.selectItem(indexPath.item, animated: true)
             selectedItems.append(indexPath.item)
-            cell!.layer.backgroundColor = Constants.Color.Main.CGColor
+            cell!.addBottomBorderWithHeight(3, color: Constants.Color.Main)
         }
 		
         self.delegate?.pickerView?(self, didSelectItems: selectedItems)
