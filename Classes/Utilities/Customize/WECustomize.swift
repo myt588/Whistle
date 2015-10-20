@@ -108,21 +108,21 @@ class WEContentLabelWithBackground: UILabel
 {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        textColor                                   = Constants.Color.CellText
-        shadowColor                                 = Constants.Color.CellTextShadow
-        shadowOffset                                = CGSizeMake(0, 0.5)
-        layer.borderColor                           = Constants.Color.ContentBackground.CGColor
-        layer.borderWidth                           = 2
-        layer.cornerRadius                          = 6
-        layer.backgroundColor                       = Constants.Color.ContentBackground.CGColor
-        let fontSize                                = font.pointSize
-        font                                        = UIFont(name: Constants.DefaultContentFont, size: fontSize)
+//        textColor                                   = Constants.Color.CellText
+//        shadowColor                                 = Constants.Color.CellTextShadow
+//        shadowOffset                                = CGSizeMake(0, 0.5)
+//        layer.borderColor                           = Constants.Color.ContentBackground.CGColor
+//        layer.borderWidth                           = 2
+//        layer.cornerRadius                          = 6
+//        layer.backgroundColor                       = Constants.Color.ContentBackground.CGColor
+//        let fontSize                                = font.pointSize
+//        font                                        = UIFont(name: Constants.DefaultContentFont, size: fontSize)
     }
     
-    override func drawRect(rect: CGRect) {
-        var insets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, insets))
-    }
+//    override func drawRect(rect: CGRect) {
+//        var insets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+//        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, insets))
+//    }
 }
 
 //----------------------------------------------------------------------------------------------------------

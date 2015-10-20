@@ -70,6 +70,7 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
     {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.translucent = true
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -119,26 +120,15 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
     func configNavBar()
     //----------------------------------------------------------------------------------------------------------
     {
-        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Action", style: .Plain, target: self, action:"action")
+        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
     }
     
     func action()
     {
-        let alert = WEAlertController(title: nil, message: nil, style: .ActionSheet)
-        alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
-        alert.addAction(SimpleAlert.Action(title: "Messages", style: .Default) { action in
-            let user1 = PFUser.currentUser()
-            let groupId = StartPrivateChat(user1!, self.user!)
-            let chatView = ChatView(with: groupId)
-            self.navigationController?.pushViewController(chatView, animated: true)
-            })
-        alert.addAction(SimpleAlert.Action(title: "Report", style: .Default) { action in
-            
-            })
-        alert.addAction(SimpleAlert.Action(title: "Add Friend", style: .Default) { action in
-            
-            })
-        presentViewController(alert, animated: true, completion: nil)
+        let user1 = PFUser.currentUser()
+        let groupId = StartPrivateChat(user1!, self.user!)
+        let chatView = ChatView(with: groupId)
+        self.navigationController?.pushViewController(chatView, animated: true)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -187,8 +177,15 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
             
         }
         
-        rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
-        rateView.displayRating(3.5)
+        user.fetchInBackgroundWithBlock { (user, error) -> Void in
+            if let user = user as? PFUser
+            {
+                self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
+                self.rateView.displayRating(user[Constants.User.Rating] as! Float)
+                self.totalRateLabel.text = "\(user[Constants.User.Rates] as! Int) Reviews"
+                self.overallLabel.text = "\(user[Constants.User.Rating] as! Float)/5.0"
+            }
+        }
     }
     
     func expand() {

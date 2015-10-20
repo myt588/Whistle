@@ -102,6 +102,7 @@ class ProfileEditSingleView : UITableViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
         switch type
         {
         case "ID":

@@ -41,8 +41,8 @@ class ProfileChangeStatusTable: UITableViewController, UITextViewDelegate
     {
         super.viewWillAppear(true)
         statusTextView.becomeFirstResponder()
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
     }
-    
     
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------

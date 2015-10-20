@@ -57,6 +57,11 @@ class CurrentView: UIViewController, CarbonTabSwipeDelegate
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
+    }
+    
     // MARK: - Delegates
     //----------------------------------------------------------------------------------------------------------
     func tabSwipeNavigation(tabSwipe: CarbonTabSwipeNavigation!, viewControllerAtIndex index: UInt) -> UIViewController!

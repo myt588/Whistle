@@ -98,12 +98,18 @@ class ProfileASController: UIViewController
             regionLabel.text = user[Constants.User.Region] as? String
             var genderImageName = (user[Constants.User.Gender] as? String) == "male" ? "profile_male" : "profile_female"
             genderImage.image = UIImage(named: genderImageName)
+            user.fetchInBackgroundWithBlock { (user, error) -> Void in
+                if let user = user as? PFUser
+                {
+                    self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
+                    self.rateView.displayRating(user[Constants.User.Rating] as! Float)
+                }
+            }
+
         } else {
 
         }
         
-        rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
-        rateView.displayRating(3.5)
     }
     
 }

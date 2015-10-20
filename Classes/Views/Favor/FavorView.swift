@@ -19,7 +19,7 @@ import Parse
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, TSMessageViewProtocol, FBClusteringManagerDelegate, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
+class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, FBClusteringManagerDelegate, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -130,10 +130,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(animated)
-        TSMessage.setDelegate(self)
-        TSMessage.setDefaultViewController(self)
         view.backgroundColor = Constants.Color.Background
-        (tabBarController as? YALFoldingTabBarController)?.tabBarView.hidden = false
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
+        loadTagView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -152,8 +151,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
 //            var vertical: Double?, horizontal: Double?
 //            badgeLabel.frame = CGRectMake(button.bounds.size.width/2, badgeSize.height/2 - 5, badgeSize.width, badgeSize.height)
 //            button.addSubview(badgeLabel)
-
-            loadTagView()
         } else {
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
@@ -271,13 +268,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         if !didSelectFavor {
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "Please select a favor first.", type: TSMessageNotificationType.Warning)
+            MessageHandler.message(MessageName.SelectFavorFirst)
             return
         }
         if let favor = favors[index] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
-                    TSMessage.showNotificationWithTitle("Warning", subtitle: "You can not pick your own favor", type: TSMessageNotificationType.Warning)
+                    MessageHandler.message(MessageName.CannotSelectOwn)
                     return
                 }
             }
@@ -331,15 +328,19 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 }
                 relationTable.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
-                        TSMessage.showNotificationWithTitle("Interested", subtitle: "Successfully interested the favor.", type: TSMessageNotificationType.Success)
+                        MessageHandler.message(MessageName.Interested)
                         favor[Constants.Favor.Status] = 1
-                        favor.saveInBackground()
-                        let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                        SendPushNotification2([user.objectId!], "Has interested in your favor")
-                        self.addFriend(user)
+                        favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if success {
+                                let user = favor[Constants.Favor.CreatedBy] as! PFUser
+                                SendPushNotification2([user.objectId!], "Has interested in your favor")
+                                self.addFriend(user)
+                            } else {
+                                ParseErrorHandler.handleParseError(error)
+                            }
+                        })
                     } else {
                         ParseErrorHandler.handleParseError(error)
-                        TSMessage.showNotificationWithTitle("Interest Failed", subtitle: "There is some problem occured,\nPlease try again.", type: TSMessageNotificationType.Error)
                     }
                 })
             }
@@ -351,19 +352,25 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         let people = PFObject(className: Constants.People.Name)
         people[Constants.People.User1] = PFUser.currentUser()!
         people[Constants.People.User2] = user
-        people.saveInBackground()
-        StartPrivateChat(user, PFUser.currentUser()!)
+        people.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+                StartPrivateChat(user, PFUser.currentUser()!)
+            } else {
+                ParseErrorHandler.handleParseError(error)
+            }
+        }
     }
     
     func interestState(favor: PFObject) {
         let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
         query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
         query.whereKey(Constants.FavorUserPivotTable.Takers, equalTo: PFUser.currentUser()!)
-        query.countObjectsInBackgroundWithBlock({ (count, error) -> Void in
-            if count == 0 {
-                self.isInterested(false)
-            } else {
+        query.getFirstObjectInBackgroundWithBlock({ (object, error) -> Void in
+            if let object = object {
                 self.isInterested(true)
+            } else {
+                ParseErrorHandler.handleParseError(error)
+                self.isInterested(false)
             }
         })
     }
@@ -432,7 +439,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 NSNotificationCenter.defaultCenter().postNotificationName("loadFavors", object: nil)
             } else {
                 ParseErrorHandler.handleParseError(error)
-                TSMessage.showNotificationWithTitle("Connection Error", subtitle: "Please check your internet connection", type: TSMessageNotificationType.Error)
             }
         }
     }
@@ -518,7 +524,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     }
                 } else {
                     ParseErrorHandler.handleParseError(error)
-                    TSMessage.showNotificationWithTitle("Interest Failed", subtitle: "There is some problem occured,\nPlease try again.", type: TSMessageNotificationType.Error)
                 }
             })
         }
@@ -822,6 +827,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         dispatch_async(dispatch_get_main_queue()) {
                             self.nameLabel.text = user[Constants.User.Nickname] as? String
                         }
+                    } else {
+                        ParseErrorHandler.handleParseError(error)
                     }
                 })
             }
@@ -846,8 +853,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             } else {
                 self.audioView.hidden = true
             }
-        } else {
-            TSMessage.showNotificationWithTitle("No Favor", subtitle: "Please wait a little and refresh.", type: TSMessageNotificationType.Error)
         }
     }
     
@@ -896,11 +901,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                                             annotationView.setImageView(UIImage(data: data)!)
                                         }
                                     } else {
-                                        println("can't load image")
                                         ParseErrorHandler.handleParseError(error)
                                     }
                                 }
                             }
+                        } else {
+                            ParseErrorHandler.handleParseError(error)
                         }
                     })
                 }
@@ -1013,13 +1019,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         return 1.0
-    }
-
-    //----------------------------------------------------------------------------------------------------------
-    func customizeMessageView(messageView: TSMessageView!)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        messageView.alpha = 0.85
     }
     
     func expand() {

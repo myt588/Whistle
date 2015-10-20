@@ -10,12 +10,14 @@ import Foundation
 import Parse
 
 class ParseErrorHandler {
+    
     class func handleParseError(error: NSError?) {
+        TSMessage.setDefaultViewController(UIApplication.rootViewController())
         if let error = error {
             if error.domain != PFParseErrorDomain {
                 return
             }
-            println(error.code)
+            println("error code: \(error.code)")
             switch (error.code) {
             case PFErrorCode.ErrorInvalidSessionToken.rawValue:
                 handleInvalidSessionTokenError()
@@ -25,6 +27,8 @@ class ParseErrorHandler {
                 handleObjectNotFoundError()
             case PFErrorCode.ErrorConnectionFailed.rawValue:
                 handleConnectionFailedError()
+            case PFErrorCode.ErrorCacheMiss.rawValue:
+                handleCasheMissError()
             default:
                 break
             }
@@ -59,7 +63,6 @@ class ParseErrorHandler {
     
     private class func handleTimeOutError() {
         println("connection timeout")
-        ProgressHUD.showError("Connection Timeout, Please try again")
     }
     
     private class func handleObjectNotFoundError() {
@@ -68,6 +71,10 @@ class ParseErrorHandler {
     
     private class func handleConnectionFailedError() {
         println("failed to connect to Parse")
-        ProgressHUD.showError("Network Failed")
+    }
+    
+    private class func handleCasheMissError() {
+        println("Missing Cache")
+        
     }
 }

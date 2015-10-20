@@ -54,6 +54,7 @@ class ProfileSettingTable: UITableViewController
         if let user = PFUser.currentUser() {
             self.user = user
             self.title = "Settings"
+            (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
             bindData()
         } else {
             

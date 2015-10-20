@@ -3764,10 +3764,18 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Bhb-LV-zO4"/>
-                                    <constraint firstAttribute="centerY" secondItem="bFL-iD-1co" secondAttribute="centerY" id="GD3-ws-cOl"/>
-                                    <constraint firstItem="bFL-iD-1co" firstAttribute="leading" secondItem="qYl-k8-vUF" secondAttribute="leading" id="OZS-jE-9GV"/>
-                                    <constraint firstAttribute="centerY" secondItem="FBS-gr-G4c" secondAttribute="centerY" constant="-0.5" id="iZE-sY-Eqa"/>
-                                    <constraint firstAttribute="trailing" secondItem="FBS-gr-G4c" secondAttribute="trailing" id="xTo-JK-04j"/>
+                                    <constraint firstAttribute="centerY" secondItem="bFL-iD-1co" secondAttribute="centerY" id="GD3-ws-cOl">
+                                        <variation key="widthClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstItem="bFL-iD-1co" firstAttribute="leading" secondItem="qYl-k8-vUF" secondAttribute="leading" id="OZS-jE-9GV">
+                                        <variation key="widthClass=compact" constant="10"/>
+                                    </constraint>
+                                    <constraint firstAttribute="centerY" secondItem="FBS-gr-G4c" secondAttribute="centerY" constant="-0.5" id="iZE-sY-Eqa">
+                                        <variation key="widthClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstAttribute="trailing" secondItem="FBS-gr-G4c" secondAttribute="trailing" id="xTo-JK-04j">
+                                        <variation key="widthClass=compact" constant="10"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                         </subviews>

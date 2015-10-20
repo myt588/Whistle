@@ -14,7 +14,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
+class CurrentAssistantTable: UITableViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // Parse
@@ -22,8 +22,6 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
     private var pivots: NSMutableArray = NSMutableArray()
     
     // MARK: - Variables
-    //----------------------------------------------------------------------------------------------------------
-    private var rc = YALSunnyRefreshControl()
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Initializations
@@ -35,7 +33,8 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
         tableView.autoresizesSubviews = true
         tableView.estimatedRowHeight = 150
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        rc = YALSunnyRefreshControl.attachToScrollView(self.tableView, target: self, refreshAction: "loadUsers")
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: "loadUsers", forControlEvents: UIControlEvents.ValueChanged)
         loadUsers()
     }
     
@@ -44,9 +43,13 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidAppear(true)
-        TSMessage.setDelegate(self)
-        TSMessage.setDefaultViewController(self)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
+    }
+
     
     // MARK: - IBActions
     //----------------------------------------------------------------------------------------------------------
@@ -59,7 +62,7 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
         if let favor = favor {
             self.favor = favor
         } else {
-            TSMessage.showNotificationWithTitle("Error", subtitle: "no favor loaded", type: TSMessageNotificationType.Error)
+            println("no favor loaded")
         }
     }
     
@@ -77,9 +80,9 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
                 self.pivots.addObjectsFromArray(objects!)
                 self.tableView.reloadData()
             } else {
-                TSMessage.showNotificationWithTitle("No Internet", subtitle: "Please check your internet connection", type: TSMessageNotificationType.Error)
+                ParseErrorHandler.handleParseError(error)
             }
-            self.rc.endRefreshing()
+            self.refreshControl?.endRefreshing()
         }
     }
     
@@ -108,7 +111,7 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
             cell.hireButton.tag = indexPath.row
             cell.hireButton.addTarget(self, action: "hire:", forControlEvents: .TouchUpInside)
         } else {
-            TSMessage.showNotificationWithTitle("Error", subtitle: "no pivot loaded", type: TSMessageNotificationType.Error)
+            println("no pivot loaded")
         }
         return cell
     }
@@ -121,34 +124,23 @@ class CurrentAssistantTable: UITableViewController, TSMessageViewProtocol
             if let user = pivot[Constants.FavorUserPivotTable.Takers] as? PFUser {
                 favor[Constants.Favor.AssistedBy] = user
                 favor[Constants.Favor.Status] = 2
-                favor.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    if error == nil {
-                        if let ownerPrice = self.favor[Constants.Favor.Price] as? Int {
-                            if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
-                                if ownerPrice != takerPrice {
-                                    self.favor[Constants.Favor.Price] = takerPrice
-                                    self.favor.saveInBackground()
-                                    SendPushNotification2([user.objectId!], "Has hired you")
-                                    self.navigationController?.popViewControllerAnimated(true)
-                                }
-                            }
-                        } else {
-                            self.navigationController?.popViewControllerAnimated(true)
+                if let ownerPrice = favor[Constants.Favor.Price] as? Int {
+                    if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
+                        if ownerPrice != takerPrice {
+                            self.favor[Constants.Favor.Price] = takerPrice
                         }
-                        TSMessage.showNotificationWithTitle("Success", subtitle: "Assistant hired successfully.", type: TSMessageNotificationType.Success)
+                    }
+                }
+                favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if success {
+                        SendPushNotification2([user.objectId!], "Has hired you")
+                        self.navigationController?.popViewControllerAnimated(true)
+                        MessageHandler.message(MessageName.Hired)
                     } else {
-                        TSMessage.showNotificationWithTitle("Error", subtitle: "Something went wrong, please try again.", type: TSMessageNotificationType.Error)
+                        ParseErrorHandler.handleParseError(error)
                     }
                 })
             }
         }
     }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func customizeMessageView(messageView: TSMessageView!)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        messageView.alpha = 0.85
-    }
-    
 }

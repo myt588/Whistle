@@ -24,6 +24,8 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     //----------------------------------------------------------------------------------------------------------
     var favors : NSMutableArray                                 = NSMutableArray()
     var pointNow : CGPoint?
+    var totalEarned : Int                                       = Int()
+    var totalSpent : Int                                        = Int()
     var delegate : ProfileScrollDelegate?
     //----------------------------------------------------------------------------------------------------------
     
@@ -62,9 +64,15 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     {
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         favorQuery.whereKey(Constants.Favor.CreatedBy, equalTo: PFUser.currentUser()!)
+        favorQuery.whereKey(Constants.Favor.Status, containedIn: [
+            Status.OwnerConfirmed.hashValue
+            ])
         
         let assistQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         assistQuery.whereKey(Constants.Favor.AssistedBy, equalTo: PFUser.currentUser()!)
+        assistQuery.whereKey(Constants.Favor.Status, containedIn: [
+            Status.OwnerConfirmed.hashValue
+            ])
         
         let query : PFQuery = PFQuery.orQueryWithSubqueries([favorQuery, assistQuery])
         query.orderByDescending(Constants.Favor.UpdatedAt)
@@ -120,8 +128,10 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
             if indexPath.row > 1 {
                 let prevFavor = favors[indexPath.row-2] as! PFObject
                 cell.bindData(favor, previousFavor: prevFavor)
+                cell.vc = self
             } else if indexPath.row != favors.count+1 {
                 cell.bindData(favor, previousFavor: nil)
+                cell.vc = self
             }
         }
         

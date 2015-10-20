@@ -65,7 +65,7 @@ class CurrentReportView: UIViewController, UITextViewDelegate {
     
     func submit() {
         if textView.text == "" {
-            ProgressHUD.showError("Please specify your reason")
+            MessageHandler.message(MessageName.NeedReason)
             return
         }
         if let favor = self.favor {
@@ -77,7 +77,7 @@ class CurrentReportView: UIViewController, UITextViewDelegate {
                 userReport[Constants.UserReportPivotTable.Reason] = textView.text
                 userReport.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
-                        TSMessage.showNotificationWithTitle("Report", subtitle: "Your Report has been posted on \(user[Constants.User.Nickname] as! String)'s wall", type: TSMessageNotificationType.Success)
+                        MessageHandler.message(MessageName.Reported)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 })

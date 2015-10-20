@@ -16,12 +16,12 @@ class TabBarController : YALFoldingTabBarController {
             leftItemImage: UIImage(named: "tab_new"),
             rightItemImage: UIImage(named: "tab_interest"))
         let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
-            leftItemImage: UIImage(named: "edit_icon"),
+            leftItemImage: nil,
             rightItemImage: nil)
         self.leftBarItems = [item1, item2]
         let item3 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "chats_icon"),
-            leftItemImage: UIImage(named: "new_chat_icon"),
-            rightItemImage: UIImage(named: "search_icon"))
+            leftItemImage: nil,
+            rightItemImage: nil)
         let item4 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "profile_icon"),
             leftItemImage: nil,
             rightItemImage: nil)
@@ -36,6 +36,11 @@ class TabBarController : YALFoldingTabBarController {
         self.tabBarViewHeight = YALTabBarViewDefaultHeight
         self.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
         self.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+            
+        
     }
 
 }

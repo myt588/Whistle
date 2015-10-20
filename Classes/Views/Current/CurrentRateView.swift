@@ -89,7 +89,7 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     
     func submit() {
         if rating == 0 {
-            ProgressHUD.showError("Please select a rate!")
+            MessageHandler.message(MessageName.NeedRate)
             return
         }
         if let favor = self.favor {
@@ -110,8 +110,10 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
             userReview[Constants.UserReviewPivotTable.Rating] = rating
             userReview.saveInBackgroundWithBlock({ (success, error) -> Void in
                 if success {
-                    TSMessage.showNotificationWithTitle("Review", subtitle: "Your review has been posted on \(user[Constants.User.Nickname] as! String)'s wall", type: TSMessageNotificationType.Success)
+                    MessageHandler.message(MessageName.Reviewed)
                     self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    ParseErrorHandler.handleParseError(error)
                 }
             })
 

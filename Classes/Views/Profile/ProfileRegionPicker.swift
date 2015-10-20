@@ -46,7 +46,9 @@ class ProfileRegionPicker: UIViewController, UITableViewDataSource, UITableViewD
             (reverseGecodeInfo, placemark, error) -> Void in
             if error == nil {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.currentCity = reverseGecodeInfo!.valueForKey("locality") as? String
+                    let address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
+                    let arr = address?.componentsSeparatedByString(",")
+                    self.currentCity = arr![1] + "," + arr![2].substringToIndex(3)
                     self.tableView.reloadData()
                 }
             }
@@ -167,6 +169,7 @@ class ProfileRegionPicker: UIViewController, UITableViewDataSource, UITableViewD
         if searching {
             if let results = results {
                 region = results[indexPath.row]["description"].string!
+                region = region.substringToIndex(count(region) - 15)
             }
         } else {
             if indexPath.section == 0 {

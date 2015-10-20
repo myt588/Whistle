@@ -251,6 +251,8 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
                                     //println("3")
                                     self.priceLabel.text = "\(price)"
                                 }
+                            } else {
+                                ParseErrorHandler.handleParseError(error)
                             }
                         }
                     })

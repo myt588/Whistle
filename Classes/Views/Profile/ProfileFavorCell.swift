@@ -20,7 +20,7 @@ class ProfileFavorCell: UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var line                                 : UIView!
     @IBOutlet weak var dotBottom                            : UIView!
-    @IBOutlet weak var portrait                             : UIImageView!
+    @IBOutlet weak var portrait                             : WEImageView!
     @IBOutlet weak var dateLabel                            : UILabel!
     @IBOutlet weak var nameWhistledLabel                    : UILabel!
     @IBOutlet weak var nameAssistedLabel                    : UILabel!
@@ -30,7 +30,7 @@ class ProfileFavorCell: UITableViewCell
     // Constraints
     //----------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------
-    
+    var vc                                                  : ProfileFavorsTable!
     
     // MARK: - Initializations
     //----------------------------------------------------------------------------------------------------------
@@ -93,25 +93,43 @@ class ProfileFavorCell: UITableViewCell
                 self.dateLabel.text = ""
             }
         }
-        if (favor[Constants.Favor.CreatedBy] as! PFUser) == user {
-            var file = user[Constants.User.Portrait] as! PFFile
-            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if let data = data {
-                    self.portrait.image = UIImage(data: data)!
-                    self.nameAssistedLabel.text = favor[Constants.Favor.Content] as? String
-                    self.priceLeftLabel.text = "$15 Earned"
+        
+        let whislter = favor[Constants.Favor.CreatedBy] as! PFUser
+        whislter.fetchIfNeededInBackgroundWithBlock({ (whislter, error) -> Void in
+            if let whislter = whislter as? PFUser
+            {
+                if whislter.objectId == user.objectId
+                { // Spent
+                    let assistant = favor[Constants.Favor.AssistedBy] as! PFUser
+                    assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
+                        if let assistant = assistant as? PFUser
+                        {
+                            self.portrait.user = assistant
+                            var file = assistant[Constants.User.Portrait] as! PFFile
+                            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                                if let data = data {
+                                    self.portrait.image = UIImage(data: data)!
+                                    self.nameWhistledLabel.text = assistant[Constants.User.Nickname] as? String
+                                    self.priceRightLabel.text = "Spent $\(favor[Constants.Favor.Price] as! Int)"
+                                    self.vc.totalSpent += favor[Constants.Favor.Price] as! Int
+                                }
+                            })
+                        }
+                    })
+                } else { // Earn
+                    self.portrait.user = whislter
+                    var file = whislter[Constants.User.Portrait] as! PFFile
+                    file.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                        if let data = data {
+                            self.portrait.image = UIImage(data: data)!
+                            self.nameAssistedLabel.text = whislter[Constants.User.Nickname] as? String
+                            self.priceLeftLabel.text = "$\(favor[Constants.Favor.Price] as! Int) Earned"
+                            self.vc.totalEarned += favor[Constants.Favor.Price] as! Int
+                        }
+                    })
                 }
-            })
-        } else {
-            var file = user[Constants.User.Portrait] as! PFFile
-            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if let data = data {
-                    self.portrait.image = UIImage(data: data)!
-                    self.nameWhistledLabel.text = favor[Constants.Favor.Content] as? String
-                    self.priceRightLabel.text = "Spent $12"
-                }
-            })
-        }
+            }
+        })
     }
     
 }

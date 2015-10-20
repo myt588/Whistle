@@ -16,6 +16,10 @@ extension String {
         let regex = NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .CaseInsensitive, error: nil)
         return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
     }
+    
+    func substringToIndex(index:Int) -> String {
+        return self.substringToIndex(advance(self.startIndex, index))
+    }
 }
 
 extension UIApplication {
@@ -35,6 +39,11 @@ extension UIApplication {
         //            return swipe.tabSwipeNavigation(swipe.tabSwipe, viewControllerAtIndex: swipe.tabSwipe.currentTabIndex)
         //        }
         return base
+    }
+    
+    class func rootViewController() -> UIViewController?
+    {
+        return UIApplication.sharedApplication().keyWindow?.rootViewController
     }
 }
 

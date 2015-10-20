@@ -213,7 +213,7 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
         query.whereKey(Constants.UserReviewPivotTable.Because, equalTo: favor)
         query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
             if let object = object {
-                ProgressHUD.showError("You have already reviewed this favor")
+                MessageHandler.message(.HaveReviewed)
             } else {
                 if let vc = self.vc {
                     vc.selectedIndex = self.row
@@ -279,7 +279,7 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
         query.whereKey(Constants.UserReportPivotTable.Because, equalTo: favor)
         query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
             if let object = object {
-                ProgressHUD.showError("You have already reported this favor")
+                MessageHandler.message(.HaveReported)
             } else {
                 if let vc = self.vc {
                     vc.selectedIndex = self.row

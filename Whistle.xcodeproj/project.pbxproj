@@ -255,6 +255,7 @@
 		9478BFA31B45113B00F3D91D /* UIViewBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478BFA21B45113B00F3D91D /* UIViewBorder.swift */; };
 		947EE5C51BCFB9ED001A6AF3 /* WETagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */; };
 		947EE5C71BCFBA21001A6AF3 /* WETagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */; };
+		948286211BD59E430087BC39 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948286201BD59E430087BC39 /* MessageHandler.swift */; };
 		94884A9F1B41C9D400EB7E5B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94884A9E1B41C9D400EB7E5B /* TabBarController.swift */; };
 		94884AC81B41E3B800EB7E5B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94884AC71B41E3B800EB7E5B /* MediaPlayer.framework */; };
 		948E8FA91B3BCDFB002556D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948E8FA81B3BCDFB002556D0 /* FBSDKShareKit.framework */; };
@@ -738,6 +739,7 @@
 		9478BFA21B45113B00F3D91D /* UIViewBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewBorder.swift; sourceTree = "<group>"; };
 		947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WETagCollectionView.swift; sourceTree = "<group>"; };
 		947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WETagCollectionCell.swift; sourceTree = "<group>"; };
+		948286201BD59E430087BC39 /* MessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		94884A9E1B41C9D400EB7E5B /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		94884AC71B41E3B800EB7E5B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		948E8FA81B3BCDFB002556D0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -1353,6 +1355,7 @@
 				9478BFA21B45113B00F3D91D /* UIViewBorder.swift */,
 				942FA2F91B2F10E90050C3E3 /* Image.swift */,
 				94B653E71B6384860091CE98 /* ParseErrorHandler.swift */,
+				948286201BD59E430087BC39 /* MessageHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2486,6 +2489,7 @@
 				94CFB0391B837B3300F681D8 /* UIImage+WebP.m in Sources */,
 				89B290111B498ECB002741DE /* UIImage+FSExtension.m in Sources */,
 				89EBA35C1B5FF2FB0011D528 /* CarbonSwipeRefresh.m in Sources */,
+				948286211BD59E430087BC39 /* MessageHandler.swift in Sources */,
 				9441B4611B89AE34002EBEEE /* MapView.m in Sources */,
 				9441B4381B89AC18002EBEEE /* converter.m in Sources */,
 				890D5D7D1B60057500DFD609 /* DGActivityIndicatorTriplePulseAnimation.m in Sources */,

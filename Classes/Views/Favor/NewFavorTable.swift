@@ -17,7 +17,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, TSMessageViewProtocol
+class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - Public Variable
@@ -172,8 +172,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(true)
-        TSMessage.setDelegate(self)
-        TSMessage.setDefaultViewController(self)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -232,7 +230,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
                 favor[Constants.Favor.Address] = address
             }
         } else {
-            TSMessage.showNotificationWithTitle("No Location", subtitle: "You need to add a location", type: TSMessageNotificationType.Error)
+            MessageHandler.message(MessageName.NoLocation, vc: self.navigationController)
+            return
         }
         
         favor[Constants.Favor.Tag] = selectedTags
@@ -262,7 +261,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         }
         
         if !audioOrText {
-            TSMessage.showNotificationWithTitle("Need Data", subtitle: "Need to fill either audio or text to describe the favor.", type: TSMessageNotificationType.Error)
+            MessageHandler.message(MessageName.NoAudioOrText, vc: self.navigationController)
             return
         }
         
@@ -300,12 +299,13 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         favor.saveInBackgroundWithBlock {
             (success : Bool, error : NSError?) -> Void in
             if (success) {
-                TSMessage.showNotificationWithTitle("Success", subtitle: "Favor posted successfully.", type: TSMessageNotificationType.Success)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                MessageHandler.message(MessageName.FavorPosted, vc: self.navigationController)
             } else {
-                println(error!.description)
+                ParseErrorHandler.handleParseError(error)
             }
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -688,7 +688,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         if authorization == .NotDetermined {
             PHPhotoLibrary.requestAuthorization() { status in
             }
-            
             return
         }
         
@@ -699,7 +698,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
                 var sourceType = source
                 if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
                     sourceType = .PhotoLibrary
-                    TSMessage.showNotificationWithTitle("No Camera", subtitle: "Fallback to camera roll as a source since the simulator doesn't support taking pictures.", type: TSMessageNotificationType.Error)
+                    MessageHandler.message(.NoCamera, vc: self.navigationController)
                 }
                 controller.sourceType = sourceType
                 
@@ -726,7 +725,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             presentViewController(controller, animated: true, completion: nil)
         }
         else {
-            TSMessage.showNotificationWithTitle("An error occurred", subtitle: "magePickerSheet needs access to the camera roll.", type: TSMessageNotificationType.Error)
+            MessageHandler.message(.CameraAccess, vc: self.navigationController)
         }
     }
     
@@ -900,13 +899,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     {
         view.endEditing(true)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func customizeMessageView(messageView: TSMessageView!)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        messageView.alpha = 0.85
     }
     
 }

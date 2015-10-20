@@ -80,7 +80,7 @@ class ProfileView: UIViewController, ProfileScrollDelegate
         super.viewWillAppear(animated)
 //        navigationController?.navigationBar.tintColor = Constants.Color.Main2
         navigationController?.navigationBar.translucent         = true
-        (tabBarController as? YALFoldingTabBarController)?.tabBarView.hidden = false
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -198,16 +198,29 @@ class ProfileView: UIViewController, ProfileScrollDelegate
             self.regionLabel.addGestureRecognizer(tap)
         }
         
-        rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
-        rateView.displayRating(3.5)
+        user.fetchInBackgroundWithBlock { (user, error) -> Void in
+            if let user = user as? PFUser
+            {
+                self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
+                self.rateView.displayRating(user[Constants.User.Rating] as! Float)
+            }
+        }
+        
+        if let child = childViewControllers.first as? ProfileFavorsTable {
+            self.totalEarnLabel.text = "Total Earned: $\(child.totalEarned)"
+            self.totalSpentLabel.text = "Total Spent: $\(child.totalSpent)"
+        }
     }
     
-    func tapToSetStatus() {
+    func tapToSetStatus()
+    {
         performSegueWithIdentifier("profile_to_status", sender: self)
     }
     
-    func tapToSetRegion() {
-        println("tagp")
+    func tapToSetRegion()
+    {
+        var vc = storyboard?.instantiateViewControllerWithIdentifier("RegionPicker") as! ProfileRegionPicker
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func expand() {
@@ -240,6 +253,13 @@ class ProfileView: UIViewController, ProfileScrollDelegate
                 }, completion: { (finished: Bool) -> Void in
                     
             })
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "profile_rate" {
+            var rateTable = segue.destinationViewController as! ProfileRateTable
+            rateTable.user = PFUser.currentUser()
         }
     }
     

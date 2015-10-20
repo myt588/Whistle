@@ -194,7 +194,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
         query.whereKey(Constants.UserReviewPivotTable.Because, equalTo: favor)
         query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
             if let object = object {
-                ProgressHUD.showError("You have already reviewed this favor")
+                MessageHandler.message(.HaveReviewed)
             } else {
                 if let vc = self.vc {
                     vc.selectedIndex = self.row
@@ -217,6 +217,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
                                 vc.favors.removeObjectAtIndex(self.row)
                                 vc.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
                                 vc.tableView.reloadData()
+                                MessageHandler.message(MessageName.Confirmed)
                             })
                         } else {
                             ParseErrorHandler.handleParseError(error)
@@ -260,7 +261,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
         query.whereKey(Constants.UserReportPivotTable.Because, equalTo: favor)
         query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
             if let object = object {
-                ProgressHUD.showError("You have already reported this favor")
+                MessageHandler.message(.HaveReported)
             } else {
                 if let vc = self.vc {
                     vc.selectedIndex = self.row

@@ -69,12 +69,6 @@
     ((YALFoldingTabBarController *) self.tabBarController).tabBarView.hidden = NO;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-}
-
 #pragma mark - Backend methods
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

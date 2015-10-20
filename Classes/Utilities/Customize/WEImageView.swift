@@ -62,11 +62,12 @@ class WEImageView: PFImageView
     //----------------------------------------------------------------------------------------------------------
     {
         if let vc = UIApplication.topViewController() {
-            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel) { action in
-                })
-            alert.addAction(SimpleAlert.Action(title: "Chat", style: .Default) { action in
-                })
-            alert.addAction(SimpleAlert.Action(title: "Add Friend", style: .Default) { action in
+            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+            alert.addAction(SimpleAlert.Action(title: "Message", style: .Default) { action in
+                let user1 = PFUser.currentUser()
+                let groupId = StartPrivateChat(user1!, self.user!)
+                let chatView = ChatView(with: groupId)
+                vc.navigationController?.pushViewController(chatView, animated: true)
                 })
             vc.presentViewController(alert, animated: true, completion: nil)
         }

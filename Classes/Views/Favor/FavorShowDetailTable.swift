@@ -90,6 +90,7 @@ class FavorShowDetailTable: UITableViewController
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
         bindData(favor)
     }
     
@@ -100,7 +101,6 @@ class FavorShowDetailTable: UITableViewController
         super.viewDidAppear(true)
         tableView.reloadData()
     }
-    
     
     // MARK: - IBActions
     
