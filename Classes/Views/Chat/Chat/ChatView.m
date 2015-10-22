@@ -83,8 +83,6 @@
 	[super viewDidLoad];
 	self.title = @"Chat";
     //---------------------------------------------------------------------------------------------------------------------------------------------
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self
-                                                                                           action:@selector(action)];
     
     [self.navigationController.navigationItem.backBarButtonItem setTitle:@""];
     [self.navigationController.navigationItem.leftBarButtonItem setTitle:@""];
@@ -149,12 +147,6 @@
 		[firebase1 removeAllObservers];
 		[firebase2 removeAllObservers];
 	}
-}
-
-- (void)action
-{
-    
-
 }
 
 #pragma mark - Backend methods

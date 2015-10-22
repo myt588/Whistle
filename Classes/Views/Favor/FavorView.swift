@@ -130,7 +130,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(animated)
-        view.backgroundColor = Constants.Color.Background
+        self.view.backgroundColor = Constants.Color.Background
+        self.navigationController?.navigationBarHidden = true
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
         loadTagView()
     }
@@ -155,6 +156,11 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -322,7 +328,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 let relationTable = PFObject(className: Constants.FavorUserPivotTable.Name)
                 relationTable[Constants.FavorUserPivotTable.Takers] = PFUser.currentUser()
                 relationTable[Constants.FavorUserPivotTable.Favor] = favor
-                relationTable[Constants.FavorUserPivotTable.Active] = false
+                relationTable[Constants.FavorUserPivotTable.Active] = true
                 if self.tableView?.priceLabel.text?.toInt() != favor[Constants.Favor.Price] as? Int {
                     relationTable[Constants.FavorUserPivotTable.Price] = self.tableView?.priceLabel.text?.toInt()
                 }
@@ -349,14 +355,29 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func addFriend(user: PFUser)
     {
-        let people = PFObject(className: Constants.People.Name)
-        people[Constants.People.User1] = PFUser.currentUser()!
-        people[Constants.People.User2] = user
-        people.saveInBackgroundWithBlock { (success, error) -> Void in
-            if success {
+        let query1 = PFQuery(className: Constants.People.Name)
+        query1.whereKey(Constants.People.User1, equalTo: PFUser.currentUser()!)
+        query1.whereKey(Constants.People.User2, equalTo: user)
+        
+        let query2 = PFQuery(className: Constants.People.Name)
+        query2.whereKey(Constants.People.User2, equalTo: PFUser.currentUser()!)
+        query2.whereKey(Constants.People.User1, equalTo: user)
+        
+        let query : PFQuery = PFQuery.orQueryWithSubqueries([query1, query2])
+        query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+            if let object = object {
                 StartPrivateChat(user, PFUser.currentUser()!)
             } else {
-                ParseErrorHandler.handleParseError(error)
+                let people = PFObject(className: Constants.People.Name)
+                people[Constants.People.User1] = PFUser.currentUser()!
+                people[Constants.People.User2] = user
+                people.saveInBackgroundWithBlock { (success, error) -> Void in
+                    if success {
+                        StartPrivateChat(user, PFUser.currentUser()!)
+                    } else {
+                        ParseErrorHandler.handleParseError(error)
+                    }
+                }
             }
         }
     }

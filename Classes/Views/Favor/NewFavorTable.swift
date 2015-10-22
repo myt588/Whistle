@@ -217,6 +217,14 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             }
         }
         
+        if let user = PFUser.currentUser() {
+            if (user[Constants.User.Gender] as! Int) == 1 {
+                selectedTags.append("dude")
+            } else {
+                selectedTags.append("girl")
+            }
+        }
+        
         var favor : PFObject = PFObject(className: Constants.Favor.Name)
         var fileImage : PFFile
         var fileAudio : PFFile
@@ -300,7 +308,8 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             (success : Bool, error : NSError?) -> Void in
             if (success) {
                 self.dismissViewControllerAnimated(true, completion: nil)
-                MessageHandler.message(MessageName.FavorPosted, vc: self.navigationController)
+                MessageHandler.message(MessageName.FavorPosted)
+                NSNotificationCenter.defaultCenter().postNotificationName("currentLocationFound", object: nil)
             } else {
                 ParseErrorHandler.handleParseError(error)
             }

@@ -14,7 +14,6 @@
 #import "JSQMessages.h"
 #import "RNGridMenu.h"
 #import "IQAudioRecorderController.h"
-#import "SelectMultipleView.h"
 
 #import "StickersView.h"
 

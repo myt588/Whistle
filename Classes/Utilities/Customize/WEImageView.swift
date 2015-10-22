@@ -25,10 +25,10 @@ class WEImageView: PFImageView
         userInteractionEnabled = true
         
         self.contentMode = UIViewContentMode.ScaleAspectFill
-        
+  
         var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.addGestureRecognizer(gesture)
-        
+
         var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
         self.addGestureRecognizer(tap)
     }
@@ -37,22 +37,48 @@ class WEImageView: PFImageView
     func longPressed(sender: UILongPressGestureRecognizer)
     //----------------------------------------------------------------------------------------------------------
     {
-        if sender.state == UIGestureRecognizerState.Began
-        {
-            let viewController = ProfileASController()
-            viewController.user = user
-            let alert = WEAlertController(view: viewController.view, style: .ActionSheet)
-            showAlert(alert)
+        let query1 = PFQuery(className: Constants.People.Name)
+        query1.whereKey(Constants.People.User1, equalTo: PFUser.currentUser()!)
+        query1.whereKey(Constants.People.User2, equalTo: user!)
+        
+        let query2 = PFQuery(className: Constants.People.Name)
+        query2.whereKey(Constants.People.User2, equalTo: PFUser.currentUser()!)
+        query2.whereKey(Constants.People.User1, equalTo: user!)
+        
+        let query : PFQuery = PFQuery.orQueryWithSubqueries([query1, query2])
+        query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+            if let object = object {
+                if sender.state == UIGestureRecognizerState.Began
+                {
+                    let viewController = ProfileASController()
+                    viewController.user = self.user
+                    let alert = WEAlertController(view: viewController.view, style: .ActionSheet)
+                    self.showAlert(alert)
+                }
+            }
         }
     }
     
     func tapped(sender: UITapGestureRecognizer) {
         println("picture tapped")
-        if let base = UIApplication.topViewController()
-        {
-            var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileOthers") as! ProfileOthersView
-            vc.user = self.user
-            base.navigationController?.pushViewController(vc, animated: true)
+        let query1 = PFQuery(className: Constants.People.Name)
+        query1.whereKey(Constants.People.User1, equalTo: PFUser.currentUser()!)
+        query1.whereKey(Constants.People.User2, equalTo: user!)
+        
+        let query2 = PFQuery(className: Constants.People.Name)
+        query2.whereKey(Constants.People.User2, equalTo: PFUser.currentUser()!)
+        query2.whereKey(Constants.People.User1, equalTo: user!)
+        
+        let query : PFQuery = PFQuery.orQueryWithSubqueries([query1, query2])
+        query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+            if let base = UIApplication.topViewController() {
+                var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileOthers") as! ProfileOthersView
+                vc.user = self.user
+                if let object = object {
+                    vc.isFriend = true
+                }
+                base.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     

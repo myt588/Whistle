@@ -68,7 +68,6 @@
 		89EBA35D1B5FF2FB0011D528 /* CarbonTabSwipeNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EBA35B1B5FF2FB0011D528 /* CarbonTabSwipeNavigation.m */; };
 		89EBA35F1B5FF3880011D528 /* CurrentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBA35E1B5FF3880011D528 /* CurrentView.swift */; };
 		89F53AA91B57FB8700F0A2A2 /* WEVoiceBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F53AA81B57FB8700F0A2A2 /* WEVoiceBubble.swift */; };
-		89F53AAB1B58C6E600F0A2A2 /* test.gif in Resources */ = {isa = PBXBuildFile; fileRef = 89F53AAA1B58C6E600F0A2A2 /* test.gif */; };
 		89F53AEC1B59A14D00F0A2A2 /* YALSunnyRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F53AEA1B59A14D00F0A2A2 /* YALSunnyRefreshControl.m */; };
 		89F53AED1B59A14D00F0A2A2 /* YALSunnyRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89F53AEB1B59A14D00F0A2A2 /* YALSunnyRefreshControl.xib */; };
 		89F53AF91B5A2D9300F0A2A2 /* TSBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F53AF31B5A2D9300F0A2A2 /* TSBlurView.m */; };
@@ -234,14 +233,6 @@
 		9441B4F01B89AE6A002EBEEE /* JSQMessagesToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4C41B89AE6A002EBEEE /* JSQMessagesToolbarContentView.xib */; };
 		9441B4F11B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B4C61B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.m */; };
 		9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4C71B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib */; };
-		9441B5081B8A5F2A002EBEEE /* SelectSingleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B4F61B8A5F2A002EBEEE /* SelectSingleView.m */; };
-		9441B5091B8A5F2A002EBEEE /* SelectSingleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4F71B8A5F2A002EBEEE /* SelectSingleView.xib */; };
-		9441B50A1B8A5F2A002EBEEE /* SelectMultipleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B4FA1B8A5F2A002EBEEE /* SelectMultipleView.m */; };
-		9441B50B1B8A5F2A002EBEEE /* SelectMultipleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4FB1B8A5F2A002EBEEE /* SelectMultipleView.xib */; };
-		9441B50C1B8A5F2A002EBEEE /* AddressBookView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B4FE1B8A5F2A002EBEEE /* AddressBookView.m */; };
-		9441B50D1B8A5F2A002EBEEE /* AddressBookView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4FF1B8A5F2A002EBEEE /* AddressBookView.xib */; };
-		9441B50E1B8A5F2A002EBEEE /* FacebookFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B5021B8A5F2A002EBEEE /* FacebookFriendsView.m */; };
-		9441B50F1B8A5F2A002EBEEE /* FacebookFriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B5031B8A5F2A002EBEEE /* FacebookFriendsView.xib */; };
 		945E88EA1B89AAE600124816 /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E71B89AAE600124816 /* RecentCell.m */; };
 		945E88EB1B89AAE600124816 /* RecentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E91B89AAE600124816 /* RecentView.m */; };
 		945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */; };
@@ -437,7 +428,6 @@
 		89EBA35B1B5FF2FB0011D528 /* CarbonTabSwipeNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarbonTabSwipeNavigation.m; sourceTree = "<group>"; };
 		89EBA35E1B5FF3880011D528 /* CurrentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentView.swift; sourceTree = "<group>"; };
 		89F53AA81B57FB8700F0A2A2 /* WEVoiceBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEVoiceBubble.swift; sourceTree = "<group>"; };
-		89F53AAA1B58C6E600F0A2A2 /* test.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test.gif; sourceTree = "<group>"; };
 		89F53AE91B59A14D00F0A2A2 /* YALSunnyRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YALSunnyRefreshControl.h; sourceTree = "<group>"; };
 		89F53AEA1B59A14D00F0A2A2 /* YALSunnyRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YALSunnyRefreshControl.m; sourceTree = "<group>"; };
 		89F53AEB1B59A14D00F0A2A2 /* YALSunnyRefreshControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YALSunnyRefreshControl.xib; sourceTree = "<group>"; };
@@ -712,18 +702,6 @@
 		9441B4C51B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesTypingIndicatorFooterView.h; sourceTree = "<group>"; };
 		9441B4C61B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesTypingIndicatorFooterView.m; sourceTree = "<group>"; };
 		9441B4C71B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
-		9441B4F51B8A5F2A002EBEEE /* SelectSingleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectSingleView.h; sourceTree = "<group>"; };
-		9441B4F61B8A5F2A002EBEEE /* SelectSingleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectSingleView.m; sourceTree = "<group>"; };
-		9441B4F71B8A5F2A002EBEEE /* SelectSingleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectSingleView.xib; sourceTree = "<group>"; };
-		9441B4F91B8A5F2A002EBEEE /* SelectMultipleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMultipleView.h; sourceTree = "<group>"; };
-		9441B4FA1B8A5F2A002EBEEE /* SelectMultipleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectMultipleView.m; sourceTree = "<group>"; };
-		9441B4FB1B8A5F2A002EBEEE /* SelectMultipleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectMultipleView.xib; sourceTree = "<group>"; };
-		9441B4FD1B8A5F2A002EBEEE /* AddressBookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookView.h; sourceTree = "<group>"; };
-		9441B4FE1B8A5F2A002EBEEE /* AddressBookView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookView.m; sourceTree = "<group>"; };
-		9441B4FF1B8A5F2A002EBEEE /* AddressBookView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressBookView.xib; sourceTree = "<group>"; };
-		9441B5011B8A5F2A002EBEEE /* FacebookFriendsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsView.h; sourceTree = "<group>"; };
-		9441B5021B8A5F2A002EBEEE /* FacebookFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsView.m; sourceTree = "<group>"; };
-		9441B5031B8A5F2A002EBEEE /* FacebookFriendsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsView.xib; sourceTree = "<group>"; };
 		945E88E61B89AAE600124816 /* RecentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentCell.h; sourceTree = "<group>"; };
 		945E88E71B89AAE600124816 /* RecentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentCell.m; sourceTree = "<group>"; };
 		945E88E81B89AAE600124816 /* RecentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentView.h; sourceTree = "<group>"; };
@@ -1200,7 +1178,6 @@
 		89CB0D1A1B8394D5008AB5DE /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				9441B4F31B8A5F2A002EBEEE /* Users */,
 				9441B4411B89AE34002EBEEE /* Chat */,
 				9441B43D1B89AD1A002EBEEE /* Application */,
 				9441B40D1B89AC18002EBEEE /* Utilities */,
@@ -1297,7 +1274,6 @@
 		942FA2C71B2F0FED0050C3E3 /* Whistle */ = {
 			isa = PBXGroup;
 			children = (
-				89F53AAA1B58C6E600F0A2A2 /* test.gif */,
 				942FA4CA1B2F11E00050C3E3 /* Main.storyboard */,
 				942FA4ED1B2F15150050C3E3 /* Whistle-Bridging-Header.h */,
 				94C1801E1B60755000D4F647 /* AppConstant.h */,
@@ -1951,57 +1927,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9441B4F31B8A5F2A002EBEEE /* Users */ = {
-			isa = PBXGroup;
-			children = (
-				9441B4F41B8A5F2A002EBEEE /* 01_SelectSingle */,
-				9441B4F81B8A5F2A002EBEEE /* 02_SelectMultiple */,
-				9441B4FC1B8A5F2A002EBEEE /* 03_AddressBook */,
-				9441B5001B8A5F2A002EBEEE /* 04_FacebookFriends */,
-			);
-			path = Users;
-			sourceTree = "<group>";
-		};
-		9441B4F41B8A5F2A002EBEEE /* 01_SelectSingle */ = {
-			isa = PBXGroup;
-			children = (
-				9441B4F51B8A5F2A002EBEEE /* SelectSingleView.h */,
-				9441B4F61B8A5F2A002EBEEE /* SelectSingleView.m */,
-				9441B4F71B8A5F2A002EBEEE /* SelectSingleView.xib */,
-			);
-			path = 01_SelectSingle;
-			sourceTree = "<group>";
-		};
-		9441B4F81B8A5F2A002EBEEE /* 02_SelectMultiple */ = {
-			isa = PBXGroup;
-			children = (
-				9441B4F91B8A5F2A002EBEEE /* SelectMultipleView.h */,
-				9441B4FA1B8A5F2A002EBEEE /* SelectMultipleView.m */,
-				9441B4FB1B8A5F2A002EBEEE /* SelectMultipleView.xib */,
-			);
-			path = 02_SelectMultiple;
-			sourceTree = "<group>";
-		};
-		9441B4FC1B8A5F2A002EBEEE /* 03_AddressBook */ = {
-			isa = PBXGroup;
-			children = (
-				9441B4FD1B8A5F2A002EBEEE /* AddressBookView.h */,
-				9441B4FE1B8A5F2A002EBEEE /* AddressBookView.m */,
-				9441B4FF1B8A5F2A002EBEEE /* AddressBookView.xib */,
-			);
-			path = 03_AddressBook;
-			sourceTree = "<group>";
-		};
-		9441B5001B8A5F2A002EBEEE /* 04_FacebookFriends */ = {
-			isa = PBXGroup;
-			children = (
-				9441B5011B8A5F2A002EBEEE /* FacebookFriendsView.h */,
-				9441B5021B8A5F2A002EBEEE /* FacebookFriendsView.m */,
-				9441B5031B8A5F2A002EBEEE /* FacebookFriendsView.xib */,
-			);
-			path = 04_FacebookFriends;
-			sourceTree = "<group>";
-		};
 		945E88E51B89AAE600124816 /* Recent */ = {
 			isa = PBXGroup;
 			children = (
@@ -2308,7 +2233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				942FA44B1B2F10E90050C3E3 /* chat_videos@2x.png in Resources */,
-				9441B50B1B8A5F2A002EBEEE /* SelectMultipleView.xib in Resources */,
 				942FA44A1B2F10E90050C3E3 /* chat_stickers@2x.png in Resources */,
 				942FA4471B2F10E90050C3E3 /* chat_camera@2x.png in Resources */,
 				942FA4F61B2F1B0E0050C3E3 /* image3.jpg in Resources */,
@@ -2325,7 +2249,6 @@
 				942FA4F91B2F1B0E0050C3E3 /* image6.jpg in Resources */,
 				948E8FB01B3C3A4C002556D0 /* Info-OSX.plist in Resources */,
 				9441B4E61B89AE6A002EBEEE /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
-				9441B50F1B8A5F2A002EBEEE /* FacebookFriendsView.xib in Resources */,
 				942FA44C1B2F10E90050C3E3 /* recent_blank@2x.png in Resources */,
 				9441B45E1B89AE34002EBEEE /* StickersCell.xib in Resources */,
 				94CFB07D1B837DF300F681D8 /* audio_record.png in Resources */,
@@ -2335,7 +2258,6 @@
 				9441B4ED1B89AE6A002EBEEE /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				9441B4601B89AE34002EBEEE /* StickersView.xib in Resources */,
 				89F53AFB1B5A2D9300F0A2A2 /* TSMessagesDefaultDesign.json in Resources */,
-				9441B5091B8A5F2A002EBEEE /* SelectSingleView.xib in Resources */,
 				94CFB07E1B837DF300F681D8 /* audio_record@2x.png in Resources */,
 				948E8FAF1B3C3A4C002556D0 /* Info-iOS.plist in Resources */,
 				942FA4F71B2F1B0E0050C3E3 /* image4.jpg in Resources */,
@@ -2349,8 +2271,6 @@
 				942FA4CB1B2F11E00050C3E3 /* Main.storyboard in Resources */,
 				94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */,
 				942FA44D1B2F10E90050C3E3 /* settings_blank@2x.png in Resources */,
-				89F53AAB1B58C6E600F0A2A2 /* test.gif in Resources */,
-				9441B50D1B8A5F2A002EBEEE /* AddressBookView.xib in Resources */,
 				942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */,
 				942FA4501B2F10E90050C3E3 /* terms.html in Resources */,
 				9441B4E81B89AE6A002EBEEE /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
@@ -2482,7 +2402,6 @@
 				94884A9F1B41C9D400EB7E5B /* TabBarController.swift in Sources */,
 				9441B4DA1B89AE6A002EBEEE /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
 				9441B4671B89AE34002EBEEE /* VideoMediaItem.m in Sources */,
-				9441B50A1B8A5F2A002EBEEE /* SelectMultipleView.m in Sources */,
 				942FA45E1B2F10E90050C3E3 /* AFURLResponseSerialization.m in Sources */,
 				948E8FB91B3DD8EC002556D0 /* LLARingSpinnerView.m in Sources */,
 				94BCF4E81B55A2BC007406F3 /* LocationPicker.swift in Sources */,
@@ -2513,10 +2432,8 @@
 				94BB08191B532C9700D2492B /* HTTPRequestSerializer.swift in Sources */,
 				94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */,
 				948E8FB11B3C3A4C002556D0 /* SwiftyJSON.swift in Sources */,
-				9441B50C1B8A5F2A002EBEEE /* AddressBookView.m in Sources */,
 				94CFB0331B837B3300F681D8 /* SDWebImageDownloaderOperation.m in Sources */,
 				9441B4E41B89AE6A002EBEEE /* JSQMessagesCollectionViewCell.m in Sources */,
-				9441B5081B8A5F2A002EBEEE /* SelectSingleView.m in Sources */,
 				94F266B81BCF353A00914F58 /* FavorDetailTable.swift in Sources */,
 				94CFB03B1B837B3300F681D8 /* UIImageView+WebCache.m in Sources */,
 				94DED7CC1B3EF144002B9F3B /* ImagePreviewTableViewCell.swift in Sources */,
@@ -2525,7 +2442,6 @@
 				9441B4CB1B89AE6A002EBEEE /* NSString+JSQMessages.m in Sources */,
 				9441B4651B89AE34002EBEEE /* EmojiMediaItem.m in Sources */,
 				9441B4681B89AE34002EBEEE /* Incoming.m in Sources */,
-				9441B50E1B8A5F2A002EBEEE /* FacebookFriendsView.m in Sources */,
 				9441B4301B89AC18002EBEEE /* people.m in Sources */,
 				942FA4611B2F10E90050C3E3 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				942FA45C1B2F10E90050C3E3 /* AFURLConnectionOperation.m in Sources */,

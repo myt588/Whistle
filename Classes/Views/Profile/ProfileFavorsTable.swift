@@ -37,6 +37,7 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     {
         super.viewDidLoad()
         configLooks()
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "loadFavors", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -102,6 +103,9 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     //----------------------------------------------------------------------------------------------------------
     {
+        if favors.count == 0 {
+            return 1
+        }
         return favors.count + 2
     }
     
@@ -109,6 +113,13 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     {
+        if favors.count == 0
+        {
+            var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+            cell.textLabel!.text = "You don't have any favors yet. Ask your first favor and start connecting!"
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("ProfileFavorCell", forIndexPath: indexPath) as! ProfileFavorCell
         
         if indexPath.row == 0 {

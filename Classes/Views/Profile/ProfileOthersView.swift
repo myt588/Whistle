@@ -19,6 +19,7 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
 {
     
     var user: PFUser?
+    var isFriend: Bool = false
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var bgView                                   : UIView!
@@ -120,7 +121,9 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
     func configNavBar()
     //----------------------------------------------------------------------------------------------------------
     {
-        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
+        if isFriend {
+            self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
+        }
     }
     
     func action()

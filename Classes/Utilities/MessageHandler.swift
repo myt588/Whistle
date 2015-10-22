@@ -69,6 +69,6 @@ class MessageHandler {
     
     class func showMessage(vc: UIViewController?, title: String, subtitle: String, type: TSMessageNotificationType)
     {
-        TSMessage.showNotificationInViewController(vc, title: title, subtitle: subtitle, image: nil, type: .Error, duration: 2, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
+        TSMessage.showNotificationInViewController(vc, title: title, subtitle: subtitle, image: nil, type: type, duration: 2, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
     }
 }
