@@ -49,7 +49,6 @@ class ProfileOthersCell: WECell {
     // MARK: - Functions
     func configLooks() {
         backgroundColor = UIColor.clearColor()
-        
         portraitView.layer.borderWidth = 3
         portraitView.layer.borderColor = Constants.Color.Border.CGColor
         portraitView.layer.cornerRadius = 30
@@ -64,6 +63,7 @@ class ProfileOthersCell: WECell {
             if let user = review[Constants.UserReviewPivotTable.From] as? PFUser {
                 user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                     if let user = user {
+                        self.portraitView.user = user as? PFUser
                         var image = user[Constants.User.Portrait] as! PFFile
                         image.getDataInBackgroundWithBlock({ (data, error) -> Void in
                             if error == nil {

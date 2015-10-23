@@ -117,7 +117,7 @@ class LoginView: UIViewController, TSMessageViewProtocol
     func processFacebook(user: PFUser, userData: NSDictionary, image: UIImage)
     {
         var picture = image
-        var thumbnail = ResizeImageByWidth(image, 60)
+        var thumbnail = ResizeImage(image, 60, 60, 1.0)
         var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
         filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
             if let error = error {

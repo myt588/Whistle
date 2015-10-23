@@ -48,6 +48,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var audioView                            : FSVoiceBubble!
     @IBOutlet weak var bannerRightView                      : UIView!
+    @IBOutlet weak var interestButton                       : UIButton!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -134,24 +135,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         self.navigationController?.navigationBarHidden = true
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
         loadTagView()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        
         if PFUser.currentUser() != nil
         {
-            let tabBar = tabBarController as! YALFoldingTabBarController
-//            let button = tabBar.tabBarView.centerButton as! MIBadgeButton
-//            button.badgeString = "10"
-//            let badgeLabel = MIBadgeLabel(frame: CGRectMake(0, 0, 10, 10))
-//            badgeLabel.clipsToBounds = true
-//            badgeLabel.alpha = 0.85
-//            badgeLabel.text = "10"
-//            var badgeSize: CGSize  = badgeLabel.sizeThatFits(CGSize(width: 320, height: CGFloat(FLT_MAX)))
-//            badgeSize.width = badgeSize.width < 20 ? 20 : badgeSize.width + 5
-//            var vertical: Double?, horizontal: Double?
-//            badgeLabel.frame = CGRectMake(button.bounds.size.width/2, badgeSize.height/2 - 5, badgeSize.width, badgeSize.height)
-//            button.addSubview(badgeLabel)
+            
         } else {
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
@@ -212,6 +199,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     // MARK: - User interactions
+    func extraRightItemDidPressed() {
+        performSegueWithIdentifier("mainToNew", sender: self)
+    }
+    
     //----------------------------------------------------------------------------------------------------------
     func addGestures()
     //----------------------------------------------------------------------------------------------------------
@@ -233,6 +224,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         var swipeDown               = UISwipeGestureRecognizer(target: self, action: "respondToGestures:")
         swipeDown.direction         = UISwipeGestureRecognizerDirection.Down
         portraitImageView.addGestureRecognizer(swipeDown)
+        
+//        var tapMap                  = UITapGestureRecognizer(target: self, action: "respondToMapTapGesture:")
+//        mapView.addGestureRecognizer(tapMap)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -262,17 +256,11 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    func extraLeftItemDidPressed()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        performSegueWithIdentifier("mainToNew", sender: self)
-    }
+//    func respondToMapTapGesture(gesture: UITapGestureRecognizer) {
+//        if displayerMode == 1 { changeDisplayMode(0) }
+//    }
     
-    //----------------------------------------------------------------------------------------------------------
-    func extraRightItemDidPressed()  // Did press
-    //----------------------------------------------------------------------------------------------------------
-    {
+    @IBAction func startInterest(sender: UIButton) {
         if !didSelectFavor {
             MessageHandler.message(MessageName.SelectFavorFirst)
             return
@@ -291,10 +279,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         progressFirer = NSTimer.scheduledTimerWithTimeInterval(0.005, target: self, selector: Selector("updateProgress"), userInfo: nil, repeats: true)
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    func extraRightItemLongPressed() // Did release
-    //----------------------------------------------------------------------------------------------------------
-    {
+    @IBAction func endInterest(sender: UIButton) {
         if !didSelectFavor {
             return
         }
@@ -311,6 +296,22 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         progressFirer.invalidate()
     }
     
+    @IBAction func endInterest2(sender: UIButton) {
+        if !didSelectFavor {
+            return
+        }
+        if let favor = favors[index] as? PFObject {
+            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
+                if user.objectId == PFUser.currentUser()?.objectId {
+                    return
+                }
+            }
+        }
+        progress = 0
+        circularProgress.progress = 0
+        circularProgress.alpha = 0
+        progressFirer.invalidate()
+    }
     //----------------------------------------------------------------------------------------------------------
     func updateProgress()
     //----------------------------------------------------------------------------------------------------------
@@ -397,20 +398,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     func isInterested(isInterested: Bool) {
-        let tabBarController = self.tabBarController as? YALFoldingTabBarController
-        let tabBarRightItem = tabBarController?.tabBarView.extraRightButton
-        tabBarRightItem?.clipsToBounds = false
-        
         if !isInterested {
-            tabBarRightItem?.setImage(UIImage(named: "tab_interest"), forState: .Normal)
-            tabBarRightItem?.enabled = true
+            interestButton.setImage(UIImage(named: "favor_interest"), forState: .Normal)
+            interestButton.userInteractionEnabled = true
         } else {
-            let oldImage = tabBarRightItem?.imageView?.image
-            let tintedImage = oldImage?.imageWithRenderingMode(.AlwaysTemplate)
-            tabBarRightItem!.tintColor = UIColor.yellowColor()
-            tabBarRightItem?.setImage(tintedImage, forState: .Normal)
-            tabBarRightItem?.enabled = false
-            bounceView(tabBarRightItem!.imageView!)
+            interestButton.setImage(UIImage(named: "favor_interested"), forState: .Normal)
+            interestButton.userInteractionEnabled = false
+            bounceView(interestButton)
         }
     }
 
@@ -488,15 +482,19 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 if self.displayerMode == 1 {
                     self.tableView!.bindData(favor)
                     UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.bannerView.alpha = 0
-                        self.detailView.alpha = 0
+//                        self.bannerView.alpha = 0
+//                        self.detailView.alpha = 0
+//                        self.tagView.alpha = 0
+                        self.portraitView.alpha = 0
                         }, completion: { (finished: Bool) -> Void in
                             self.configBanner(favor)
                             self.centerMapOnFavor()
                     })
                     UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.bannerView.alpha = 1
-                        self.detailView.alpha = 1
+//                        self.bannerView.alpha = 1
+//                        self.detailView.alpha = 1
+//                        self.tagView.alpha = 1
+                        self.portraitView.alpha = 1
                         }, completion: { (finished: Bool) -> Void in
                     })
                 } else {
@@ -525,15 +523,17 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         if self.displayerMode == 1 {
                             self.tableView!.bindData(favor)
                             UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.bannerView.alpha = 0
-                                self.detailView.alpha = 0
+//                                self.bannerView.alpha = 0
+//                                self.detailView.alpha = 0
+                                self.portraitView.alpha = 0
                                 }, completion: { (finished: Bool) -> Void in
                                     self.configBanner(favor)
                                     self.centerMapOnFavor()
                             })
                             UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.bannerView.alpha = 1
-                                self.detailView.alpha = 1
+//                                self.bannerView.alpha = 1
+//                                self.detailView.alpha = 1
+                                self.portraitView.alpha = 1
                                 }, completion: { (finished: Bool) -> Void in
                             })
                         } else {
@@ -563,8 +563,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
-//        centerOnUserButton.layer.cornerRadius = 15
-//        refreshButton.layer.cornerRadius = 15
         topBanner.backgroundColor = Constants.Color.Background
     }
     
@@ -591,18 +589,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         tagView.dataSource = self
         
         tagView.backgroundColor = UIColor.clearColor()
-        
-//        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-//        var blurView = UIVisualEffectView(effect: darkBlur)
-//        blurView.frame = tagView.bounds
-//        blurView.userInteractionEnabled = false
-//        tagView.insertSubview(blurView, atIndex: 0)
-//        tagView.clipsToBounds = true
-        
-//        tagView.layer.cornerRadius = 15
         tagView.maskDisabled = true
-        tagView.font = UIFont(name: "HelveticaNeue-Light", size: 14)!
-        tagView.highlightedFont = UIFont(name: "HelveticaNeue-Light", size: 14)!
+        tagView.font = UIFont(name: "TimesNewRomanPSMT", size: 16)!
+        tagView.highlightedFont = UIFont(name: "TimesNewRomanPSMT", size: 16)!
         tagView.textColor = UIColor.whiteColor()
         tagView.highlightedTextColor = UIColor.whiteColor()
         tagView.interitemSpacing = 12
@@ -816,7 +805,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         circularProgress.lineWidth = 8.0
         circularProgress.alpha = 0
         circularProgress.layer.cornerRadius = 75
-//        circularProgress.backgroundColor = Constants.Color.Background
         var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         var blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = circularProgress.bounds

@@ -18,11 +18,7 @@
 #import "ProgressHUD.h"
 #import "RNGridMenu.h"
 
-#import "AppConstant.h"
-#import "audio.h"
-#import "camera.h"
-#import "fileutil.h"
-#import "recent.h"
+#import "utilities.h"
 
 #import "Incoming.h"
 #import "Outgoing.h"
@@ -31,13 +27,10 @@
 #import "PhotoMediaItem.h"
 #import "VideoMediaItem.h"
 
-#import "RecentView.h"
 #import "ChatView.h"
 #import "StickersView.h"
 #import "MapView.h"
 #import "NavigationController.h"
-#import "YALFoldingTabBarController.h"
-#import "Whistle-Swift.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface ChatView()
@@ -82,10 +75,6 @@
 {
 	[super viewDidLoad];
 	self.title = @"Chat";
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-    
-    [self.navigationController.navigationItem.backBarButtonItem setTitle:@""];
-    [self.navigationController.navigationItem.leftBarButtonItem setTitle:@""];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	loads = [[NSMutableArray alloc] init];
 	items = [[NSMutableArray alloc] init];
@@ -93,9 +82,8 @@
 	started = [[NSMutableDictionary alloc] init];
 	avatars = [[NSMutableDictionary alloc] init];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	PFUser *user = [PFUser currentUser];
-	self.senderId = user.objectId;
-	self.senderDisplayName = user[PF_USER_FULLNAME];
+	self.senderId = [PFUser currentId];
+	self.senderDisplayName = [PFUser currentName];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
 	bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor:COLOR_OUTGOING];
@@ -128,22 +116,14 @@
 	self.collectionView.collectionViewLayout.springinessEnabled = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-    ((YALFoldingTabBarController *) self.tabBarController).tabBarView.hidden = YES;
-    //---------------------------------------------------------------------------------------------------------------------------------------------
-}
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)viewWillDisappear:(BOOL)animated
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-    [super viewWillDisappear:animated];
+	[super viewWillDisappear:animated];
 	if (self.isMovingFromParentViewController)
 	{
-		ClearRecentCounter1(groupId);
+		ClearRecentCounter(groupId);
 		[firebase1 removeAllObservers];
 		[firebase2 removeAllObservers];
 	}
@@ -243,7 +223,7 @@
 	for (int index=0; index<[items count]; index++)
 	{
 		NSDictionary *temp = items[index];
-		if ([item[@"key"] isEqualToString:temp[@"key"]])
+		if ([item[@"messageId"] isEqualToString:temp[@"messageId"]])
 		{
 			items[index] = item;
 			[self.collectionView reloadData];
@@ -259,7 +239,7 @@
 	for (int index=0; index<[items count]; index++)
 	{
 		NSDictionary *temp = items[index];
-		if ([item[@"key"] isEqualToString:temp[@"key"]])
+		if ([item[@"messageId"] isEqualToString:temp[@"messageId"]])
 		{
 			[items removeObjectAtIndex:index];
 			[messages removeObjectAtIndex:index];
@@ -277,7 +257,7 @@
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
 	[query whereKey:PF_USER_OBJECTID equalTo:senderId];
-    [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+	[query setCachePolicy:kPFCachePolicyCacheThenNetwork];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 	{
 		if (error == nil)
@@ -319,7 +299,7 @@
 {
 	if ([item[@"status"] isEqualToString:TEXT_READ]) return;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[[firebase1 childByAppendingPath:item[@"key"]] updateChildValues:@{@"status":TEXT_READ} withCompletionBlock:^(NSError *error, Firebase *ref)
+	[[firebase1 childByAppendingPath:item[@"messageId"]] updateChildValues:@{@"status":TEXT_READ} withCompletionBlock:^(NSError *error, Firebase *ref)
 	{
 		if (error != nil) NSLog(@"ChatView messageUpdate network error.");
 	}];
@@ -331,7 +311,7 @@
 {
 	NSDictionary *item = items[indexPath.item];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[[firebase1 childByAppendingPath:item[@"key"]] removeValueWithCompletionBlock:^(NSError *error, Firebase *ref)
+	[[firebase1 childByAppendingPath:item[@"messageId"]] removeValueWithCompletionBlock:^(NSError *error, Firebase *ref)
 	{
 		if (error != nil) NSLog(@"ChatView messageDelete network error.");
 	}];
@@ -607,8 +587,7 @@
 	JSQMessage *message = messages[indexPath.item];
 	if ([self incoming:message])
 	{
-//		ProfileView *profileView = [[ProfileView alloc] initWith:message.senderId User:nil];
-//		[self.navigationController pushViewController:profileView animated:YES];
+		
 	}
 }
 

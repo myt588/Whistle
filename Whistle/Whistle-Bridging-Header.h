@@ -18,8 +18,6 @@
 #import "YALAnimatingTabBarConstants.h"
 #import "YALTabBarInteracting.h"
 
-#import "YALSunnyRefreshControl.h"
-
 #import "TSMessageView.h"
 #import "AMTumblrHud.h"
 

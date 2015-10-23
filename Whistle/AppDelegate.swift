@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // set Navigation bar style
         UINavigationBar.appearance().barTintColor = Constants.Color.NavigationBar
         UINavigationBar.appearance().tintColor = Constants.Color.NavigationBarTint
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : Constants.Color.NavigationBarTint]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : Constants.Color.NavigationBarTint, NSFontAttributeName: UIFont(name: "TimesNewRomanPSMT", size: 20)!]
         
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().shadowImage = UIImage()

@@ -11,20 +11,14 @@ import UIKit
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-protocol ProfileOthersScrollDelegate {
-    func expand()
-    func shrink()
-}
 
 //----------------------------------------------------------------------------------------------------------
-class ProfileOthersTable: UITableViewController, UIScrollViewDelegate
+class ProfileOthersTable: UITableViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     var reviews : NSMutableArray                                 = NSMutableArray()
-    var pointNow : CGPoint?
-    var delegate : ProfileOthersScrollDelegate?
     var user : PFUser?
     //----------------------------------------------------------------------------------------------------------
     
@@ -36,10 +30,6 @@ class ProfileOthersTable: UITableViewController, UIScrollViewDelegate
     {
         super.viewDidLoad()
         configLooks()
-        /*
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: "loadFavors", forControlEvents: UIControlEvents.ValueChanged)
-        */
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -104,51 +94,8 @@ class ProfileOthersTable: UITableViewController, UIScrollViewDelegate
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("ProfileOthersCell", forIndexPath: indexPath) as! ProfileOthersCell
         cell.bindData(reviews[indexPath.row] as? PFObject)
-        
-        
-        /*
-        if indexPath.row == 0 {
-        cell.dotBottom.hidden = false
-        cell.portrait.hidden = true
-        cell.line.hidden = true
-        }
-        
-        if indexPath.row == favors.count + 1 {
-        cell.dotBottom.hidden = false
-        cell.portrait.hidden = true
-        cell.line.hidden = true
-        }
-        
-        if indexPath.row > 0 && indexPath.row < favors.count + 1{
-        let favor = favors[indexPath.row-1] as! PFObject
-        if indexPath.row > 1 {
-        let prevFavor = favors[indexPath.row-2] as! PFObject
-        cell.bindData(favor, previousFavor: prevFavor)
-        } else if indexPath.row != favors.count+1 {
-        cell.bindData(favor, previousFavor: nil)
-        }
-        }
-        */
-        
         return cell
     }
-    
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        pointNow = scrollView.contentOffset
-    }
-    
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > pointNow?.y {
-            delegate?.expand()
-        }
-    }
-    
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (scrollView.contentOffset.y < -60) {
-            delegate?.shrink()
-        }
-    }
-    
 }
 
 

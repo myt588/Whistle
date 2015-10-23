@@ -27,8 +27,8 @@ void BlockUser(PFUser *user2)
 	BlockUserOne(user1, user2);
 	BlockUserOne(user2, user1);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	RemoveGroupMembers(user1, user2);
-	RemoveGroupMembers(user2, user1);
+	GroupRemoveMembers(user1, user2);
+	GroupRemoveMembers(user2, user1);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	PeopleDelete(user1, user2);
 	PeopleDelete(user2, user1);

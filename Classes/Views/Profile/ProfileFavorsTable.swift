@@ -11,22 +11,15 @@ import UIKit
 import Parse
 //----------------------------------------------------------------------------------------------------------
 
-protocol ProfileScrollDelegate {
-    func expand()
-    func shrink()
-}
-
 //----------------------------------------------------------------------------------------------------------
-class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
+class ProfileFavorsTable: UITableViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     var favors : NSMutableArray                                 = NSMutableArray()
-    var pointNow : CGPoint?
     var totalEarned : Int                                       = Int()
     var totalSpent : Int                                        = Int()
-    var delegate : ProfileScrollDelegate?
     //----------------------------------------------------------------------------------------------------------
     
     
@@ -169,22 +162,6 @@ class ProfileFavorsTable: UITableViewController, UIScrollViewDelegate
     {
         println(indexPath.row)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        pointNow = scrollView.contentOffset
-    }
-    
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > pointNow?.y {
-//            delegate?.expand()
-        }
-    }
-    
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (scrollView.contentOffset.y < -50) {
-//            delegate?.shrink()
-        }
     }
     
 }

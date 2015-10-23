@@ -14,12 +14,11 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
+class ProfileOthersView: UIViewController
 //----------------------------------------------------------------------------------------------------------
 {
     
     var user: PFUser?
-    var isFriend: Bool = false
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var bgView                                   : UIView!
@@ -54,7 +53,6 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
     {
         super.viewDidLoad()
         if let child = childViewControllers.first as? ProfileOthersTable {
-            child.delegate = self
             child.user = self.user
         }
         if let user = self.user {
@@ -121,9 +119,8 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
     func configNavBar()
     //----------------------------------------------------------------------------------------------------------
     {
-        if isFriend {
-            self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
-        }
+        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
+
     }
     
     func action()
@@ -170,15 +167,11 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
         
         if let status = user[Constants.User.Status] as? String {
             self.lineLabel.text = status
-        } else {
-            
         }
         
         if let region = user[Constants.User.Region] as? String {
             self.regionLabel.text = region
-        } else {
-            
-        }
+        } 
         
         user.fetchInBackgroundWithBlock { (user, error) -> Void in
             if let user = user as? PFUser
@@ -190,38 +183,4 @@ class ProfileOthersView: UIViewController, ProfileOthersScrollDelegate
             }
         }
     }
-    
-    func expand() {
-        if containerCons.active {
-            println("Expand")
-            var diffY = rateView.frame.origin.y - containerView.frame.origin.y
-            self.containerCons.active = false
-            self.containerNewCons.active = true
-            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                self.containerView.frame = self.view.bounds
-                self.totalView.frame.origin = self.containerView.frame.origin
-                self.rateView.frame.origin.y = self.containerView.frame.origin.y + diffY
-                }, completion: { (finished: Bool) -> Void in
-                    
-            })
-        }
-    }
-    
-    func shrink() {
-        
-        if containerNewCons.active {
-            println("Shrink")
-            var diffY = rateView.frame.origin.y - containerView.frame.origin.y
-            self.containerNewCons.active = false
-            self.containerCons.active = true
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                self.containerView.frame = self.containerViewOriginalFrame
-                self.totalView.frame.origin = self.containerView.frame.origin
-                self.rateView.frame.origin.y = self.containerView.frame.origin.y + diffY
-                }, completion: { (finished: Bool) -> Void in
-                    
-            })
-        }
-    }
-    
 }

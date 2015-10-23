@@ -17,7 +17,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class ProfileView: UIViewController, ProfileScrollDelegate
+class ProfileView: UIViewController
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -55,9 +55,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidLoad()
-        if let child = childViewControllers.first as? ProfileFavorsTable {
-            child.delegate = self
-        }
         configLooks()
         addBlurEffect()
         addGesture()
@@ -66,7 +63,7 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if let user = PFUser.currentUser() {
-            bindData(user)
+            self.bindData(user)
         } else {
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
@@ -78,9 +75,15 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(animated)
-//        navigationController?.navigationBar.tintColor = Constants.Color.Main2
         navigationController?.navigationBar.translucent         = true
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
+        
+        if let user = PFUser.currentUser() {
+            self.bindData(user)
+        } else {
+            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+            self.presentViewController(viewController, animated: true, completion: nil)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -136,15 +139,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
         
         totalView.alpha                                         = 0.92
         totalView.backgroundColor                               = Constants.Color.ContentBackground
-        
-//        totalEarnLabel.layer.borderWidth                        = 0
-//        totalEarnLabel.layer.cornerRadius                       = 12
-//        totalEarnLabel.layer.backgroundColor                    = Constants.Color.Border.CGColor
-//        totalEarnLabel.textColor                                = Constants.Color.CellBackground
-//        totalSpentLabel.layer.borderWidth                       = 0
-//        totalSpentLabel.layer.cornerRadius                      = 12
-//        totalSpentLabel.layer.backgroundColor                   = Constants.Color.Border.CGColor
-//        totalSpentLabel.textColor                               = Constants.Color.CellBackground
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -164,6 +158,7 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     func bindData(user: PFUser!)
     //----------------------------------------------------------------------------------------------------------
     {
+
         let name = user[Constants.User.Nickname] as? String
         self.nameLabel.text = "  \(name!)  "
         
@@ -205,7 +200,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
                 self.rateView.displayRating(user[Constants.User.Rating] as! Float)
             }
         }
-        
         if let child = childViewControllers.first as? ProfileFavorsTable {
             self.totalEarnLabel.text = "Total Earned: $\(child.totalEarned)"
             self.totalSpentLabel.text = "Total Spent: $\(child.totalSpent)"
@@ -221,39 +215,6 @@ class ProfileView: UIViewController, ProfileScrollDelegate
     {
         var vc = storyboard?.instantiateViewControllerWithIdentifier("RegionPicker") as! ProfileRegionPicker
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func expand() {
-        if containerCons.active {
-            println("Expand")
-            var diffY = rateView.frame.origin.y - containerView.frame.origin.y
-            self.containerCons.active = false
-            self.containerNewCons.active = true
-            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                self.containerView.frame = self.view.bounds
-                self.totalView.frame.origin = self.containerView.frame.origin
-                self.rateView.frame.origin.y = self.containerView.frame.origin.y + diffY
-                }, completion: { (finished: Bool) -> Void in
-                   
-            })
-        }
-    }
-    
-    func shrink() {
-        
-        if containerNewCons.active {
-            println("Shrink")
-            var diffY = rateView.frame.origin.y - containerView.frame.origin.y
-            self.containerNewCons.active = false
-            self.containerCons.active = true
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                self.containerView.frame = self.containerViewOriginalFrame
-                self.totalView.frame.origin = self.containerView.frame.origin
-                self.rateView.frame.origin.y = self.containerView.frame.origin.y + diffY
-                }, completion: { (finished: Bool) -> Void in
-                    
-            })
-        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

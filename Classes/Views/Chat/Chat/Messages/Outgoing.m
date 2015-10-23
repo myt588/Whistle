@@ -13,14 +13,7 @@
 #import <Firebase/Firebase.h>
 #import "MBProgressHUD.h"
 
-#import "AppConstant.h"
-#import "audio.h"
-#import "converter.h"
-#import "emoji.h"
-#import "image.h"
-#import "push.h"
-#import "recent.h"
-#import "video.h"
+#import "utilities.h"
 
 #import "Outgoing.h"
 #import "Whistle-Swift.h"
@@ -50,12 +43,10 @@
 - (void)send:(NSString *)text Video:(NSURL *)video Picture:(UIImage *)picture Audio:(NSString *)audio
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	PFUser *user = [PFUser currentUser];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
 	NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	item[@"userId"] = user.objectId;
-	item[@"name"] = user[PF_USER_FULLNAME];
+	item[@"userId"] = [PFUser currentId];
+	item[@"name"] = [PFUser currentName];
 	item[@"date"] = Date2String([NSDate date]);
 	item[@"status"] = TEXT_DELIVERED;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -180,12 +171,12 @@
 - (void)sendLoactionMessage:(NSMutableDictionary *)item
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-	item[@"latitude"] = [NSNumber numberWithDouble:app.locationManager.location.coordinate.latitude];
-	item[@"longitude"] = [NSNumber numberWithDouble:app.locationManager.location.coordinate.longitude];
-	item[@"text"] = @"[Location message]";
-	item[@"type"] = @"location";
-	[self sendMessage:item];
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    item[@"latitude"] = [NSNumber numberWithDouble:app.locationManager.location.coordinate.latitude];
+    item[@"longitude"] = [NSNumber numberWithDouble:app.locationManager.location.coordinate.longitude];
+    item[@"text"] = @"[Location message]";
+    item[@"type"] = @"location";
+    [self sendMessage:item];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -194,7 +185,7 @@
 {
 	Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", FIREBASE, groupId]];
 	Firebase *reference = [firebase childByAutoId];
-	item[@"key"] = reference.key;
+	item[@"messageId"] = reference.key;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
 	{
@@ -202,7 +193,7 @@
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	SendPushNotification1(groupId, item[@"text"]);
-	UpdateRecentCounter1(groupId, 1, item[@"text"]);
+	UpdateRecentItems(groupId, item[@"text"]);
 }
 
 @end

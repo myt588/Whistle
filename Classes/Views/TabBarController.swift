@@ -13,8 +13,8 @@ class TabBarController : YALFoldingTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
-            leftItemImage: UIImage(named: "tab_new"),
-            rightItemImage: UIImage(named: "tab_interest"))
+            leftItemImage: nil,
+            rightItemImage: UIImage(named: "tab_new"))
         let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
             leftItemImage: nil,
             rightItemImage: nil)

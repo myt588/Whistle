@@ -34,7 +34,7 @@ class WEFontHeader: UILabel {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         textColor = Constants.Color.TextMain
-        font = UIFont(name: "TimesNewRomanPSMT", size: 18)
+        font = UIFont(name: "AbrahamLincoln", size: 26)
     }
 }
 
@@ -42,7 +42,7 @@ class WEFontContent: UILabel {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         textColor = UIColor.whiteColor()
-        font = UIFont(name: "HelveticaNeue-Light", size: 14)
+        font = UIFont(name: "MyriadPro-SemiExt", size: 15)
     }
 }
 

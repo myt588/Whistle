@@ -9,11 +9,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Parse/Parse.h>
+#ifndef app_utilities_h
+#define app_utilities_h
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-void			GroupRemoveMembers		(PFUser *user1, PFUser *user2);
-void			GroupRemoveMember		(PFObject *group, PFUser *user);
+#import "AppConstant.h"
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-void			GroupDelete				(PFObject *group);
+#import "blocked.h"
+#import "group.h"
+#import "people.h"
+#import "PFUser+Util.h"
+#import "push.h"
+#import "recent.h"
+#import "report.h"
+
+#import "audio.h"
+#import "camera.h"
+#import "common.h"
+#import "converter.h"
+#import "emoji.h"
+#import "fileutil.h"
+#import "image.h"
+#import "video.h"
+
+#endif
