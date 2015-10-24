@@ -148,7 +148,7 @@ class ProfileView: UIViewController
         var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = bgView.bounds
-        blurImage = UIImageView(image: UIImage(named: "Jaychou_fantasy"))
+        blurImage = UIImageView(image: UIImage(named: "user_photo"))
         blurImage.frame = bgView.bounds
         bgView.addSubview(blurImage)
         bgView.addSubview(blurView)

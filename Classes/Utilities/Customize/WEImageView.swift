@@ -23,9 +23,7 @@ class WEImageView: PFImageView
     {
         super.init(coder: aDecoder)
         userInteractionEnabled = true
-        
         self.contentMode = UIViewContentMode.ScaleAspectFill
-
         var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
         self.addGestureRecognizer(tap)
     }

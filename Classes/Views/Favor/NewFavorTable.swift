@@ -147,24 +147,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         addGestures()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationPicked:", name: "locationPicked", object: nil)
-        
         tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
-        
-//        let location = CurrentLocation()
-//        LocationManager.sharedInstance.reverseGeocodeLocationWithLatLon(latitude: location.latitude, longitude: location.longitude) {
-//            (reverseGecodeInfo, placemark, error) -> Void in
-//            if error == nil {
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.addressLabel.text = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
-//                    self.address = reverseGecodeInfo!.valueForKey("formattedAddress") as? String
-//                    self.addressIsHidden = false
-//                    self.tableView.beginUpdates()
-//                    self.tableView.endUpdates()
-//                }
-//            } else {
-//                println(error)
-//            }
-//        }
     }
     
     //----------------------------------------------------------------------------------------------------------

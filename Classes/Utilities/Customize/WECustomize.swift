@@ -24,6 +24,19 @@ class WETable: UITableView
 }
 
 //----------------------------------------------------------------------------------------------------------
+class WESettingTable: UITableView
+//----------------------------------------------------------------------------------------------------------
+{
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        backgroundColor = Constants.Color.Background
+        contentInset = UIEdgeInsetsMake(0, 0, YALTabBarViewDefaultHeight, 0)
+    }
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------
 class WECell: UITableViewCell
 //----------------------------------------------------------------------------------------------------------
 {

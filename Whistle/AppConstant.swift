@@ -67,7 +67,7 @@ struct Constants {
         static let Level                        : String = "level"
         static let UpdatedAt                    : String = "updatedAt"
         static let CreatedAt                    : String = "createdAt"
-        static let DefaultImage                 : UIImage = UIImage(named: "default_user_photo")!
+        static let DefaultImage                 : UIImage = UIImage(named: "user_photo")!
     }
     //------------------------------------------------------------------------------------------------------
     
@@ -171,6 +171,7 @@ struct Constants {
         static let TextLight                    : UIColor = UIColor(red:1, green:0.97, blue:0.93, alpha:1)
         static let PlaceHolder                  : UIColor = UIColor(red:0.75, green:0.73, blue:0.71, alpha:1)
         static let Border                       : UIColor = UIColor(red:1, green:0.97, blue:0.93, alpha:1)
+        static let ButtonBorder                 : UIColor = UIColor(red:237/255, green: 118/255, blue: 0, alpha:1)
         static let Banner                       : UIColor = Constants.Color.Main
         //--------------------------------------------------------------------------------------------------
         // Navigation Bar
@@ -186,6 +187,7 @@ struct Constants {
         static let CellTextReverse              : UIColor = Constants.Color.Background
         static let CellTextShadow               : UIColor = Constants.Color.Shadow
         static let CellPlaceHolder              : UIColor = Constants.Color.PlaceHolder
+        static let CellButtonBorder             : UIColor = Constants.Color.ButtonBorder
         //--------------------------------------------------------------------------------------------------
         static let TextMain                     : UIColor = Constants.Color.Main
         static let TextCopyright                : UIColor = UIColor(red: 192.0/255, green: 192.0/255, blue: 193.0/255, alpha: 1)

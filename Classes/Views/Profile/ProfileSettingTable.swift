@@ -21,6 +21,7 @@ class ProfileSettingTable: UITableViewController
     // Profile Edit
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var portrait                         : UIImageView!
+    @IBOutlet weak var nameLabel                        : WEFontContent!
     //----------------------------------------------------------------------------------------------------------
     // Account
     //----------------------------------------------------------------------------------------------------------
@@ -33,10 +34,6 @@ class ProfileSettingTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var whistleNofitySwitch              : UISwitch!
     @IBOutlet weak var chatNotifySwitch                 : UISwitch!
-    //----------------------------------------------------------------------------------------------------------
-    // Logout
-    //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var logoutButton                     : UIButton!
     //----------------------------------------------------------------------------------------------------------
     private var user                                    : PFUser!
     
@@ -76,15 +73,7 @@ class ProfileSettingTable: UITableViewController
     @IBAction func logoutButtonTapped(sender: UIButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        PFUser.logOutInBackgroundWithBlock { (error) -> Void in
-            if let error = error {
-                println("log out failed, \(error)")
-            } else {
-                PostNotification(NOTIFICATION_USER_LOGGED_OUT)
-                var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-                self.presentViewController(viewController, animated: true, completion: nil)
-            }
-        }
+        
     }
     
     func setEmail(email: String) {
@@ -110,13 +99,9 @@ class ProfileSettingTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     {
         portrait.layer.borderColor                      = Constants.Color.Border.CGColor
-        portrait.layer.borderWidth                      = 2
-        portrait.layer.cornerRadius                     = 37.5
+        portrait.layer.borderWidth                      = 3
+        portrait.layer.cornerRadius                     = 44
         portrait.backgroundColor                        = Constants.Color.Border
-        
-        logoutButton.setTitleColor(Constants.Color.CellText, forState: .Normal)
-        logoutButton.layer.backgroundColor              = Constants.Color.Main2.CGColor
-        logoutButton.layer.cornerRadius                 = 15
         
         var switches = [whistleNofitySwitch, chatNotifySwitch]
         for element in switches {
@@ -137,6 +122,7 @@ class ProfileSettingTable: UITableViewController
             })
         }
         
+        self.nameLabel.text = user[Constants.User.Nickname] as? String
         self.phoneKeyLabel.text = user[Constants.User.Phone] as? String
         self.emailKeyLabel.text = user[Constants.User.Email] as? String
         
@@ -153,12 +139,12 @@ class ProfileSettingTable: UITableViewController
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 4 {
+        if indexPath.row == 3 {
             var vc : ProfileEditSingleView = storyboard?.instantiateViewControllerWithIdentifier("EditSingleSetting") as! ProfileEditSingleView
             vc.type = "Email"
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        if indexPath.row == 6 {
+        if indexPath.row == 4 {
             if self.facebookKeyLabel.text == "linked" {
                 return
             }
@@ -171,7 +157,7 @@ class ProfileSettingTable: UITableViewController
                 }
             })
         }
-        if indexPath.row == 7 {
+        if indexPath.row == 5 {
             if self.twitterKeyLabel.text == "linked" {
                 return
             }
@@ -182,6 +168,17 @@ class ProfileSettingTable: UITableViewController
                     ParseErrorHandler.handleParseError(error)
                 }
             })
+        }
+        if indexPath.row == 11 {
+            PFUser.logOutInBackgroundWithBlock { (error) -> Void in
+                if let error = error {
+                    println("log out failed, \(error)")
+                } else {
+                    PostNotification(NOTIFICATION_USER_LOGGED_OUT)
+                    var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+                    self.presentViewController(viewController, animated: true, completion: nil)
+                }
+            }
         }
     }
 

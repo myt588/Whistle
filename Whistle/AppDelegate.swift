@@ -35,11 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // set Navigation bar style
         UINavigationBar.appearance().barTintColor = Constants.Color.NavigationBar
         UINavigationBar.appearance().tintColor = Constants.Color.NavigationBarTint
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : Constants.Color.NavigationBarTint, NSFontAttributeName: UIFont(name: "TimesNewRomanPSMT", size: 20)!]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.Color.NavigationBarTint, NSFontAttributeName: UIFont(name: "Arial", size: 21.5)!]
         
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AbrahamLincoln", size: 20)!], forState: UIControlState.Normal)
+        
         
         Firebase.defaultConfig().persistenceEnabled = true
         // Enable storing and querying data from Local Datastore.

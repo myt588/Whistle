@@ -48,7 +48,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     @IBOutlet weak var favorIcon                                    : UIImageView!
     @IBOutlet weak var favorLine                                    : UIView!
     @IBOutlet weak var favorHeader                                  : UILabel!
-    @IBOutlet weak var favorLabel                                   : UILabel!
+    @IBOutlet weak var favorLabel                                   : WEContentLabel!
     //----------------------------------------------------------------------------------------------------------
     // Address
     //----------------------------------------------------------------------------------------------------------
@@ -121,6 +121,12 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         configShape()
+        self.favorLabel.numberOfLines = 0
+        self.favorLabel.sizeToFit()
+        self.rewardLabel.numberOfLines = 0
+        self.rewardLabel.sizeToFit()
+        self.addressLabel.numberOfLines = 0
+        self.addressLabel.sizeToFit()
     }
     
     
@@ -219,6 +225,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             
             if let content = favor[Constants.Favor.Content] as? String {
                 self.favorLabel.text = content
+                println(self.favorLabel.frame)
                 self.noContent = false
             } else {
                 self.noContent = true
@@ -295,7 +302,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     {
         var buttonList = [plus1Button, plus5Button, plus10Button, clearButton]
         for element in buttonList {
-            element.layer.borderColor                               = Constants.Color.Border.CGColor
+            element.layer.borderColor                               = Constants.Color.ButtonBorder.CGColor
             element.layer.borderWidth                               = 0.3
             element.layer.cornerRadius                              = element.layer.frame.height/2
             element.setTitleColor(Constants.Color.CellText, forState: .Normal)

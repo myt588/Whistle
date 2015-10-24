@@ -234,6 +234,7 @@
 		944AE4501BDA0123008B7964 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE44A1BDA0123008B7964 /* ProfileView.swift */; };
 		944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */; };
 		944AE4571BDA0A79008B7964 /* AbrahamLincoln.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4561BDA09B4008B7964 /* AbrahamLincoln.ttf */; };
+		944AE4591BDAF0F5008B7964 /* MyriadPro-LightSemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */; };
 		945E88EA1B89AAE600124816 /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E71B89AAE600124816 /* RecentCell.m */; };
 		945E88EB1B89AAE600124816 /* RecentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E91B89AAE600124816 /* RecentView.m */; };
 		945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */; };
@@ -701,6 +702,7 @@
 		944AE44A1BDA0123008B7964 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-SemiExt.otf"; sourceTree = "<group>"; };
 		944AE4561BDA09B4008B7964 /* AbrahamLincoln.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AbrahamLincoln.ttf; sourceTree = "<group>"; };
+		944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-LightSemiExt.otf"; sourceTree = "<group>"; };
 		945E88E61B89AAE600124816 /* RecentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentCell.h; sourceTree = "<group>"; };
 		945E88E71B89AAE600124816 /* RecentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentCell.m; sourceTree = "<group>"; };
 		945E88E81B89AAE600124816 /* RecentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentView.h; sourceTree = "<group>"; };
@@ -1917,6 +1919,7 @@
 		944AE4511BDA03EE008B7964 /* font */ = {
 			isa = PBXGroup;
 			children = (
+				944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */,
 				944AE4561BDA09B4008B7964 /* AbrahamLincoln.ttf */,
 				944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */,
 			);
@@ -2226,6 +2229,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				944AE4591BDAF0F5008B7964 /* MyriadPro-LightSemiExt.otf in Resources */,
 				944AE4571BDA0A79008B7964 /* AbrahamLincoln.ttf in Resources */,
 				942FA44B1B2F10E90050C3E3 /* chat_videos@2x.png in Resources */,
 				940242791BD9DEA300CE8E45 /* StickersCell.xib in Resources */,

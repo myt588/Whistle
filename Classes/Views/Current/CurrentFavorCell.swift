@@ -91,13 +91,6 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
         portraitView.layer.borderWidth                      = 3
         portraitView.layer.borderColor                      = Constants.Color.Border.CGColor
         portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
-        
-//        statusButton.layer.borderWidth                      = 3
-//        statusButton.layer.borderColor                      = Constants.Color.Border.CGColor
-//        statusButton.layer.cornerRadius                     = statusButton.layer.frame.height/2
-//        statusButton.layer.backgroundColor                  = UIColorFromHex(0x9198A0, alpha: 1).CGColor
-        
-        favorHeader.addBottomBorderWithHeight(0.3, color: Constants.Color.Border)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -169,6 +162,7 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
             portraitView.user = user
             var name = user[Constants.User.Nickname] as? String
             self.statusLabel.text = "\(name!)"
+            self.statusLabel.font = UIFont(name: "Arial", size: 20)
             if let gender = user[Constants.User.Gender] as? Int {
                 if gender == 1 {
                     self.genderImage.image = UIImage(named: "profile_male")
