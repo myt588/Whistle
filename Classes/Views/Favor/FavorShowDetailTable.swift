@@ -18,8 +18,8 @@ class FavorShowDetailTable: UITableViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
-    @IBOutlet weak var ownerPortrait                                : WEImageView!
-    @IBOutlet weak var assistantPortrait                            : WEImageView!
+    @IBOutlet weak var ownerPortrait                                : WEProfileView!
+    @IBOutlet weak var assistantPortrait                            : WEProfileView!
     @IBOutlet weak var favorUserName                                : WEContentLabel!
     @IBOutlet weak var assistantUserName                            : WEContentLabel!
     @IBOutlet weak var favorUserLabel                               : WEContentLabel!
@@ -149,35 +149,18 @@ class FavorShowDetailTable: UITableViewController
             }
 
             if let owner = favor[Constants.Favor.CreatedBy] as? PFUser {
-                ownerPortrait.tag = 1
-                ownerPortrait.user = owner
                 self.favorUserName.text = owner[Constants.User.Nickname] as? String
-                var image = owner[Constants.User.Portrait] as! PFFile
-                image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    if let data = data {
-                        self.ownerPortrait.image = UIImage(data: data)
-                        self.ownerPortrait.tag = 1
-                    } else {
-                        println("network error")
-                    }
-                })
+                ownerPortrait.tag = 1
+                ownerPortrait.loadImage(owner)
             }
             
             if let assistant = favor[Constants.Favor.AssistedBy] as? PFUser {
-                assistantPortrait.tag = 2
-                assistantPortrait.user = assistant
                 assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
                     if let assistant = assistant as? PFUser
                     {
                         self.assistantUserName.text = assistant[Constants.User.Nickname] as? String
-                        var image = assistant[Constants.User.Portrait] as! PFFile
-                        image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                            if let data = data {
-                                self.assistantPortrait.image = UIImage(data: data)
-                            } else {
-                                println("network error")
-                            }
-                        })
+                        self.assistantPortrait.tag = 2
+                        self.assistantPortrait.loadImage(assistant)
                     }
                 })
             } else {

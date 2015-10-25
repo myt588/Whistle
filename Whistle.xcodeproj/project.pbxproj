@@ -98,6 +98,7 @@
 		940242A91BD9E00B00CE8E45 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429A1BD9E00B00CE8E45 /* DGActivityIndicatorTripleRingsAnimation.m */; };
 		940242AA1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429C1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m */; };
 		940242AB1BD9E00B00CE8E45 /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */; };
+		9418B9691BDD7650007F2296 /* WEProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9681BDD7650007F2296 /* WEProfileView.swift */; };
 		942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */; };
 		942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D11B2F0FED0050C3E3 /* Images.xcassets */; };
 		942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D31B2F0FED0050C3E3 /* LaunchScreen.xib */; };
@@ -182,6 +183,10 @@
 		942FA4F71B2F1B0E0050C3E3 /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 942FA4F11B2F1B0E0050C3E3 /* image4.jpg */; };
 		942FA4F81B2F1B0E0050C3E3 /* image5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 942FA4F21B2F1B0E0050C3E3 /* image5.jpg */; };
 		942FA4F91B2F1B0E0050C3E3 /* image6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 942FA4F31B2F1B0E0050C3E3 /* image6.jpg */; };
+		94354C971BDC13760048C6CD /* WEEmptyTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */; };
+		94354C991BDC138F0048C6CD /* WEEmptyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */; };
+		94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94354C9C1BDC2B8D0048C6CD /* BlockedView.m */; };
+		94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */; };
 		9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B43F1B89AD1A002EBEEE /* NavigationController.m */; };
 		9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */; };
 		9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B46F1B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m */; };
@@ -488,6 +493,7 @@
 		9402429D1BD9E00B00CE8E45 /* DGActivityIndicatorAnimationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorAnimationProtocol.h; sourceTree = "<group>"; };
 		9402429E1BD9E00B00CE8E45 /* DGActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorView.h; sourceTree = "<group>"; };
 		9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGActivityIndicatorView.m; sourceTree = "<group>"; };
+		9418B9681BDD7650007F2296 /* WEProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEProfileView.swift; sourceTree = "<group>"; };
 		942FA2C51B2F0FED0050C3E3 /* Whistle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whistle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942FA2C91B2F0FED0050C3E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -606,6 +612,11 @@
 		942FA4F11B2F1B0E0050C3E3 /* image4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image4.jpg; sourceTree = "<group>"; };
 		942FA4F21B2F1B0E0050C3E3 /* image5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image5.jpg; sourceTree = "<group>"; };
 		942FA4F31B2F1B0E0050C3E3 /* image6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image6.jpg; sourceTree = "<group>"; };
+		94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEEmptyTableCell.xib; sourceTree = "<group>"; };
+		94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEEmptyTableCell.swift; sourceTree = "<group>"; };
+		94354C9B1BDC2B8D0048C6CD /* BlockedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedView.h; sourceTree = "<group>"; };
+		94354C9C1BDC2B8D0048C6CD /* BlockedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedView.m; sourceTree = "<group>"; };
+		94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockedView.xib; sourceTree = "<group>"; };
 		9441B43E1B89AD1A002EBEEE /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		9441B43F1B89AD1A002EBEEE /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -1093,6 +1104,7 @@
 				947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */,
 				947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */,
 				893B79681B52E86300019CF7 /* WEImageView.swift */,
+				9418B9681BDD7650007F2296 /* WEProfileView.swift */,
 				893B797D1B5456AC00019CF7 /* WEAlertController.swift */,
 				94BB08081B5329BB00D2492B /* WEAnnotationView.swift */,
 				89E57F1C1B57F3FD00983D1A /* WECustomize.swift */,
@@ -1100,6 +1112,8 @@
 				890D5D851B60149C00DFD609 /* WESlideTransition.swift */,
 				8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */,
 				89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */,
+				94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */,
+				94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */,
 			);
 			path = Customize;
 			sourceTree = "<group>";
@@ -1136,6 +1150,7 @@
 		89CB0D1A1B8394D5008AB5DE /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				94354C9A1BDC2B8D0048C6CD /* Blocked */,
 				9402425C1BD9DEA200CE8E45 /* Chat */,
 				9402422B1BD9DE9600CE8E45 /* Utilities */,
 				9441B43D1B89AD1A002EBEEE /* Application */,
@@ -1758,6 +1773,16 @@
 			path = SiriWaveView;
 			sourceTree = "<group>";
 		};
+		94354C9A1BDC2B8D0048C6CD /* Blocked */ = {
+			isa = PBXGroup;
+			children = (
+				94354C9B1BDC2B8D0048C6CD /* BlockedView.h */,
+				94354C9C1BDC2B8D0048C6CD /* BlockedView.m */,
+				94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */,
+			);
+			path = Blocked;
+			sourceTree = "<group>";
+		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -1940,12 +1965,12 @@
 		946FD5481B3F25A200472E91 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				944AE44A1BDA0123008B7964 /* ProfileView.swift */,
 				944AE4451BDA0123008B7964 /* ProfileFavorCell.swift */,
 				944AE4461BDA0123008B7964 /* ProfileFavorsTable.swift */,
 				944AE4471BDA0123008B7964 /* ProfileOthersCell.swift */,
 				944AE4481BDA0123008B7964 /* ProfileOthersTable.swift */,
 				944AE4491BDA0123008B7964 /* ProfileOthersView.swift */,
-				944AE44A1BDA0123008B7964 /* ProfileView.swift */,
 				94B655971B7CFE390091CE98 /* ProfileEditSingleView.swift */,
 				94B655981B7CFE390091CE98 /* ProfilePhoneSetting.swift */,
 				893DDA141B51614600659436 /* ProfileSettingTable.swift */,
@@ -2244,9 +2269,11 @@
 				942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */,
 				944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */,
 				9441B4D21B89AE6A002EBEEE /* JSQMessagesViewController.xib in Resources */,
+				94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */,
 				893B79711B52ECCF00019CF7 /* SimpleAlert.xib in Resources */,
 				9402427B1BD9DEA300CE8E45 /* StickersView.xib in Resources */,
 				89B290171B499275002741DE /* fs_chat_bubble@2x.png in Resources */,
+				94354C971BDC13760048C6CD /* WEEmptyTableCell.xib in Resources */,
 				942FA4F91B2F1B0E0050C3E3 /* image6.jpg in Resources */,
 				948E8FB01B3C3A4C002556D0 /* Info-OSX.plist in Resources */,
 				9441B4E61B89AE6A002EBEEE /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
@@ -2392,6 +2419,7 @@
 				94CFB07C1B837DF300F681D8 /* IQAudioRecorderController.m in Sources */,
 				9441B4E91B89AE6A002EBEEE /* JSQMessagesComposerTextView.m in Sources */,
 				94CFB0361B837B3300F681D8 /* UIButton+WebCache.m in Sources */,
+				94354C991BDC138F0048C6CD /* WEEmptyTableCell.swift in Sources */,
 				94C4A1481B8093FE005AC537 /* Extensions.swift in Sources */,
 				893B79651B52E0A600019CF7 /* CurrentAssistantCell.swift in Sources */,
 				942FA45D1B2F10E90050C3E3 /* AFURLRequestSerialization.m in Sources */,
@@ -2441,6 +2469,7 @@
 				942FA45C1B2F10E90050C3E3 /* AFURLConnectionOperation.m in Sources */,
 				94F266BA1BCF353A00914F58 /* NewFavorTable.swift in Sources */,
 				94CFB03C1B837B3300F681D8 /* UIView+WebCacheOperation.m in Sources */,
+				9418B9691BDD7650007F2296 /* WEProfileView.swift in Sources */,
 				94CFB0371B837B3300F681D8 /* UIImage+GIF.m in Sources */,
 				94B08EDC1B5DA9C5007784AB /* FBAnnotationClusterView.swift in Sources */,
 				9402424F1BD9DE9600CE8E45 /* people.m in Sources */,
@@ -2511,6 +2540,7 @@
 				944AE44C1BDA0123008B7964 /* ProfileFavorsTable.swift in Sources */,
 				9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */,
 				9441B4E21B89AE6A002EBEEE /* JSQMessagesCellTextView.m in Sources */,
+				94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */,
 				894425A01B7B899A00B3716C /* CurrentReportView.swift in Sources */,
 				942FA49A1B2F10E90050C3E3 /* JSQSystemSoundPlayer.m in Sources */,
 				94B08EDE1B5DA9C5007784AB /* FBClusteringManager.swift in Sources */,

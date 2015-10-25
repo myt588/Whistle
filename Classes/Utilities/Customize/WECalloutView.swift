@@ -26,7 +26,8 @@ class WECalloutView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = Constants.Color.Background
+        self.layer.cornerRadius                         = 10
         self.dataSource = self
         self.delegate = self
         self.userInteractionEnabled = true
@@ -48,22 +49,29 @@ extension WECalloutView : UICollectionViewDataSource {
         cell.backgroundColor = UIColor.blackColor()
         let user = users[indexPath.item]
         user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-            if let user = user {
-                if let image = user[Constants.User.Thumbnail] as? PFFile {
-                    image.getDataInBackgroundWithBlock { (data, error) -> Void in
-                        if let data = data {
-                            dispatch_async(dispatch_get_main_queue()) {
-                                let imageView = UIImageView(image: UIImage(data: data)!)
-                                cell.contentView.addSubview(imageView)
-                                imageView.frame = cell.contentView.frame
-                                println(cell.contentView.frame)
-                            }
-                        } else {
-                            println("can't load image")
-                            ParseErrorHandler.handleParseError(error)
-                        }
-                    }
-                }
+            if let user = user as? PFUser {
+                let imageView = WEProfileView(user: user)
+                cell.contentView.addSubview(imageView)
+                imageView.frame = cell.contentView.frame
+
+//                if let image = user[Constants.User.Thumbnail] as? PFFile {
+//                    image.getDataInBackgroundWithBlock { (data, error) -> Void in
+//                        if let data = data {
+//                            dispatch_async(dispatch_get_main_queue()) {
+//                                let imageView = UIImageView(image: UIImage(data: data)!)
+//                                imageView.clipsToBounds                              = true
+//                                imageView.layer.cornerRadius                         = 12
+//                                imageView.layer.borderWidth                          = 2
+//                                cell.contentView.addSubview(imageView)
+//                                imageView.frame = cell.contentView.frame
+//                                println(cell.contentView.frame)
+//                            }
+//                        } else {
+//                            println("can't load image")
+//                            ParseErrorHandler.handleParseError(error)
+//                        }
+//                    }
+//                }
             }
         })
         return cell

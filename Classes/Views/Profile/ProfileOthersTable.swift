@@ -30,13 +30,17 @@ class ProfileOthersTable: UITableViewController
     {
         super.viewDidLoad()
         configLooks()
+        self.tableView.registerNib(UINib(nibName: "WEEmptyTableCell", bundle: nil), forCellReuseIdentifier: "WEEmptyTableCell")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "load", name: "loadReview", object: nil)
     }
     
     //----------------------------------------------------------------------------------------------------------
     override func viewWillAppear(animated: Bool) {
     //----------------------------------------------------------------------------------------------------------
         super.viewWillAppear(animated)
-        load()
+        if user != nil {
+            load()
+        }
     }
     
     // MARK: - Functions
@@ -85,6 +89,10 @@ class ProfileOthersTable: UITableViewController
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     //----------------------------------------------------------------------------------------------------------
     {
+        if reviews.count == 0
+        {
+            return 1
+        }
         return reviews.count
     }
     
@@ -92,6 +100,14 @@ class ProfileOthersTable: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     {
+        if reviews.count == 0
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("WEEmptyTableCell", forIndexPath: indexPath) as! WEEmptyTableCell
+            cell.bindData(message: "No one has reviewed you yet",
+                       subMessage: "No one ~~~~~",
+                            image: UIImage(named: "favor_whistle_icon")!)
+            return cell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("ProfileOthersCell", forIndexPath: indexPath) as! ProfileOthersCell
         cell.bindData(reviews[indexPath.row] as? PFObject)
         return cell

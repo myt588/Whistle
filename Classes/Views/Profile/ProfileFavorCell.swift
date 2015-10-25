@@ -20,7 +20,7 @@ class ProfileFavorCell: UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var line                                 : UIView!
     @IBOutlet weak var dotBottom                            : UIView!
-    @IBOutlet weak var portrait                             : WEImageView!
+    @IBOutlet weak var portrait                             : WEProfileView!
     @IBOutlet weak var dateLabel                            : UILabel!
     @IBOutlet weak var nameWhistledLabel                    : UILabel!
     @IBOutlet weak var nameAssistedLabel                    : UILabel!
@@ -67,11 +67,6 @@ class ProfileFavorCell: UITableViewCell
         dotBottom.backgroundColor                           = Constants.Color.Border
         dotBottom.layer.cornerRadius                        = 7.5
         
-        portrait.layer.borderColor                          = Constants.Color.Border.CGColor
-        portrait.layer.borderWidth                          = 2
-        portrait.layer.cornerRadius                         = 40
-        portrait.backgroundColor                            = Constants.Color.Border
-        
         dateLabel.textColor                                 = Constants.Color.CellTextReverse
         dateLabel.backgroundColor                           = Constants.Color.CellText
         dateLabel.layer.cornerRadius                        = 7.5
@@ -104,29 +99,18 @@ class ProfileFavorCell: UITableViewCell
                     assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
                         if let assistant = assistant as? PFUser
                         {
-                            self.portrait.user = assistant
+                            self.portrait.loadImage(assistant)
+                            self.nameWhistledLabel.text = assistant[Constants.User.Nickname] as? String
+                            self.priceRightLabel.text = "Spent $\(favor[Constants.Favor.Price] as! Int)"
+                            self.vc.totalSpent += favor[Constants.Favor.Price] as! Int
                             var file = assistant[Constants.User.Portrait] as! PFFile
-                            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                                if let data = data {
-                                    self.portrait.image = UIImage(data: data)!
-                                    self.nameWhistledLabel.text = assistant[Constants.User.Nickname] as? String
-                                    self.priceRightLabel.text = "Spent $\(favor[Constants.Favor.Price] as! Int)"
-                                    self.vc.totalSpent += favor[Constants.Favor.Price] as! Int
-                                }
-                            })
                         }
                     })
                 } else { // Earn
-                    self.portrait.user = whislter
-                    var file = whislter[Constants.User.Portrait] as! PFFile
-                    file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                        if let data = data {
-                            self.portrait.image = UIImage(data: data)!
-                            self.nameAssistedLabel.text = whislter[Constants.User.Nickname] as? String
-                            self.priceLeftLabel.text = "$\(favor[Constants.Favor.Price] as! Int) Earned"
-                            self.vc.totalEarned += favor[Constants.Favor.Price] as! Int
-                        }
-                    })
+                    self.portrait.loadImage(whislter)
+                    self.nameAssistedLabel.text = whislter[Constants.User.Nickname] as? String
+                    self.priceLeftLabel.text = "$\(favor[Constants.Favor.Price] as! Int) Earned"
+                    self.vc.totalEarned += favor[Constants.Favor.Price] as! Int
                 }
             }
         })

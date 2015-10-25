@@ -43,7 +43,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     // Portrait
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var portraitView                         : UIView!
-    @IBOutlet weak var portraitImageView                    : WEImageView!
+    @IBOutlet weak var portraitImageView                    : WEProfileView!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var audioView                            : FSVoiceBubble!
@@ -570,10 +570,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func configShapes()
     //----------------------------------------------------------------------------------------------------------
     {
-        portraitImageView.layer.borderColor                         = Constants.Color.Border.CGColor
-        portraitImageView.layer.borderWidth                         = 3
-        portraitImageView.layer.cornerRadius                        = portraitImageView.frame.height/2
-        portraitImageView.alpha                                     = 1
         nameLabel.shadowOffset                                      = CGSizeMake(0, -1)
         nameLabel.layer.cornerRadius                                = 8
         bannerView.backgroundColor                                  = Constants.Color.Banner
@@ -818,31 +814,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func configBanner(favor: PFObject?) {
     //----------------------------------------------------------------------------------------------------------
         if let favor = favor {
-            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                portraitImageView.user = user
-                user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                    if let user = user {
-                        if let image = user[Constants.User.Portrait] as? PFFile {
-                            image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                                if let data = data {
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        self.portraitImageView.image = UIImage(data: data)
-                                    }
-                                } else {
-                                    ParseErrorHandler.handleParseError(error)
-                                }
-                            })
-                        }
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.nameLabel.text = user[Constants.User.Nickname] as? String
-                        }
-                    } else {
-                        ParseErrorHandler.handleParseError(error)
-                    }
-                })
+            if let user = favor[Constants.Favor.CreatedBy] as? PFUser
+            {
+                portraitImageView.loadImage(user)
             }
             
-            if let audio = favor[Constants.Favor.Audio] as? PFFile {
+            if let audio = favor[Constants.Favor.Audio] as? PFFile
+            {
                 self.audioView.hidden = false
                 audio.getDataInBackgroundWithBlock({ (data, error) -> Void in
                     if let data = data {
@@ -903,6 +881,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     let user = favor[Constants.Favor.CreatedBy] as! PFUser
                     user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
                         if let user = user {
+                            annotationView.gender = user[Constants.User.Gender] as? Int
                             if let image = user[Constants.User.Thumbnail] as? PFFile {
                                 image.getDataInBackgroundWithBlock { (data, error) -> Void in
                                     if let data = data {

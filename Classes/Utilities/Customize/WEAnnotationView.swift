@@ -12,6 +12,7 @@ import MapKit
 class WEAnnotationView: MKAnnotationView {
     
     var index: Int!
+    var gender: Int?
     
     // Required for MKAnnotationView
     required init(coder aDecoder: NSCoder) {
@@ -28,10 +29,22 @@ class WEAnnotationView: MKAnnotationView {
         self.image = UIImage(named: "clusterSmall")
     }
     
-    override func layoutSubviews() {
-        
-        // adds a white border around the green circle
-        layer.borderColor = UIColor.whiteColor().CGColor
+    override func layoutSubviews()
+    {
+        if gender == nil
+        {
+            layer.borderColor = UIColor.whiteColor().CGColor
+        }
+        else
+        {
+            if gender == 1
+            {
+                layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
+            } else {
+                layer.borderColor = UIColorFromHex(0xFF99CC, alpha: 1).CGColor
+            }
+        }
+    
         layer.borderWidth = 3
         layer.cornerRadius = self.bounds.size.width / 2
     }
@@ -44,8 +57,6 @@ class WEAnnotationView: MKAnnotationView {
         imageView.frame = CGRectMake(0, 0, userIconWidth, userIconWidth)
         imageView.center = CGPointMake(width/2, width/2)
         imageView.clipsToBounds                          = true
-//        imageView.layer.borderWidth                      = 3
-//        imageView.layer.borderColor                      = Constants.Color.Border.CGColor
         imageView.layer.cornerRadius                     = userIconWidth/2
         imageView.layer.backgroundColor                  = UIColor.lightGrayColor().CGColor
         self.addSubview(imageView)

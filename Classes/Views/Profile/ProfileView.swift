@@ -162,6 +162,14 @@ class ProfileView: UIViewController
         let name = user[Constants.User.Nickname] as? String
         self.nameLabel.text = "  \(name!)  "
         
+        if let gender = user[Constants.User.Gender] as? Int {
+            if gender == 1 {
+                self.genderIcon.image = UIImage(named: "profile_male")
+            } else {
+                self.genderIcon.image = UIImage(named: "profile_female")
+            }
+        }
+        
         if let file = user[Constants.User.Portrait] as? PFFile {
             file.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if let data = data {

@@ -30,7 +30,7 @@ class ProfileFavorsTable: UITableViewController
     {
         super.viewDidLoad()
         configLooks()
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.registerNib(UINib(nibName: "WEEmptyTableCell", bundle: nil), forCellReuseIdentifier: "WEEmptyTableCell")
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "loadFavors", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -108,8 +108,7 @@ class ProfileFavorsTable: UITableViewController
     {
         if favors.count == 0
         {
-            var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-            cell.textLabel!.text = "You don't have any favors yet. Ask your first favor and start connecting!"
+            let cell = tableView.dequeueReusableCellWithIdentifier("WEEmptyTableCell", forIndexPath: indexPath) as! WEEmptyTableCell
             return cell
         }
         

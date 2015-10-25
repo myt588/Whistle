@@ -19,6 +19,7 @@ class ProfileOthersView: UIViewController
 {
     
     var user: PFUser?
+    
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var bgView                                   : UIView!
@@ -52,12 +53,12 @@ class ProfileOthersView: UIViewController
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidLoad()
+
+        bindData(user)
         if let child = childViewControllers.first as? ProfileOthersTable {
             child.user = self.user
         }
-        if let user = self.user {
-            bindData(user)
-        }
+        
         configLooks()
         configNavBar()
         addBlurEffect()

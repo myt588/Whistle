@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AbrahamLincoln", size: 20)!], forState: UIControlState.Normal)
         
         
-        Firebase.defaultConfig().persistenceEnabled = true
+        // Firebase.defaultConfig().persistenceEnabled = true
         // Enable storing and querying data from Local Datastore.
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
         //Parse.enableLocalDatastore()

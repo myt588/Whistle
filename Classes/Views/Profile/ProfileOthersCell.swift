@@ -19,7 +19,7 @@ class ProfileOthersCell: WECell {
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var nameLabel                            : WEContentLabel!
     @IBOutlet weak var genderImage                          : UIImageView!
-    @IBOutlet weak var portraitView                         : WEImageView!
+    @IBOutlet weak var portraitView                         : WEProfileView!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -49,9 +49,6 @@ class ProfileOthersCell: WECell {
     // MARK: - Functions
     func configLooks() {
         backgroundColor = UIColor.clearColor()
-        portraitView.layer.borderWidth = 3
-        portraitView.layer.borderColor = Constants.Color.Border.CGColor
-        portraitView.layer.cornerRadius = 30
     }
     
     
@@ -62,14 +59,9 @@ class ProfileOthersCell: WECell {
         if let review = review {
             if let user = review[Constants.UserReviewPivotTable.From] as? PFUser {
                 user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                    if let user = user {
-                        self.portraitView.user = user as? PFUser
-                        var image = user[Constants.User.Portrait] as! PFFile
-                        image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                            if error == nil {
-                                self.portraitView.image = UIImage(data: data!)
-                            }
-                        })
+                    if let user = user as? PFUser
+                    {
+                        self.portraitView.loadImage(user)
                         self.nameLabel.text = user[Constants.User.Nickname] as? String
                         if let gender = user[Constants.User.Gender] as? Int {
                             if gender == 1 {

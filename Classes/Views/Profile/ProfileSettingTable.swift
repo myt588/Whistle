@@ -20,7 +20,7 @@ class ProfileSettingTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     // Profile Edit
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var portrait                         : UIImageView!
+    @IBOutlet weak var portrait                         : WEProfileView!
     @IBOutlet weak var nameLabel                        : WEFontContent!
     //----------------------------------------------------------------------------------------------------------
     // Account
@@ -98,11 +98,6 @@ class ProfileSettingTable: UITableViewController
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        portrait.layer.borderColor                      = Constants.Color.Border.CGColor
-        portrait.layer.borderWidth                      = 3
-        portrait.layer.cornerRadius                     = 44
-        portrait.backgroundColor                        = Constants.Color.Border
-        
         var switches = [whistleNofitySwitch, chatNotifySwitch]
         for element in switches {
             element.onTintColor = Constants.Color.Main2
@@ -114,14 +109,8 @@ class ProfileSettingTable: UITableViewController
     func bindData()
     //----------------------------------------------------------------------------------------------------------
     {
-        if let file = user[Constants.User.Portrait] as? PFFile {
-            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if let data = data {
-                    self.portrait.image = UIImage(data: data)!
-                }
-            })
-        }
-        
+        self.portrait.loadImage(user)
+        self.portrait.useDefault = true
         self.nameLabel.text = user[Constants.User.Nickname] as? String
         self.phoneKeyLabel.text = user[Constants.User.Phone] as? String
         self.emailKeyLabel.text = user[Constants.User.Email] as? String
@@ -168,6 +157,10 @@ class ProfileSettingTable: UITableViewController
                     ParseErrorHandler.handleParseError(error)
                 }
             })
+        }
+        if indexPath.row == 6 {
+            let blockedView = BlockedView()
+            self.navigationController?.pushViewController(blockedView, animated: true)
         }
         if indexPath.row == 11 {
             PFUser.logOutInBackgroundWithBlock { (error) -> Void in

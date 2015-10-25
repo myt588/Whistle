@@ -59,6 +59,10 @@ class ParseErrorHandler {
             // let presentingViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
             // let logInViewController = PFLogInViewController()
             // presentingViewController?.presentViewController(logInViewController, animated: true, completion: nil)
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        var viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+        let rootViewController = UIApplication.rootViewController()
+        rootViewController!.presentViewController(viewController, animated: true, completion: nil)
     }
     
     private class func handleTimeOutError() {
@@ -75,6 +79,5 @@ class ParseErrorHandler {
     
     private class func handleCasheMissError() {
         println("Missing Cache")
-        
     }
 }

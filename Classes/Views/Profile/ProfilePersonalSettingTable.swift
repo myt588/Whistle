@@ -21,7 +21,7 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     //----------------------------------------------------------------------------------------------------------
     // Information
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var portrait                             : UIImageView!
+    @IBOutlet weak var portrait                             : WEProfileView!
     @IBOutlet weak var nameKeyLabel                         : UILabel!
     @IBOutlet weak var genderKeyLabel                       : UILabel!
     @IBOutlet weak var regionKeyLabel                       : UILabel!
@@ -41,7 +41,6 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     {
         super.viewDidLoad()
         imagePicker.delegate = self
-        configLooks()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -62,26 +61,11 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
-    func configLooks()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        portrait.layer.borderColor                      = Constants.Color.Border.CGColor
-        portrait.layer.borderWidth                      = 2
-        portrait.layer.cornerRadius                     = 37.5
-        portrait.backgroundColor                        = Constants.Color.Border
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
     func bindData(user: PFUser)
     //----------------------------------------------------------------------------------------------------------
     {
-        var file = user[Constants.User.Portrait] as! PFFile
-        file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-            if let data = data {
-                self.portrait.image = UIImage(data: data)!
-            }
-        })
-        
+        self.portrait.loadImage(user)
+        self.portrait.useDefault = true
         self.nameKeyLabel.text = user[Constants.User.Nickname] as? String
         if let gender = user[Constants.User.Gender] as? Int {
             switch gender

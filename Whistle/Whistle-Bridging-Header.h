@@ -41,5 +41,5 @@
 #import "recent.h"
 #import "common.h"
 #import "image.h"
-
+#import "BlockedView.h"
 #endif

@@ -24,7 +24,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
     @IBOutlet weak var wrapper                              : UIView!
     @IBOutlet weak var headerLabel                          : WEHeader!
     @IBOutlet weak var contentLabel                         : UILabel!
-    @IBOutlet weak var portraitView                         : WEImageView!
+    @IBOutlet weak var portraitView                         : WEProfileView!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var genderImage                          : UIImageView!
     @IBOutlet weak var banner                               : UIView!
@@ -70,10 +70,6 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
     {
         backgroundColor                                     = UIColor.clearColor()
         
-        portraitView.layer.borderWidth                      = 3
-        portraitView.layer.borderColor                      = Constants.Color.Border.CGColor
-        portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
-        
         banner.backgroundColor                              = Constants.Color.Banner
         banner.layer.cornerRadius                           = 12
         wrapper.backgroundColor                             = Constants.Color.ContentBackground
@@ -96,15 +92,10 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
             }
             
             var user : PFUser = favor[Constants.Favor.CreatedBy] as! PFUser
-            portraitView.user = user
             user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                if let user = user {
-                    var image = user[Constants.User.Portrait] as! PFFile
-                    image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                        if error == nil {
-                            self.portraitView.image = UIImage(data: data!)
-                        }
-                    })
+                if let user = user as? PFUser {
+                    self.portraitView.loadImage(user)
+                    self.portraitView.useDefault = true
                     self.nameLabel.text = user[Constants.User.Nickname] as? String
                     if let gender = user[Constants.User.Gender] as? Int {
                         if gender == 1 {

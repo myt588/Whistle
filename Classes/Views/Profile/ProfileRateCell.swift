@@ -19,9 +19,9 @@ class ProfileRateCell: WECell {
     //----------------------------------------------------------------------------------------------------------
     // Banner
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var nameLabel: WEContentLabel!
+    @IBOutlet weak var nameLabel                            : WEContentLabel!
     @IBOutlet weak var genderImage                          : UIImageView!
-    @IBOutlet weak var portraitView                         : WEImageView!
+    @IBOutlet weak var portraitView                         : WEProfileView!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -34,9 +34,6 @@ class ProfileRateCell: WECell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configLooks()
-        
-        rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
-        rateView.displayRating(3.5)
     }
     
     /*
@@ -59,10 +56,6 @@ class ProfileRateCell: WECell {
         bannerView.layer.cornerRadius = 8
         wrapperView.backgroundColor = Constants.Color.ContentBackground
         wrapperView.alpha = 0.65
-        
-        portraitView.layer.borderWidth = 3
-        portraitView.layer.borderColor = Constants.Color.Border.CGColor
-        portraitView.layer.cornerRadius = 40
     }
     
     
@@ -73,13 +66,8 @@ class ProfileRateCell: WECell {
         if let review = review {
             if let user = review[Constants.UserReviewPivotTable.From] as? PFUser {
                 user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                    if let user = user {
-                        var image = user[Constants.User.Portrait] as! PFFile
-                        image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                            if error == nil {
-                                self.portraitView.image = UIImage(data: data!)
-                            }
-                        })
+                    if let user = user as? PFUser {
+                        self.portraitView.loadImage(user)
                         self.nameLabel.text = user[Constants.User.Nickname] as? String
                         if let gender = user[Constants.User.Gender] as? Int {
                             if gender == 1 {

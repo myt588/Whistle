@@ -20,7 +20,7 @@ class CurrentAssistantCell: UITableViewCell
     
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var portraitView                         : WEImageView!
+    @IBOutlet weak var portraitView                         : WEProfileView!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var wrapper                              : UIView!
@@ -50,32 +50,18 @@ class CurrentAssistantCell: UITableViewCell
     {
         backgroundColor                                     = UIColor.clearColor()
         
-        portraitView.layer.borderWidth                      = 3
-        portraitView.layer.borderColor                      = Constants.Color.Border.CGColor
-        portraitView.layer.cornerRadius                     = portraitView.layer.frame.height/2
-        
         bannerView.backgroundColor                          = Constants.Color.Banner
         bannerView.layer.cornerRadius                       = 12
         wrapper.backgroundColor                             = Constants.Color.ContentBackground
-        
-//        hireButton.layer.cornerRadius                       = 20
-//        hireButton.layer.borderColor                        = Constants.Color.Border.CGColor
-//        hireButton.layer.borderWidth                        = 0.3
-//        hireButton.setTitleColor(Constants.Color.TextLight, forState: .Normal)
     }
     
     func bindData(user: PFUser?, favor: PFObject){
         if let user = user {
-            self.portraitView.user = user
             self.favor = favor
             user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                if let user = user {
+                if let user = user as? PFUser {
                     var file = user[Constants.User.Portrait] as! PFFile
-                    file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                        if error == nil {
-                            self.portraitView.image = UIImage(data: data!)!
-                        }
-                    })
+                    self.portraitView.loadImage(user)
                     self.nameLabel.text = user[Constants.User.Nickname] as? String
                     self.lineLabel.text = user[Constants.User.Status] as? String
                     let likes = user[Constants.User.Likes] as? Double

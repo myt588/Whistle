@@ -13,10 +13,7 @@
 #import <Firebase/Firebase.h>
 #import "ProgressHUD.h"
 
-#import "AppConstant.h"
-#import "common.h"
-#import "recent.h"
-#import "converter.h"
+#import "utilities.h"
 
 #import "RecentView.h"
 #import "RecentCell.h"
@@ -154,49 +151,6 @@
 	[action showFromTabBar:[[self tabBarController] tabBar]];
 }
 
-#pragma mark - SelectSingleDelegate
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)didSelectSingleUser:(PFUser *)user2
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	PFUser *user1 = [PFUser currentUser];
-	NSString *groupId = StartPrivateChat(user1, user2);
-	[self actionChat:groupId];
-}
-
-#pragma mark - SelectMultipleDelegate
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)didSelectMultipleUsers:(NSMutableArray *)users
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	NSString *groupId = StartMultipleChat(users);
-	[self actionChat:groupId];
-}
-
-#pragma mark - AddressBookDelegate
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)didSelectAddressBookUser:(PFUser *)user2
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	PFUser *user1 = [PFUser currentUser];
-	NSString *groupId = StartPrivateChat(user1, user2);
-	[self actionChat:groupId];
-}
-
-#pragma mark - FacebookFriendsDelegate
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)didSelectFacebookUser:(PFUser *)user2
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	PFUser *user1 = [PFUser currentUser];
-	NSString *groupId = StartPrivateChat(user1, user2);
-	[self actionChat:groupId];
-}
-
 #pragma mark - Table view data source
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,6 +205,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //---------------------------------------------------------------------------------------------------------------------------------------------
     NSDictionary *recent = recents[indexPath.row];
+    RestartRecentChat(recent);
     [self actionChat:recent[@"groupId"]];
 }
 

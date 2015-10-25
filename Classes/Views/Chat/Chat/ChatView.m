@@ -31,6 +31,8 @@
 #import "StickersView.h"
 #import "MapView.h"
 #import "NavigationController.h"
+#import "YALFoldingTabBarController.h"
+#import "Whistle-Swift.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface ChatView()
@@ -114,6 +116,16 @@
 {
 	[super viewDidAppear:animated];
 	self.collectionView.collectionViewLayout.springinessEnabled = NO;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)viewWillAppear:(BOOL)animated
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+    [super viewWillAppear:animated];
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    ((YALFoldingTabBarController *) self.tabBarController).tabBarView.hidden = YES;
+    //---------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -587,7 +599,22 @@
 	JSQMessage *message = messages[indexPath.item];
 	if ([self incoming:message])
 	{
-		
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        ProfileOthersView *profileView = [mainStoryboard instantiateViewControllerWithIdentifier: @"ProfileOthersView"];
+        PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
+        [query whereKey:PF_USER_OBJECTID equalTo:message.senderId];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        {
+             if (error == nil)
+             {
+                 if ([objects count] != 0)
+                 {
+                     PFUser *user = [objects firstObject];
+                     profileView.user = user;
+                     [self.navigationController pushViewController:profileView animated:YES];
+                 }
+             }
+        }];
 	}
 }
 

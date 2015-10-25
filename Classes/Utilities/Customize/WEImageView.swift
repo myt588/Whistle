@@ -27,7 +27,7 @@ class WEImageView: PFImageView
         var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
         self.addGestureRecognizer(tap)
     }
-    
+        
     func tapped(sender: UITapGestureRecognizer) {
         if let base = UIApplication.topViewController() {
             var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileOthersView") as! ProfileOthersView
@@ -35,6 +35,7 @@ class WEImageView: PFImageView
             base.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
 }
 
 
