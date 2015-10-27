@@ -37,9 +37,6 @@
 #import "RecentView.h"
 #import "AppConstant.h"
 #import "ProgressHUD.h"
-#import "push.h"
-#import "recent.h"
-#import "common.h"
-#import "image.h"
+#import "utilities.h"
 #import "BlockedView.h"
 #endif

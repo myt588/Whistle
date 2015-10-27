@@ -206,7 +206,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
                         if success {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 vc.favors.removeObjectAtIndex(self.row)
-                                vc.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+                                //vc.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
                                 vc.tableView.reloadData()
                                 MessageHandler.message(MessageName.Confirmed)
                             })
@@ -232,7 +232,7 @@ class CurrentAssistCell: UITableViewCell, WERecentButtonsViewDelegate
                         if success {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 vc.favors.removeObjectAtIndex(self.row)
-                                vc.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+                                //vc.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
                                 vc.tableView.reloadData()
                             })
                         } else {

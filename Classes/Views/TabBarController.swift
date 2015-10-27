@@ -37,10 +37,5 @@ class TabBarController : YALFoldingTabBarController {
         self.tabBarView.tabBarViewEdgeInsets = YALTabBarViewHDefaultEdgeInsets
         self.tabBarView.tabBarItemsEdgeInsets = YALTabBarViewItemsDefaultEdgeInsets
     }
-    
-    override func viewDidAppear(animated: Bool) {
-            
-        
-    }
 
 }

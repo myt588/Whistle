@@ -99,6 +99,8 @@
 		940242AA1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429C1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m */; };
 		940242AB1BD9E00B00CE8E45 /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */; };
 		9418B9691BDD7650007F2296 /* WEProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9681BDD7650007F2296 /* WEProfileView.swift */; };
+		9418B96D1BDEE803007F2296 /* WEEmptyTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */; };
+		9418B96F1BDEE81F007F2296 /* WEEmptyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */; };
 		942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */; };
 		942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D11B2F0FED0050C3E3 /* Images.xcassets */; };
 		942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D31B2F0FED0050C3E3 /* LaunchScreen.xib */; };
@@ -494,6 +496,8 @@
 		9402429E1BD9E00B00CE8E45 /* DGActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorView.h; sourceTree = "<group>"; };
 		9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGActivityIndicatorView.m; sourceTree = "<group>"; };
 		9418B9681BDD7650007F2296 /* WEProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEProfileView.swift; sourceTree = "<group>"; };
+		9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEEmptyTableView.xib; sourceTree = "<group>"; };
+		9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEEmptyTableView.swift; sourceTree = "<group>"; };
 		942FA2C51B2F0FED0050C3E3 /* Whistle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whistle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942FA2C91B2F0FED0050C3E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1113,6 +1117,8 @@
 				8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */,
 				89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */,
 				94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */,
+				9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */,
+				9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */,
 				94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */,
 			);
 			path = Customize;
@@ -2269,6 +2275,7 @@
 				942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */,
 				944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */,
 				9441B4D21B89AE6A002EBEEE /* JSQMessagesViewController.xib in Resources */,
+				9418B96D1BDEE803007F2296 /* WEEmptyTableView.xib in Resources */,
 				94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */,
 				893B79711B52ECCF00019CF7 /* SimpleAlert.xib in Resources */,
 				9402427B1BD9DEA300CE8E45 /* StickersView.xib in Resources */,
@@ -2541,6 +2548,7 @@
 				9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */,
 				9441B4E21B89AE6A002EBEEE /* JSQMessagesCellTextView.m in Sources */,
 				94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */,
+				9418B96F1BDEE81F007F2296 /* WEEmptyTableView.swift in Sources */,
 				894425A01B7B899A00B3716C /* CurrentReportView.swift in Sources */,
 				942FA49A1B2F10E90050C3E3 /* JSQSystemSoundPlayer.m in Sources */,
 				94B08EDE1B5DA9C5007784AB /* FBClusteringManager.swift in Sources */,

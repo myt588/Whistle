@@ -134,11 +134,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         self.view.backgroundColor = Constants.Color.Background
         self.navigationController?.navigationBarHidden = true
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
-        loadTagView()
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if PFUser.currentUser() != nil
         {
-            
+            loadTagView()
         } else {
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)

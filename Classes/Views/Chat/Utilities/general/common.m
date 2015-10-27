@@ -11,13 +11,15 @@
 
 #import "common.h"
 #import "NavigationController.h"
+#import "Whistle-Swift.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 void LoginUser(id target)
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-//	NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:[[WelcomeView alloc] init]];
-//	[target presentViewController:navigationController animated:YES completion:nil];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    LoginView *loginView = [mainStoryboard instantiateViewControllerWithIdentifier: @"LoginVC"];
+	[target presentViewController:loginView animated:YES completion:nil];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

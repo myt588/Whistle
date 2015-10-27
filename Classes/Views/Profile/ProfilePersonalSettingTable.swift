@@ -209,7 +209,6 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
                     println("network error")
                 }
             })
-            user.pinInBackground()
         } else {
             println("current user error")
         }

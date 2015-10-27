@@ -25,14 +25,14 @@
                         <rect key="frame" x="8" y="58" width="359" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post your first favor and start connecting" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nf5-jc-L0X" customClass="WEFontContent" customModule="Whistle" customModuleProvider="target">
                         <rect key="frame" x="8" y="79" width="359" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -54,7 +54,7 @@
                 <outlet property="messageLabel" destination="fwm-Uc-PE9" id="fso-uh-Qbh"/>
                 <outlet property="subMessageLabel" destination="nf5-jc-L0X" id="eif-iR-KMD"/>
             </connections>
-            <point key="canvasLocation" x="417.5" y="322"/>
+            <point key="canvasLocation" x="535.5" y="250"/>
         </tableViewCell>
     </objects>
     <resources>

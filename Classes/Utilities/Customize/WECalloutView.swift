@@ -53,25 +53,6 @@ extension WECalloutView : UICollectionViewDataSource {
                 let imageView = WEProfileView(user: user)
                 cell.contentView.addSubview(imageView)
                 imageView.frame = cell.contentView.frame
-
-//                if let image = user[Constants.User.Thumbnail] as? PFFile {
-//                    image.getDataInBackgroundWithBlock { (data, error) -> Void in
-//                        if let data = data {
-//                            dispatch_async(dispatch_get_main_queue()) {
-//                                let imageView = UIImageView(image: UIImage(data: data)!)
-//                                imageView.clipsToBounds                              = true
-//                                imageView.layer.cornerRadius                         = 12
-//                                imageView.layer.borderWidth                          = 2
-//                                cell.contentView.addSubview(imageView)
-//                                imageView.frame = cell.contentView.frame
-//                                println(cell.contentView.frame)
-//                            }
-//                        } else {
-//                            println("can't load image")
-//                            ParseErrorHandler.handleParseError(error)
-//                        }
-//                    }
-//                }
             }
         })
         return cell

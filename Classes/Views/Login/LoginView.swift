@@ -15,7 +15,7 @@ import ParseUI
 
 
 //----------------------------------------------------------------------------------------------------------
-class LoginView: UIViewController, TSMessageViewProtocol
+class LoginView: UIViewController
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
@@ -37,8 +37,6 @@ class LoginView: UIViewController, TSMessageViewProtocol
         super.viewDidLoad()
         configBg()
         addGestures()
-        TSMessage.setDelegate(self)
-        TSMessage.setDefaultViewController(self)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -122,14 +120,12 @@ class LoginView: UIViewController, TSMessageViewProtocol
         filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
             if let error = error {
                 ParseErrorHandler.handleParseError(error)
-                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
             }
         }
         var fileThumbnail = PFFile(name: "thumbnail.jpg", data: NSData(data: thumbnail.mediumQualityJPEGNSData))
         fileThumbnail.saveInBackgroundWithBlock({ (success, error) -> Void in
             if let error = error {
                 ParseErrorHandler.handleParseError(error)
-                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
             }
         })
         user[Constants.User.Portrait] = filePicture
@@ -161,7 +157,6 @@ class LoginView: UIViewController, TSMessageViewProtocol
         user.saveInBackgroundWithBlock({ (success, error) -> Void in
             if let error = error {
                 ParseErrorHandler.handleParseError(error)
-                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
             } else {
                 self.view.userInteractionEnabled = false
                 self.userLoggedIn(user)
@@ -183,14 +178,6 @@ class LoginView: UIViewController, TSMessageViewProtocol
             }
         }
         performSegueWithIdentifier("Login_To_Root", sender: self)
-    }
-    
-    // MARK: - Delegates
-    //----------------------------------------------------------------------------------------------------------
-    func customizeMessageView(messageView: TSMessageView!)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        messageView.alpha = 0.85
     }
 }
 

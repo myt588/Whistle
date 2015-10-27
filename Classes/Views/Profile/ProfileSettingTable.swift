@@ -80,9 +80,7 @@ class ProfileSettingTable: UITableViewController
         self.user[Constants.User.Email] = email
         self.user.saveInBackgroundWithBlock({ (success, error) -> Void in
             if let error = error {
-                if error.code == 125 {
-                    
-                }
+                ParseErrorHandler.handleParseError(error)
             } else {
                 self.emailKeyLabel.text = email
             }

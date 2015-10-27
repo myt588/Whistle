@@ -16,6 +16,7 @@ class WEProfileView: UIImageView
     var user: PFUser!
     var useDefault: Bool = false
     var canTap: Bool = true
+    var isThumbnail: Bool = false
     var imageView: UIImageView!
     
     // MARK: - Init
@@ -65,7 +66,13 @@ class WEProfileView: UIImageView
     func loadImage(user: PFUser)
     {
         self.user = user
-        if let imageFile = user[Constants.User.Portrait] as? PFFile
+        var imageFile: PFFile?
+        if isThumbnail {
+            imageFile = user[Constants.User.Thumbnail] as? PFFile
+        } else {
+            imageFile = user[Constants.User.Portrait] as? PFFile
+        }
+        if let imageFile = imageFile
         {
             imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if let data = data

@@ -25,6 +25,7 @@ enum MessageName {
     case HaveReviewed
     case NeedReason
     case NeedRate
+    case Blocked
 }
 
 class MessageHandler {
@@ -62,6 +63,8 @@ class MessageHandler {
             TSMessage.showNotificationWithTitle("Warning", subtitle: "Please specify your reason", type: .Error)
         case MessageName.NeedRate:
             TSMessage.showNotificationWithTitle("Warning", subtitle: "Please specify your rate", type: .Error)
+        case MessageName.Blocked:
+            showMessage(vc, title:"Blocked", subtitle: "Successfully blocked", type: .Success)
         default:
             break
         }

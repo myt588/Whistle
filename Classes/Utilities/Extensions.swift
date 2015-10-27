@@ -35,9 +35,6 @@ extension UIApplication {
         if let presented = base?.presentedViewController {
             return topViewController(base: presented)
         }
-        //        if let swipe = base as? CurrentView {
-        //            return swipe.tabSwipeNavigation(swipe.tabSwipe, viewControllerAtIndex: swipe.tabSwipe.currentTabIndex)
-        //        }
         return base
     }
     
@@ -196,6 +193,24 @@ extension Array {
             }
         }
         return false
+    }
+}
+
+extension NSObject {
+    
+    func callSelectorAsync(selector: Selector, object: AnyObject?, delay: NSTimeInterval) -> NSTimer {
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: object, repeats: false)
+        return timer
+    }
+    
+    func callSelector(selector: Selector, object: AnyObject?, delay: NSTimeInterval) {
+        
+        let delay = delay * Double(NSEC_PER_SEC)
+        var time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue(), {
+            NSThread.detachNewThreadSelector(selector, toTarget:self, withObject: object)
+        })
     }
 }
 

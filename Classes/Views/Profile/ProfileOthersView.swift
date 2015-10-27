@@ -10,6 +10,7 @@
 //----------------------------------------------------------------------------------------------------------
 import UIKit
 import Parse
+import Foundation
 //----------------------------------------------------------------------------------------------------------
 
 
@@ -17,7 +18,6 @@ import Parse
 class ProfileOthersView: UIViewController
 //----------------------------------------------------------------------------------------------------------
 {
-    
     var user: PFUser?
     
     // MARK: - IBOutlets
@@ -120,16 +120,49 @@ class ProfileOthersView: UIViewController
     func configNavBar()
     //----------------------------------------------------------------------------------------------------------
     {
-        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "Message", style: .Plain, target: self, action:"action")
+        self.navigationItem.rightBarButtonItem                  = UIBarButtonItem(title: "actions", style: .Plain, target: self, action:"action")
 
     }
     
     func action()
     {
-        let user1 = PFUser.currentUser()
-        let groupId = StartPrivateChat(user1!, self.user!)
-        let chatView = ChatView(with: groupId)
-        self.navigationController?.pushViewController(chatView, animated: true)
+        let alert = WEAlertController(title: "Action", message: "select your action", style: .ActionSheet)
+        alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+        alert.addAction(SimpleAlert.Action(title: "Chat", style: .OK) { action in
+            let n = self.navigationController?.viewControllers.count
+            let vc = self.navigationController?.viewControllers[n!-2] as? UIViewController
+            if vc is ChatView
+            {
+                self.navigationController?.popViewControllerAnimated(true)
+                return
+            }
+            let user1 = PFUser.currentUser()
+            let groupId = StartPrivateChat(user1!, self.user!)
+            let chatView = ChatView(with: groupId)
+            self.navigationController?.pushViewController(chatView, animated: true)
+            })
+        alert.addAction(SimpleAlert.Action(title: "Block", style: .OK) { action in
+            BlockUser(self.user)
+            MessageHandler.message(MessageName.Blocked, vc: self)
+            self.callSelector("delayedPopToRootViewController", object: self, delay: 1.0)
+            })
+        alert.addAction(SimpleAlert.Action(title: "Report", style: .OK) { action in
+//            let query = PFQuery(className: Constants.UserReportPivotTable.Name)
+//            query.whereKey(Constants.UserReportPivotTable.From, equalTo: PFUser.currentUser()!)
+//            query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+//                if let object = object {
+//                    MessageHandler.message(.HaveReported)
+//                } else {
+//                    vc.performSegueWithIdentifier("report", sender: vc)
+//                }
+//            }
+            })
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func delayedPopToRootViewController()
+    {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     //----------------------------------------------------------------------------------------------------------
