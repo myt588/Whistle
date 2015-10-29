@@ -18,6 +18,7 @@ class WEProfileView: UIImageView
     var canTap: Bool = true
     var isThumbnail: Bool = false
     var imageView: UIImageView!
+    var borderWidth: CGFloat = 3
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -40,26 +41,25 @@ class WEProfileView: UIImageView
     
     override func layoutSubviews()
     {
-        if self.user == nil {
-            return
-        }
-        
-        let gender = user[Constants.User.Gender] as? Int
-        
-        if gender == nil || useDefault
+        if self.user == nil || useDefault
         {
             layer.borderColor = UIColor.whiteColor().CGColor
         }
         else
         {
-            if gender == 1
+            if let gender = user[Constants.User.Gender] as? Int
             {
-                layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
+                if gender == 1
+                {
+                    layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
+                } else {
+                    layer.borderColor = UIColorFromHex(0xFF99CC, alpha: 1).CGColor
+                }
             } else {
-                layer.borderColor = UIColorFromHex(0xFF99CC, alpha: 1).CGColor
+                layer.borderColor = UIColor.whiteColor().CGColor
             }
         }
-        layer.borderWidth = 3
+        layer.borderWidth = borderWidth
         layer.cornerRadius = self.bounds.size.width / 2
     }
     
@@ -102,7 +102,7 @@ class WEProfileView: UIImageView
     
     func presentImageView(image: UIImage) {
         let width = self.bounds.width
-        let userIconWidth = width - 6
+        let userIconWidth = width - borderWidth * 2
         imageView = UIImageView(image: image)
         imageView.userInteractionEnabled = true
         imageView.frame = CGRectMake(0, 0, userIconWidth, userIconWidth)

@@ -11,7 +11,7 @@
 		891160AD1B7900B5005D3995 /* MXPullDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 891160AC1B7900B5005D3995 /* MXPullDownMenu.m */; };
 		893B79631B52E09300019CF7 /* CurrentAssistantTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */; };
 		893B79651B52E0A600019CF7 /* CurrentAssistantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */; };
-		893B79691B52E86300019CF7 /* WEImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79681B52E86300019CF7 /* WEImageView.swift */; };
+		893B79691B52E86300019CF7 /* WEBlurImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79681B52E86300019CF7 /* WEBlurImageView.swift */; };
 		893B79701B52ECCF00019CF7 /* SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B796D1B52ECCF00019CF7 /* SimpleAlert.swift */; };
 		893B79711B52ECCF00019CF7 /* SimpleAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 893B796E1B52ECCF00019CF7 /* SimpleAlert.xib */; };
 		893B797E1B5456AC00019CF7 /* WEAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B797D1B5456AC00019CF7 /* WEAlertController.swift */; };
@@ -99,8 +99,13 @@
 		940242AA1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429C1BD9E00B00CE8E45 /* DGActivityIndicatorTwoDotsAnimation.m */; };
 		940242AB1BD9E00B00CE8E45 /* DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */; };
 		9418B9691BDD7650007F2296 /* WEProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9681BDD7650007F2296 /* WEProfileView.swift */; };
-		9418B96D1BDEE803007F2296 /* WEEmptyTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */; };
-		9418B96F1BDEE81F007F2296 /* WEEmptyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */; };
+		9418B9711BE097D7007F2296 /* CurrentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9701BE097D7007F2296 /* CurrentCell.swift */; };
+		9418B9731BE097E7007F2296 /* CurrentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9721BE097E7007F2296 /* CurrentCell.xib */; };
+		9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9741BE0A713007F2296 /* WEPrizeView.xib */; };
+		9418B9771BE0A721007F2296 /* WEPrizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9761BE0A721007F2296 /* WEPrizeView.swift */; };
+		9418B97D1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */; };
+		9418B97F1BE1401F007F2296 /* WECurrentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */; };
+		9418B9811BE1477D007F2296 /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9801BE1477D007F2296 /* sky.jpg */; };
 		942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */; };
 		942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D11B2F0FED0050C3E3 /* Images.xcassets */; };
 		942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D31B2F0FED0050C3E3 /* LaunchScreen.xib */; };
@@ -242,6 +247,7 @@
 		944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */; };
 		944AE4571BDA0A79008B7964 /* AbrahamLincoln.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4561BDA09B4008B7964 /* AbrahamLincoln.ttf */; };
 		944AE4591BDAF0F5008B7964 /* MyriadPro-LightSemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */; };
+		944CFC5D1BE186CD00A84DE8 /* WEButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC5C1BE186CD00A84DE8 /* WEButtons.swift */; };
 		945E88EA1B89AAE600124816 /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E71B89AAE600124816 /* RecentCell.m */; };
 		945E88EB1B89AAE600124816 /* RecentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E91B89AAE600124816 /* RecentView.m */; };
 		945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */; };
@@ -342,7 +348,7 @@
 		891160AC1B7900B5005D3995 /* MXPullDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXPullDownMenu.m; sourceTree = "<group>"; };
 		893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentAssistantTable.swift; sourceTree = "<group>"; };
 		893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentAssistantCell.swift; sourceTree = "<group>"; };
-		893B79681B52E86300019CF7 /* WEImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEImageView.swift; sourceTree = "<group>"; };
+		893B79681B52E86300019CF7 /* WEBlurImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEBlurImageView.swift; sourceTree = "<group>"; };
 		893B796D1B52ECCF00019CF7 /* SimpleAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleAlert.swift; sourceTree = "<group>"; };
 		893B796E1B52ECCF00019CF7 /* SimpleAlert.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleAlert.xib; sourceTree = "<group>"; };
 		893B797D1B5456AC00019CF7 /* WEAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEAlertController.swift; sourceTree = "<group>"; };
@@ -496,8 +502,13 @@
 		9402429E1BD9E00B00CE8E45 /* DGActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGActivityIndicatorView.h; sourceTree = "<group>"; };
 		9402429F1BD9E00B00CE8E45 /* DGActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGActivityIndicatorView.m; sourceTree = "<group>"; };
 		9418B9681BDD7650007F2296 /* WEProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEProfileView.swift; sourceTree = "<group>"; };
-		9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEEmptyTableView.xib; sourceTree = "<group>"; };
-		9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEEmptyTableView.swift; sourceTree = "<group>"; };
+		9418B9701BE097D7007F2296 /* CurrentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentCell.swift; sourceTree = "<group>"; };
+		9418B9721BE097E7007F2296 /* CurrentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentCell.xib; sourceTree = "<group>"; };
+		9418B9741BE0A713007F2296 /* WEPrizeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEPrizeView.xib; sourceTree = "<group>"; };
+		9418B9761BE0A721007F2296 /* WEPrizeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEPrizeView.swift; sourceTree = "<group>"; };
+		9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "emma-watson-for-people-tree-image-2-274150077.jpg"; sourceTree = "<group>"; };
+		9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECurrentImageView.swift; sourceTree = "<group>"; };
+		9418B9801BE1477D007F2296 /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
 		942FA2C51B2F0FED0050C3E3 /* Whistle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whistle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942FA2C91B2F0FED0050C3E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -718,6 +729,7 @@
 		944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-SemiExt.otf"; sourceTree = "<group>"; };
 		944AE4561BDA09B4008B7964 /* AbrahamLincoln.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AbrahamLincoln.ttf; sourceTree = "<group>"; };
 		944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-LightSemiExt.otf"; sourceTree = "<group>"; };
+		944CFC5C1BE186CD00A84DE8 /* WEButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEButtons.swift; sourceTree = "<group>"; };
 		945E88E61B89AAE600124816 /* RecentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentCell.h; sourceTree = "<group>"; };
 		945E88E71B89AAE600124816 /* RecentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentCell.m; sourceTree = "<group>"; };
 		945E88E81B89AAE600124816 /* RecentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentView.h; sourceTree = "<group>"; };
@@ -1107,8 +1119,9 @@
 				94F2669D1BCDA1E700914F58 /* WECalloutView.swift */,
 				947EE5C41BCFB9ED001A6AF3 /* WETagCollectionView.swift */,
 				947EE5C61BCFBA21001A6AF3 /* WETagCollectionCell.swift */,
-				893B79681B52E86300019CF7 /* WEImageView.swift */,
+				893B79681B52E86300019CF7 /* WEBlurImageView.swift */,
 				9418B9681BDD7650007F2296 /* WEProfileView.swift */,
+				9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */,
 				893B797D1B5456AC00019CF7 /* WEAlertController.swift */,
 				94BB08081B5329BB00D2492B /* WEAnnotationView.swift */,
 				89E57F1C1B57F3FD00983D1A /* WECustomize.swift */,
@@ -1117,9 +1130,10 @@
 				8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */,
 				89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */,
 				94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */,
-				9418B96C1BDEE803007F2296 /* WEEmptyTableView.xib */,
-				9418B96E1BDEE81F007F2296 /* WEEmptyTableView.swift */,
 				94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */,
+				9418B9741BE0A713007F2296 /* WEPrizeView.xib */,
+				9418B9761BE0A721007F2296 /* WEPrizeView.swift */,
+				944CFC5C1BE186CD00A84DE8 /* WEButtons.swift */,
 			);
 			path = Customize;
 			sourceTree = "<group>";
@@ -1399,6 +1413,8 @@
 		942FA2C71B2F0FED0050C3E3 /* Whistle */ = {
 			isa = PBXGroup;
 			children = (
+				9418B9801BE1477D007F2296 /* sky.jpg */,
+				9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */,
 				942FA4CA1B2F11E00050C3E3 /* Main.storyboard */,
 				942FA4ED1B2F15150050C3E3 /* Whistle-Bridging-Header.h */,
 				94C1801E1B60755000D4F647 /* AppConstant.h */,
@@ -2000,6 +2016,8 @@
 				893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */,
 				8944259F1B7B899A00B3716C /* CurrentReportView.swift */,
 				89B4D17B1B7CEA0C00EE1C79 /* CurrentRateView.swift */,
+				9418B9701BE097D7007F2296 /* CurrentCell.swift */,
+				9418B9721BE097E7007F2296 /* CurrentCell.xib */,
 			);
 			path = Current;
 			sourceTree = "<group>";
@@ -2268,6 +2286,7 @@
 				942FA4471B2F10E90050C3E3 /* chat_camera@2x.png in Resources */,
 				942FA4F61B2F1B0E0050C3E3 /* image3.jpg in Resources */,
 				942FA49F1B2F10E90050C3E3 /* ProgressHUD.bundle in Resources */,
+				9418B97D1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg in Resources */,
 				942FA44F1B2F10E90050C3E3 /* privacy.html in Resources */,
 				94DED7CD1B3EF144002B9F3B /* Images.xcassets in Resources */,
 				942FA4F81B2F1B0E0050C3E3 /* image5.jpg in Resources */,
@@ -2275,7 +2294,6 @@
 				942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */,
 				944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */,
 				9441B4D21B89AE6A002EBEEE /* JSQMessagesViewController.xib in Resources */,
-				9418B96D1BDEE803007F2296 /* WEEmptyTableView.xib in Resources */,
 				94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */,
 				893B79711B52ECCF00019CF7 /* SimpleAlert.xib in Resources */,
 				9402427B1BD9DEA300CE8E45 /* StickersView.xib in Resources */,
@@ -2301,10 +2319,13 @@
 				9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */,
 				942FA4CB1B2F11E00050C3E3 /* Main.storyboard in Resources */,
 				94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */,
+				9418B9811BE1477D007F2296 /* sky.jpg in Resources */,
 				942FA44D1B2F10E90050C3E3 /* settings_blank@2x.png in Resources */,
+				9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */,
 				9402427D1BD9DEA300CE8E45 /* MapView.xib in Resources */,
 				942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */,
 				942FA4501B2F10E90050C3E3 /* terms.html in Resources */,
+				9418B9731BE097E7007F2296 /* CurrentCell.xib in Resources */,
 				9441B4E81B89AE6A002EBEEE /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				942FA44E1B2F10E90050C3E3 /* stickers_blank@2x.png in Resources */,
 				942FA4451B2F10E90050C3E3 /* chat_audio@2x.png in Resources */,
@@ -2381,6 +2402,7 @@
 				9441B4CF1B89AE6A002EBEEE /* UIView+JSQMessages.m in Sources */,
 				945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */,
 				94BB081A1B532C9700D2492B /* HTTPResponseSerializer.swift in Sources */,
+				944CFC5D1BE186CD00A84DE8 /* WEButtons.swift in Sources */,
 				940242A01BD9E00B00CE8E45 /* DGActivityIndicatorCookieTerminatorAnimation.m in Sources */,
 				942FA4591B2F10E90050C3E3 /* AFHTTPSessionManager.m in Sources */,
 				942FA4211B2F10E90050C3E3 /* AudioRecorder.swift in Sources */,
@@ -2410,13 +2432,14 @@
 				942FA46B1B2F10E90050C3E3 /* IDMTapDetectingView.m in Sources */,
 				89B0A5411B48590200B0226B /* JTSAnimatedGIFUtility.m in Sources */,
 				89594C201B3ACCFE00A8CF8B /* CAAnimation+YALTabBarViewAnimations.m in Sources */,
-				893B79691B52E86300019CF7 /* WEImageView.swift in Sources */,
+				893B79691B52E86300019CF7 /* WEBlurImageView.swift in Sources */,
 				89EBA35F1B5FF3880011D528 /* CurrentView.swift in Sources */,
 				942FA49D1B2F10E90050C3E3 /* MapManager.swift in Sources */,
 				940242521BD9DE9600CE8E45 /* recent.m in Sources */,
 				944AE44D1BDA0123008B7964 /* ProfileOthersCell.swift in Sources */,
 				940242A41BD9E00B00CE8E45 /* DGActivityIndicatorRotatingSandglassAnimation.m in Sources */,
 				942FA45A1B2F10E90050C3E3 /* AFNetworkReachabilityManager.m in Sources */,
+				9418B9771BE0A721007F2296 /* WEPrizeView.swift in Sources */,
 				940242A81BD9E00B00CE8E45 /* DGActivityIndicatorTriplePulseAnimation.m in Sources */,
 				89594C211B3ACCFE00A8CF8B /* CATransaction+TransactionWithAnimationsAndCompletion.m in Sources */,
 				89594C1F1B3ACCFE00A8CF8B /* YALSpringAnimation.m in Sources */,
@@ -2429,6 +2452,7 @@
 				94354C991BDC138F0048C6CD /* WEEmptyTableCell.swift in Sources */,
 				94C4A1481B8093FE005AC537 /* Extensions.swift in Sources */,
 				893B79651B52E0A600019CF7 /* CurrentAssistantCell.swift in Sources */,
+				9418B97F1BE1401F007F2296 /* WECurrentImageView.swift in Sources */,
 				942FA45D1B2F10E90050C3E3 /* AFURLRequestSerialization.m in Sources */,
 				9441B4D81B89AE6A002EBEEE /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				9441B4E31B89AE6A002EBEEE /* JSQMessagesCollectionView.m in Sources */,
@@ -2548,7 +2572,6 @@
 				9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */,
 				9441B4E21B89AE6A002EBEEE /* JSQMessagesCellTextView.m in Sources */,
 				94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */,
-				9418B96F1BDEE81F007F2296 /* WEEmptyTableView.swift in Sources */,
 				894425A01B7B899A00B3716C /* CurrentReportView.swift in Sources */,
 				942FA49A1B2F10E90050C3E3 /* JSQSystemSoundPlayer.m in Sources */,
 				94B08EDE1B5DA9C5007784AB /* FBClusteringManager.swift in Sources */,
@@ -2565,6 +2588,7 @@
 				940242801BD9DEA300CE8E45 /* EmojiMediaItem.m in Sources */,
 				94B653E81B6384860091CE98 /* ParseErrorHandler.swift in Sources */,
 				94DED7CF1B3EF144002B9F3B /* PreviewSupplementaryView.swift in Sources */,
+				9418B9711BE097D7007F2296 /* CurrentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

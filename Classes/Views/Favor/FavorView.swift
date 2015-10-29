@@ -819,6 +819,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser
             {
                 portraitImageView.loadImage(user)
+                nameLabel.text = user[Constants.User.Nickname] as? String
             }
             
             if let audio = favor[Constants.Favor.Audio] as? PFFile

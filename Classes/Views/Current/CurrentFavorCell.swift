@@ -33,7 +33,7 @@ class CurrentFavorCell: UITableViewCell, WERecentButtonsViewDelegate
     @IBOutlet weak var statusLabel                          : UILabel!
     @IBOutlet weak var timeElapsedLabel                     : UILabel!
     @IBOutlet weak var genderImage                          : UIImageView!
-    @IBOutlet weak var portraitView                         : WEImageView!
+    @IBOutlet weak var portraitView                         : WEProfileView!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------

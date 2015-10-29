@@ -501,7 +501,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             element.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             element.layer.backgroundColor = Constants.Color.Main2.CGColor
             element.layer.cornerRadius = 12.5
-//            element.tintColor = Constants.Color.CellTextReverse
         }
         
         deleteAudioButton.alpha                                     = 0
