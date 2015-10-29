@@ -98,8 +98,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     // Constraints
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var audioViewLengthCons                      : NSLayoutConstraint!
-    @IBOutlet weak var favorBotCons                             : NSLayoutConstraint!
-    @IBOutlet weak var rewardBotCons                            : NSLayoutConstraint!
+    @IBOutlet weak var favorContentTopCons                      : NSLayoutConstraint!
     //----------------------------------------------------------------------------------------------------------
     
     
@@ -147,7 +146,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         addGestures()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationPicked:", name: "locationPicked", object: nil)
-        tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+//        tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -362,9 +361,11 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         switch sender.tag {
         case 1:
             if favorContentIsHidden {
+//                favorContentTopCons.active = true
                 favorHideButton.setTitle("Skip", forState: .Normal)
                 favorTextView.alpha = 1
             } else {
+//                favorContentTopCons.active = false
                 favorHideButton.setTitle("Compose", forState: .Normal)
                 favorTextView.alpha = 0
             }
@@ -499,8 +500,9 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         var buttons = [pickLocationButton]
         for element in buttons {
             element.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            element.layer.backgroundColor = Constants.Color.Main2.CGColor
+            element.backgroundColor = UIColor.whiteColor()
             element.layer.cornerRadius = 12.5
+            element.tintColor = Constants.Color.Main
         }
         
         deleteAudioButton.alpha                                     = 0

@@ -56,6 +56,13 @@ class WEReviewButton: UIButton {
                     MessageHandler.message(.HaveReviewed)
                 } else {
                     println("review")
+                    if let base = UIApplication.topViewController()
+                    {
+                        var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ReviewView") as! CurrentRateView
+                        var nav = UINavigationController(rootViewController: vc)
+                        base.presentViewController(nav, animated: true, completion: nil)
+                        vc.favor = favor
+                    }
                 }
             }
         }
@@ -88,97 +95,15 @@ class WEReportButton: UIButton {
                     MessageHandler.message(.HaveReported)
                 } else {
                     println("report")
+                    if let base = UIApplication.topViewController()
+                    {
+                        var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ReportTable") as! CurrentReoprtTable
+                        var nav = UINavigationController(rootViewController: vc)
+                        base.presentViewController(nav, animated: true, completion: nil)
+                        vc.favor = favor
+                    }
                 }
             }
-        }
-    }
-}
-
-class WEConfirmButton: UIButton {
-    
-    var favor: PFObject?
-    var vc: CurrentSwitcher!
-    var index: Int!
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
-    }
-    
-    init(favor: PFObject, vc: CurrentSwitcher, index: Int) {
-        super.init(frame: CGRectMake(0, 0, 50, 50))
-        self.favor = favor
-        self.vc = vc
-        self.index = index
-        self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
-    }
-    
-    func action()
-    {
-        if let vc = self.vc {
-            let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
-            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
-            alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
-                if let favor = self.favor {
-                    favor[Constants.Favor.Status] = 3
-                    favor.saveInBackgroundWithBlock({ (success, error) -> Void in
-                        if success {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                vc.favors.removeObjectAtIndex(self.index)
-                                vc.tableView.reloadData()
-                                MessageHandler.message(MessageName.Confirmed)
-                            })
-                        } else {
-                            ParseErrorHandler.handleParseError(error)
-                        }
-                    })
-                }
-                })
-            vc.presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-}
-
-class WECancelButton: UIButton {
-    
-    var favor: PFObject?
-    var vc: CurrentSwitcher!
-    var index: Int!
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
-    }
-    
-    init(favor: PFObject, vc: CurrentSwitcher, index: Int) {
-        super.init(frame: CGRectMake(0, 0, 50, 50))
-        self.favor = favor
-        self.vc = vc
-        self.index = index
-        self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
-    }
-    
-    func action()
-    {
-        if let vc = self.vc {
-            let alert = WEAlertController(title: "Cancel", message: "Are you certain?", style: .Alert)
-            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
-            alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
-                if let favor = self.favor {
-                    favor[Constants.Favor.Status] = 5
-                    favor.saveInBackgroundWithBlock({ (success, error) -> Void in
-                        if success {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                vc.favors.removeObjectAtIndex(self.index)
-                                vc.tableView.reloadData()
-                            })
-                        } else {
-                            ParseErrorHandler.handleParseError(error)
-                        }
-                    })
-                }
-                })
-            vc.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }
@@ -186,7 +111,6 @@ class WECancelButton: UIButton {
 class WEChatButton: UIButton {
     
     var user: PFUser?
-    var vc: CurrentSwitcher!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -196,7 +120,6 @@ class WEChatButton: UIButton {
     init(user: PFUser, vc: CurrentSwitcher) {
         super.init(frame: CGRectMake(0, 0, 50, 50))
         self.user = user
-        self.vc = vc
         self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
     }
     

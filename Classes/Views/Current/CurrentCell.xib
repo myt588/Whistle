@@ -154,7 +154,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-ea-1XT" userLabel="Confirm">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-ea-1XT" userLabel="Confirm">
                                 <rect key="frame" x="356" y="38" width="30" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -171,7 +171,7 @@
                                     <constraint firstAttribute="width" constant="30" id="33x-JD-woO"/>
                                     <constraint firstAttribute="width" secondItem="RcM-oH-otL" secondAttribute="height" multiplier="1:1" id="j1E-UJ-H2N"/>
                                 </constraints>
-                                <state key="normal" image="favor_buttons_view_cancel">
+                                <state key="normal" image="current_cancel_black">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -231,11 +231,11 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="current_cancel_black" width="34" height="34"/>
         <image name="emma-watson-for-people-tree-image-2-274150077.jpg" width="1534" height="1227"/>
         <image name="favor_buttons_chat" width="50" height="50"/>
         <image name="favor_buttons_review" width="50" height="50"/>
         <image name="favor_buttons_share" width="50" height="50"/>
-        <image name="favor_buttons_view_cancel" width="43" height="43"/>
         <image name="favor_buttons_view_confirm" width="43" height="43"/>
     </resources>
 </document>

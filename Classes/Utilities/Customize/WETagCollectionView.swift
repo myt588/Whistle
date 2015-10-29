@@ -14,10 +14,10 @@ struct Tag {
     var textContent: String
 }
 
-let colorUnselectedTag = UIColor.whiteColor()
-let colorSelectedTag = UIColor(red:0.22, green:0.7, blue:0.99, alpha:1)
+let colorUnselectedTag = UIColor.clearColor()
+let colorSelectedTag = UIColor.clearColor()
 
-let colorTextUnSelectedTag = UIColor(red:0.33, green:0.33, blue:0.35, alpha:1)
+let colorTextUnSelectedTag = UIColor.whiteColor()
 let colorTextSelectedTag = UIColor.whiteColor()
 
 let TagCollectionViewCellIdentifier = "TagCell"

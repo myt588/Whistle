@@ -60,6 +60,7 @@ private class AKCollectionViewCell: UICollectionViewCell {
 	var imageView: UIImageView!
 	var font = UIFont.systemFontOfSize(UIFont.systemFontSize())
 	var highlightedFont = UIFont.systemFontOfSize(UIFont.systemFontSize())
+    var border: UIView!
 	var _selected: Bool = false {
 		didSet(selected) {
 			let animation = CATransition()
@@ -95,6 +96,10 @@ private class AKCollectionViewCell: UICollectionViewCell {
 		self.imageView.contentMode = .Center
 		self.imageView.autoresizingMask = .FlexibleWidth | .FlexibleHeight;
 		self.contentView.addSubview(self.imageView)
+        
+        self.border = UIView(frame: CGRectMake(0, self.contentView.bounds.height-3, self.contentView.bounds.width, 3))
+        self.border.backgroundColor = Constants.Color.Background
+        self.contentView.addSubview(self.border)
 	}
 
 	init() {
@@ -571,16 +576,16 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 
 	// MARK: UICollectionViewDelegate
 	public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        var cell = collectionView.cellForItemAtIndexPath(indexPath)
-        cell!.layer.cornerRadius = 12
+        var cell = collectionView.cellForItemAtIndexPath(indexPath) as! AKCollectionViewCell
+        cell.layer.cornerRadius = 12
         
         if contains(selectedItems, indexPath.item) {
             selectedItems.removeObject(indexPath.item)
-            cell!.addBottomBorderWithHeight(3, color: Constants.Color.Background)
+            cell.border.backgroundColor = Constants.Color.Background
         } else {
             self.selectItem(indexPath.item, animated: true)
             selectedItems.append(indexPath.item)
-            cell!.addBottomBorderWithHeight(3, color: Constants.Color.Main)
+            cell.border.backgroundColor = Constants.Color.Main
         }
 		
         self.delegate?.pickerView?(self, didSelectItems: selectedItems)

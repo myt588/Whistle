@@ -28,11 +28,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Views/Favor/FavorView.swift"
-            timestampString = "467673114.822705"
+            timestampString = "467779824.309247"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "addFriend(_:)"
             landmarkType = "5">
          </BreakpointContent>

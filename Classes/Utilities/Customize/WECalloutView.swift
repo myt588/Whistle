@@ -21,6 +21,11 @@ class WECalloutView: UICollectionView {
     //----------------------------------------------------------------------------------------------------------
     {
         super.init(coder: aDecoder)
+        self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        self.backgroundColor = UIColor.clearColor()
+        self.dataSource = self
+        self.delegate = self
+        self.userInteractionEnabled = true
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -51,6 +56,7 @@ extension WECalloutView : UICollectionViewDataSource {
         user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
             if let user = user as? PFUser {
                 let imageView = WEProfileView(user: user)
+                cell.contentView.backgroundColor = Constants.Color.Background
                 cell.contentView.addSubview(imageView)
                 imageView.frame = cell.contentView.frame
             }
@@ -65,6 +71,22 @@ extension WECalloutView : UICollectionViewDelegateFlowLayout {
         self.deselectItemAtIndexPath(indexPath, animated: false)
         let index = indexes[indexPath.item]
         NSNotificationCenter.defaultCenter().postNotificationName("calloutSelected", object: nil, userInfo: ["index": index])
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: 40, height: 40)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return  UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 5
     }
     
 }

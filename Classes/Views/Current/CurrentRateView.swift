@@ -20,6 +20,8 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     @IBOutlet weak var star4: WETintImageView!
     @IBOutlet weak var star5: WETintImageView!
     
+    @IBOutlet weak var rateLabel: WEFontName!
+    
     private var rating: Int = 0
     var favor: PFObject?
     
@@ -46,22 +48,19 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     //----------------------------------------------------------------------------------------------------------
     {
         var rightButton = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action:"submit")
-        self.navigationItem.rightBarButtonItem             = rightButton
+        self.navigationItem.rightBarButtonItem = rightButton
         var leftButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action:"cancel")
-        self.navigationItem.leftBarButtonItem              = leftButton
+        self.navigationItem.leftBarButtonItem = leftButton
+        self.title = "Review"
     }
     
     func configLooks() {
         view.backgroundColor                            = Constants.Color.Background
-        var darkBlur                                    = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        var blurView                                    = UIVisualEffectView(effect: darkBlur)
-        blurView.frame                                  = view.bounds
-        view.insertSubview(blurView, atIndex: 0)
         
         textView.delegate                               = self
-        textView.backgroundColor                        = UIColor.clearColor()
+        textView.backgroundColor                        = Constants.Color.ContentBackground
         textView.textContainerInset                     = UIEdgeInsetsMake(10, 8, 10, 8)
-        textView.textColor                              = Constants.Color.CellTextReverse
+        textView.textColor                              = UIColor.whiteColor()
         textView.layer.cornerRadius                     = 8
     }
     
@@ -79,7 +78,7 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
         var stars = [star1, star2, star3, star4, star5]
         for element in stars {
             element.userInteractionEnabled = true
-            element.tintColor = Constants.Color.Main
+            element.tintColor = UIColor.whiteColor()
         }
     }
     
@@ -121,65 +120,79 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     }
     
     func star1Tapped(sender: UITapGestureRecognizer) {
-        println("1")
         var stars = [star1]
         for element in stars {
             element.image = UIImage(named: "rate_star_fill")
+            element.tintColor = UIColor.whiteColor()
             bounceView(element)
         }
         rating = 1
+        bounceView(rateLabel)
+        rateLabel.text = "1/5"
         var unStars = [star2, star3, star4, star5]
         for element in unStars {
             element.image = UIImage(named: "rate_star_line")
+            element.tintColor = UIColor.whiteColor()
         }
     }
     func star2Tapped(sender: UITapGestureRecognizer) {
-        println("2")
         var stars = [star1, star2]
         for element in stars {
             element.image = UIImage(named: "rate_star_fill")
+            element.tintColor = UIColor.whiteColor()
             bounceView(element)
         }
         rating = 2
+        bounceView(rateLabel)
+        rateLabel.text = "2/5"
         var unStars = [star3, star4, star5]
         for element in unStars {
             element.image = UIImage(named: "rate_star_line")
+            element.tintColor = UIColor.whiteColor()
         }
     }
     func star3Tapped(sender: UITapGestureRecognizer) {
-        println("3")
         var stars = [star1, star2, star3]
         for element in stars {
             element.image = UIImage(named: "rate_star_fill")
+            element.tintColor = UIColor.whiteColor()
             bounceView(element)
         }
         rating = 3
+        bounceView(rateLabel)
+        rateLabel.text = "3/5"
         var unStars = [star4, star5]
         for element in unStars {
             element.image = UIImage(named: "rate_star_line")
+            element.tintColor = UIColor.whiteColor()
         }
     }
     func star4Tapped(sender: UITapGestureRecognizer) {
-        println("4")
         var stars = [star1, star2, star3, star4]
         for element in stars {
             element.image = UIImage(named: "rate_star_fill")
+            element.tintColor = UIColor.whiteColor()
             bounceView(element)
         }
         rating = 4
+        bounceView(rateLabel)
+        rateLabel.text = "4/5"
         var unStars = [star5]
         for element in unStars {
             element.image = UIImage(named: "rate_star_line")
+            element.tintColor = UIColor.whiteColor()
         }
     }
     func star5Tapped(sender: UITapGestureRecognizer) {
-        println("5")
         var stars = [star1, star2, star3, star4, star5]
         for element in stars {
             element.image = UIImage(named: "rate_star_fill")
+            element.tintColor = UIColor.whiteColor()
             bounceView(element)
         }
         rating = 5
+        bounceView(rateLabel)
+        rateLabel.text = "5/5"
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool

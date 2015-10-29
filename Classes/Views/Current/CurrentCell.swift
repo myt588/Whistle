@@ -39,7 +39,10 @@ class CurrentCell: UITableViewCell
     @IBOutlet weak var reviewButton                         : WEReviewButton!
     @IBOutlet weak var shareButton                          : WEShareButton!
     
+    private var favor                                       : PFObject!
+    private var row                                         : Int!
     var vc                                                  : CurrentSwitcher?
+    
     
     // MARK: - Initializations
     //----------------------------------------------------------------------------------------------------------
@@ -51,8 +54,17 @@ class CurrentCell: UITableViewCell
         self.chatButton.enabled = false
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
-        self.cancelButton.enabled = false
-        self.confirmButton.enabled = false
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    override func prepareForReuse()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        self.timeElapsedLabel.text = ""
+        self.portraitView.imageView = nil
+        self.blurImage.imageView = nil
+        self.audioView.hidden = true
+        self.contentLabel.text = ""
     }
     
     
@@ -67,9 +79,16 @@ class CurrentCell: UITableViewCell
     func bindData(favor : PFObject?, row: Int, cellType: String)
     {
         if let favor = favor {
+            self.favor = favor
+            self.row = row
+            if cellType == "favor" {
+                self.cancelButton.hidden = false
+                self.cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchUpInside)
+            } else {
+                self.cancelButton.hidden = true
+            }
             var status = 0
-            if cellType == "interest"
-            {
+            if cellType == "interest" {
                 status = 2
             } else {
                 status = favor[Constants.Favor.Status] as! Int
@@ -92,7 +111,6 @@ class CurrentCell: UITableViewCell
                         self.coutLabel.hidden = false
                         self.coutLabel.text = "\(count)"
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
-                        self.tag = row
                         self.coutLabel.addGestureRecognizer(tap)
                         self.nameLabel.text = "Please select your assistant..."
                     } else {
@@ -100,18 +118,23 @@ class CurrentCell: UITableViewCell
                     }
                 })
             default:
-                self.chatButton.enabled = true
-                self.reviewButton.enabled = true
                 var user: PFUser?
                 if cellType == "favor"
                 {
                     user = favor[Constants.Favor.AssistedBy] as? PFUser
+                    if user == nil
+                    {
+                        user = favor[Constants.Favor.CreatedBy] as? PFUser
+                    }
                 } else {
                     user = favor[Constants.Favor.CreatedBy] as? PFUser
                 }
+                
+                self.chatButton.enabled = true
                 self.chatButton.user = user
-                self.chatButton.vc = vc
+                self.reviewButton.enabled = true
                 self.reviewButton.favor = favor
+                
                 if let user = user
                 {
                     user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
@@ -163,8 +186,56 @@ class CurrentCell: UITableViewCell
     func showTakers()
     //----------------------------------------------------------------------------------------------------------
     {
-        vc!.selectedIndex = self.tag
+        vc!.selectedIndex = self.row
         vc!.performSegueWithIdentifier("Current_To_Assistant", sender: self)
+    }
+    
+    func cancel()
+    {
+        if let vc = self.vc {
+            let alert = WEAlertController(title: "Cancel", message: "Are you certain?", style: .Alert)
+            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+            alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
+                if let favor = self.favor {
+                    favor[Constants.Favor.Status] = 5
+                    favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        if success {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                vc.favors.removeObjectAtIndex(self.row)
+                                vc.tableView.reloadData()
+                            })
+                        } else {
+                            ParseErrorHandler.handleParseError(error)
+                        }
+                    })
+                }
+                })
+            vc.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func complete()
+    {
+        if let vc = self.vc {
+            let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
+            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+            alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
+                if let favor = self.favor {
+                    favor[Constants.Favor.Status] = 4
+                    favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        if success {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                vc.favors.removeObjectAtIndex(self.row)
+                                vc.tableView.reloadData()
+                            })
+                        } else {
+                            ParseErrorHandler.handleParseError(error)
+                        }
+                    })
+                }
+                })
+            vc.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
 }

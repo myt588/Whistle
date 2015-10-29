@@ -105,9 +105,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
-    // filter
-    var gender: Int?
-    
     // MARK: - Initialization
     //----------------------------------------------------------------------------------------------------------
     override func viewDidLoad()
@@ -191,7 +188,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         favors.removeAllObjects()
         edge = nil
         index = 0
-        gender = nil
     }
     
     func currentLocationFound()
@@ -226,9 +222,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         var swipeDown               = UISwipeGestureRecognizer(target: self, action: "respondToGestures:")
         swipeDown.direction         = UISwipeGestureRecognizerDirection.Down
         portraitImageView.addGestureRecognizer(swipeDown)
-        
-//        var tapMap                  = UITapGestureRecognizer(target: self, action: "respondToMapTapGesture:")
-//        mapView.addGestureRecognizer(tapMap)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -257,10 +250,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             }
         }
     }
-    
-//    func respondToMapTapGesture(gesture: UITapGestureRecognizer) {
-//        if displayerMode == 1 { changeDisplayMode(0) }
-//    }
     
     @IBAction func startInterest(sender: UIButton) {
         if !didSelectFavor {
@@ -424,13 +413,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         hud.startAnimating()
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
-        // filters
-        if let gender = gender {
-            let query = PFUser.query()
-            query?.whereKey(Constants.User.Gender, equalTo: gender)
-            favorQuery.whereKey(Constants.Favor.CreatedBy, matchesQuery: query!)
-        }
-        
         let location = CurrentLocation()
         if tags.count != 0
         {
@@ -484,18 +466,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 if self.displayerMode == 1 {
                     self.tableView!.bindData(favor)
                     UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-//                        self.bannerView.alpha = 0
-//                        self.detailView.alpha = 0
-//                        self.tagView.alpha = 0
                         self.portraitView.alpha = 0
                         }, completion: { (finished: Bool) -> Void in
                             self.configBanner(favor)
                             self.centerMapOnFavor()
                     })
                     UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-//                        self.bannerView.alpha = 1
-//                        self.detailView.alpha = 1
-//                        self.tagView.alpha = 1
                         self.portraitView.alpha = 1
                         }, completion: { (finished: Bool) -> Void in
                     })
@@ -525,16 +501,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         if self.displayerMode == 1 {
                             self.tableView!.bindData(favor)
                             UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-//                                self.bannerView.alpha = 0
-//                                self.detailView.alpha = 0
                                 self.portraitView.alpha = 0
                                 }, completion: { (finished: Bool) -> Void in
                                     self.configBanner(favor)
                                     self.centerMapOnFavor()
                             })
                             UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-//                                self.bannerView.alpha = 1
-//                                self.detailView.alpha = 1
                                 self.portraitView.alpha = 1
                                 }, completion: { (finished: Bool) -> Void in
                             })
@@ -565,7 +537,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
-        topBanner.backgroundColor = Constants.Color.Background
+        topBanner.backgroundColor                                   = Constants.Color.Background
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -774,17 +746,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             let location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: PFLocation.latitude, longitude: PFLocation.longitude)
             var annotation = FBAnnotation()
             annotation.coordinate = location
-            
-            switch favor[Constants.Favor.Status] as! Int {
-            case 0:
-                annotation.imageName = "map_regular_pin"
-            case 1:
-                annotation.imageName = "map_interested_pin"
-            case 2:
-                annotation.imageName = "map_processing_pin"
-            default:
-                break
-            }
             annotation.index = index
             annotations.append(annotation)
             index = index + 1

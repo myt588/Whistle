@@ -18,7 +18,7 @@ protocol FavorDetailScrollDelegate {
 
 //----------------------------------------------------------------------------------------------------------
 class FavorDetailTable: UITableViewController, UIScrollViewDelegate
-    //----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
     
@@ -73,7 +73,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     @IBOutlet weak var image7                                       : UIImageView!
     @IBOutlet weak var image8                                       : UIImageView!
     //----------------------------------------------------------------------------------------------------------
-    
+    @IBOutlet weak var takersView                                   : WECalloutView!
     
     // MARK: - Variables
     
@@ -292,6 +292,23 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
                 self.noImage = true
                 self.tableView.reloadData()
             }
+            
+            let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
+            query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                if let pivots = objects as? [PFObject] {
+                    var users = [PFUser]()
+                    for pivot in pivots {
+                        users.append(pivot[Constants.FavorUserPivotTable.Takers] as! PFUser)
+                    }
+                    self.takersView.users = users
+                    self.takersView.reloadData()
+                } else {
+                    ParseErrorHandler.handleParseError(error)
+                }
+                self.refreshControl?.endRefreshing()
+            }
         }
         tableView.setContentOffset(CGPointMake(0, -self.tableView.contentInset.top), animated: true)
     }
@@ -410,6 +427,8 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             }
             var imageViewsHeight = 30 + imageViewHeight * rows!
             return imageViewsHeight
+        case 5:
+            return 100
         default:
             return 44
         }

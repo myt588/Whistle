@@ -15,6 +15,7 @@ class WEBlurImageView: PFImageView
 //----------------------------------------------------------------------------------------------------------
 {
     var user: PFUser?
+    var imageView: UIImageView!
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ class WEBlurImageView: PFImageView
     //----------------------------------------------------------------------------------------------------------
     {
         super.init(coder: aDecoder)
+        self.backgroundColor = UIColor.clearColor()
     }
     
     init(user: PFUser)
@@ -51,7 +53,7 @@ class WEBlurImageView: PFImageView
     
     func presentImageView(image: UIImage) {
         let width = self.bounds.width
-        let imageView = UIImageView(image: image)
+        imageView = UIImageView(image: image)
         imageView.userInteractionEnabled = true
         imageView.frame = self.frame
         self.addSubview(imageView)
