@@ -41,7 +41,6 @@
 		89B290171B499275002741DE /* fs_chat_bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89B290131B499275002741DE /* fs_chat_bubble@2x.png */; };
 		89C31D4C1B7D0423009ADF1E /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D4B1B7D0423009ADF1E /* RatingView.m */; };
 		89C31D4E1B7D1CCA009ADF1E /* ProfileRateTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D4D1B7D1CCA009ADF1E /* ProfileRateTable.swift */; };
-		89C31D501B7D1CDA009ADF1E /* ProfileRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C31D4F1B7D1CDA009ADF1E /* ProfileRateCell.swift */; };
 		89D1C9171BD3409900F284D9 /* WEFontCustomize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */; };
 		89E57F1D1B57F3FD00983D1A /* WECustomize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E57F1C1B57F3FD00983D1A /* WECustomize.swift */; };
 		89E993F81B5FAF730061AAE4 /* KYCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */; };
@@ -56,6 +55,9 @@
 		89F53AFF1B5A2E0D00F0A2A2 /* HexColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F53AFE1B5A2E0D00F0A2A2 /* HexColors.m */; };
 		89F53B051B5A32FE00F0A2A2 /* AMTumblrHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F53B041B5A32FE00F0A2A2 /* AMTumblrHud.m */; };
 		89F53B0A1B5C2ADD00F0A2A2 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F53B091B5C2ADD00F0A2A2 /* SwiftSpinner.swift */; };
+		89F5D5431BE3879D00E8EF66 /* WEReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F5D5411BE3879D00E8EF66 /* WEReviewCell.swift */; };
+		89F5D5441BE3879D00E8EF66 /* WEReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89F5D5421BE3879D00E8EF66 /* WEReviewCell.xib */; };
+		89F5D5461BE387F500E8EF66 /* ProfileReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F5D5451BE387F500E8EF66 /* ProfileReviewDetailView.swift */; };
 		9402424D1BD9DE9600CE8E45 /* blocked.m in Sources */ = {isa = PBXBuildFile; fileRef = 9402422E1BD9DE9600CE8E45 /* blocked.m */; };
 		9402424E1BD9DE9600CE8E45 /* group.m in Sources */ = {isa = PBXBuildFile; fileRef = 940242301BD9DE9600CE8E45 /* group.m */; };
 		9402424F1BD9DE9600CE8E45 /* people.m in Sources */ = {isa = PBXBuildFile; fileRef = 940242321BD9DE9600CE8E45 /* people.m */; };
@@ -101,7 +103,6 @@
 		9418B9731BE097E7007F2296 /* CurrentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9721BE097E7007F2296 /* CurrentCell.xib */; };
 		9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9741BE0A713007F2296 /* WEPrizeView.xib */; };
 		9418B9771BE0A721007F2296 /* WEPrizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9761BE0A721007F2296 /* WEPrizeView.swift */; };
-		9418B97D1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */; };
 		9418B97F1BE1401F007F2296 /* WECurrentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */; };
 		942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */; };
 		942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D11B2F0FED0050C3E3 /* Images.xcassets */; };
@@ -237,8 +238,6 @@
 		9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9441B4C71B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		944AE44B1BDA0123008B7964 /* ProfileFavorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE4451BDA0123008B7964 /* ProfileFavorCell.swift */; };
 		944AE44C1BDA0123008B7964 /* ProfileFavorsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE4461BDA0123008B7964 /* ProfileFavorsTable.swift */; };
-		944AE44D1BDA0123008B7964 /* ProfileOthersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE4471BDA0123008B7964 /* ProfileOthersCell.swift */; };
-		944AE44E1BDA0123008B7964 /* ProfileOthersTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE4481BDA0123008B7964 /* ProfileOthersTable.swift */; };
 		944AE44F1BDA0123008B7964 /* ProfileOthersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE4491BDA0123008B7964 /* ProfileOthersView.swift */; };
 		944AE4501BDA0123008B7964 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AE44A1BDA0123008B7964 /* ProfileView.swift */; };
 		944AE4531BDA03EE008B7964 /* MyriadPro-SemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */; };
@@ -328,7 +327,6 @@
 		94DED7CF1B3EF144002B9F3B /* PreviewSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */; };
 		94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2669D1BCDA1E700914F58 /* WECalloutView.swift */; };
 		94F266B81BCF353A00914F58 /* FavorDetailTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B51BCF353A00914F58 /* FavorDetailTable.swift */; };
-		94F266B91BCF353A00914F58 /* FavorShowDetailTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B61BCF353A00914F58 /* FavorShowDetailTable.swift */; };
 		94F266BA1BCF353A00914F58 /* NewFavorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F266B71BCF353A00914F58 /* NewFavorTable.swift */; };
 /* End PBXBuildFile section */
 
@@ -397,7 +395,6 @@
 		89C31D4A1B7D0423009ADF1E /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
 		89C31D4B1B7D0423009ADF1E /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
 		89C31D4D1B7D1CCA009ADF1E /* ProfileRateTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRateTable.swift; sourceTree = "<group>"; };
-		89C31D4F1B7D1CDA009ADF1E /* ProfileRateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRateCell.swift; sourceTree = "<group>"; };
 		89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEFontCustomize.swift; sourceTree = "<group>"; };
 		89E57F1C1B57F3FD00983D1A /* WECustomize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECustomize.swift; sourceTree = "<group>"; };
 		89E993F71B5FAF730061AAE4 /* KYCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KYCircularProgress.swift; sourceTree = "<group>"; };
@@ -420,6 +417,9 @@
 		89F53B031B5A32FE00F0A2A2 /* AMTumblrHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTumblrHud.h; sourceTree = "<group>"; };
 		89F53B041B5A32FE00F0A2A2 /* AMTumblrHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTumblrHud.m; sourceTree = "<group>"; };
 		89F53B091B5C2ADD00F0A2A2 /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
+		89F5D5411BE3879D00E8EF66 /* WEReviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEReviewCell.swift; sourceTree = "<group>"; };
+		89F5D5421BE3879D00E8EF66 /* WEReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEReviewCell.xib; sourceTree = "<group>"; };
+		89F5D5451BE387F500E8EF66 /* ProfileReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileReviewDetailView.swift; sourceTree = "<group>"; };
 		9402422D1BD9DE9600CE8E45 /* blocked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blocked.h; sourceTree = "<group>"; };
 		9402422E1BD9DE9600CE8E45 /* blocked.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = blocked.m; sourceTree = "<group>"; };
 		9402422F1BD9DE9600CE8E45 /* group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = group.h; sourceTree = "<group>"; };
@@ -504,7 +504,6 @@
 		9418B9721BE097E7007F2296 /* CurrentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentCell.xib; sourceTree = "<group>"; };
 		9418B9741BE0A713007F2296 /* WEPrizeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEPrizeView.xib; sourceTree = "<group>"; };
 		9418B9761BE0A721007F2296 /* WEPrizeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEPrizeView.swift; sourceTree = "<group>"; };
-		9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "emma-watson-for-people-tree-image-2-274150077.jpg"; sourceTree = "<group>"; };
 		9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECurrentImageView.swift; sourceTree = "<group>"; };
 		942FA2C51B2F0FED0050C3E3 /* Whistle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whistle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942FA2C91B2F0FED0050C3E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -719,8 +718,6 @@
 		9441B4C71B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		944AE4451BDA0123008B7964 /* ProfileFavorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavorCell.swift; sourceTree = "<group>"; };
 		944AE4461BDA0123008B7964 /* ProfileFavorsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavorsTable.swift; sourceTree = "<group>"; };
-		944AE4471BDA0123008B7964 /* ProfileOthersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersCell.swift; sourceTree = "<group>"; };
-		944AE4481BDA0123008B7964 /* ProfileOthersTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersTable.swift; sourceTree = "<group>"; };
 		944AE4491BDA0123008B7964 /* ProfileOthersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOthersView.swift; sourceTree = "<group>"; };
 		944AE44A1BDA0123008B7964 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-SemiExt.otf"; sourceTree = "<group>"; };
@@ -836,7 +833,6 @@
 		94DED7C51B3EF144002B9F3B /* PreviewSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSupplementaryView.swift; sourceTree = "<group>"; };
 		94F2669D1BCDA1E700914F58 /* WECalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECalloutView.swift; sourceTree = "<group>"; };
 		94F266B51BCF353A00914F58 /* FavorDetailTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorDetailTable.swift; sourceTree = "<group>"; };
-		94F266B61BCF353A00914F58 /* FavorShowDetailTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorShowDetailTable.swift; sourceTree = "<group>"; };
 		94F266B71BCF353A00914F58 /* NewFavorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFavorTable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1413,7 +1409,6 @@
 		942FA2C71B2F0FED0050C3E3 /* Whistle */ = {
 			isa = PBXGroup;
 			children = (
-				9418B97C1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg */,
 				942FA4CA1B2F11E00050C3E3 /* Main.storyboard */,
 				942FA4ED1B2F15150050C3E3 /* Whistle-Bridging-Header.h */,
 				94C1801E1B60755000D4F647 /* AppConstant.h */,
@@ -1997,8 +1992,6 @@
 				944AE44A1BDA0123008B7964 /* ProfileView.swift */,
 				944AE4451BDA0123008B7964 /* ProfileFavorCell.swift */,
 				944AE4461BDA0123008B7964 /* ProfileFavorsTable.swift */,
-				944AE4471BDA0123008B7964 /* ProfileOthersCell.swift */,
-				944AE4481BDA0123008B7964 /* ProfileOthersTable.swift */,
 				944AE4491BDA0123008B7964 /* ProfileOthersView.swift */,
 				94B655971B7CFE390091CE98 /* ProfileEditSingleView.swift */,
 				94B655981B7CFE390091CE98 /* ProfilePhoneSetting.swift */,
@@ -2006,7 +1999,9 @@
 				893B797F1B545C5C00019CF7 /* ProfilePersonalSettingTable.swift */,
 				89755A011B407F0A00D31E2F /* ProfileChangeStatusTable.swift */,
 				89C31D4D1B7D1CCA009ADF1E /* ProfileRateTable.swift */,
-				89C31D4F1B7D1CDA009ADF1E /* ProfileRateCell.swift */,
+				89F5D5451BE387F500E8EF66 /* ProfileReviewDetailView.swift */,
+				89F5D5411BE3879D00E8EF66 /* WEReviewCell.swift */,
+				89F5D5421BE3879D00E8EF66 /* WEReviewCell.xib */,
 				945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */,
 			);
 			path = Profile;
@@ -2188,9 +2183,8 @@
 			children = (
 				94BCF4E11B55A2BC007406F3 /* LocationPicker */,
 				9478BF9C1B45110300F3D91D /* FavorView.swift */,
-				944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */,
 				94F266B51BCF353A00914F58 /* FavorDetailTable.swift */,
-				94F266B61BCF353A00914F58 /* FavorShowDetailTable.swift */,
+				944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */,
 				94F266B71BCF353A00914F58 /* NewFavorTable.swift */,
 			);
 			path = Favor;
@@ -2286,7 +2280,6 @@
 				942FA4471B2F10E90050C3E3 /* chat_camera@2x.png in Resources */,
 				942FA4F61B2F1B0E0050C3E3 /* image3.jpg in Resources */,
 				942FA49F1B2F10E90050C3E3 /* ProgressHUD.bundle in Resources */,
-				9418B97D1BE0E976007F2296 /* emma-watson-for-people-tree-image-2-274150077.jpg in Resources */,
 				942FA44F1B2F10E90050C3E3 /* privacy.html in Resources */,
 				94DED7CD1B3EF144002B9F3B /* Images.xcassets in Resources */,
 				942FA4F81B2F1B0E0050C3E3 /* image5.jpg in Resources */,
@@ -2305,6 +2298,7 @@
 				942FA44C1B2F10E90050C3E3 /* recent_blank@2x.png in Resources */,
 				94CFB07D1B837DF300F681D8 /* audio_record.png in Resources */,
 				9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				89F5D5441BE3879D00E8EF66 /* WEReviewCell.xib in Resources */,
 				942FA4991B2F10E90050C3E3 /* Info.plist in Resources */,
 				9441B4ED1B89AE6A002EBEEE /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				89F53AFB1B5A2D9300F0A2A2 /* TSMessagesDefaultDesign.json in Resources */,
@@ -2346,6 +2340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89F5D5461BE387F500E8EF66 /* ProfileReviewDetailView.swift in Sources */,
 				89B290101B498ECB002741DE /* FSVoiceBubble.m in Sources */,
 				942FA4621B2F10E90050C3E3 /* UIAlertView+AFNetworking.m in Sources */,
 				944CFC651BE1C71400A84DE8 /* CurrentRateView.swift in Sources */,
@@ -2358,7 +2353,6 @@
 				945E88EA1B89AAE600124816 /* RecentCell.m in Sources */,
 				942FA45F1B2F10E90050C3E3 /* AFURLSessionManager.m in Sources */,
 				942FA4A61B2F10E90050C3E3 /* RNGridMenu.m in Sources */,
-				89C31D501B7D1CDA009ADF1E /* ProfileRateCell.swift in Sources */,
 				9441B4EF1B89AE6A002EBEEE /* JSQMessagesToolbarContentView.m in Sources */,
 				942FA45B1B2F10E90050C3E3 /* AFSecurityPolicy.m in Sources */,
 				940242501BD9DE9600CE8E45 /* PFUser+Util.m in Sources */,
@@ -2437,7 +2431,6 @@
 				89EBA35F1B5FF3880011D528 /* CurrentView.swift in Sources */,
 				942FA49D1B2F10E90050C3E3 /* MapManager.swift in Sources */,
 				940242521BD9DE9600CE8E45 /* recent.m in Sources */,
-				944AE44D1BDA0123008B7964 /* ProfileOthersCell.swift in Sources */,
 				940242A41BD9E00B00CE8E45 /* DGActivityIndicatorRotatingSandglassAnimation.m in Sources */,
 				944CFC661BE1C71400A84DE8 /* CurrentReportTable.swift in Sources */,
 				942FA45A1B2F10E90050C3E3 /* AFNetworkReachabilityManager.m in Sources */,
@@ -2447,7 +2440,6 @@
 				89594C1F1B3ACCFE00A8CF8B /* YALSpringAnimation.m in Sources */,
 				9441B4E51B89AE6A002EBEEE /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				94CFB0341B837B3300F681D8 /* SDWebImageManager.m in Sources */,
-				944AE44E1BDA0123008B7964 /* ProfileOthersTable.swift in Sources */,
 				94CFB07C1B837DF300F681D8 /* IQAudioRecorderController.m in Sources */,
 				9441B4E91B89AE6A002EBEEE /* JSQMessagesComposerTextView.m in Sources */,
 				94CFB0361B837B3300F681D8 /* UIButton+WebCache.m in Sources */,
@@ -2504,6 +2496,7 @@
 				9418B9691BDD7650007F2296 /* WEProfileView.swift in Sources */,
 				94CFB0371B837B3300F681D8 /* UIImage+GIF.m in Sources */,
 				94B08EDC1B5DA9C5007784AB /* FBAnnotationClusterView.swift in Sources */,
+				89F5D5431BE3879D00E8EF66 /* WEReviewCell.swift in Sources */,
 				9402424F1BD9DE9600CE8E45 /* people.m in Sources */,
 				94BB08091B5329BB00D2492B /* WEAnnotationView.swift in Sources */,
 				940242511BD9DE9600CE8E45 /* push.m in Sources */,
@@ -2557,7 +2550,6 @@
 				942FA4A01B2F10E90050C3E3 /* ProgressHUD.m in Sources */,
 				89F53AFC1B5A2D9300F0A2A2 /* TSMessageView.m in Sources */,
 				89F53AA91B57FB8700F0A2A2 /* WEVoiceBubble.swift in Sources */,
-				94F266B91BCF353A00914F58 /* FavorShowDetailTable.swift in Sources */,
 				947EE5C51BCFB9ED001A6AF3 /* WETagCollectionView.swift in Sources */,
 				942FA4661B2F10E90050C3E3 /* UIRefreshControl+AFNetworking.m in Sources */,
 				9441B4D51B89AE6A002EBEEE /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,

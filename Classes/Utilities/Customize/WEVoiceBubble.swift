@@ -19,3 +19,16 @@ class WEVoiceBubble : FSVoiceBubble {
         animatingWaveColor                                = UIColor.grayColor()
     }
 }
+
+class WEVoiceBar : FSVoiceBubble {
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        backgroundColor                                   = Constants.Color.CellText
+        alpha                                             = 1
+        clipsToBounds                                     = true
+        durationInsideBubble                              = true
+        bubbleImage                                       = UIImage(named: "voicebar")
+        waveColor                                         = Constants.Color.Background
+        animatingWaveColor                                = UIColor.grayColor()
+    }
+}

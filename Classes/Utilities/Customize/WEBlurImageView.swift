@@ -52,10 +52,11 @@ class WEBlurImageView: PFImageView
     }
     
     func presentImageView(image: UIImage) {
-        let width = self.bounds.width
-        imageView = UIImageView(image: image)
+        imageView = UIImageView(frame: self.frame)
+        imageView.image = image
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.userInteractionEnabled = true
-        imageView.frame = self.frame
+        imageView.clipsToBounds = true
         self.addSubview(imageView)
         var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Light)
         var blurView = UIVisualEffectView(effect: darkBlur)

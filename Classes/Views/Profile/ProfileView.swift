@@ -34,10 +34,7 @@ class ProfileView: UIViewController
     @IBOutlet weak var totalEarnLabel                           : WEContentLabelWithBackground!
     @IBOutlet weak var totalSpentLabel                          : WEContentLabelWithBackground!
     @IBOutlet weak var regionIcon                               : UIImageView!
-    @IBOutlet weak var genderIcon                               : UIImageView!
     @IBOutlet weak var containerView                            : UIView!
-    @IBOutlet weak var containerCons                            : NSLayoutConstraint!
-    @IBOutlet weak var containerNewCons                         : NSLayoutConstraint!
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Variables
@@ -120,7 +117,9 @@ class ProfileView: UIViewController
     }
     
     func rateTapped() {
-        performSegueWithIdentifier("profile_rate", sender: self)
+        var rateTable = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileRateTable") as! ProfileRateTable
+        rateTable.user = PFUser.currentUser()
+        self.navigationController?.pushViewController(rateTable, animated: true)
     }
     
     
@@ -150,6 +149,8 @@ class ProfileView: UIViewController
         blurView.frame = bgView.bounds
         blurImage = UIImageView(image: UIImage(named: "user_photo"))
         blurImage.frame = bgView.bounds
+        blurImage.contentMode = UIViewContentMode.ScaleAspectFill
+        blurImage.clipsToBounds = true
         bgView.addSubview(blurImage)
         bgView.addSubview(blurView)
     }
@@ -161,15 +162,6 @@ class ProfileView: UIViewController
 
         let name = user[Constants.User.Nickname] as? String
         self.nameLabel.text = "  \(name!)  "
-        
-        if let gender = user[Constants.User.Gender] as? Int {
-            if gender == 1 {
-                self.genderIcon.image = UIImage(named: "profile_male")
-            } else {
-                self.genderIcon.image = UIImage(named: "profile_female")
-            }
-        }
-        
         if let file = user[Constants.User.Portrait] as? PFFile {
             file.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if let data = data {
@@ -223,13 +215,6 @@ class ProfileView: UIViewController
     {
         var vc = storyboard?.instantiateViewControllerWithIdentifier("RegionPicker") as! ProfileRegionPicker
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "profile_rate" {
-            var rateTable = segue.destinationViewController as! ProfileRateTable
-            rateTable.user = PFUser.currentUser()
-        }
     }
     
 }

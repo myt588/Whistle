@@ -82,8 +82,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var didLayoutSubviews                           = false
     private var canSwipeIndex                               = true
     //----------------------------------------------------------------------------------------------------------
-    private var didSelectFavor                              = false
-    //----------------------------------------------------------------------------------------------------------
     private var transitionOperator                          = WESlideTransition()
     private var isSearchHidden                              = true
     //----------------------------------------------------------------------------------------------------------
@@ -222,6 +220,9 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         var swipeDown               = UISwipeGestureRecognizer(target: self, action: "respondToGestures:")
         swipeDown.direction         = UISwipeGestureRecognizerDirection.Down
         portraitImageView.addGestureRecognizer(swipeDown)
+        
+        interestButton.addTarget(self, action: "startInterest", forControlEvents: UIControlEvents.TouchDown)
+        interestButton.addTarget(self, action: "endInterest", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -251,11 +252,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         }
     }
     
-    @IBAction func startInterest(sender: UIButton) {
-        if !didSelectFavor {
-            MessageHandler.message(MessageName.SelectFavorFirst)
-            return
-        }
+    func startInterest() {
         if let favor = favors[index] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
@@ -270,10 +267,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         progressFirer = NSTimer.scheduledTimerWithTimeInterval(0.005, target: self, selector: Selector("updateProgress"), userInfo: nil, repeats: true)
     }
     
-    @IBAction func endInterest(sender: UIButton) {
-        if !didSelectFavor {
-            return
-        }
+    func endInterest() {
         if let favor = favors[index] as? PFObject {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
                 if user.objectId == PFUser.currentUser()?.objectId {
@@ -287,22 +281,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         progressFirer.invalidate()
     }
     
-    @IBAction func endInterest2(sender: UIButton) {
-        if !didSelectFavor {
-            return
-        }
-        if let favor = favors[index] as? PFObject {
-            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                if user.objectId == PFUser.currentUser()?.objectId {
-                    return
-                }
-            }
-        }
-        progress = 0
-        circularProgress.progress = 0
-        circularProgress.alpha = 0
-        progressFirer.invalidate()
-    }
     //----------------------------------------------------------------------------------------------------------
     func updateProgress()
     //----------------------------------------------------------------------------------------------------------
@@ -390,10 +368,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func isInterested(isInterested: Bool) {
         if !isInterested {
-            interestButton.setImage(UIImage(named: "favor_interest"), forState: .Normal)
+            bannerRightView.backgroundColor = UIColor.yellowColor()
+            interestButton.setTitle("Interest", forState: .Normal)
             interestButton.userInteractionEnabled = true
         } else {
-            interestButton.setImage(UIImage(named: "favor_interested"), forState: .Normal)
+            interestButton.setTitle("Interested", forState: .Normal)
+            bannerRightView.backgroundColor = UIColor.orangeColor()
             interestButton.userInteractionEnabled = false
             bounceView(interestButton)
         }
@@ -613,8 +593,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 
                 self.bannerView.hidden                              = false
                 
-                self.didSelectFavor                                 = true
-                
                 self.toggleButtonAppear()
                 
                 }, completion: {
@@ -640,8 +618,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.detailView.alpha                           = 0
                     
                     self.bannerView.hidden                          = true
-                    
-                    self.didSelectFavor                             = false
                     
                     self.toggleButtonAppear()
                     
@@ -779,8 +755,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if let favor = favor {
             if let user = favor[Constants.Favor.CreatedBy] as? PFUser
             {
-                portraitImageView.loadImage(user)
-                nameLabel.text = user[Constants.User.Nickname] as? String
+                user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
+                    if let user = user as? PFUser {
+                        self.portraitImageView.loadImage(user)
+                        self.nameLabel.text = user[Constants.User.Nickname] as? String
+                    }
+                })
             }
             
             if let audio = favor[Constants.Favor.Audio] as? PFFile
@@ -843,24 +823,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 annotationView.index = temp.index
                 if let favor = favors[temp.index] as? PFObject {
                     let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                    user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                        if let user = user {
-                            annotationView.gender = user[Constants.User.Gender] as? Int
-                            if let image = user[Constants.User.Thumbnail] as? PFFile {
-                                image.getDataInBackgroundWithBlock { (data, error) -> Void in
-                                    if let data = data {
-                                        dispatch_async(dispatch_get_main_queue()) {
-                                            annotationView.setImageView(UIImage(data: data)!)
-                                        }
-                                    } else {
-                                        ParseErrorHandler.handleParseError(error)
-                                    }
-                                }
-                            }
-                        } else {
-                            ParseErrorHandler.handleParseError(error)
-                        }
-                    })
+                    annotationView.user = user
+                    annotationView.setImageView()                    
                 }
             }
             return annotationView
@@ -891,21 +855,17 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 users.append(user)
             }
             let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-            layout.minimumInteritemSpacing = 2
-            layout.minimumLineSpacing = 5
-            layout.itemSize = CGSize(width: 40, height: 40)
             var frame: CGRect!
             switch users.count
             {
             case 2:
-                frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+                frame = CGRect(x: 0, y: 0, width: 120, height: 60)
             case 3:
-                frame = CGRect(x: 0, y: 0, width: 150, height: 50)
+                frame = CGRect(x: 0, y: 0, width: 180, height: 60)
             case 4:
-                frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+                frame = CGRect(x: 0, y: 0, width: 240, height: 60)
             default:
-                frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+                frame = CGRect(x: 0, y: 0, width: 240, height: 100)
             }
             let calloutView = WECalloutView(frame: frame, collectionViewLayout: layout)
             calloutView.users = users

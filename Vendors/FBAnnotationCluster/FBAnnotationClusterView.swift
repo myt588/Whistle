@@ -98,7 +98,6 @@ class FBAnnotationClusterView : MKAnnotationView {
         layer.borderColor = UIColor.whiteColor().CGColor
         layer.borderWidth = borderWidth
         layer.cornerRadius = self.bounds.size.width / 2
-        
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {

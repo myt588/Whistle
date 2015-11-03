@@ -13,6 +13,7 @@ class WEAnnotationView: MKAnnotationView {
     
     var index: Int!
     var gender: Int?
+    var user: PFUser!
     
     // Required for MKAnnotationView
     required init(coder aDecoder: NSCoder) {
@@ -29,36 +30,10 @@ class WEAnnotationView: MKAnnotationView {
         self.image = UIImage(named: "clusterSmall")
     }
     
-    override func layoutSubviews()
-    {
-        if gender == nil
-        {
-            layer.borderColor = UIColor.whiteColor().CGColor
-        }
-        else
-        {
-            if gender == 1
-            {
-                layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
-            } else {
-                layer.borderColor = UIColorFromHex(0xFF99CC, alpha: 1).CGColor
-            }
-        }
-    
-        layer.borderWidth = 3
-        layer.cornerRadius = self.bounds.size.width / 2
-    }
-    
-    func setImageView(image: UIImage) {
+    func setImageView() {
         let width = self.image.size.width
-        let userIconWidth = width - 6
-        let imageView = UIImageView(image: image)
-        imageView.userInteractionEnabled = true
-        imageView.frame = CGRectMake(0, 0, userIconWidth, userIconWidth)
+        let imageView = WEProfileView(user: user, userInteraction: false)
         imageView.center = CGPointMake(width/2, width/2)
-        imageView.clipsToBounds                          = true
-        imageView.layer.cornerRadius                     = userIconWidth/2
-        imageView.layer.backgroundColor                  = UIColor.lightGrayColor().CGColor
         self.addSubview(imageView)
     }
 }

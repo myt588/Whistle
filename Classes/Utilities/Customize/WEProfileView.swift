@@ -29,13 +29,19 @@ class WEProfileView: UIImageView
         self.userInteractionEnabled = true
         self.image = UIImage(named: "clusterSmall")
         self.contentMode = UIViewContentMode.ScaleAspectFill
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped")
         self.addGestureRecognizer(tap)
     }
     
-    init(user: PFUser)
+    init(user: PFUser, userInteraction: Bool)
     {
         super.init(image: UIImage(named: "clusterSmall"))
+        if userInteraction
+        {
+            self.userInteractionEnabled = true
+            var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped")
+            self.addGestureRecognizer(tap)
+        }
         loadImage(user)
     }
     
@@ -53,7 +59,7 @@ class WEProfileView: UIImageView
                 {
                     layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
                 } else {
-                    layer.borderColor = UIColorFromHex(0xFF99CC, alpha: 1).CGColor
+                    layer.borderColor = UIColorFromHex(0xC091FF, alpha: 1).CGColor
                 }
             } else {
                 layer.borderColor = UIColor.whiteColor().CGColor
@@ -65,28 +71,32 @@ class WEProfileView: UIImageView
     
     func loadImage(user: PFUser)
     {
-        self.user = user
-        var imageFile: PFFile?
-        if isThumbnail {
-            imageFile = user[Constants.User.Thumbnail] as? PFFile
-        } else {
-            imageFile = user[Constants.User.Portrait] as? PFFile
-        }
-        if let imageFile = imageFile
-        {
-            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if let data = data
-                {
-                    let image = UIImage(data: data)
-                    self.presentImageView(image!)
+        user.fetchIfNeededInBackgroundWithBlock { (user, error) -> Void in
+            if let user = user as? PFUser {
+                self.user = user
+                var imageFile: PFFile?
+                if self.isThumbnail {
+                    imageFile = user[Constants.User.Thumbnail] as? PFFile
                 } else {
-                    ParseErrorHandler.handleParseError(error)
+                    imageFile = user[Constants.User.Portrait] as? PFFile
                 }
-            })
+                if let imageFile = imageFile
+                {
+                    imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                        if let data = data
+                        {
+                            let image = UIImage(data: data)
+                            self.presentImageView(image!)
+                        } else {
+                            ParseErrorHandler.handleParseError(error)
+                        }
+                    })
+                }
+            }
         }
     }
     
-    func tapped(sender: UITapGestureRecognizer) {
+    func tapped() {
         if !canTap
         {
             return

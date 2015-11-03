@@ -39,6 +39,9 @@ class CurrentCell: UITableViewCell
     @IBOutlet weak var reviewButton                         : WEReviewButton!
     @IBOutlet weak var shareButton                          : WEShareButton!
     
+    @IBOutlet weak var midView                              : UIView!
+    @IBOutlet weak var botView                              : UIView!
+    
     private var favor                                       : PFObject!
     private var row                                         : Int!
     var vc                                                  : CurrentSwitcher?
@@ -54,6 +57,7 @@ class CurrentCell: UITableViewCell
         self.chatButton.enabled = false
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
+        self.confirmButton.backgroundColor = UIColor.orangeColor()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -67,13 +71,24 @@ class CurrentCell: UITableViewCell
         self.contentLabel.text = ""
     }
     
-    
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        backgroundColor                                     = UIColor.clearColor()
+        backgroundColor = UIColor.clearColor()
+        blurImage.clipsToBounds = true
+        
+        midView.backgroundColor = UIColorFromHex(0x261724, alpha: 0.65)
+        var darkBlurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+        darkBlurView.frame = midView.bounds
+        midView.insertSubview(darkBlurView, atIndex: 0)
+        
+        midView.layer.shadowOffset = CGSize(width: -5, height: -5)
+        midView.layer.shadowOpacity = 0.65
+        
+        portraitView.layer.shadowOffset = CGSize(width: 5, height: -5)
+        portraitView.layer.shadowOpacity = 0.65
     }
     
     func bindData(favor : PFObject?, row: Int, cellType: String)
@@ -100,6 +115,9 @@ class CurrentCell: UITableViewCell
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.nameLabel.text = "Waiting..."
+                let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
+                let string = NSAttributedString(string: "Waiting...", attributes: attr)
+                self.confirmButton.setAttributedTitle(string, forState: .Normal)
             case 1:                                         // Has Takers
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.portraitView.image = UIImage(named: "user_photo")
@@ -113,6 +131,9 @@ class CurrentCell: UITableViewCell
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
                         self.nameLabel.text = "Please select your assistant..."
+                        let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
+                        let string = NSAttributedString(string: "Select your assistant...", attributes: attr)
+                        self.confirmButton.setAttributedTitle(string, forState: .Normal)
                     } else {
                         println("network error")
                     }
@@ -179,6 +200,10 @@ class CurrentCell: UITableViewCell
             if let price = favor[Constants.Favor.Price] as? Int {
                 self.prizeView.bindData(price)
             }
+            
+            let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
+            let string = NSAttributedString(string: "", attributes: attr)
+            self.confirmButton.setAttributedTitle(string, forState: .Normal)
         }
     }
     

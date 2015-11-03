@@ -81,6 +81,14 @@ class WEReportButton: UIButton {
     init(favor: PFObject) {
         super.init(frame: CGRectMake(0, 0, 50, 50))
         self.favor = favor
+        
+        var image = UIImage(named: "report")
+        let origImage = image
+        let tintedImage = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        image = tintedImage
+        self.setImage(image, forState: .Normal)
+        self.tintColor = Constants.Color.Main2
+        
         self.addTarget(self, action: "action", forControlEvents: .TouchUpInside)
     }
     

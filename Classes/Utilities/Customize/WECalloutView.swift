@@ -13,6 +13,7 @@ class WECalloutView: UICollectionView {
     
     var users = [PFUser]()
     var indexes = [Int]()
+    var isInterestView = false
     private let reuseIdentifier = "cell"
     
     // MARK: - Init
@@ -31,8 +32,11 @@ class WECalloutView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        self.backgroundColor = Constants.Color.Background
-        self.layer.cornerRadius                         = 10
+        self.backgroundColor = UIColor.clearColor()
+        self.layer.cornerRadius = 10
+        var blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+        blurView.frame = self.bounds
+        self.backgroundView = blurView
         self.dataSource = self
         self.delegate = self
         self.userInteractionEnabled = true
@@ -55,8 +59,8 @@ extension WECalloutView : UICollectionViewDataSource {
         let user = users[indexPath.item]
         user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
             if let user = user as? PFUser {
-                let imageView = WEProfileView(user: user)
-                cell.contentView.backgroundColor = Constants.Color.Background
+                let imageView = WEProfileView(user: user, userInteraction: self.isInterestView ? true : false)
+                cell.backgroundColor = UIColor.clearColor()
                 cell.contentView.addSubview(imageView)
                 imageView.frame = cell.contentView.frame
             }
@@ -69,12 +73,15 @@ extension WECalloutView : UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         self.deselectItemAtIndexPath(indexPath, animated: false)
+        if isInterestView {
+            return
+        }
         let index = indexes[indexPath.item]
         NSNotificationCenter.defaultCenter().postNotificationName("calloutSelected", object: nil, userInfo: ["index": index])
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 40, height: 40)
+        return CGSize(width: 50, height: 50)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {

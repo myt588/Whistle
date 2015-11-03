@@ -37,7 +37,6 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var audioView                            : FSVoiceBubble!
     @IBOutlet weak var bannerRightView                      : UIView!
-    @IBOutlet weak var interestButton                       : UIButton!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -124,14 +123,6 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
         
     }
     
-    // MARK: - IBActions
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func centerMapOnUserButtonTapped(sender: WEMapButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        centerMapOnUser()
-    }
-    
     func actionCleanup()
     {
 
@@ -179,6 +170,7 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
     {
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
+        self.title = "Detail"
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -402,25 +394,8 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
             if let annotationView = annotationView {
                 annotationView.canShowCallout = false
                 let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                    if let user = user {
-                        annotationView.gender = user[Constants.User.Gender] as? Int
-                        if let image = user[Constants.User.Thumbnail] as? PFFile {
-                            image.getDataInBackgroundWithBlock { (data, error) -> Void in
-                                if let data = data {
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        annotationView.setImageView(UIImage(data: data)!)
-                                    }
-                                } else {
-                                    ParseErrorHandler.handleParseError(error)
-                                }
-                            }
-                        }
-                    } else {
-                        ParseErrorHandler.handleParseError(error)
-                    }
-                })
-                
+                annotationView.user = user
+                annotationView.setImageView()
             }
             return annotationView
         }

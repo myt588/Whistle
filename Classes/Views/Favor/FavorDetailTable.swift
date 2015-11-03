@@ -74,6 +74,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     @IBOutlet weak var image8                                       : UIImageView!
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var takersView                                   : WECalloutView!
+    @IBOutlet weak var waitingView                                  : UIView!
     
     // MARK: - Variables
     
@@ -113,6 +114,8 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidAppear(true)
+        //takersView.hidden = true
+        takersView.isInterestView = true
         tableView.reloadData()
     }
     
@@ -302,6 +305,13 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
                     for pivot in pivots {
                         users.append(pivot[Constants.FavorUserPivotTable.Takers] as! PFUser)
                     }
+                    if users.count > 0 {
+                        self.takersView.hidden = false
+                        self.waitingView.hidden = true
+                    } else {
+                        self.takersView.hidden = true
+                        self.waitingView.hidden = false
+                    }
                     self.takersView.users = users
                     self.takersView.reloadData()
                 } else {
@@ -319,7 +329,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     {
         var buttonList = [plus1Button, plus5Button, plus10Button, clearButton]
         for element in buttonList {
-            element.layer.borderColor                               = Constants.Color.ButtonBorder.CGColor
+            element.layer.borderColor                               = UIColor.whiteColor().CGColor
             element.layer.borderWidth                               = 0.3
             element.layer.cornerRadius                              = element.layer.frame.height/2
             element.setTitleColor(Constants.Color.CellText, forState: .Normal)
@@ -392,7 +402,9 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
         case 4:
             return noImage ? 0 : 1
         case 5:
-            return noImage ? 1 : 0
+            return 1
+        case 6:
+            return 1
         default:
             return 0
         }
@@ -428,9 +440,46 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             var imageViewsHeight = 30 + imageViewHeight * rows!
             return imageViewsHeight
         case 5:
-            return 100
+            return 150
+        case 6:
+            return 0
         default:
             return 44
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch section {
+        case 6:
+            return 50
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section != 6 {
+            return nil
+        } else {
+            var footerView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 65))
+            var button = WEReportButton(favor: favor)
+            button.frame = CGRectMake(self.view.bounds.width-60, 0, 50, 50)
+//            var button = UIButton(frame: CGRectMake(self.view.bounds.width-60, 0, 50, 50))
+//            var image = UIImage(named: "report")
+//            let origImage = image
+//            let tintedImage = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+//            image = tintedImage
+//            button.setImage(image, forState: .Normal)
+//            button.tintColor = Constants.Color.Main2
+//            button.addTarget(self, action: "reportAction", forControlEvents: .TouchUpInside)
+            footerView.addSubview(button)
+            var label = UILabel(frame: CGRectMake(self.view.bounds.width-85, 40, 100, 15))
+            label.text = "Report"
+            label.font = UIFont(name: "Superclarendon-Bold", size: 12)
+            label.textAlignment = .Center
+            label.textColor = UIColor.whiteColor()
+            footerView.addSubview(label)
+            return footerView
         }
     }
     

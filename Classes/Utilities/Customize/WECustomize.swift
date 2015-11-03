@@ -221,6 +221,14 @@ class WETintImageView: UIImageView {
         let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         image = tintedImage
     }
+    
+    override init(image: UIImage!) {
+        super.init(image: image)
+        tintColor                                   = Constants.Color.Main
+        let origImage                               = image
+        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        self.image = tintedImage
+    }
 }
 
 class WEProfileTextField: UITextField {

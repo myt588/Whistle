@@ -32,10 +32,7 @@ class ProfileOthersView: UIViewController
     @IBOutlet weak var totalRateLabel                           : WEContentLabelWithBackground!
     @IBOutlet weak var overallLabel                             : WEContentLabelWithBackground!
     @IBOutlet weak var regionIcon                               : UIImageView!
-    @IBOutlet weak var genderIcon                               : UIImageView!
     @IBOutlet weak var containerView                            : UIView!
-    @IBOutlet weak var containerCons                            : NSLayoutConstraint!
-    @IBOutlet weak var containerNewCons                         : NSLayoutConstraint!
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Variables
@@ -55,7 +52,7 @@ class ProfileOthersView: UIViewController
         super.viewDidLoad()
 
         bindData(user)
-        if let child = childViewControllers.first as? ProfileOthersTable {
+        if let child = childViewControllers.first as? ProfileRateTable {
             child.user = self.user
         }
         
@@ -86,6 +83,8 @@ class ProfileOthersView: UIViewController
         if !didLayoutSubviews {
             portraitView.layer.cornerRadius                     = portraitView.frame.height/2
             blurImage.frame                                     = bgView.bounds
+            blurImage.contentMode = UIViewContentMode.ScaleAspectFill
+            blurImage.clipsToBounds = true
             blurView.frame                                      = bgView.bounds
             containerViewOriginalFrame                          = containerView.frame
             didLayoutSubviews                                   = !didLayoutSubviews

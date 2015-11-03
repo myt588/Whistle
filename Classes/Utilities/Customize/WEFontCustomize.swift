@@ -54,6 +54,14 @@ class WEFontContent: UILabel {
     }
 }
 
+class WEFontTime: UILabel {
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        textColor = UIColor.whiteColor()
+        font = UIFont(name: "MyriadPro-LightSemiExt", size: 11)
+    }
+}
+
 class WEFontIndicator: UILabel {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

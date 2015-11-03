@@ -83,6 +83,10 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
         }
     }
     
+    func cancel() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
     {
         let num: Int = count(textView.text)

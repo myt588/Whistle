@@ -10,21 +10,42 @@ import UIKit
 
 class ProfileRateTable: UITableViewController {
     
+    // MARK: - Variables
+    //----------------------------------------------------------------------------------------------------------
     var reviews : NSMutableArray                                 = NSMutableArray()
     var user : PFUser?
-
-    override func viewDidLoad() {
+    //----------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Initializations
+    //----------------------------------------------------------------------------------------------------------
+    override func viewDidLoad()
+    //----------------------------------------------------------------------------------------------------------
+    {
         super.viewDidLoad()
-        navigationController?.navigationBar.translucent = false
-        tableView.autoresizesSubviews = true
-        tableView.estimatedRowHeight = 100
-        title = "Ratings"
-        load()
+        configLooks()
+        self.tableView.registerNib(UINib(nibName: "WEEmptyTableCell", bundle: nil), forCellReuseIdentifier: "WEEmptyTableCell")
+        self.tableView.registerNib(UINib(nibName: "WEReviewCell", bundle: nil), forCellReuseIdentifier: "WEReviewCell")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "load", name: "loadReview", object: nil)
     }
     
+    //----------------------------------------------------------------------------------------------------------
     override func viewWillAppear(animated: Bool) {
+    //----------------------------------------------------------------------------------------------------------
         super.viewWillAppear(animated)
-        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
+        if user != nil {
+            (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
+            load()
+        }
+    }
+    
+    // MARK: - Functions
+    //----------------------------------------------------------------------------------------------------------
+    func configLooks()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        tableView.backgroundColor                               = Constants.Color.TableBackground
+        tableView.contentInset                                  = UIEdgeInsetsMake(50, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -48,14 +69,44 @@ class ProfileRateTable: UITableViewController {
             self.refreshControl?.endRefreshing()
         }
     }
-
-    // MARK: - Table view data source
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    // MARK: - Delegates
+    //----------------------------------------------------------------------------------------------------------
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    //----------------------------------------------------------------------------------------------------------
+    {
+        return 1
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if reviews.count == 0
+        {
+            return 1
+        }
         return reviews.count
     }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ProfileRateCell", forIndexPath: indexPath) as! ProfileRateCell
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 150
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if reviews.count == 0
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("WEEmptyTableCell", forIndexPath: indexPath) as! WEEmptyTableCell
+            cell.bindData(message: "No one has reviewed you yet",
+                subMessage: "No one ~~~~~",
+                image: UIImage(named: "favor_whistle_icon")!)
+            return cell
+        }
+        let cell = tableView.dequeueReusableCellWithIdentifier("WEReviewCell", forIndexPath: indexPath) as! WEReviewCell
         cell.bindData(reviews[indexPath.row] as? PFObject)
         return cell
     }

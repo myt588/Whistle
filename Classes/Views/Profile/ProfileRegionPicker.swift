@@ -31,8 +31,14 @@ class ProfileRegionPicker: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Constants.Color.Background
         searchBar.delegate = self
+        if let searchTextField = self.searchBar.valueForKey("searchField") as? UITextField {
+            searchTextField.backgroundColor = Constants.Color.Background
+            searchTextField.textColor = UIColor.whiteColor()
+        }
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.separatorStyle = .None
         autoCompleteAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
         autoCompleteAttributes![NSFontAttributeName] = UIFont(name: "HelveticaNeue-Bold", size: 15)
         fetchData()
@@ -150,14 +156,23 @@ class ProfileRegionPicker: UIViewController, UITableViewDataSource, UITableViewD
                 var attString = NSMutableAttributedString(string: autoCompleteString!, attributes: attrs)
                 attString.addAttributes(autoCompleteAttributes!, range: range)
                 cell.textLabel?.attributedText = attString
+                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.textLabel?.backgroundColor = UIColor.clearColor()
+                cell.contentView.backgroundColor = Constants.Color.Background
             }
         } else {
             if indexPath.section == 0 {
                 cell.textLabel?.text = currentCity
+                cell.textLabel?.textColor = Constants.Color.Main
+                cell.textLabel?.backgroundColor = UIColor.clearColor()
+                cell.contentView.backgroundColor = Constants.Color.Background
                 return cell
             } else {
                 if let city = popularCities[indexPath.row] as? PFObject {
                     cell.textLabel?.text = city[Constants.Region.City] as? String
+                    cell.textLabel?.textColor = Constants.Color.Main
+                    cell.textLabel?.backgroundColor = UIColor.clearColor()
+                    cell.contentView.backgroundColor = Constants.Color.Background
                 }
             }
         }

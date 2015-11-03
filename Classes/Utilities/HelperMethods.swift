@@ -185,11 +185,19 @@ func CurrentLocation() -> PFGeoPoint
     return PFGeoPoint(latitude: app.coordinate.latitude, longitude: app.coordinate.longitude)
 }
 
-
-
-
-
-
-
-
+/*
+Image Resizing Techniques: http://bit.ly/1Hv0T6i
+*/
+func scaleUIImageToSize(let image: UIImage, let size: CGSize) -> UIImage {
+    let hasAlpha = false
+    let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+    
+    UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+    image.drawInRect(CGRect(origin: CGPointZero, size: size))
+    
+    let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return scaledImage
+}
 
