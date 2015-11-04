@@ -30,11 +30,10 @@ class CurrentAssistantTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidLoad()
-        tableView.autoresizesSubviews = true
-        tableView.estimatedRowHeight = 150
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "loadUsers", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.registerNib(UINib(nibName: "CurrentCell", bundle: nil), forCellReuseIdentifier: "CurrentCell")
         loadUsers()
     }
     
@@ -105,15 +104,15 @@ class CurrentAssistantTable: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CurrentAssistantCell", forIndexPath: indexPath) as! CurrentAssistantCell
-        if let pivot = pivots[indexPath.row] as? PFObject {
-            cell.bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser, favor: favor)
-            cell.hireButton.tag = indexPath.row
-            cell.hireButton.addTarget(self, action: "hire:", forControlEvents: .TouchUpInside)
-        } else {
-            println("no pivot loaded")
-        }
-        return cell
+        let currentCell = tableView.dequeueReusableCellWithIdentifier("CurrentCell", forIndexPath: indexPath) as! CurrentCell
+        currentCell.bindAssistant(pivots[indexPath.row] as? PFObject)
+        currentCell.confirmButton.tag = indexPath.row
+        currentCell.confirmButton.addTarget(self, action: "hire:", forControlEvents: .TouchUpInside)
+        return currentCell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 300
     }
     
     //----------------------------------------------------------------------------------------------------------

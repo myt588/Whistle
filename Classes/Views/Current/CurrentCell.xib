@@ -48,11 +48,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhc-Og-QbU" userLabel="Prize View" customClass="WEPrizeView" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="444" y="0.0" width="38" height="38"/>
+                                        <rect key="frame" x="429" y="0.0" width="53" height="38"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="Vhc-Og-QbU" secondAttribute="height" multiplier="1:1" id="5YD-Hc-lY2"/>
+                                            <constraint firstAttribute="width" secondItem="Vhc-Og-QbU" secondAttribute="height" multiplier="7:5" id="5YD-Hc-lY2"/>
                                             <constraint firstAttribute="height" constant="38" id="BCU-Ep-ZyU"/>
                                         </constraints>
                                     </view>
@@ -113,21 +113,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OFf-Zl-E53" userLabel="Audio View" customClass="WEVoiceBar" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="bubbleImage" value="voicebar"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fju-ha-FYj" userLabel="Content Label" customClass="WEFontContent" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="6" y="0.0" width="340" height="50"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-ea-1XT" userLabel="Confirm">
                                         <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
                                         <animations/>
@@ -141,24 +126,16 @@
                                     <constraint firstAttribute="centerY" secondItem="ZK8-HQ-MWT" secondAttribute="centerY" id="5Xd-Id-HcS"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="height" secondItem="f2z-Hb-r8A" secondAttribute="height" id="CFW-ed-HFT"/>
                                     <constraint firstAttribute="centerY" secondItem="f2z-Hb-r8A" secondAttribute="centerY" id="H9U-W0-Wtt"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="leading" secondItem="Fju-ha-FYj" secondAttribute="leading" constant="-6" id="Hdl-VX-TV0"/>
                                     <constraint firstAttribute="height" constant="50" id="IO5-Bm-dCW"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="top" secondItem="Fju-ha-FYj" secondAttribute="top" id="OJC-7S-5qp"/>
                                     <constraint firstAttribute="trailing" secondItem="ZK8-HQ-MWT" secondAttribute="trailing" id="Oie-BM-73h"/>
                                     <constraint firstItem="f2z-Hb-r8A" firstAttribute="leading" secondItem="Qkz-xi-IhA" secondAttribute="trailing" id="PGj-6L-Neb"/>
                                     <constraint firstItem="Qkz-xi-IhA" firstAttribute="leading" secondItem="2d8-ea-1XT" secondAttribute="trailing" id="QjN-GU-dVK"/>
                                     <constraint firstAttribute="centerY" secondItem="Qkz-xi-IhA" secondAttribute="centerY" id="SfV-x9-ztM"/>
-                                    <constraint firstItem="Qkz-xi-IhA" firstAttribute="leading" secondItem="OFf-Zl-E53" secondAttribute="trailing" id="TaM-bm-c1m"/>
                                     <constraint firstItem="Qkz-xi-IhA" firstAttribute="height" secondItem="f2z-Hb-r8A" secondAttribute="height" id="Yg5-Ib-ZYF"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="leading" secondItem="f2z-Hb-r8A" secondAttribute="trailing" id="ZFq-x0-omF"/>
                                     <constraint firstItem="2d8-ea-1XT" firstAttribute="leading" secondItem="vsa-6W-Mz3" secondAttribute="leading" id="dgd-xk-C27"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="leading" secondItem="vsa-6W-Mz3" secondAttribute="leading" id="fV0-oQ-ihm"/>
-                                    <constraint firstAttribute="bottom" secondItem="OFf-Zl-E53" secondAttribute="bottom" id="kZK-PL-Yip"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="width" secondItem="Fju-ha-FYj" secondAttribute="width" id="lct-Vv-PeT"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="height" secondItem="vsa-6W-Mz3" secondAttribute="height" id="no3-qH-rPl"/>
                                     <constraint firstItem="2d8-ea-1XT" firstAttribute="top" secondItem="vsa-6W-Mz3" secondAttribute="top" id="oum-oP-Kcg"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="height" secondItem="Fju-ha-FYj" secondAttribute="height" id="rFe-53-aGe"/>
-                                    <constraint firstItem="OFf-Zl-E53" firstAttribute="top" secondItem="vsa-6W-Mz3" secondAttribute="top" id="x4C-ux-f0l"/>
                                     <constraint firstAttribute="bottom" secondItem="2d8-ea-1XT" secondAttribute="bottom" id="xUW-NJ-Whw"/>
                                 </constraints>
                             </view>
@@ -189,7 +166,7 @@
                                     <constraint firstAttribute="width" constant="30" id="33x-JD-woO"/>
                                     <constraint firstAttribute="width" secondItem="RcM-oH-otL" secondAttribute="height" multiplier="1:1" id="j1E-UJ-H2N"/>
                                 </constraints>
-                                <state key="normal" image="current_delete">
+                                <state key="normal" image="current_cancel_black">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -231,13 +208,11 @@
             </tableViewCellContentView>
             <animations/>
             <connections>
-                <outlet property="audioView" destination="OFf-Zl-E53" id="LWV-zi-kZG"/>
                 <outlet property="blurImage" destination="RRs-Pd-6gu" id="l9F-u9-QNd"/>
                 <outlet property="botView" destination="vsa-6W-Mz3" id="Cur-ES-MOR"/>
                 <outlet property="cancelButton" destination="RcM-oH-otL" id="RYV-dk-1oc"/>
                 <outlet property="chatButton" destination="ZK8-HQ-MWT" id="9tN-Bt-rld"/>
                 <outlet property="confirmButton" destination="2d8-ea-1XT" id="yoR-PC-OI2"/>
-                <outlet property="contentLabel" destination="Fju-ha-FYj" id="gyJ-fY-w9H"/>
                 <outlet property="coutLabel" destination="hHj-vW-Lad" id="tBM-5y-21o"/>
                 <outlet property="midView" destination="MY6-Ue-Kzy" id="l9H-Rm-Ixd"/>
                 <outlet property="nameLabel" destination="4fc-sQ-PE1" id="JUi-5r-l01"/>
@@ -251,10 +226,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="current_delete" width="25" height="25"/>
+        <image name="current_cancel_black" width="16" height="16"/>
         <image name="favor_buttons_chat" width="50" height="50"/>
         <image name="favor_buttons_review" width="50" height="50"/>
         <image name="favor_buttons_share" width="50" height="50"/>
-        <image name="voicebar" width="120" height="40"/>
     </resources>
 </document>

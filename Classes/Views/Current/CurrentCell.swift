@@ -30,9 +30,6 @@ class CurrentCell: UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var audioView                            : WEVoiceBubble!
-    @IBOutlet weak var contentLabel                         : UILabel!
-    
     @IBOutlet weak var confirmButton                        : UIButton!
     @IBOutlet weak var cancelButton                         : UIButton!
     @IBOutlet weak var chatButton                           : WEChatButton!
@@ -54,9 +51,12 @@ class CurrentCell: UITableViewCell
     {
         super.awakeFromNib()
         configLooks()
+        self.timeElapsedLabel.text = ""
+        self.nameLabel.text = ""
         self.chatButton.enabled = false
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
+        self.cancelButton.hidden = true
         self.confirmButton.backgroundColor = UIColor.orangeColor()
     }
     
@@ -67,8 +67,11 @@ class CurrentCell: UITableViewCell
         self.timeElapsedLabel.text = ""
         self.portraitView.imageView = nil
         self.blurImage.imageView = nil
-        self.audioView.hidden = true
-        self.contentLabel.text = ""
+        self.cancelButton.hidden = true
+        self.chatButton.enabled = false
+        self.reviewButton.enabled = false
+        self.shareButton.enabled = true
+        self.cancelButton.hidden = true
     }
     
     // MARK: - Functions
@@ -91,33 +94,20 @@ class CurrentCell: UITableViewCell
         portraitView.layer.shadowOpacity = 0.65
     }
     
-    func bindData(favor : PFObject?, row: Int, cellType: String)
+    func bindFavor(favor : PFObject?, row: Int)
     {
         if let favor = favor {
             self.favor = favor
             self.row = row
-            if cellType == "favor" {
-                self.cancelButton.hidden = false
-                self.cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchUpInside)
-            } else {
-                self.cancelButton.hidden = true
-            }
-            var status = 0
-            if cellType == "interest" {
-                status = 2
-            } else {
-                status = favor[Constants.Favor.Status] as! Int
-            }
-            switch status {
+            self.cancelButton.hidden = false
+            self.cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchUpInside)
+            switch favor[Constants.Favor.Status] as! Int {
             case 0:                                         // No Takers
                 self.coutLabel.hidden = true
                 self.portraitView.image = UIImage(named: "user_unknown")
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
-                self.nameLabel.text = "Waiting..."
-                let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
-                let string = NSAttributedString(string: "Waiting...", attributes: attr)
-                self.confirmButton.setAttributedTitle(string, forState: .Normal)
+                self.confirmButtonConfig("Waiting...", action: nil)
             case 1:                                         // Has Takers
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.portraitView.image = UIImage(named: "user_photo")
@@ -130,83 +120,94 @@ class CurrentCell: UITableViewCell
                         self.coutLabel.text = "\(count)"
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
-                        self.nameLabel.text = "Please select your assistant..."
-                        let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
-                        let string = NSAttributedString(string: "Select your assistant...", attributes: attr)
-                        self.confirmButton.setAttributedTitle(string, forState: .Normal)
+                        self.confirmButtonConfig("Select your assistant", action: nil)
                     } else {
                         println("network error")
                     }
                 })
             default:
-                var user: PFUser?
-                if cellType == "favor"
-                {
-                    user = favor[Constants.Favor.AssistedBy] as? PFUser
-                    if user == nil
-                    {
-                        user = favor[Constants.Favor.CreatedBy] as? PFUser
-                    }
-                } else {
-                    user = favor[Constants.Favor.CreatedBy] as? PFUser
-                }
-                
-                self.chatButton.enabled = true
-                self.chatButton.user = user
+                self.confirmButtonConfig("Finished", action: "whistlerAccepted")
                 self.reviewButton.enabled = true
                 self.reviewButton.favor = favor
-                
-                if let user = user
-                {
-                    user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
-                        if let user = user as? PFUser
-                        {
-                            var name = user[Constants.User.Nickname] as? String
-                            self.coutLabel.hidden = true
-                            self.nameLabel.text = "\(name!)"
-                            self.portraitView.loadImage(user)
-                            self.portraitView.canTap = true
-                            self.blurImage.loadImage(user)
-                        }
-                    })
-                }
-                
+                let user: AnyObject? = favor[Constants.Favor.AssistedBy] == nil ? favor[Constants.Favor.CreatedBy] : favor[Constants.Favor.AssistedBy]
+                bindData(user as? PFUser)
             }
-            
-            if let audio = favor[Constants.Favor.Audio] as? PFFile {
-                self.audioView.hidden = false
-                self.contentLabel.hidden = true
-                audio.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    let audioManager = AudioManager()
-                    let name = audioNameWithDate()
-                    audioManager.saveAudio(data!, name: name)
-                    let url = audioManager.audioURLWithName(name)
-                    self.audioView.contentURL = url
-                    var asset = AVURLAsset(URL: audioManager.audioURLWithName(name), options: [AVURLAssetPreferPreciseDurationAndTimingKey:true])
-                    var duration: CMTime = asset.duration
-                    var seconds = Int(CMTimeGetSeconds(duration))
-                    //self.audioLengthCons.constant = 50 + CGFloat(seconds)*1.67
-                })
-            } else {
-                self.audioView.hidden = true
-                if let content = favor[Constants.Favor.Content] as? String {
-                    self.contentLabel.hidden = false
-                    self.contentLabel.text = content
-                }
-            }
-            
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
-            
             if let price = favor[Constants.Favor.Price] as? Int {
                 self.prizeView.bindData(price)
             }
-            
-            let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
-            let string = NSAttributedString(string: "", attributes: attr)
-            self.confirmButton.setAttributedTitle(string, forState: .Normal)
         }
     }
     
+    func bindInterest(favor: PFObject?, row: Int) {
+        if let favor = favor {
+            self.favor = favor
+            self.row = row
+            self.confirmButtonConfig("Interested", action: nil)
+            bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
+            timeElapsedLabel.text = favor.updatedAt?.relativeTime
+            if let price = favor[Constants.Favor.Price] as? Int {
+                self.prizeView.bindData(price)
+            }
+        }
+    }
+    
+    func bindAssist(favor: PFObject?, row: Int) {
+        if let favor = favor {
+            self.favor = favor
+            self.row = row
+            self.confirmButtonConfig("Favor Finished", action: "assistantDelivered")
+            self.reviewButton.enabled = true
+            self.reviewButton.favor = favor
+            bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
+            timeElapsedLabel.text = favor.updatedAt?.relativeTime
+            if let price = favor[Constants.Favor.Price] as? Int {
+                self.prizeView.bindData(price)
+            }
+        }
+    }
+    
+    func bindAssistant(pivot: PFObject?) {
+        if let pivot = pivot {
+            self.confirmButtonConfig("Hire", action: nil)
+            bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser)
+            timeElapsedLabel.text = pivot.updatedAt?.relativeTime
+            if let price = pivot[Constants.FavorUserPivotTable.Price] as? Int {
+                self.prizeView.bindData(price)
+            }
+        }
+    }
+    
+    func bindData(user: PFUser?) {
+        if let user = user
+        {
+            user.fetchIfNeededInBackgroundWithBlock({ (user, error) -> Void in
+                if let user = user as? PFUser
+                {
+                    var name = user[Constants.User.Nickname] as? String
+                    self.chatButton.enabled = true
+                    self.chatButton.user = user
+                    self.coutLabel.hidden = true
+                    self.nameLabel.text = "\(name!)"
+                    self.portraitView.loadImage(user)
+                    self.portraitView.canTap = true
+                    self.blurImage.loadImage(user)
+                } else {
+                    ParseErrorHandler.handleParseError(error)
+                }
+            })
+        }
+    }
+    
+    func confirmButtonConfig(title: String, action: Selector?) {
+        let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
+        let string = NSAttributedString(string: title, attributes: attr)
+        self.confirmButton.setAttributedTitle(string, forState: .Normal)
+        if action != nil {
+            self.confirmButton.addTarget(self, action: action!, forControlEvents: .TouchUpInside)
+        }
+    }
+
     //----------------------------------------------------------------------------------------------------------
     func showTakers()
     //----------------------------------------------------------------------------------------------------------
@@ -214,7 +215,7 @@ class CurrentCell: UITableViewCell
         vc!.selectedIndex = self.row
         vc!.performSegueWithIdentifier("Current_To_Assistant", sender: self)
     }
-    
+
     func cancel()
     {
         if let vc = self.vc {
@@ -239,8 +240,31 @@ class CurrentCell: UITableViewCell
         }
     }
     
-    func complete()
+    func assistantDelivered()
     {
+        if let vc = self.vc {
+            let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
+            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+            alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
+                if let favor = self.favor {
+                    favor[Constants.Favor.Status] = 3
+                    favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        if success {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                vc.favors.removeObjectAtIndex(self.row)
+                                vc.tableView.reloadData()
+                            })
+                        } else {
+                            ParseErrorHandler.handleParseError(error)
+                        }
+                    })
+                }
+                })
+            vc.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func whistlerAccepted() {
         if let vc = self.vc {
             let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
             alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
@@ -262,7 +286,6 @@ class CurrentCell: UITableViewCell
             vc.presentViewController(alert, animated: true, completion: nil)
         }
     }
-    
 }
 
 

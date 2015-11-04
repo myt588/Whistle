@@ -1799,6 +1799,16 @@
 			path = Blocked;
 			sourceTree = "<group>";
 		};
+		943A951E1BE99EB200F2E916 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				9478BF811B440AB800F3D91D /* CurrentFavorCell.swift */,
+				9478BF861B440AB800F3D91D /* CurrentAssistCell.swift */,
+				893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -2010,14 +2020,12 @@
 		9478BF801B440AB800F3D91D /* Current */ = {
 			isa = PBXGroup;
 			children = (
+				943A951E1BE99EB200F2E916 /* Deprecated */,
 				944CFC631BE1C71400A84DE8 /* CurrentRateView.swift */,
 				944CFC641BE1C71400A84DE8 /* CurrentReportTable.swift */,
 				89EBA35E1B5FF3880011D528 /* CurrentView.swift */,
 				9478BF831B440AB800F3D91D /* CurrentSwitcher.swift */,
-				9478BF811B440AB800F3D91D /* CurrentFavorCell.swift */,
-				9478BF861B440AB800F3D91D /* CurrentAssistCell.swift */,
 				893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */,
-				893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */,
 				9418B9701BE097D7007F2296 /* CurrentCell.swift */,
 				9418B9721BE097E7007F2296 /* CurrentCell.xib */,
 			);

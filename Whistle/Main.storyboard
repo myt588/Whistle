@@ -8429,9 +8429,6 @@
                                                     <state key="normal" title="Compose">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="301" y="2" width="66" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="toggleHidden:" destination="dr1-Pz-GcC" eventType="touchUpInside" id="xyZ-gU-aVk"/>
                                                     </connections>
@@ -8531,9 +8528,6 @@
                                                     <state key="normal" title="Compose">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="301" y="2" width="66" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="toggleHidden:" destination="dr1-Pz-GcC" eventType="touchUpInside" id="rT5-Rx-Opg"/>
                                                     </connections>
@@ -9146,8 +9140,8 @@
         <image name="waiting_arrow" width="272" height="234"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="736-M1-MnA"/>
         <segue reference="Mhz-ik-Qwh"/>
-        <segue reference="Cr0-f1-cZ8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.9882352941176471" green="0.79607843137254897" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
