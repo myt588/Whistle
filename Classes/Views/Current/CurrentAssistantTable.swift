@@ -126,7 +126,7 @@ class CurrentAssistantTable: UITableViewController
                 if let ownerPrice = favor[Constants.Favor.Price] as? Int {
                     if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
                         if ownerPrice != takerPrice {
-                            self.favor[Constants.Favor.Price] = takerPrice
+                            favor[Constants.Favor.Price] = takerPrice
                         }
                     }
                 }

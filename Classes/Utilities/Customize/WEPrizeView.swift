@@ -43,6 +43,7 @@ class WEPrizeView: UIView
             priceLabel.hidden = false
             priceLabel.text = "$\(price)"
         }
+        
     }
     
 }

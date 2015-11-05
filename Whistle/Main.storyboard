@@ -265,7 +265,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-pk-Tfo" userLabel="bg">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-pk-Tfo" userLabel="bg" customClass="WEBlurImageView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="417"/>
                                 <animations/>
                                 <constraints>
@@ -277,7 +277,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="ZM3-fh-dcr" userLabel="Portrait">
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="ZM3-fh-dcr" userLabel="Portrait" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="125" y="64" width="125" height="125"/>
                                 <animations/>
                                 <constraints>
@@ -780,7 +780,7 @@
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="PT9-UE-0W8" firstAttribute="top" secondItem="8OC-JY-6xO" secondAttribute="bottom" constant="8" id="e1e-tk-Rnh">
-                                <variation key="widthClass=compact" constant="8" symbolic="YES"/>
+                                <variation key="widthClass=compact" constant="20"/>
                             </constraint>
                             <constraint firstItem="k2O-1h-7bc" firstAttribute="top" secondItem="PT9-UE-0W8" secondAttribute="bottom" constant="462" id="f6M-6Z-NCu">
                                 <variation key="widthClass=compact" constant="0.0"/>
@@ -846,6 +846,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="commentLabel" destination="PT9-UE-0W8" id="VoY-gy-eft"/>
+                        <outlet property="nameLabel" destination="Nm0-vC-EUB" id="ffA-Tk-Vxg"/>
+                        <outlet property="portraitView" destination="JEA-Zs-eJD" id="Yw9-0B-q9E"/>
+                        <outlet property="ratingView" destination="8OC-JY-6xO" id="GIR-aJ-ban"/>
+                        <outlet property="timeLabel" destination="pSN-qa-6zB" id="tbV-l4-6jg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qWM-Dm-ZBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -5710,7 +5717,7 @@
         <scene sceneID="DOX-pK-TRH">
             <objects>
                 <tableViewController storyboardIdentifier="ProfileRateTable" id="Ao4-HB-LwY" customClass="ProfileRateTable" customModule="Whistle" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="8JE-0B-zjY" customClass="WETable" customModule="Whistle" customModuleProvider="target">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="8JE-0B-zjY" customClass="WETable" customModule="Whistle" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -5737,7 +5744,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6CG-Oa-ocI" userLabel="bg">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6CG-Oa-ocI" userLabel="bg" customClass="WEBlurImageView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="417"/>
                                 <animations/>
                                 <constraints>
@@ -5749,7 +5756,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-a8-kXF" userLabel="Portrait">
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-a8-kXF" userLabel="Portrait" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="125" y="64" width="125" height="125"/>
                                 <animations/>
                                 <constraints>
@@ -6418,8 +6425,7 @@
                                         <exclude reference="w1i-zj-4fK"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="72" y="180" width="287" height="250"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="w1i-zj-4fK"/>
                                     </mask>
@@ -6431,9 +6437,6 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="325" y="414" width="34" height="16"/>
-                                </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="rate_star_line" translatesAutoresizingMaskIntoConstraints="NO" id="vVE-l6-0SB" customClass="WETintImageView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="36" y="87" width="53" height="54"/>
@@ -6441,8 +6444,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vVE-l6-0SB" secondAttribute="height" multiplier="1:1" id="UfU-bT-VEb"/>
                                 </constraints>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="172" y="107" width="37" height="38"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="UfU-bT-VEb"/>
                                     </mask>
@@ -6454,8 +6456,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1Vt-es-Ylj" secondAttribute="height" multiplier="1:1" id="fIj-2b-q2y"/>
                                 </constraints>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="107" width="38" height="38"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="fIj-2b-q2y"/>
                                     </mask>
@@ -6467,8 +6468,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Nmv-Ue-OGi" secondAttribute="height" multiplier="1:1" id="y9r-9o-O6R"/>
                                 </constraints>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="247" y="107" width="37" height="38"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="y9r-9o-O6R"/>
                                     </mask>
@@ -6480,8 +6480,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9gf-VA-61K" secondAttribute="height" multiplier="1:1" id="5HY-G0-bzr"/>
                                 </constraints>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="284" y="107" width="38" height="38"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="5HY-G0-bzr"/>
                                     </mask>
@@ -6502,8 +6501,7 @@
                                         <exclude reference="m5H-rN-XDW"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="322" y="107" width="37" height="38"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="0qP-OG-1M3"/>
                                         <exclude reference="m5H-rN-XDW"/>
@@ -8429,6 +8427,9 @@
                                                     <state key="normal" title="Compose">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="301" y="2" width="66" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="toggleHidden:" destination="dr1-Pz-GcC" eventType="touchUpInside" id="xyZ-gU-aVk"/>
                                                     </connections>
@@ -8528,6 +8529,9 @@
                                                     <state key="normal" title="Compose">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="301" y="2" width="66" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="toggleHidden:" destination="dr1-Pz-GcC" eventType="touchUpInside" id="rT5-Rx-Opg"/>
                                                     </connections>
@@ -9141,7 +9145,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="736-M1-MnA"/>
-        <segue reference="Mhz-ik-Qwh"/>
+        <segue reference="Mvx-8i-boF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.9882352941176471" green="0.79607843137254897" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>

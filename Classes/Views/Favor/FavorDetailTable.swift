@@ -464,14 +464,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             var footerView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, 65))
             var button = WEReportButton(favor: favor)
             button.frame = CGRectMake(self.view.bounds.width-60, 0, 50, 50)
-//            var button = UIButton(frame: CGRectMake(self.view.bounds.width-60, 0, 50, 50))
-//            var image = UIImage(named: "report")
-//            let origImage = image
-//            let tintedImage = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-//            image = tintedImage
-//            button.setImage(image, forState: .Normal)
-//            button.tintColor = Constants.Color.Main2
-//            button.addTarget(self, action: "reportAction", forControlEvents: .TouchUpInside)
             footerView.addSubview(button)
             var label = UILabel(frame: CGRectMake(self.view.bounds.width-85, 40, 100, 15))
             label.text = "Report"

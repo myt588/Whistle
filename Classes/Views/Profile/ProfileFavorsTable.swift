@@ -52,9 +52,7 @@ class ProfileFavorsTable: UITableViewController
         tableView.contentInset                                  = UIEdgeInsetsMake(35, 0, YALTabBarViewDefaultHeight + 30, 0)
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    func loadFavors()
-    //----------------------------------------------------------------------------------------------------------
+    func setQuery() -> PFQuery
     {
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         favorQuery.whereKey(Constants.Favor.CreatedBy, equalTo: PFUser.currentUser()!)
@@ -70,10 +68,36 @@ class ProfileFavorsTable: UITableViewController
         
         let query : PFQuery = PFQuery.orQueryWithSubqueries([favorQuery, assistQuery])
         query.orderByDescending(Constants.Favor.UpdatedAt)
+        query.limit = 10
+        
+        return query
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func loadFavors()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        let query = setQuery()
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
                 self.favors.removeAllObjects()
+                self.favors.addObjectsFromArray(objects!)
+                println("favor count \(self.favors.count)")
+                self.tableView.reloadData()
+            } else {
+                println("network error")
+            }
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func loadMore() {
+        let query = setQuery()
+        query.whereKey(Constants.Favor.UpdatedAt, lessThan: (favors.lastObject as! PFObject).updatedAt!)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
                 self.favors.addObjectsFromArray(objects!)
                 println("favor count \(self.favors.count)")
                 self.tableView.reloadData()
@@ -161,6 +185,15 @@ class ProfileFavorsTable: UITableViewController
     {
         println(indexPath.row)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if (scrollView.contentOffset.y > (scrollView.contentSize.height - (scrollView.frame.size.height - 60))) {
+            loadMore()
+        }
     }
     
 }

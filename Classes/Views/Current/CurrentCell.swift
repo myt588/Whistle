@@ -101,7 +101,8 @@ class CurrentCell: UITableViewCell
             self.row = row
             self.cancelButton.hidden = false
             self.cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchUpInside)
-            switch favor[Constants.Favor.Status] as! Int {
+            let status = favor[Constants.Favor.Status] as! Int
+            switch status {
             case 0:                                         // No Takers
                 self.coutLabel.hidden = true
                 self.portraitView.image = UIImage(named: "user_unknown")
@@ -126,6 +127,9 @@ class CurrentCell: UITableViewCell
                     }
                 })
             default:
+                if status == 4 || status == 5 || status == 6{
+                    self.cancelButton.hidden = true
+                }
                 self.confirmButtonConfig("Finished", action: "whistlerAccepted")
                 self.reviewButton.enabled = true
                 self.reviewButton.favor = favor

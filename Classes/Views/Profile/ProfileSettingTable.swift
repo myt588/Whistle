@@ -65,17 +65,6 @@ class ProfileSettingTable: UITableViewController
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - IBActions
-    //----------------------------------------------------------------------------------------------------------
-    // Navigation Bar Button
-    //----------------------------------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func logoutButtonTapped(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        
-    }
-    
     func setEmail(email: String) {
         self.user[Constants.User.Email] = email
         self.user.saveInBackgroundWithBlock({ (success, error) -> Void in
@@ -109,6 +98,7 @@ class ProfileSettingTable: UITableViewController
     {
         self.portrait.loadImage(user)
         self.portrait.useDefault = true
+        self.portrait.canTap = false
         self.nameLabel.text = user[Constants.User.Nickname] as? String
         self.phoneKeyLabel.text = user[Constants.User.Phone] as? String
         self.emailKeyLabel.text = user[Constants.User.Email] as? String

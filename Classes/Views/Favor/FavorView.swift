@@ -91,7 +91,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     var favors: NSMutableArray = NSMutableArray()
     var tags: [PFObject] = [PFObject]()
     var tagNames = [String]()
-    var edge: Edges?
     var index: Int = 0 {
         didSet {
             if index > favors.count - 1 {
@@ -171,7 +170,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBAction func refreshButtonTapped(sender: WEMapButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        loadFavors(nil, tags: tagNames)
+        loadFavors(tagNames)
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -184,14 +183,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func actionCleanup()
     {
         favors.removeAllObjects()
-        edge = nil
         index = 0
     }
     
     func currentLocationFound()
     {
         centerMapOnUser()
-        loadFavors(nil, tags: tagNames)
+        loadFavors(tagNames)
     }
     
     // MARK: - User interactions
@@ -301,6 +299,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 relationTable[Constants.FavorUserPivotTable.Active] = true
                 if self.tableView?.priceLabel.text?.toInt() != favor[Constants.Favor.Price] as? Int {
                     relationTable[Constants.FavorUserPivotTable.Price] = self.tableView?.priceLabel.text?.toInt()
+                } else {
+                    relationTable[Constants.FavorUserPivotTable.Price] = favor[Constants.Favor.Price] as? Int
                 }
                 relationTable.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
@@ -321,6 +321,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 })
             }
         }
+        
     }
     
     func addFriend(user: PFUser)
@@ -368,7 +369,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func isInterested(isInterested: Bool) {
         if !isInterested {
-            bannerRightView.backgroundColor = UIColor.yellowColor()
             interestButton.setTitle("Interest", forState: .Normal)
             interestButton.userInteractionEnabled = true
         } else {
@@ -383,7 +383,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //---------------------------------------------------------------------------------------------------------
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
-    func loadFavors(edge: Edges?, tags: [String])
+    func loadFavors(tags: [String])
     //----------------------------------------------------------------------------------------------------------
     {
         var hud = DGActivityIndicatorView(type: DGActivityIndicatorAnimationType.TriplePulse, tintColor: Constants.Color.Banner, size: 35)
@@ -391,6 +391,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         hud.alpha = 0.85
         view.addSubview(hud)
         hud.startAnimating()
+        
+        let blockQuery = PFQuery(className: PF_BLOCKED_CLASS_NAME)
+        blockQuery.whereKey(PF_BLOCKED_USER1, equalTo: PFUser.currentUser()!)
+        
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
         let location = CurrentLocation()
@@ -408,6 +412,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             Constants.Favor.CreatedBy,
             Constants.Favor.Price
             ])
+        favorQuery.whereKey(Constants.Favor.CreatedBy, doesNotMatchKey: PF_BLOCKED_USER2, inQuery: blockQuery)
         favorQuery.limit = Constants.Favor.MapPaginationLimit
         favorQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             hud.removeFromSuperview()
@@ -442,25 +447,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if let favor = favor {
             if favor.isDataAvailable() {
                 println("fetched")
-                self.interestState(favor)
-                if self.displayerMode == 1 {
-                    self.tableView!.bindData(favor)
-                    UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.portraitView.alpha = 0
-                        }, completion: { (finished: Bool) -> Void in
-                            self.configBanner(favor)
-                            self.centerMapOnFavor()
-                    })
-                    UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.portraitView.alpha = 1
-                        }, completion: { (finished: Bool) -> Void in
-                    })
-                } else {
-                    self.tableView!.bindData(favor)
-                    self.configBanner(favor)
-                    self.centerMapOnFavor()
-                    self.changeDisplayMode(1)
-                }
+                switchMode(favor)
                 return
             }
             println("fetching")
@@ -477,30 +464,34 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 if let favor = favor {
                     self.favors.replaceObjectAtIndex(self.index, withObject: favor)
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.interestState(favor)
-                        if self.displayerMode == 1 {
-                            self.tableView!.bindData(favor)
-                            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.portraitView.alpha = 0
-                                }, completion: { (finished: Bool) -> Void in
-                                    self.configBanner(favor)
-                                    self.centerMapOnFavor()
-                            })
-                            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.portraitView.alpha = 1
-                                }, completion: { (finished: Bool) -> Void in
-                            })
-                        } else {
-                            self.tableView!.bindData(favor)
-                            self.configBanner(favor)
-                            self.centerMapOnFavor()
-                            self.changeDisplayMode(1)
-                        }
+                        self.switchMode(favor)
                     }
                 } else {
                     ParseErrorHandler.handleParseError(error)
                 }
             })
+        }
+    }
+    
+    func switchMode(favor: PFObject) {
+        self.interestState(favor)
+        if self.displayerMode == 1 {
+            self.tableView!.bindData(favor)
+            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.portraitView.alpha = 0
+                }, completion: { (finished: Bool) -> Void in
+                    self.configBanner(favor)
+                    self.centerMapOnFavor()
+            })
+            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.portraitView.alpha = 1
+                }, completion: { (finished: Bool) -> Void in
+            })
+        } else {
+            self.tableView!.bindData(favor)
+            self.configBanner(favor)
+            self.centerMapOnFavor()
+            self.changeDisplayMode(1)
         }
     }
     
@@ -923,7 +914,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         {
             tagNames.append(tags[item]["name"] as! String)
         }
-        loadFavors(nil, tags: tagNames)
+        loadFavors(tagNames)
     }
     
     //----------------------------------------------------------------------------------------------------------
