@@ -19,7 +19,7 @@ import Parse
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, FBClusteringManagerDelegate, FavorDetailScrollDelegate, AKPickerViewDelegate, AKPickerViewDataSource
+class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGestureRecognizerDelegate, FBClusteringManagerDelegate, FavorDetailScrollDelegate, WETagCollectionViewDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     
@@ -34,7 +34,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var loadingLabel                         : WEContentLabel!
     @IBOutlet weak var circularProgress                     : KYCircularProgress!
     @IBOutlet weak var progressLabel                        : UILabel!
-    @IBOutlet weak var tagView                              : AKPickerView!
+    @IBOutlet weak var tagCollectionView                    : WETagCollectionView!
     //----------------------------------------------------------------------------------------------------------
     // Table
     //----------------------------------------------------------------------------------------------------------
@@ -49,6 +49,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var audioView                            : FSVoiceBubble!
     @IBOutlet weak var bannerRightView                      : UIView!
     @IBOutlet weak var interestButton                       : UIButton!
+    @IBOutlet weak var gifImageView                         : UIImageView!
+    @IBOutlet weak var gifLabelImageView                    : UIImageView!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -91,7 +93,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     var favors: NSMutableArray = NSMutableArray()
     var tags: [PFObject] = [PFObject]()
     var tagNames = [String]()
-    var edge: Edges?
     var index: Int = 0 {
         didSet {
             if index > favors.count - 1 {
@@ -113,7 +114,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         configContainerView()
         configMapView()
         configureCircularProgress()
-        configtagView()
         addGestures()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "calloutSelected:", name: "calloutSelected", object: nil)
@@ -171,7 +171,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBAction func refreshButtonTapped(sender: WEMapButton)
     //----------------------------------------------------------------------------------------------------------
     {
-        loadFavors(nil, tags: tagNames)
+        loadFavors(tagNames)
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -184,14 +184,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func actionCleanup()
     {
         favors.removeAllObjects()
-        edge = nil
         index = 0
     }
     
     func currentLocationFound()
     {
         centerMapOnUser()
-        loadFavors(nil, tags: tagNames)
+        loadFavors(tagNames)
     }
     
     // MARK: - User interactions
@@ -301,6 +300,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 relationTable[Constants.FavorUserPivotTable.Active] = true
                 if self.tableView?.priceLabel.text?.toInt() != favor[Constants.Favor.Price] as? Int {
                     relationTable[Constants.FavorUserPivotTable.Price] = self.tableView?.priceLabel.text?.toInt()
+                } else {
+                    relationTable[Constants.FavorUserPivotTable.Price] = favor[Constants.Favor.Price] as? Int
                 }
                 relationTable.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
@@ -309,7 +310,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         favor.saveInBackgroundWithBlock({ (success, error) -> Void in
                             if success {
                                 let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                                SendPushNotification2([user.objectId!], "Has interested in your favor")
+                                SendPushNotification2([user.objectId!], "Has interested in your favor", "whislte")
                                 self.addFriend(user)
                             } else {
                                 ParseErrorHandler.handleParseError(error)
@@ -321,6 +322,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 })
             }
         }
+        
     }
     
     func addFriend(user: PFUser)
@@ -368,12 +370,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func isInterested(isInterested: Bool) {
         if !isInterested {
-            bannerRightView.backgroundColor = UIColor.yellowColor()
-            interestButton.setTitle("Interest", forState: .Normal)
             interestButton.userInteractionEnabled = true
         } else {
-            interestButton.setTitle("Interested", forState: .Normal)
-            bannerRightView.backgroundColor = UIColor.orangeColor()
             interestButton.userInteractionEnabled = false
             bounceView(interestButton)
         }
@@ -383,7 +381,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     //---------------------------------------------------------------------------------------------------------
     // MARK: - Functions
     //----------------------------------------------------------------------------------------------------------
-    func loadFavors(edge: Edges?, tags: [String])
+    func loadFavors(tags: [String])
     //----------------------------------------------------------------------------------------------------------
     {
         var hud = DGActivityIndicatorView(type: DGActivityIndicatorAnimationType.TriplePulse, tintColor: Constants.Color.Banner, size: 35)
@@ -391,6 +389,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         hud.alpha = 0.85
         view.addSubview(hud)
         hud.startAnimating()
+        
+        let blockQuery = PFQuery(className: PF_BLOCKED_CLASS_NAME)
+        blockQuery.whereKey(PF_BLOCKED_USER1, equalTo: PFUser.currentUser()!)
+        
         let favorQuery : PFQuery = PFQuery(className: Constants.Favor.Name)
         favorQuery.cachePolicy = PFCachePolicy.CacheThenNetwork
         let location = CurrentLocation()
@@ -408,6 +410,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             Constants.Favor.CreatedBy,
             Constants.Favor.Price
             ])
+        favorQuery.whereKey(Constants.Favor.CreatedBy, doesNotMatchKey: PF_BLOCKED_USER2, inQuery: blockQuery)
         favorQuery.limit = Constants.Favor.MapPaginationLimit
         favorQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             hud.removeFromSuperview()
@@ -428,8 +431,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if error == nil
             {
+                self.tags.removeAll(keepCapacity: true)
                 self.tags = objects as! [PFObject]
-                self.tagView.reloadData()
+                for currentTag in self.tags {
+                    let name = currentTag["name"] as! String
+                    self.tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: name))
+                }
+                self.tagCollectionView.reloadData()
             }
         }
     }
@@ -442,25 +450,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if let favor = favor {
             if favor.isDataAvailable() {
                 println("fetched")
-                self.interestState(favor)
-                if self.displayerMode == 1 {
-                    self.tableView!.bindData(favor)
-                    UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.portraitView.alpha = 0
-                        }, completion: { (finished: Bool) -> Void in
-                            self.configBanner(favor)
-                            self.centerMapOnFavor()
-                    })
-                    UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.portraitView.alpha = 1
-                        }, completion: { (finished: Bool) -> Void in
-                    })
-                } else {
-                    self.tableView!.bindData(favor)
-                    self.configBanner(favor)
-                    self.centerMapOnFavor()
-                    self.changeDisplayMode(1)
-                }
+                switchMode(favor)
                 return
             }
             println("fetching")
@@ -477,30 +467,34 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 if let favor = favor {
                     self.favors.replaceObjectAtIndex(self.index, withObject: favor)
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.interestState(favor)
-                        if self.displayerMode == 1 {
-                            self.tableView!.bindData(favor)
-                            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.portraitView.alpha = 0
-                                }, completion: { (finished: Bool) -> Void in
-                                    self.configBanner(favor)
-                                    self.centerMapOnFavor()
-                            })
-                            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                                self.portraitView.alpha = 1
-                                }, completion: { (finished: Bool) -> Void in
-                            })
-                        } else {
-                            self.tableView!.bindData(favor)
-                            self.configBanner(favor)
-                            self.centerMapOnFavor()
-                            self.changeDisplayMode(1)
-                        }
+                        self.switchMode(favor)
                     }
                 } else {
                     ParseErrorHandler.handleParseError(error)
                 }
             })
+        }
+    }
+    
+    func switchMode(favor: PFObject) {
+        self.interestState(favor)
+        if self.displayerMode == 1 {
+            self.tableView!.bindData(favor)
+            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.portraitView.alpha = 0
+                }, completion: { (finished: Bool) -> Void in
+                    self.configBanner(favor)
+                    self.centerMapOnFavor()
+            })
+            UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.portraitView.alpha = 1
+                }, completion: { (finished: Bool) -> Void in
+            })
+        } else {
+            self.tableView!.bindData(favor)
+            self.configBanner(favor)
+            self.centerMapOnFavor()
+            self.changeDisplayMode(1)
         }
     }
     
@@ -518,6 +512,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         view.backgroundColor                                        = Constants.Color.Background
         portraitView.backgroundColor                                = UIColor.clearColor()
         topBanner.backgroundColor                                   = Constants.Color.Background
+        bannerRightView.clipsToBounds                               = false
+        tagCollectionView.tagDelegate                               = self
+        
+        let gif = UIImage.gifWithName("a")
+        gifImageView.image = gif
+        let gifLabel = UIImage.gifWithName("b")
+        gifLabelImageView.image = gifLabel
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -528,31 +529,14 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         nameLabel.layer.cornerRadius                                = 8
         bannerView.backgroundColor                                  = Constants.Color.Banner
         bannerView.roundCorners(.TopRight | .BottomRight, radius: 8)
-        bannerRightView.roundCorners(.TopRight | .BottomRight, radius: 8)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func configtagView()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        tagView.delegate = self
-        tagView.dataSource = self
-        
-        tagView.backgroundColor = UIColor.clearColor()
-        tagView.maskDisabled = true
-        tagView.font = UIFont(name: "TimesNewRomanPSMT", size: 16)!
-        tagView.highlightedFont = UIFont(name: "TimesNewRomanPSMT", size: 16)!
-        tagView.textColor = UIColor.whiteColor()
-        tagView.highlightedTextColor = UIColor.whiteColor()
-        tagView.interitemSpacing = 12
-        tagView.pickerViewStyle = AKPickerViewStyle.Flat
+        bannerRightView.layer.cornerRadius = 8
     }
     
     //----------------------------------------------------------------------------------------------------------
     func toggleButtonHidden()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [refreshButton, centerOnUserButton, tagView]
+        var buttons = [refreshButton, centerOnUserButton, tagCollectionView]
         for element in buttons {
             element.alpha = 0
         }
@@ -562,7 +546,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     func toggleButtonAppear()
     //----------------------------------------------------------------------------------------------------------
     {
-        var buttons = [refreshButton, centerOnUserButton, tagView]
+        var buttons = [refreshButton, centerOnUserButton, tagCollectionView]
         for element in buttons {
             element.alpha = 1
         }
@@ -641,7 +625,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.portraitViewNewTopConstraint.active        = true
                     
                     self.tableView?.setTopMargin2()
-                    
+                    self.tableView?.scrollToTop()
                     self.toggleButtonHidden()
                     
                     }, completion: {
@@ -904,33 +888,16 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         userLocation.title = ""
     }
-    
-    // MARK: - tagView Delegate
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
-        return tags.count
-    }
-    
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
-        if tags.count == 0 {
-            return ""
-        }
-        return tags[item]["name"] as! String
-    }
-    
-    func pickerView(pickerView: AKPickerView, didSelectItems items: [Int]) {
-        tagNames.removeAll(keepCapacity: false)
-        for item in items
-        {
-            tagNames.append(tags[item]["name"] as! String)
-        }
-        loadFavors(nil, tags: tagNames)
-    }
-    
+
     //----------------------------------------------------------------------------------------------------------
     func cellSizeFactorForCoordinator(coordinator:FBClusteringManager) -> CGFloat
     //----------------------------------------------------------------------------------------------------------
     {
         return 1.0
+    }
+    
+    func tagView(tagView: WETagCollectionView, didSelectItems items: [String]) {
+        loadFavors(items)
     }
     
     func expand() {

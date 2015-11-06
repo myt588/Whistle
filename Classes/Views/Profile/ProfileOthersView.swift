@@ -22,8 +22,8 @@ class ProfileOthersView: UIViewController
     
     // MARK: - IBOutlets
     //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var bgView                                   : UIView!
-    @IBOutlet weak var portraitView                             : UIImageView!
+    @IBOutlet weak var bgView                                   : WEBlurImageView!
+    @IBOutlet weak var portraitView                             : WEProfileView!
     @IBOutlet weak var nameLabel                                : UILabel!
     @IBOutlet weak var lineLabel                                : UILabel!
     @IBOutlet weak var regionLabel                              : UILabel!
@@ -58,7 +58,6 @@ class ProfileOthersView: UIViewController
         
         configLooks()
         configNavBar()
-        addBlurEffect()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -81,11 +80,6 @@ class ProfileOthersView: UIViewController
     //----------------------------------------------------------------------------------------------------------
     {
         if !didLayoutSubviews {
-            portraitView.layer.cornerRadius                     = portraitView.frame.height/2
-            blurImage.frame                                     = bgView.bounds
-            blurImage.contentMode = UIViewContentMode.ScaleAspectFill
-            blurImage.clipsToBounds = true
-            blurView.frame                                      = bgView.bounds
             containerViewOriginalFrame                          = containerView.frame
             didLayoutSubviews                                   = !didLayoutSubviews
         }
@@ -97,11 +91,6 @@ class ProfileOthersView: UIViewController
     //----------------------------------------------------------------------------------------------------------
     {
         navigationController?.navigationBar.translucent         = true
-        bgView.backgroundColor                                  = Constants.Color.NavigationBar
-        
-        portraitView.layer.borderColor                          = Constants.Color.TextLight.CGColor
-        portraitView.layer.borderWidth                          = 2
-        
         totalView.alpha                                         = 0.92
         totalView.backgroundColor                               = Constants.Color.Border
         
@@ -165,38 +154,16 @@ class ProfileOthersView: UIViewController
     }
     
     //----------------------------------------------------------------------------------------------------------
-    func addBlurEffect()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = bgView.bounds
-        blurImage = UIImageView(image: UIImage(named: "user_photo"))
-        blurImage.frame = bgView.bounds
-        bgView.addSubview(blurImage)
-        bgView.addSubview(blurView)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
     func bindData(user: PFUser!)
     //----------------------------------------------------------------------------------------------------------
     {
         let name = user[Constants.User.Nickname] as? String
         self.nameLabel.text = "  \(name!)  "
         
-        if let file = user[Constants.User.Portrait] as? PFFile {
-            file.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if let data = data {
-                    self.portraitView.image = UIImage(data: data)!
-                    self.blurImage.image = UIImage(data: data)!
-                } else {
-                    ParseErrorHandler.handleParseError(error!)
-                }
-            })
-        } else {
-            self.portraitView.image = Constants.User.DefaultImage
-            self.blurImage.image = Constants.User.DefaultImage
-        }
+        self.portraitView.loadImage(user)
+        self.portraitView.canTap = false
+        self.bgView.loadImage(user)
+        self.bgView.style = .Dark
         
         if let status = user[Constants.User.Status] as? String {
             self.lineLabel.text = status

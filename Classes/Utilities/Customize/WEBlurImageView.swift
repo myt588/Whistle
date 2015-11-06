@@ -16,6 +16,7 @@ class WEBlurImageView: PFImageView
 {
     var user: PFUser?
     var imageView: UIImageView!
+    var style: UIBlurEffectStyle! = .Light
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -58,9 +59,10 @@ class WEBlurImageView: PFImageView
         imageView.userInteractionEnabled = true
         imageView.clipsToBounds = true
         self.addSubview(imageView)
-        var darkBlur = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        var darkBlur = UIBlurEffect(style: style)
         var blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = self.frame
+        blurView.alpha = 0.95
         imageView.addSubview(blurView)
     }
     

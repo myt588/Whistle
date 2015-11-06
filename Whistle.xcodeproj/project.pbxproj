@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890ADEB81BEC8B5F009D6E83 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = 890ADEB71BEC8B5F009D6E83 /* a.gif */; };
+		890ADEBC1BEC911B009D6E83 /* b.gif in Resources */ = {isa = PBXBuildFile; fileRef = 890ADEBB1BEC911B009D6E83 /* b.gif */; };
+		890ADEBE1BEC9CB1009D6E83 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */; };
 		890D5D861B60149C00DFD609 /* WESlideTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D5D851B60149C00DFD609 /* WESlideTransition.swift */; };
 		891160AD1B7900B5005D3995 /* MXPullDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 891160AC1B7900B5005D3995 /* MXPullDownMenu.m */; };
 		893B79631B52E09300019CF7 /* CurrentAssistantTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */; };
@@ -192,6 +195,7 @@
 		94354C991BDC138F0048C6CD /* WEEmptyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94354C981BDC138F0048C6CD /* WEEmptyTableCell.swift */; };
 		94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94354C9C1BDC2B8D0048C6CD /* BlockedView.m */; };
 		94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */; };
+		943A95211BE9F0D300F2E916 /* RelationInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A95201BE9F0D300F2E916 /* RelationInterest.swift */; };
 		9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B43F1B89AD1A002EBEEE /* NavigationController.m */; };
 		9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */; };
 		9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B46F1B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m */; };
@@ -245,7 +249,6 @@
 		944AE4591BDAF0F5008B7964 /* MyriadPro-LightSemiExt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */; };
 		944CFC5D1BE186CD00A84DE8 /* WEButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC5C1BE186CD00A84DE8 /* WEButtons.swift */; };
 		944CFC5F1BE1BA1900A84DE8 /* FavorDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */; };
-		944CFC621BE1C5F100A84DE8 /* AKPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC611BE1C5F100A84DE8 /* AKPickerView.swift */; };
 		944CFC651BE1C71400A84DE8 /* CurrentRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC631BE1C71400A84DE8 /* CurrentRateView.swift */; };
 		944CFC661BE1C71400A84DE8 /* CurrentReportTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC641BE1C71400A84DE8 /* CurrentReportTable.swift */; };
 		945E88EA1B89AAE600124816 /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E71B89AAE600124816 /* RecentCell.m */; };
@@ -341,6 +344,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		890ADEB71BEC8B5F009D6E83 /* a.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = a.gif; sourceTree = "<group>"; };
+		890ADEBB1BEC911B009D6E83 /* b.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = b.gif; sourceTree = "<group>"; };
+		890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		890D5D851B60149C00DFD609 /* WESlideTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WESlideTransition.swift; sourceTree = "<group>"; };
 		891160AB1B7900B5005D3995 /* MXPullDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXPullDownMenu.h; sourceTree = "<group>"; };
 		891160AC1B7900B5005D3995 /* MXPullDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXPullDownMenu.m; sourceTree = "<group>"; };
@@ -628,6 +634,7 @@
 		94354C9B1BDC2B8D0048C6CD /* BlockedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedView.h; sourceTree = "<group>"; };
 		94354C9C1BDC2B8D0048C6CD /* BlockedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedView.m; sourceTree = "<group>"; };
 		94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockedView.xib; sourceTree = "<group>"; };
+		943A95201BE9F0D300F2E916 /* RelationInterest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationInterest.swift; sourceTree = "<group>"; };
 		9441B43E1B89AD1A002EBEEE /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		9441B43F1B89AD1A002EBEEE /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -725,7 +732,6 @@
 		944AE4581BDAF0BD008B7964 /* MyriadPro-LightSemiExt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-LightSemiExt.otf"; sourceTree = "<group>"; };
 		944CFC5C1BE186CD00A84DE8 /* WEButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEButtons.swift; sourceTree = "<group>"; };
 		944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorDetailView.swift; sourceTree = "<group>"; };
-		944CFC611BE1C5F100A84DE8 /* AKPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKPickerView.swift; sourceTree = "<group>"; };
 		944CFC631BE1C71400A84DE8 /* CurrentRateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentRateView.swift; sourceTree = "<group>"; };
 		944CFC641BE1C71400A84DE8 /* CurrentReportTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentReportTable.swift; sourceTree = "<group>"; };
 		945E88E61B89AAE600124816 /* RecentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentCell.h; sourceTree = "<group>"; };
@@ -1409,6 +1415,8 @@
 		942FA2C71B2F0FED0050C3E3 /* Whistle */ = {
 			isa = PBXGroup;
 			children = (
+				890ADEB71BEC8B5F009D6E83 /* a.gif */,
+				890ADEBB1BEC911B009D6E83 /* b.gif */,
 				942FA4CA1B2F11E00050C3E3 /* Main.storyboard */,
 				942FA4ED1B2F15150050C3E3 /* Whistle-Bridging-Header.h */,
 				94C1801E1B60755000D4F647 /* AppConstant.h */,
@@ -1449,6 +1457,7 @@
 		942FA2EE1B2F10E90050C3E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				943A951F1BE9F08600F2E916 /* Models */,
 				942FA2EF1B2F10E90050C3E3 /* Utilities */,
 				8951A4E31B39CDE80048D593 /* Views */,
 			);
@@ -1603,7 +1612,6 @@
 		942FA33E1B2F10E90050C3E3 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				944CFC601BE1C5F100A84DE8 /* AKPickerView */,
 				940242851BD9E00B00CE8E45 /* DGActivityIndicatorView */,
 				9441B46A1B89AE6A002EBEEE /* JSQMessagesViewController */,
 				94CFB0801B837EBE00F681D8 /* MBProgressHUD */,
@@ -1809,6 +1817,15 @@
 			name = Deprecated;
 			sourceTree = "<group>";
 		};
+		943A951F1BE9F08600F2E916 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				943A95201BE9F0D300F2E916 /* RelationInterest.swift */,
+				890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -1975,14 +1992,6 @@
 				944AE4521BDA03EE008B7964 /* MyriadPro-SemiExt.otf */,
 			);
 			path = font;
-			sourceTree = "<group>";
-		};
-		944CFC601BE1C5F100A84DE8 /* AKPickerView */ = {
-			isa = PBXGroup;
-			children = (
-				944CFC611BE1C5F100A84DE8 /* AKPickerView.swift */,
-			);
-			path = AKPickerView;
 			sourceTree = "<group>";
 		};
 		945E88E51B89AAE600124816 /* Recent */ = {
@@ -2307,6 +2316,7 @@
 				94CFB07D1B837DF300F681D8 /* audio_record.png in Resources */,
 				9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				89F5D5441BE3879D00E8EF66 /* WEReviewCell.xib in Resources */,
+				890ADEBC1BEC911B009D6E83 /* b.gif in Resources */,
 				942FA4991B2F10E90050C3E3 /* Info.plist in Resources */,
 				9441B4ED1B89AE6A002EBEEE /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				89F53AFB1B5A2D9300F0A2A2 /* TSMessagesDefaultDesign.json in Resources */,
@@ -2320,6 +2330,7 @@
 				9441B4F01B89AE6A002EBEEE /* JSQMessagesToolbarContentView.xib in Resources */,
 				9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */,
 				942FA4CB1B2F11E00050C3E3 /* Main.storyboard in Resources */,
+				890ADEB81BEC8B5F009D6E83 /* a.gif in Resources */,
 				94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */,
 				942FA44D1B2F10E90050C3E3 /* settings_blank@2x.png in Resources */,
 				9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */,
@@ -2411,7 +2422,6 @@
 				942FA46D1B2F10E90050C3E3 /* ImageLoader.swift in Sources */,
 				94CFB0321B837B3300F681D8 /* SDWebImageDownloader.m in Sources */,
 				9441B4D01B89AE6A002EBEEE /* JSQMessagesKeyboardController.m in Sources */,
-				944CFC621BE1C5F100A84DE8 /* AKPickerView.swift in Sources */,
 				940242551BD9DE9600CE8E45 /* camera.m in Sources */,
 				940242811BD9DEA300CE8E45 /* PhotoMediaItem.m in Sources */,
 				942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */,
@@ -2483,6 +2493,7 @@
 				94DED7C71B3EF144002B9F3B /* ImageAction.swift in Sources */,
 				9441B4CC1B89AE6A002EBEEE /* UIColor+JSQMessages.m in Sources */,
 				942FA4671B2F10E90050C3E3 /* UIWebView+AFNetworking.m in Sources */,
+				943A95211BE9F0D300F2E916 /* RelationInterest.swift in Sources */,
 				940242591BD9DE9600CE8E45 /* fileutil.m in Sources */,
 				942FA4691B2F10E90050C3E3 /* IDMPhotoBrowser.m in Sources */,
 				9402427A1BD9DEA300CE8E45 /* StickersView.m in Sources */,
@@ -2538,6 +2549,7 @@
 				944AE44B1BDA0123008B7964 /* ProfileFavorCell.swift in Sources */,
 				9402424D1BD9DE9600CE8E45 /* blocked.m in Sources */,
 				9441B4D71B89AE6A002EBEEE /* JSQMessagesToolbarButtonFactory.m in Sources */,
+				890ADEBE1BEC9CB1009D6E83 /* UserDefault.swift in Sources */,
 				9441B4EE1B89AE6A002EBEEE /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				940242561BD9DE9600CE8E45 /* common.m in Sources */,
 				89B0A5451B48590200B0226B /* UIApplication+JTSImageViewController.m in Sources */,

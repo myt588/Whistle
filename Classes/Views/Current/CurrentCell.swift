@@ -57,7 +57,7 @@ class CurrentCell: UITableViewCell
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
         self.cancelButton.hidden = true
-        self.confirmButton.backgroundColor = UIColor.orangeColor()
+        self.confirmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -71,7 +71,6 @@ class CurrentCell: UITableViewCell
         self.chatButton.enabled = false
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
-        self.cancelButton.hidden = true
     }
     
     // MARK: - Functions
@@ -79,19 +78,25 @@ class CurrentCell: UITableViewCell
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
+        contentView.clipsToBounds = true
+        
         backgroundColor = UIColor.clearColor()
-        blurImage.clipsToBounds = true
+//        var topBorder = UIView(frame: CGRectMake(0, 0, blurImage.frame.size.width, 20))
+//        topBorder.backgroundColor = UIColor.redColor()
+//        blurImage.addSubview(topBorder)
         
-        midView.backgroundColor = UIColorFromHex(0x261724, alpha: 0.65)
-        var darkBlurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-        darkBlurView.frame = midView.bounds
-        midView.insertSubview(darkBlurView, atIndex: 0)
+//        midView.backgroundColor = UIColorFromHex(0x261724, alpha: 0.35)
+//        var darkBlurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+//        darkBlurView.frame = midView.bounds
+//        midView.insertSubview(darkBlurView, atIndex: 0)
         
-        midView.layer.shadowOffset = CGSize(width: -5, height: -5)
-        midView.layer.shadowOpacity = 0.65
+        midView.layer.shadowOffset = CGSize(width: 0, height: -3.5)
+        midView.layer.shadowOpacity = 0.85
         
-        portraitView.layer.shadowOffset = CGSize(width: 5, height: -5)
+        portraitView.layer.shadowOffset = CGSize(width: 2, height: 3)
         portraitView.layer.shadowOpacity = 0.65
+        
+        confirmButton.backgroundColor = UIColorFromHex(0xFCCB00, alpha: 1)
     }
     
     func bindFavor(favor : PFObject?, row: Int)
@@ -101,7 +106,8 @@ class CurrentCell: UITableViewCell
             self.row = row
             self.cancelButton.hidden = false
             self.cancelButton.addTarget(self, action: "cancel", forControlEvents: .TouchUpInside)
-            switch favor[Constants.Favor.Status] as! Int {
+            let status = favor[Constants.Favor.Status] as! Int
+            switch status {
             case 0:                                         // No Takers
                 self.coutLabel.hidden = true
                 self.portraitView.image = UIImage(named: "user_unknown")
@@ -126,6 +132,9 @@ class CurrentCell: UITableViewCell
                     }
                 })
             default:
+                if status == 4 || status == 5 || status == 6{
+                    self.cancelButton.hidden = true
+                }
                 self.confirmButtonConfig("Finished", action: "whistlerAccepted")
                 self.reviewButton.enabled = true
                 self.reviewButton.favor = favor
@@ -191,6 +200,7 @@ class CurrentCell: UITableViewCell
                     self.nameLabel.text = "\(name!)"
                     self.portraitView.loadImage(user)
                     self.portraitView.canTap = true
+                    self.portraitView.useDefault = true
                     self.blurImage.loadImage(user)
                 } else {
                     ParseErrorHandler.handleParseError(error)
@@ -200,7 +210,7 @@ class CurrentCell: UITableViewCell
     }
     
     func confirmButtonConfig(title: String, action: Selector?) {
-        let attr = [NSFontAttributeName : UIFont(name: "MyriadPro-LightSemiExt", size: 23)!]
+        let attr = [NSFontAttributeName : UIFont(name: "Helvetica-Bold", size: 25)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
         let string = NSAttributedString(string: title, attributes: attr)
         self.confirmButton.setAttributedTitle(string, forState: .Normal)
         if action != nil {

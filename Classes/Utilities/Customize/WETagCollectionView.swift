@@ -14,6 +14,10 @@ struct Tag {
     var textContent: String
 }
 
+protocol WETagCollectionViewDelegate: UICollectionViewDelegate {
+    func tagView(tagView: WETagCollectionView, didSelectItems items: [String])
+}
+
 let colorUnselectedTag = UIColor.clearColor()
 let colorSelectedTag = UIColor.clearColor()
 
@@ -24,6 +28,7 @@ let TagCollectionViewCellIdentifier = "TagCell"
 
 class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var tagDelegate : WETagCollectionViewDelegate?
     var tags: Array<Tag> = [Tag]()
     var _totalTagsSelected = 0
     
@@ -41,16 +46,18 @@ class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         }
     }
     
+    var scrollHorizontally: Bool = false
+    
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
     required init(coder aDecoder: NSCoder)
-    //----------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------
     {
         super.init(coder: aDecoder)
-        self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
+        self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.delegate = self
         self.dataSource = self
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.clearColor()
         self.registerClass(WETagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCellIdentifier)
         self.userInteractionEnabled = true
     }
@@ -60,7 +67,7 @@ class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
         self.delegate = self
         self.dataSource = self
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.clearColor()
         self.registerClass(WETagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCellIdentifier)
         self.userInteractionEnabled = true
     }
@@ -92,6 +99,16 @@ class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
                 selectedCell?.animateSelection(tags[indexPath.row].selected)
                 totalTagsSelected = -1
             }
+            
+            var selectedTags = [String]()
+            for tag in self.tags
+            {
+                if tag.selected
+                {
+                    selectedTags.append(tag.textContent)
+                }
+            }
+            tagDelegate?.tagView(self, didSelectItems: selectedTags)
         }
     }
     
@@ -102,18 +119,16 @@ class WETagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
             let currentTag = tags[indexPath.row]
             cell?.initContent(currentTag)
         }
-        else {
-            cell?.initAddButtonContent()
-        }
+        
         return cell!
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        return  UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 20)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 5
+        return 8
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {

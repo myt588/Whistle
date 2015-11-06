@@ -18,7 +18,7 @@ class AudioManager: NSObject {
             appropriateForURL: nil,
             create: false,
             error: nil)
-        let userFolderUrl = documentsFolderUrl!.URLByAppendingPathComponent("userId")
+        let userFolderUrl = documentsFolderUrl!.URLByAppendingPathComponent(PFUser.currentId())
         if !fileManager.fileExistsAtPath(userFolderUrl.path!){
             fileManager.createDirectoryAtURL(userFolderUrl, withIntermediateDirectories: true, attributes: nil, error: nil)
             println("audio folder created")

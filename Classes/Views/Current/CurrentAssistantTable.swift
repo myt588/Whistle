@@ -126,13 +126,13 @@ class CurrentAssistantTable: UITableViewController
                 if let ownerPrice = favor[Constants.Favor.Price] as? Int {
                     if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
                         if ownerPrice != takerPrice {
-                            self.favor[Constants.Favor.Price] = takerPrice
+                            favor[Constants.Favor.Price] = takerPrice
                         }
                     }
                 }
                 favor.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
-                        SendPushNotification2([user.objectId!], "Has hired you")
+                        SendPushNotification2([user.objectId!], "Has hired you", "whislte")
                         self.navigationController?.popViewControllerAnimated(true)
                         MessageHandler.message(MessageName.Hired)
                     } else {

@@ -28,11 +28,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Views/Favor/FavorView.swift"
-            timestampString = "468279575.917251"
+            timestampString = "468372928.007662"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "addFriend(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Views/Profile/ProfileOthersView.swift"
-            timestampString = "467850014.639042"
+            timestampString = "468320808.641673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "bindData(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Views/Profile/ProfileView.swift"
-            timestampString = "467853788.281095"
+            timestampString = "468320808.641673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "bindData(_:)"
             landmarkType = "5">
          </BreakpointContent>

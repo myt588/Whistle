@@ -253,6 +253,7 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                     self.portraitViewNewTopConstraint.active        = true
                     
                     self.tableView?.setTopMargin2()
+                    self.tableView?.scrollToTop()
                     
                     }, completion: {
                         (finished: Bool) -> Void in
@@ -275,6 +276,7 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                 self.tableTopToMapConstraint.active                 = true
                 
                 self.tableView?.setTopMargin1()
+                self.tableView?.scrollToTop()
                 
                 }, completion: {
                     (finished: Bool) -> Void in

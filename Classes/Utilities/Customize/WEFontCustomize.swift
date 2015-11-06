@@ -82,7 +82,8 @@ class WEFontName: UILabel {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         textColor = UIColor.whiteColor()
-        font = UIFont(name: "Arial", size: 20)
+//        font = UIFont(name: "Arial", size: 20)
+        font = UIFont(name: "Helvetica-Bold", size: 20)
     }
 }
 

@@ -121,3 +121,6 @@
 #define     PF_LOCAL_RECENT_LOADED              @"RecentLoaded"
 #define     PF_LOCAL_MESSAGE_LOADED             @"MessageLoaded"
 #define     PF_LOCAL_FRIEND_LIST_LOADED         @"FriendListLoaded"
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+#define     PF_DEFAULT_WHISTLE_SWITCH           @"WhistleSwitch"
+#define     PF_DEFAULT_CHAT_SWITCH              @"ChatSwitch"

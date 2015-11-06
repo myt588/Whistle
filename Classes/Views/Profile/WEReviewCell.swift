@@ -44,12 +44,8 @@ class WEReviewCell: UITableViewCell
     func configLooks()
     //----------------------------------------------------------------------------------------------------------
     {
-        backgroundColor                                     = UIColor.clearColor()
-    }
-    
-    override func layoutSubviews() {
-        self.commentLabel.numberOfLines = 0
-        self.commentLabel.sizeToFit()
+        backgroundColor = UIColor.clearColor()
+        nameLabel.font = UIFont(name: "Helvetica-Bold", size: 15)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -66,10 +62,11 @@ class WEReviewCell: UITableViewCell
                     }
                 })
             }
-            self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
+            self.rateView.setImagesDeselected("star_empty", partlySelected: "star_half", fullSelected: "star_full")
             self.rateView.displayRating(review[Constants.UserReviewPivotTable.Rating] as! Float)
             self.commentLabel.text = review[Constants.UserReviewPivotTable.Comment] as? String
             self.timeLabel.text = review.updatedAt?.relativeTime
+            
         }
     }
     

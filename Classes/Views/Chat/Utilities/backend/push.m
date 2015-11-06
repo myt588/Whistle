@@ -55,34 +55,36 @@ void SendPushNotification1(NSString *groupId, NSString *text)
 			NSDictionary *recent = [recents firstObject];
 			if (recent != nil)
 			{
-				SendPushNotification2(recent[@"members"], text);
+				SendPushNotification2(recent[@"members"], text, @"chat");
 			}
 		}
 	}];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-void SendPushNotification2(NSArray *members, NSString *text)
+void SendPushNotification2(NSArray *members, NSString *text, NSString *type)
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	NSString *message = [NSString stringWithFormat:@"%@: %@", [PFUser currentName], text];
-	
-	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
-	[query whereKey:PF_USER_OBJECTID containedIn:members];
-	[query whereKey:PF_USER_OBJECTID notEqualTo:[PFUser currentId]];
-	[query setLimit:1000];
-
-	PFQuery *queryInstallation = [PFInstallation query];
-	[queryInstallation whereKey:PF_INSTALLATION_USER matchesQuery:query];
-
-	PFPush *push = [[PFPush alloc] init];
-	[push setQuery:queryInstallation];
-	[push setData:@{@"alert":message, @"sound":@"default", @"badge":@"Increment"}];
-	[push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-	{
-		if (error != nil)
-		{
-			NSLog(@"SendPushNotification2 send error.");
-		}
-	}];
+    NSString *message = [NSString stringWithFormat:@"%@: %@", [PFUser currentName], text];
+    
+    PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
+    [query whereKey:PF_USER_OBJECTID containedIn:members];
+    [query whereKey:PF_USER_OBJECTID notEqualTo:[PFUser currentId]];
+    [query setLimit:1000];
+    
+    PFQuery *queryInstallation = [PFInstallation query];
+    [queryInstallation whereKey:PF_INSTALLATION_USER matchesQuery:query];
+    if ([type isEqual: @"chat"])    [queryInstallation whereKey:@"chat" equalTo: @"true"];
+    if ([type isEqual: @"whistle"]) [queryInstallation whereKey:@"whistle" equalTo: @"true"];
+    
+    PFPush *push = [[PFPush alloc] init];
+    [push setQuery:queryInstallation];
+    [push setData:@{@"alert":message, @"sound":@"default", @"badge":@"Increment"}];
+    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (error != nil)
+         {
+             NSLog(@"SendPushNotification2 send error.");
+         }
+     }];
 }

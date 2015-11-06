@@ -44,6 +44,10 @@ class ProfileSettingTable: UITableViewController
     {
         super.viewDidLoad()
         configLooks()
+        whistleNofitySwitch.addTarget(self, action: "whistleNotifySwitch:", forControlEvents: UIControlEvents.ValueChanged)
+        chatNotifySwitch.addTarget(self, action: "chatNotifySwitch:", forControlEvents: UIControlEvents.ValueChanged)
+        chatNotifySwitch.setOn(UserDefault.getBool(PF_DEFAULT_CHAT_SWITCH), animated: false)
+        whistleNofitySwitch.setOn(UserDefault.getBool(PF_DEFAULT_WHISTLE_SWITCH), animated: false)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,17 +67,6 @@ class ProfileSettingTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     {
         super.didReceiveMemoryWarning()
-    }
-    
-    // MARK: - IBActions
-    //----------------------------------------------------------------------------------------------------------
-    // Navigation Bar Button
-    //----------------------------------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func logoutButtonTapped(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        
     }
     
     func setEmail(email: String) {
@@ -109,6 +102,7 @@ class ProfileSettingTable: UITableViewController
     {
         self.portrait.loadImage(user)
         self.portrait.useDefault = true
+        self.portrait.canTap = false
         self.nameLabel.text = user[Constants.User.Nickname] as? String
         self.phoneKeyLabel.text = user[Constants.User.Phone] as? String
         self.emailKeyLabel.text = user[Constants.User.Email] as? String
@@ -122,6 +116,32 @@ class ProfileSettingTable: UITableViewController
             self.twitterKeyLabel.text = "linked"
         } else {
             self.twitterKeyLabel.text = "not linked"
+        }
+    }
+    
+    func whistleNotifySwitch(switchState: UISwitch) {
+        let installation = PFInstallation.currentInstallation()
+        installation["whistle"] = switchState.on ? true : false
+        installation.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+                UserDefault.saveBool(PF_DEFAULT_WHISTLE_SWITCH, value: switchState.on)
+                println("changed whistle state")
+            } else {
+                ParseErrorHandler.handleParseError(error)
+            }
+        }
+    }
+    
+    func chatNotifySwitch(switchState: UISwitch) {
+        let installation = PFInstallation.currentInstallation()
+        installation["chat"] = switchState.on ? true : false
+        installation.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+                UserDefault.saveBool(PF_DEFAULT_CHAT_SWITCH, value: switchState.on)
+                println("changed chat state")
+            } else {
+                ParseErrorHandler.handleParseError(error)
+            }
         }
     }
     

@@ -57,9 +57,9 @@ class WEProfileView: UIImageView
             {
                 if gender == 1
                 {
-                    layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
+                    layer.borderColor = UIColorFromHex(0x9999FF, alpha: 0.85).CGColor
                 } else {
-                    layer.borderColor = UIColorFromHex(0xC091FF, alpha: 1).CGColor
+                    layer.borderColor = UIColorFromHex(0xFFC0CB, alpha: 0.85).CGColor
                 }
             } else {
                 layer.borderColor = UIColor.whiteColor().CGColor
