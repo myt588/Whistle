@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKP-0k-6dA">
-                        <rect key="frame" x="-8" y="8" width="490" height="423.5"/>
+                        <rect key="frame" x="-8" y="8" width="490" height="423"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RRs-Pd-6gu" userLabel="Top View" customClass="WEBlurImageView" customModule="Whistle" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="490" height="423.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="490" height="423"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="fd2-dy-3ec"/>
@@ -35,14 +35,14 @@
                                 <rect key="frame" x="0.0" y="298" width="490" height="125"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emma Watson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fc-sQ-PE1" customClass="WEFontName" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="48" width="111.5" height="20.5"/>
+                                        <rect key="frame" x="8" y="48" width="112" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday, August 26th" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwD-lp-wuC" customClass="WEFontContent" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="318" y="48" width="163.5" height="20.5"/>
+                                        <rect key="frame" x="318" y="48" width="164" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -123,20 +123,38 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZpF-8I-JeB">
+                                        <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YU7-5g-W0c">
+                                        <rect key="frame" x="25" y="12" width="25" height="25"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="YU7-5g-W0c" secondAttribute="height" multiplier="1:1" id="VJW-wQ-4zZ"/>
+                                            <constraint firstAttribute="height" constant="25" id="wdI-Lp-zQg"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <animations/>
                                 <constraints>
+                                    <constraint firstItem="ZpF-8I-JeB" firstAttribute="height" secondItem="2d8-ea-1XT" secondAttribute="height" id="3i2-nq-FUs"/>
                                     <constraint firstAttribute="centerY" secondItem="ZK8-HQ-MWT" secondAttribute="centerY" id="5Xd-Id-HcS"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="height" secondItem="f2z-Hb-r8A" secondAttribute="height" id="CFW-ed-HFT"/>
                                     <constraint firstAttribute="centerY" secondItem="f2z-Hb-r8A" secondAttribute="centerY" id="H9U-W0-Wtt"/>
                                     <constraint firstAttribute="height" constant="50" id="IO5-Bm-dCW"/>
+                                    <constraint firstItem="YU7-5g-W0c" firstAttribute="leading" secondItem="ZpF-8I-JeB" secondAttribute="leading" constant="25" id="JQO-VW-hty"/>
                                     <constraint firstAttribute="trailing" secondItem="ZK8-HQ-MWT" secondAttribute="trailing" id="Oie-BM-73h"/>
+                                    <constraint firstItem="ZpF-8I-JeB" firstAttribute="centerY" secondItem="2d8-ea-1XT" secondAttribute="centerY" id="PEY-5p-vH4"/>
                                     <constraint firstItem="f2z-Hb-r8A" firstAttribute="leading" secondItem="Qkz-xi-IhA" secondAttribute="trailing" id="PGj-6L-Neb"/>
                                     <constraint firstItem="Qkz-xi-IhA" firstAttribute="leading" secondItem="2d8-ea-1XT" secondAttribute="trailing" id="QjN-GU-dVK"/>
                                     <constraint firstAttribute="centerY" secondItem="Qkz-xi-IhA" secondAttribute="centerY" id="SfV-x9-ztM"/>
+                                    <constraint firstItem="YU7-5g-W0c" firstAttribute="centerY" secondItem="ZpF-8I-JeB" secondAttribute="centerY" id="Wtl-Zt-zej"/>
                                     <constraint firstItem="Qkz-xi-IhA" firstAttribute="height" secondItem="f2z-Hb-r8A" secondAttribute="height" id="Yg5-Ib-ZYF"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="leading" secondItem="f2z-Hb-r8A" secondAttribute="trailing" id="ZFq-x0-omF"/>
+                                    <constraint firstItem="ZpF-8I-JeB" firstAttribute="centerX" secondItem="2d8-ea-1XT" secondAttribute="centerX" id="dNg-4k-jeP"/>
                                     <constraint firstItem="2d8-ea-1XT" firstAttribute="leading" secondItem="vsa-6W-Mz3" secondAttribute="leading" id="dgd-xk-C27"/>
+                                    <constraint firstItem="ZpF-8I-JeB" firstAttribute="width" secondItem="2d8-ea-1XT" secondAttribute="width" id="jG1-yK-Ajg"/>
                                     <constraint firstItem="ZK8-HQ-MWT" firstAttribute="height" secondItem="vsa-6W-Mz3" secondAttribute="height" id="no3-qH-rPl"/>
                                     <constraint firstItem="2d8-ea-1XT" firstAttribute="top" secondItem="vsa-6W-Mz3" secondAttribute="top" id="oum-oP-Kcg"/>
                                     <constraint firstAttribute="bottom" secondItem="2d8-ea-1XT" secondAttribute="bottom" id="xUW-NJ-Whw"/>
@@ -235,6 +253,8 @@
                 <outlet property="chatButton" destination="ZK8-HQ-MWT" id="9tN-Bt-rld"/>
                 <outlet property="confirmButton" destination="2d8-ea-1XT" id="yoR-PC-OI2"/>
                 <outlet property="coutLabel" destination="hHj-vW-Lad" id="tBM-5y-21o"/>
+                <outlet property="gifIconImageView" destination="YU7-5g-W0c" id="MeO-8Q-0gS"/>
+                <outlet property="gifImageView" destination="ZpF-8I-JeB" id="II9-87-4Ku"/>
                 <outlet property="midView" destination="MY6-Ue-Kzy" id="l9H-Rm-Ixd"/>
                 <outlet property="nameLabel" destination="4fc-sQ-PE1" id="JUi-5r-l01"/>
                 <outlet property="portraitView" destination="od2-lI-nVI" id="4ly-Mf-1tq"/>

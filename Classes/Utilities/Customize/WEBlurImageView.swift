@@ -62,7 +62,6 @@ class WEBlurImageView: PFImageView
         var darkBlur = UIBlurEffect(style: style)
         var blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = self.frame
-        blurView.alpha = 0.95
         imageView.addSubview(blurView)
     }
     

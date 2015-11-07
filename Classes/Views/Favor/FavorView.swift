@@ -51,6 +51,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var interestButton                       : UIButton!
     @IBOutlet weak var gifImageView                         : UIImageView!
     @IBOutlet weak var gifLabelImageView                    : UIImageView!
+    @IBOutlet weak var sunglassImagView                     : UIImageView!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -88,7 +89,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var isSearchHidden                              = true
     //----------------------------------------------------------------------------------------------------------
     private var canExpand                                   = true
-    
     
     var favors: NSMutableArray = NSMutableArray()
     var tags: [PFObject] = [PFObject]()
@@ -140,11 +140,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
             self.presentViewController(viewController, animated: true, completion: nil)
         }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -252,14 +247,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     func startInterest() {
-        if let favor = favors[index] as? PFObject {
-            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                if user.objectId == PFUser.currentUser()?.objectId {
-                    MessageHandler.message(MessageName.CannotSelectOwn)
-                    return
-                }
-            }
-        }
         progress = 0
         progressLabel.text = "Hold To Interest"
         circularProgress.alpha = 0.95
@@ -267,13 +254,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     func endInterest() {
-        if let favor = favors[index] as? PFObject {
-            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
-                if user.objectId == PFUser.currentUser()?.objectId {
-                    return
-                }
-            }
-        }
         progress = 0
         circularProgress.progress = 0
         circularProgress.alpha = 0
@@ -355,6 +335,17 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     }
     
     func interestState(favor: PFObject) {
+        if let favor = favors[index] as? PFObject {
+            if let user = favor[Constants.Favor.CreatedBy] as? PFUser {
+                if user.objectId == PFUser.currentUser()?.objectId {
+                    self.bannerRightView.hidden = true
+                    return
+                } else {
+                    self.bannerRightView.hidden = false
+                }
+            }
+        }
+        
         let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
         query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
         query.whereKey(Constants.FavorUserPivotTable.Takers, equalTo: PFUser.currentUser()!)
@@ -370,8 +361,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func isInterested(isInterested: Bool) {
         if !isInterested {
+            sunglassImagView.hidden = true
+            gifLabelImageView.hidden = false
             interestButton.userInteractionEnabled = true
         } else {
+            sunglassImagView.hidden = false
+            gifLabelImageView.hidden = true
             interestButton.userInteractionEnabled = false
             bounceView(interestButton)
         }
@@ -433,6 +428,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             {
                 self.tags.removeAll(keepCapacity: true)
                 self.tags = objects as! [PFObject]
+                self.tagCollectionView.tags.removeAll(keepCapacity: true)
                 for currentTag in self.tags {
                     let name = currentTag["name"] as! String
                     self.tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: name))
@@ -519,6 +515,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         gifImageView.image = gif
         let gifLabel = UIImage.gifWithName("b")
         gifLabelImageView.image = gifLabel
+        
     }
     
     //----------------------------------------------------------------------------------------------------------

@@ -93,6 +93,9 @@ class ProfileFavorsTable: UITableViewController
     }
     
     func loadMore() {
+        if self.favors.count < 10 {
+            return
+        }
         let query = setQuery()
         query.whereKey(Constants.Favor.UpdatedAt, lessThan: (favors.lastObject as! PFObject).updatedAt!)
         query.findObjectsInBackgroundWithBlock {

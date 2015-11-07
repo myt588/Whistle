@@ -66,6 +66,7 @@ class ProfileOthersView: UIViewController
     {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBarHidden = false
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = true
     }
     
@@ -133,17 +134,6 @@ class ProfileOthersView: UIViewController
             BlockUser(self.user)
             MessageHandler.message(MessageName.Blocked, vc: self)
             self.callSelector("delayedPopToRootViewController", object: self, delay: 1.0)
-            })
-        alert.addAction(SimpleAlert.Action(title: "Report", style: .OK) { action in
-//            let query = PFQuery(className: Constants.UserReportPivotTable.Name)
-//            query.whereKey(Constants.UserReportPivotTable.From, equalTo: PFUser.currentUser()!)
-//            query.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
-//                if let object = object {
-//                    MessageHandler.message(.HaveReported)
-//                } else {
-//                    vc.performSegueWithIdentifier("report", sender: vc)
-//                }
-//            }
             })
         self.presentViewController(alert, animated: true, completion: nil)
     }

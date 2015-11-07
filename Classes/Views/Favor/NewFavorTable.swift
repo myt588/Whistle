@@ -132,6 +132,22 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     private var isaudioViewHidden                               : Bool = true
     { didSet { tableView.reloadData() } }
     //----------------------------------------------------------------------------------------------------------
+
+    private var currentPrice : Int {
+        get {
+            if let price = priceTextField.text.toInt() {
+                return price
+            }
+            return 0
+        }
+        
+        set(newPrice) {
+            let limit = 999
+            if newPrice > limit {
+                priceTextField.text = "\(limit)"
+            }
+        }
+    }
     
     // MARK: - Initialzations
     //----------------------------------------------------------------------------------------------------------
@@ -215,10 +231,12 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         if let location = self.location {
             favor[Constants.Favor.Location] = location
             if aptTextField.text != "" {
-                favor[Constants.Favor.Address] = aptTextField.text + ", " + address!
-            } else {
-                favor[Constants.Favor.Address] = address
+                address = aptTextField.text + ", " + address!
             }
+            if descTextField.text != "" {
+                address = descTextField.text + ", " + address!
+            }
+            favor[Constants.Favor.Address] = address
         } else {
             MessageHandler.message(MessageName.NoLocation, vc: self.navigationController)
             return
@@ -401,21 +419,21 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         case "C":
             priceTextField.text = ""
             priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 15)
-        case "+10":
+        case "10":
             if priceTextField.text == "" {
                 priceTextField.text = "10"
             } else {
                 priceTextField.text = "\(priceTextField.text!.toInt()! + 10)"
             }
             priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-        case "+5":
+        case "5":
             if priceTextField.text == "" {
                 priceTextField.text = "5"
             } else {
                 priceTextField.text = "\(priceTextField.text!.toInt()! + 5)"
             }
             priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-        case "+1":
+        case "1":
             if priceTextField.text == "" {
                 priceTextField.text = "1"
             } else {
@@ -424,6 +442,12 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
         default:
             return
+        }
+        
+        if let price = priceTextField.text.toInt() {
+            currentPrice = price
+        } else {
+            currentPrice = 0
         }
     }
     //----------------------------------------------------------------------------------------------------------
@@ -884,6 +908,15 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     {
         if textField.text == "" {
             priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 15)
+        }
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let num: Int = count(textField.text)
+        if num - range.length + count(string) > 3 {
+            return false
+        } else {
+            return true
         }
     }
     

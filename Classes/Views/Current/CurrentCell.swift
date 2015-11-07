@@ -27,6 +27,8 @@ class CurrentCell: UITableViewCell
     @IBOutlet weak var prizeView                            : WEPrizeView!
     @IBOutlet weak var coutLabel                            : UILabel!
     @IBOutlet weak var blurImage                            : WEBlurImageView!
+    @IBOutlet weak var gifImageView                         : UIImageView!
+    @IBOutlet weak var gifIconImageView                     : UIImageView!
     //----------------------------------------------------------------------------------------------------------
     // Content
     //----------------------------------------------------------------------------------------------------------
@@ -96,7 +98,21 @@ class CurrentCell: UITableViewCell
         portraitView.layer.shadowOffset = CGSize(width: 2, height: 3)
         portraitView.layer.shadowOpacity = 0.65
         
-        confirmButton.backgroundColor = UIColorFromHex(0xFCCB00, alpha: 1)
+        botView.backgroundColor = Constants.Color.ContentBackground
+        confirmButton.backgroundColor = UIColor.clearColor()
+        confirmButton.layer.shadowColor = UIColor.blackColor().CGColor
+        confirmButton.layer.shadowOffset = CGSizeMake(5, 5)
+        confirmButton.layer.shadowRadius = 5
+        confirmButton.layer.shadowOpacity = 1.0
+        
+
+        gifIconImageView.contentMode = .ScaleAspectFill
+        gifIconImageView.image = UIImage.gifWithName("waiting_icon")
+        gifIconImageView.layer.shadowColor = UIColor.blackColor().CGColor
+        gifIconImageView.layer.shadowOffset = CGSizeMake(5, 5)
+        gifIconImageView.layer.shadowRadius = 5
+        gifIconImageView.layer.shadowOpacity = 0.65
+        
     }
     
     func bindFavor(favor : PFObject?, row: Int)
@@ -210,7 +226,7 @@ class CurrentCell: UITableViewCell
     }
     
     func confirmButtonConfig(title: String, action: Selector?) {
-        let attr = [NSFontAttributeName : UIFont(name: "Helvetica-Bold", size: 25)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let attr = [NSFontAttributeName : UIFont(name: "Thonburi-Bold", size: 20)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
         let string = NSAttributedString(string: title, attributes: attr)
         self.confirmButton.setAttributedTitle(string, forState: .Normal)
         if action != nil {

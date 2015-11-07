@@ -27,6 +27,7 @@ class ProfileRateTable: UITableViewController {
         self.tableView.estimatedRowHeight = 150
         self.tableView.autoresizesSubviews = true
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         self.title = "Review"
         
         configLooks()
@@ -88,6 +89,9 @@ class ProfileRateTable: UITableViewController {
     
     func loadMore()
     {
+        if self.reviews.count < 5 {
+            return
+        }
         let query = setQuery()
         query.whereKey(Constants.UserReviewPivotTable.CreatedAt, lessThan: (reviews.lastObject as! PFObject).createdAt!)
         query.findObjectsInBackgroundWithBlock {
@@ -149,7 +153,7 @@ class ProfileRateTable: UITableViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+
     //----------------------------------------------------------------------------------------------------------
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     //----------------------------------------------------------------------------------------------------------

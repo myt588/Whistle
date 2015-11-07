@@ -100,6 +100,25 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     var pointNow : CGPoint?
     var delegate : FavorDetailScrollDelegate?
     
+    private var currentPrice : Int {
+        get {
+            if let price = priceLabel.text!.toInt() {
+                return price
+            }
+            return 0
+        }
+        
+        set(newPrice) {
+            let limit = 999
+            if newPrice > limit {
+                priceLabel.text = "\(limit)"
+            }
+            if newPrice < -limit {
+                priceLabel.text = "\(-limit)"
+            }
+        }
+    }
+    
     // MARK: - Initializations
     //----------------------------------------------------------------------------------------------------------
     override func viewDidLoad()
@@ -180,6 +199,12 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             default:
                 return
             }
+        }
+        
+        if let price = priceLabel.text!.toInt() {
+            currentPrice = price
+        } else {
+            currentPrice = 0
         }
         
     }
