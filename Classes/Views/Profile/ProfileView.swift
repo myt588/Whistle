@@ -143,6 +143,7 @@ class ProfileView: UIViewController
 
         self.portraitView.loadImage(user)
         self.portraitView.canTap = false
+        self.portraitView.useDefault = true
         self.bgView.loadImage(user)
         self.bgView.style = .Dark
         
@@ -168,11 +169,10 @@ class ProfileView: UIViewController
             {
                 self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
                 self.rateView.displayRating(user[Constants.User.Rating] as! Float)
+                
+                self.totalEarnLabel.text = "Total Assists: \(user[Constants.User.Assists] as! Int)"
+                self.totalSpentLabel.text = "Total Favors: \(user[Constants.User.Favors] as! Int)" 
             }
-        }
-        if let child = childViewControllers.first as? ProfileFavorsTable {
-            self.totalEarnLabel.text = "Total Earned: $\(child.totalEarned)"
-            self.totalSpentLabel.text = "Total Spent: $\(child.totalSpent)"
         }
     }
     

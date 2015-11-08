@@ -45,6 +45,8 @@ class CurrentCell: UITableViewCell
     private var row                                         : Int!
     var vc                                                  : CurrentSwitcher?
     
+    private var timer                                       : NSTimer?
+    
     
     // MARK: - Initializations
     //----------------------------------------------------------------------------------------------------------
@@ -60,6 +62,8 @@ class CurrentCell: UITableViewCell
         self.shareButton.enabled = true
         self.cancelButton.hidden = true
         self.confirmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.portraitView.isWaiting = true
+        self.timer?.invalidate()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -67,12 +71,17 @@ class CurrentCell: UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     {
         self.timeElapsedLabel.text = ""
-        self.portraitView.imageView = nil
-        self.blurImage.imageView = nil
+        self.coutLabel.text = ""
         self.cancelButton.hidden = true
         self.chatButton.enabled = false
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
+        self.confirmButton.backgroundColor = UIColor.clearColor()
+        if self.portraitView.subviews.count == 1 {
+            self.portraitView.subviews.first?.removeFromSuperview()
+        }
+        self.portraitView.isWaiting = true
+        self.timer?.invalidate()
     }
     
     // MARK: - Functions
@@ -83,6 +92,7 @@ class CurrentCell: UITableViewCell
         contentView.clipsToBounds = true
         
         backgroundColor = UIColor.clearColor()
+        
 //        var topBorder = UIView(frame: CGRectMake(0, 0, blurImage.frame.size.width, 20))
 //        topBorder.backgroundColor = UIColor.redColor()
 //        blurImage.addSubview(topBorder)
@@ -95,23 +105,31 @@ class CurrentCell: UITableViewCell
         midView.layer.shadowOffset = CGSize(width: 0, height: -3.5)
         midView.layer.shadowOpacity = 0.85
         
-        portraitView.layer.shadowOffset = CGSize(width: 2, height: 3)
+        botView.layer.shadowOffset = CGSize(width: 0, height: -2.5)
+        botView.layer.shadowOpacity = 0.65
+        
+        portraitView.layer.shadowOffset = CGSize(width: 5, height: 5)
         portraitView.layer.shadowOpacity = 0.65
         
-        botView.backgroundColor = Constants.Color.ContentBackground
+        botView.backgroundColor = Constants.Color.ContentBackground.colorWithAlphaComponent(0.3)
         confirmButton.backgroundColor = UIColor.clearColor()
         confirmButton.layer.shadowColor = UIColor.blackColor().CGColor
         confirmButton.layer.shadowOffset = CGSizeMake(5, 5)
         confirmButton.layer.shadowRadius = 5
         confirmButton.layer.shadowOpacity = 1.0
         
+        coutLabel.textColor = UIColor.whiteColor()
+        coutLabel.layer.shadowColor = UIColor.blackColor().CGColor
+        coutLabel.layer.shadowOffset = CGSizeMake(5, 5)
+        coutLabel.layer.shadowRadius = 5
+        coutLabel.layer.shadowOpacity = 1.0
 
-        gifIconImageView.contentMode = .ScaleAspectFill
-        gifIconImageView.image = UIImage.gifWithName("waiting_icon")
-        gifIconImageView.layer.shadowColor = UIColor.blackColor().CGColor
-        gifIconImageView.layer.shadowOffset = CGSizeMake(5, 5)
-        gifIconImageView.layer.shadowRadius = 5
-        gifIconImageView.layer.shadowOpacity = 0.65
+//        gifIconImageView.contentMode = .ScaleAspectFill
+//        gifIconImageView.image = UIImage.gifWithName("waiting_icon")
+//        gifIconImageView.layer.shadowColor = UIColor.blackColor().CGColor
+//        gifIconImageView.layer.shadowOffset = CGSizeMake(5, 5)
+//        gifIconImageView.layer.shadowRadius = 5
+//        gifIconImageView.layer.shadowOpacity = 0.65
         
     }
     
@@ -125,11 +143,12 @@ class CurrentCell: UITableViewCell
             let status = favor[Constants.Favor.Status] as! Int
             switch status {
             case 0:                                         // No Takers
-                self.coutLabel.hidden = true
-                self.portraitView.image = UIImage(named: "user_unknown")
+                self.coutLabel.hidden = false
+                self.coutLabel.text = "?"
+                self.portraitView.image = nil
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
-                self.confirmButtonConfig("Waiting...", action: nil)
+                self.confirmButtonConfig("Waiting For Assistance", action: nil)
             case 1:                                         // Has Takers
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.portraitView.image = UIImage(named: "user_photo")
@@ -140,18 +159,28 @@ class CurrentCell: UITableViewCell
                     if error == nil {
                         self.coutLabel.hidden = false
                         self.coutLabel.text = "\(count)"
+                        self.portraitView.image = nil
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
-                        self.confirmButtonConfig("Select your assistant", action: nil)
+                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
+                        self.confirmButtonConfig("Pick Your Assistant", action: nil)
                     } else {
                         println("network error")
                     }
                 })
             default:
-                if status == 4 || status == 5 || status == 6{
+                if status == 4 || status == 5 || status == 6 {
                     self.cancelButton.hidden = true
                 }
-                self.confirmButtonConfig("Finished", action: "whistlerAccepted")
+                if status == 2 {
+                    self.confirmButtonConfig("Assistance Received", action: "whistlerAccepted")
+                }
+                if status == 4 {
+                    self.confirmButtonConfig("Favor is Complete", action: nil)
+                }
+                if status == 5 {
+                    self.confirmButtonConfig("Favor is Cancelled", action: nil)
+                }
                 self.reviewButton.enabled = true
                 self.reviewButton.favor = favor
                 let user: AnyObject? = favor[Constants.Favor.AssistedBy] == nil ? favor[Constants.Favor.CreatedBy] : favor[Constants.Favor.AssistedBy]
@@ -168,7 +197,7 @@ class CurrentCell: UITableViewCell
         if let favor = favor {
             self.favor = favor
             self.row = row
-            self.confirmButtonConfig("Interested", action: nil)
+            self.confirmButtonConfig("Interest Delivered", action: nil)
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
             if let price = favor[Constants.Favor.Price] as? Int {
@@ -181,7 +210,10 @@ class CurrentCell: UITableViewCell
         if let favor = favor {
             self.favor = favor
             self.row = row
-            self.confirmButtonConfig("Favor Finished", action: "assistantDelivered")
+            let status = favor[Constants.Favor.Status] as! Int
+        
+            self.confirmButtonConfig("Time To Assist", action: nil)
+            
             self.reviewButton.enabled = true
             self.reviewButton.favor = favor
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
@@ -194,7 +226,7 @@ class CurrentCell: UITableViewCell
     
     func bindAssistant(pivot: PFObject?) {
         if let pivot = pivot {
-            self.confirmButtonConfig("Hire", action: nil)
+            self.confirmButtonConfig("Would you help me?", action: nil)
             bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser)
             timeElapsedLabel.text = pivot.updatedAt?.relativeTime
             if let price = pivot[Constants.FavorUserPivotTable.Price] as? Int {
@@ -229,8 +261,13 @@ class CurrentCell: UITableViewCell
         let attr = [NSFontAttributeName : UIFont(name: "Thonburi-Bold", size: 20)!, NSForegroundColorAttributeName: UIColor.whiteColor()]
         let string = NSAttributedString(string: title, attributes: attr)
         self.confirmButton.setAttributedTitle(string, forState: .Normal)
+        self.confirmButton.contentEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 3)
+        self.confirmButton.titleLabel?.numberOfLines = 1
+        self.confirmButton.titleLabel?.adjustsFontSizeToFitWidth = true
         if action != nil {
             self.confirmButton.addTarget(self, action: action!, forControlEvents: .TouchUpInside)
+            self.confirmButton.backgroundColor = UIColorFromHex(0x7BBA37, alpha: 0.5)
+            self.confirmButton.layer.cornerRadius = 8
         }
     }
 
@@ -311,6 +348,10 @@ class CurrentCell: UITableViewCell
                 })
             vc.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    func bounceCountLabel() {
+        bounceView(coutLabel)
     }
 }
 

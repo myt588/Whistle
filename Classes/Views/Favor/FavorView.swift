@@ -184,8 +184,14 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     
     func currentLocationFound()
     {
-        centerMapOnUser()
-        loadFavors(tagNames)
+        if PFUser.currentUser() != nil
+        {
+            centerMapOnUser()
+            loadFavors(tagNames)
+        } else {
+            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+            self.presentViewController(viewController, animated: true, completion: nil)
+        }
     }
     
     // MARK: - User interactions
@@ -750,8 +756,10 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 audio.getDataInBackgroundWithBlock({ (data, error) -> Void in
                     if let data = data {
                         let audioManager = AudioManager()
-                        let name = audioNameWithDate()
-                        audioManager.saveAudio(data, name: name)
+                        let name = favor.objectId!
+                        if !audioManager.exists(audioManager.audioPathWithName(name)) {
+                            audioManager.saveAudio(data, name: name)
+                        }
                         let url = audioManager.audioURLWithName(name)
                         self.audioView.contentURL = url
                         var asset = AVURLAsset(URL: audioManager.audioURLWithName(name), options: [AVURLAssetPreferPreciseDurationAndTimingKey:true])

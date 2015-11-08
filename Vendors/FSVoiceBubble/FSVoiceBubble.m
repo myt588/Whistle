@@ -248,6 +248,7 @@
 
 - (void)voiceClicked:(id)sender
 {
+    NSLog(@"hahahah");
     if (_player.playing && _contentButton.imageView.isAnimating) {
         [self stop];
     } else {

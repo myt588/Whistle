@@ -20,5 +20,4 @@ enum Status {
     case TakerDelivered
     case OwnerConfirmed
     case Cancelled
-    case Reported
 }

@@ -152,16 +152,21 @@ class ProfileOthersView: UIViewController
         
         self.portraitView.loadImage(user)
         self.portraitView.canTap = false
+        self.portraitView.useDefault = true
         self.bgView.loadImage(user)
         self.bgView.style = .Dark
         
         if let status = user[Constants.User.Status] as? String {
             self.lineLabel.text = status
+        } else {
+            self.lineLabel.text = ""
         }
         
         if let region = user[Constants.User.Region] as? String {
             self.regionLabel.text = region
-        } 
+        } else {
+            self.regionLabel.text = "Where?"
+        }
         
         user.fetchInBackgroundWithBlock { (user, error) -> Void in
             if let user = user as? PFUser
@@ -169,7 +174,7 @@ class ProfileOthersView: UIViewController
                 self.rateView.setImagesDeselected("profile_rate_0", partlySelected: "profile_rate_1", fullSelected: "profile_rate_2")
                 self.rateView.displayRating(user[Constants.User.Rating] as! Float)
                 self.totalRateLabel.text = "\(user[Constants.User.Rates] as! Int) Reviews"
-                self.overallLabel.text = "\(user[Constants.User.Rating] as! Float)/5.0"
+                self.overallLabel.text = "\((user[Constants.User.Rating] as! Double).roundTo1)/5.0"
             }
         }
     }

@@ -15,6 +15,7 @@ class WEProfileView: UIImageView
 {
     var user: PFUser!
     var useDefault: Bool = false
+    var isWaiting: Bool = false
     var canTap: Bool = true
     var isThumbnail: Bool = false
     var imageView: UIImageView!
@@ -47,7 +48,11 @@ class WEProfileView: UIImageView
     
     override func layoutSubviews()
     {
-        if self.user == nil || useDefault
+        if self.isWaiting {
+            layer.borderColor = UIColor.whiteColor().CGColor
+            backgroundColor = Constants.Color.ContentBackground
+        }
+        else if self.user == nil || useDefault
         {
             layer.borderColor = UIColor.whiteColor().CGColor
         }
@@ -57,9 +62,9 @@ class WEProfileView: UIImageView
             {
                 if gender == 1
                 {
-                    layer.borderColor = UIColorFromHex(0x9999FF, alpha: 0.85).CGColor
+                    layer.borderColor = UIColorFromHex(0x9999FF, alpha: 1).CGColor
                 } else {
-                    layer.borderColor = UIColorFromHex(0xFFC0CB, alpha: 0.85).CGColor
+                    layer.borderColor = UIColorFromHex(0xA43E51, alpha: 0.5).CGColor
                 }
             } else {
                 layer.borderColor = UIColor.whiteColor().CGColor

@@ -134,7 +134,7 @@ class ProfileRateTable: UITableViewController {
         if reviews.count == 0
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("WEEmptyTableCell", forIndexPath: indexPath) as! WEEmptyTableCell
-            cell.bindData(message: "No one has reviewed you yet",
+            cell.bindData(message: "No one has reviewed yet",
                 subMessage: "No one ~~~~~",
                 image: UIImage(named: "favor_whistle_icon")!)
             return cell

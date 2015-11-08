@@ -9,7 +9,24 @@
 import UIKit
 import Parse
 
-class WEShareButton: UIButton {
+class WEButton: UIButton {
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.backgroundColor = UIColor.clearColor()
+        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowOffset = CGSizeMake(5, 5)
+        self.layer.shadowRadius = 5
+        self.layer.shadowOpacity = 1.0
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+}
+
+class WEShareButton: WEButton {
     
     var favor: PFObject?
     
@@ -30,7 +47,7 @@ class WEShareButton: UIButton {
     }
 }
 
-class WEReviewButton: UIButton {
+class WEReviewButton: WEButton {
     
     var favor: PFObject?
     
@@ -116,7 +133,7 @@ class WEReportButton: UIButton {
     }
 }
 
-class WEChatButton: UIButton {
+class WEChatButton: WEButton {
     
     var user: PFUser?
     
@@ -134,6 +151,13 @@ class WEChatButton: UIButton {
     func action()
     {
         println("chat")
+        if let base = UIApplication.topViewController()
+        {
+            let user1 = PFUser.currentUser()
+            let groupId = StartPrivateChat(user1!, self.user!)
+            let chatView = ChatView(with: groupId)
+            base.navigationController?.pushViewController(chatView, animated: true)
+        }
     }
 }
 

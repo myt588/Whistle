@@ -36,7 +36,6 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var bannerView                           : UIView!
     @IBOutlet weak var audioView                            : FSVoiceBubble!
-    @IBOutlet weak var bannerRightView                      : UIView!
     //----------------------------------------------------------------------------------------------------------
     // Constraints
     //----------------------------------------------------------------------------------------------------------
@@ -181,7 +180,6 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
         nameLabel.layer.cornerRadius                                = 8
         bannerView.backgroundColor                                  = Constants.Color.Banner
         bannerView.roundCorners(.TopRight | .BottomRight, radius: 8)
-        bannerRightView.roundCorners(.TopRight | .BottomRight, radius: 8)
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -350,8 +348,10 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                 audio.getDataInBackgroundWithBlock({ (data, error) -> Void in
                     if let data = data {
                         let audioManager = AudioManager()
-                        let name = audioNameWithDate()
-                        audioManager.saveAudio(data, name: name)
+                        let name = favor.objectId!
+                        if !audioManager.exists(audioManager.audioPathWithName(name)) {
+                            audioManager.saveAudio(data, name: name)
+                        }
                         let url = audioManager.audioURLWithName(name)
                         self.audioView.contentURL = url
                         var asset = AVURLAsset(URL: audioManager.audioURLWithName(name), options: [AVURLAssetPreferPreciseDurationAndTimingKey:true])

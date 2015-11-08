@@ -927,6 +927,11 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         view.endEditing(true)
     }
     
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        self.configImageView([image])
+    }
+    
 }
 
 

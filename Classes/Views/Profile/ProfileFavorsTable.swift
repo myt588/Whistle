@@ -18,8 +18,6 @@ class ProfileFavorsTable: UITableViewController
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     var favors : NSMutableArray                                 = NSMutableArray()
-    var totalEarned : Int                                       = Int()
-    var totalSpent : Int                                        = Int()
     //----------------------------------------------------------------------------------------------------------
     
     

@@ -132,15 +132,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if application.applicationState == UIApplicationState.Active {
             println("active")
         } else {
-            if userInfo["type"] as! String == "chat" {
-//                let tabBarController = self.window?.rootViewController as! TabBarController
-//                let nav = tabBarController.selectedViewController as! UINavigationController
-//                let groupId = userInfo["groupId"] as! String
-//                let chatView = ChatView(with: groupId)
-//                nav.pushViewController(chatView, animated: true)
-            }
+//            if userInfo["type"] as! String == "chat" {
+////                let tabBarController = self.window?.rootViewController as! TabBarController
+////                let nav = tabBarController.selectedViewController as! UINavigationController
+////                let groupId = userInfo["groupId"] as! String
+////                let chatView = ChatView(with: groupId)
+////                nav.pushViewController(chatView, animated: true)
+//            }
         }
         //PFPush.handlePush(userInfo)
+        println(userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }

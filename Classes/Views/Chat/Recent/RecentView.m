@@ -22,6 +22,8 @@
 #import "YALFoldingTabBarController.h"
 #import "Whistle-Swift.h"
 
+#import "DXPopover.h"
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface RecentView()
 {
@@ -38,13 +40,15 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Recent";
+	self.title = @"People";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	recents = [[NSMutableArray alloc] init];
     //-----------------------------------------------------------------------------------------------------------------------------------------
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRecents) name:NOTIFICATION_APP_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRecents) name:NOTIFICATION_USER_LOGGED_IN object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionCleanup) name:NOTIFICATION_USER_LOGGED_OUT object:nil];
+//    self.tableView.backgroundColor = [UIColor colorWithRed:35 green:24 blue:21 alpha:1];
+//    self.view.backgroundColor = [UIColor colorWithRed:35 green:24 blue:21 alpha:1];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,6 +176,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	RecentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecentCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
 	[cell bindData:recents[indexPath.row]];
 	return cell;
 }
@@ -207,6 +212,26 @@
     NSDictionary *recent = recents[indexPath.row];
     RestartRecentChat(recent);
     [self actionChat:recent[@"groupId"]];
+}
+
+- (IBAction)showInfo:(id)sender {
+    
+    DXPopover *popover = [DXPopover popover];
+    popover.contentInset = UIEdgeInsetsMake(8, 5, 8, 5);
+    popover.backgroundColor = [UIColor colorWithRed:63.0/255 green:69.0/255 blue:74.0/255 alpha:0.85];
+    
+    UIView *titleView = self.navigationItem.titleView;
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(titleView.frame), CGRectGetMaxY(titleView.frame) + 64);
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
+    textLabel.numberOfLines = 0;
+    textLabel.textColor = [UIColor whiteColor];
+    textLabel.text = @"To add people into chat, simply post a favor or assit on one! :)";
+    
+    [popover showAtPoint:startPoint
+               popoverPostion:DXPopoverPositionDown
+              withContentView:textLabel
+                       inView:self.tabBarController.view];
 }
 
 @end

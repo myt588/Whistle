@@ -89,7 +89,7 @@ class LoginView: UIViewController
     //----------------------------------------------------------------------------------------------------------
     {
         if((FBSDKAccessToken.currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.height(200).width(200), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.height(300).width(300), gender"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if (error == nil){
                     println(result)
                     self.requestFacebookPicture(user, userData: result as! NSDictionary)

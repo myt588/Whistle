@@ -195,6 +195,7 @@
 		94354C9E1BDC2B8D0048C6CD /* BlockedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94354C9C1BDC2B8D0048C6CD /* BlockedView.m */; };
 		94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */; };
 		943A95211BE9F0D300F2E916 /* RelationInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A95201BE9F0D300F2E916 /* RelationInterest.swift */; };
+		943E40D91BEEFE2F0034DE85 /* DXPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E40D81BEEFE2F0034DE85 /* DXPopover.m */; };
 		9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B43F1B89AD1A002EBEEE /* NavigationController.m */; };
 		9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */; };
 		9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B46F1B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m */; };
@@ -333,7 +334,6 @@
 		94F8A1F11BED60E2004C9220 /* b.gif in Resources */ = {isa = PBXBuildFile; fileRef = 94F8A1F01BED60E2004C9220 /* b.gif */; };
 		94F8A1F51BED6346004C9220 /* sunglass.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F8A1F41BED6346004C9220 /* sunglass.png */; };
 		94F8A1FC1BEDD7EE004C9220 /* waiting_icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 94F8A1FA1BEDD7EE004C9220 /* waiting_icon.gif */; };
-		94F8A1FD1BEDD7EE004C9220 /* waiting.gif in Resources */ = {isa = PBXBuildFile; fileRef = 94F8A1FB1BEDD7EE004C9220 /* waiting.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -637,6 +637,8 @@
 		94354C9C1BDC2B8D0048C6CD /* BlockedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedView.m; sourceTree = "<group>"; };
 		94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockedView.xib; sourceTree = "<group>"; };
 		943A95201BE9F0D300F2E916 /* RelationInterest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationInterest.swift; sourceTree = "<group>"; };
+		943E40D71BEEFE2F0034DE85 /* DXPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXPopover.h; sourceTree = "<group>"; };
+		943E40D81BEEFE2F0034DE85 /* DXPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXPopover.m; sourceTree = "<group>"; };
 		9441B43E1B89AD1A002EBEEE /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		9441B43F1B89AD1A002EBEEE /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -845,7 +847,6 @@
 		94F8A1F01BED60E2004C9220 /* b.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = b.gif; sourceTree = "<group>"; };
 		94F8A1F41BED6346004C9220 /* sunglass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunglass.png; sourceTree = "<group>"; };
 		94F8A1FA1BEDD7EE004C9220 /* waiting_icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waiting_icon.gif; sourceTree = "<group>"; };
-		94F8A1FB1BEDD7EE004C9220 /* waiting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waiting.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1422,7 +1423,6 @@
 			isa = PBXGroup;
 			children = (
 				94F8A1FA1BEDD7EE004C9220 /* waiting_icon.gif */,
-				94F8A1FB1BEDD7EE004C9220 /* waiting.gif */,
 				890ADEB71BEC8B5F009D6E83 /* a.gif */,
 				94F8A1F01BED60E2004C9220 /* b.gif */,
 				94F8A1F41BED6346004C9220 /* sunglass.png */,
@@ -1621,6 +1621,7 @@
 		942FA33E1B2F10E90050C3E3 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				943E40D61BEEFE2F0034DE85 /* DXPopover */,
 				940242851BD9E00B00CE8E45 /* DGActivityIndicatorView */,
 				9441B46A1B89AE6A002EBEEE /* JSQMessagesViewController */,
 				94CFB0801B837EBE00F681D8 /* MBProgressHUD */,
@@ -1833,6 +1834,15 @@
 				890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		943E40D61BEEFE2F0034DE85 /* DXPopover */ = {
+			isa = PBXGroup;
+			children = (
+				943E40D71BEEFE2F0034DE85 /* DXPopover.h */,
+				943E40D81BEEFE2F0034DE85 /* DXPopover.m */,
+			);
+			path = DXPopover;
 			sourceTree = "<group>";
 		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
@@ -2308,7 +2318,6 @@
 				942FA4471B2F10E90050C3E3 /* chat_camera@2x.png in Resources */,
 				942FA4F61B2F1B0E0050C3E3 /* image3.jpg in Resources */,
 				94F8A1FC1BEDD7EE004C9220 /* waiting_icon.gif in Resources */,
-				94F8A1FD1BEDD7EE004C9220 /* waiting.gif in Resources */,
 				942FA49F1B2F10E90050C3E3 /* ProgressHUD.bundle in Resources */,
 				942FA44F1B2F10E90050C3E3 /* privacy.html in Resources */,
 				94DED7CD1B3EF144002B9F3B /* Images.xcassets in Resources */,
@@ -2520,6 +2529,7 @@
 				94DED7CC1B3EF144002B9F3B /* ImagePreviewTableViewCell.swift in Sources */,
 				9441B4D31B89AE6A002EBEEE /* JSQMessagesAvatarImageFactory.m in Sources */,
 				9441B4CB1B89AE6A002EBEEE /* NSString+JSQMessages.m in Sources */,
+				943E40D91BEEFE2F0034DE85 /* DXPopover.m in Sources */,
 				942FA4611B2F10E90050C3E3 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				942FA45C1B2F10E90050C3E3 /* AFURLConnectionOperation.m in Sources */,
 				94F266BA1BCF353A00914F58 /* NewFavorTable.swift in Sources */,
