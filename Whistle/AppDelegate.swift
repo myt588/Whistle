@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var locationManager: CLLocationManager!
     var coordinate: CLLocationCoordinate2D!
     var posted: Bool = false
+    var type: String!
     
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -128,32 +129,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    func notificationHandler() {
+        let tabBarController = self.window?.rootViewController as! TabBarController
+        if type == "chat"        { tabBarController.selectedIndex = 2 }
+        if type == "whistle"     { tabBarController.selectedIndex = 1 }
+    }
+    
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        println(userInfo)
         if application.applicationState == UIApplicationState.Active {
             println("active")
-        } else {
-//            if userInfo["type"] as! String == "chat" {
-////                let tabBarController = self.window?.rootViewController as! TabBarController
-////                let nav = tabBarController.selectedViewController as! UINavigationController
-////                let groupId = userInfo["groupId"] as! String
-////                let chatView = ChatView(with: groupId)
-////                nav.pushViewController(chatView, animated: true)
-//            }
+            let dic = userInfo["aps"] as! NSDictionary
+            let alert = dic["alert"] as! String
+            let parts = alert.componentsSeparatedByString(":")
+            let message = alert.substringWithRange(Range(start: advance(alert.startIndex, count(parts.first!) + 1), end: alert.endIndex))
+            type = userInfo["type"] as! String
+            MessageHandler.message(parts.first!, subtitle: message, callback: notificationHandler)
         }
-        //PFPush.handlePush(userInfo)
-        println(userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+            type = userInfo["type"] as! String
+            notificationHandler()
+            //                let tabBarController = self.window?.rootViewController as! TabBarController
+            //                tabBarController.selectedIndex = 2
+            //                let nav = tabBarController.selectedViewController as! UINavigationController
+            //                let groupId = userInfo["groupId"] as! String
+            //                let chatView = ChatView(with: groupId)
+            //                nav.pushViewController(chatView, animated: true)
         }
-        
-        let installation = PFInstallation.currentInstallation()
-        if installation.badge != 0 {
-            installation.badge = 0
-        }
-        installation.saveInBackground()
-        
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
     
     //--------------------------------------
@@ -170,6 +173,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidBecomeActive(application: UIApplication) {
         locationManagerStart()
         FBSDKAppEvents.activateApp()
+        
+        let installation = PFInstallation.currentInstallation()
+        println(installation.badge)
+        if installation.badge != 0 {
+            installation.badge = 0
+            installation.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    println("badge saved")
+                } else {
+                    ParseErrorHandler.handleParseError(error)
+                }
+            })
+        }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
     
     //MARK: Location manager methods

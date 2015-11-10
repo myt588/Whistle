@@ -8,70 +8,106 @@
 
 import Foundation
 
-enum MessageName {
-    case SelectFavorFirst
-    case CannotSelectOwn
-    case Interested
-    case NoLocation
-    case NoAudioOrText
-    case FavorPosted
-    case NoCamera
-    case CameraAccess
-    case Hired
-    case Reported
-    case Reviewed
-    case Confirmed
-    case HaveReported
-    case HaveReviewed
-    case NeedReason
-    case NeedRate
-    case Blocked
+enum MessageName : String {
+    case SelectFavorFirst = "Please select a favor first."
+    case CannotSelectOwn = "You can not pick your own favor"
+    case NoLocation = "You need to add a location"
+    case NoAudioOrText = "Need to fill either audio or text to describe the favor."
+    case Interested = "Successfully interested the favor."
+    case FavorPosted = "Favor posted successfully."
+    case NoCamera = "This Device has no camera. Opening Photo Library Instead"
+    case CameraAccess = "Whistle needs access to the camera roll."
+    case Hired = "Assistant hired successfully."
+    case Reported = "Your report has been posted"
+    case Reviewed = "Your review has been posted"
+    case Confirmed = ""
+    case HaveReported = "You have already reported this user"
+    case HaveReviewed = "You have already reviewed this user"
+    case NeedReason = "Please specify your reason"
+    case NeedRate = "Please specify your rate"
+    case Blocked = "Successfully blocked"
+    case Favor0 = "Waiting For Assistance"
+    case Favor1 = "Pick Your Assistant"
+    case Favor2 = "Assistance Received"
+    case Favor4 = "Favor is Complete"
+    case Favor5 = "Favor is Cancelled"
+    case CurrentInterest = "Interest Delivered"
+    case Assist = "Time To Assist"
+    case AssistantHire = "Would you help me?"
+    case CancelFavor = "Are you certain?"
+    case AcceptAssist = "Are you sure that your favor is successfully delivered"
 }
 
+
 class MessageHandler {
+    
+    class func message(title: String, subtitle: String, vc: UIViewController? = UIApplication.rootViewController(), callback: (Void)->Void) {
+        TSMessage.setDefaultViewController(vc)
+        TSMessage.showNotificationInViewController(
+            vc, title: title, subtitle: subtitle,
+            image: nil, type: TSMessageNotificationType.Message, duration: 2,
+            callback: callback, buttonTitle: nil,
+            buttonCallback: nil, atPosition: TSMessageNotificationPosition.NavBarOverlay,
+            canBeDismissedByUser: true
+        )
+    }
     
     class func message(name: MessageName, vc: UIViewController? = UIApplication.rootViewController() ) {
         TSMessage.setDefaultViewController(vc)
         switch (name) {
         case MessageName.SelectFavorFirst:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "Please select a favor first.", type: .Warning)
+            showMessage("Warning", subtitle: name.rawValue, type: .Warning)
         case MessageName.CannotSelectOwn:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "You can not pick your own favor", type: .Warning)
+            showMessage("Warning", subtitle: name.rawValue, type: .Warning)
         case MessageName.Interested:
-            TSMessage.showNotificationWithTitle("Interested", subtitle: "Successfully interested the favor.", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success)
         case MessageName.NoLocation:
-            showMessage(vc, title: "No Location", subtitle: "You need to add a location", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.NoAudioOrText:
-            showMessage(vc, title: "Need Data", subtitle: "Need to fill either audio or text to describe the favor.", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.FavorPosted:
-            showMessage(vc, title: "Success", subtitle: "Favor posted successfully.", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success, vc: vc)
         case MessageName.NoCamera:
-            showMessage(vc, title: "No Camera", subtitle: "This Device has no camera. Opening Photo Library Instead", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.CameraAccess:
-            showMessage(vc, title: "An error occurred", subtitle: "Whistle needs access to the camera roll.", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.Hired:
-            TSMessage.showNotificationWithTitle("Success", subtitle: "Assistant hired successfully.", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success)
         case MessageName.Reported:
-            TSMessage.showNotificationWithTitle("Reported", subtitle: "Your report has been posted", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success)
         case MessageName.Reviewed:
-            TSMessage.showNotificationWithTitle("Reviewed", subtitle: "Your review has been posted", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success)
         case MessageName.HaveReported:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "You have already reported this user", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error)
         case MessageName.HaveReviewed:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "You have already reviewed this user", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error)
         case MessageName.NeedReason:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "Please specify your reason", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error)
         case MessageName.NeedRate:
-            TSMessage.showNotificationWithTitle("Warning", subtitle: "Please specify your rate", type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error)
         case MessageName.Blocked:
-            showMessage(vc, title:"Blocked", subtitle: "Successfully blocked", type: .Success)
+            showMessage("Success", subtitle: name.rawValue, type: .Success, vc: vc)
         default:
             break
         }
+        
     }
     
-    class func showMessage(vc: UIViewController?, title: String, subtitle: String, type: TSMessageNotificationType)
+    private class func showMessage(title: String, subtitle: String, type: TSMessageNotificationType)
     {
-        TSMessage.showNotificationInViewController(vc, title: title, subtitle: subtitle, image: nil, type: type, duration: 2, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .NavBarOverlay, canBeDismissedByUser: true)
+        TSMessage.showNotificationWithTitle(title, subtitle: subtitle, type: type)
     }
+    
+    private class func showMessage(title: String, subtitle: String, type: TSMessageNotificationType, vc: UIViewController?)
+    {
+        TSMessage.showNotificationInViewController(
+            vc, title: title, subtitle: subtitle,
+            image: nil, type: type, duration: 2,
+            callback: nil, buttonTitle: nil,
+            buttonCallback: nil, atPosition: .NavBarOverlay,
+            canBeDismissedByUser: true
+        )
+    }
+    
+    
 }

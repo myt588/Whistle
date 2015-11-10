@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Utilities/Customize/WEProfileView.swift"
-            timestampString = "467942370.366276"
+            timestampString = "468821750.333172"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "tapped()"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Utilities/Customize/WEProfileView.swift"
-            timestampString = "467942370.366276"
+            timestampString = "468821750.333172"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "presentImageView(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -552,12 +552,12 @@
                   moduleName = "Whistle"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Tian/Downloads/Whistle/Classes/Views/Login/LoginView.swift"
-                  timestampString = "468639827.527526"
+                  timestampString = "468822422.796831"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
                   endingLineNumber = "92"
-                  offsetFromSymbolStart = "270">
+                  offsetFromSymbolStart = "248">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -567,12 +567,12 @@
                   moduleName = "Whistle"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Tian/Downloads/Whistle/Classes/Views/Login/LoginView.swift"
-                  timestampString = "468639827.528134"
+                  timestampString = "468822422.797025"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
                   endingLineNumber = "93"
-                  offsetFromSymbolStart = "35">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>

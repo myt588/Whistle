@@ -196,6 +196,17 @@
 		94354C9F1BDC2B8D0048C6CD /* BlockedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94354C9D1BDC2B8D0048C6CD /* BlockedView.xib */; };
 		943A95211BE9F0D300F2E916 /* RelationInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A95201BE9F0D300F2E916 /* RelationInterest.swift */; };
 		943E40D91BEEFE2F0034DE85 /* DXPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E40D81BEEFE2F0034DE85 /* DXPopover.m */; };
+		943E41141BF198830034DE85 /* OLAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E40FF1BF198830034DE85 /* OLAlbumViewController.m */; };
+		943E41151BF198830034DE85 /* OLAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 943E41001BF198830034DE85 /* OLAlbumViewController.xib */; };
+		943E41161BF198830034DE85 /* OLFacebookAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41021BF198830034DE85 /* OLFacebookAlbum.m */; };
+		943E41171BF198830034DE85 /* OLFacebookAlbumRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41041BF198830034DE85 /* OLFacebookAlbumRequest.m */; };
+		943E41181BF198830034DE85 /* OLFacebookImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41061BF198830034DE85 /* OLFacebookImage.m */; };
+		943E41191BF198830034DE85 /* OLFacebookImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41081BF198830034DE85 /* OLFacebookImagePickerCell.m */; };
+		943E411B1BF198830034DE85 /* OLFacebookImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E410C1BF198830034DE85 /* OLFacebookImagePickerController.m */; };
+		943E411C1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E410E1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.m */; };
+		943E411D1BF198830034DE85 /* OLPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41101BF198830034DE85 /* OLPhotoViewController.m */; };
+		943E411E1BF198830034DE85 /* OLPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 943E41111BF198830034DE85 /* OLPhotoViewController.xib */; };
+		943E411F1BF198830034DE85 /* UIImageView+FacebookFadeIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */; };
 		9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B43F1B89AD1A002EBEEE /* NavigationController.m */; };
 		9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */; };
 		9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B46F1B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m */; };
@@ -639,6 +650,26 @@
 		943A95201BE9F0D300F2E916 /* RelationInterest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationInterest.swift; sourceTree = "<group>"; };
 		943E40D71BEEFE2F0034DE85 /* DXPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXPopover.h; sourceTree = "<group>"; };
 		943E40D81BEEFE2F0034DE85 /* DXPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXPopover.m; sourceTree = "<group>"; };
+		943E40FE1BF198830034DE85 /* OLAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLAlbumViewController.h; sourceTree = "<group>"; };
+		943E40FF1BF198830034DE85 /* OLAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLAlbumViewController.m; sourceTree = "<group>"; };
+		943E41001BF198830034DE85 /* OLAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OLAlbumViewController.xib; sourceTree = "<group>"; };
+		943E41011BF198830034DE85 /* OLFacebookAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookAlbum.h; sourceTree = "<group>"; };
+		943E41021BF198830034DE85 /* OLFacebookAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookAlbum.m; sourceTree = "<group>"; };
+		943E41031BF198830034DE85 /* OLFacebookAlbumRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookAlbumRequest.h; sourceTree = "<group>"; };
+		943E41041BF198830034DE85 /* OLFacebookAlbumRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookAlbumRequest.m; sourceTree = "<group>"; };
+		943E41051BF198830034DE85 /* OLFacebookImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImage.h; sourceTree = "<group>"; };
+		943E41061BF198830034DE85 /* OLFacebookImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookImage.m; sourceTree = "<group>"; };
+		943E41071BF198830034DE85 /* OLFacebookImagePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImagePickerCell.h; sourceTree = "<group>"; };
+		943E41081BF198830034DE85 /* OLFacebookImagePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookImagePickerCell.m; sourceTree = "<group>"; };
+		943E410B1BF198830034DE85 /* OLFacebookImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImagePickerController.h; sourceTree = "<group>"; };
+		943E410C1BF198830034DE85 /* OLFacebookImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookImagePickerController.m; sourceTree = "<group>"; };
+		943E410D1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookPhotosForAlbumRequest.h; sourceTree = "<group>"; };
+		943E410E1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookPhotosForAlbumRequest.m; sourceTree = "<group>"; };
+		943E410F1BF198830034DE85 /* OLPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLPhotoViewController.h; sourceTree = "<group>"; };
+		943E41101BF198830034DE85 /* OLPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLPhotoViewController.m; sourceTree = "<group>"; };
+		943E41111BF198830034DE85 /* OLPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OLPhotoViewController.xib; sourceTree = "<group>"; };
+		943E41121BF198830034DE85 /* UIImageView+FacebookFadeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+FacebookFadeIn.h"; sourceTree = "<group>"; };
+		943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+FacebookFadeIn.m"; sourceTree = "<group>"; };
 		9441B43E1B89AD1A002EBEEE /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		9441B43F1B89AD1A002EBEEE /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -1621,6 +1652,7 @@
 		942FA33E1B2F10E90050C3E3 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				943E40FD1BF198830034DE85 /* FacebookImagePicker */,
 				943E40D61BEEFE2F0034DE85 /* DXPopover */,
 				940242851BD9E00B00CE8E45 /* DGActivityIndicatorView */,
 				9441B46A1B89AE6A002EBEEE /* JSQMessagesViewController */,
@@ -1843,6 +1875,33 @@
 				943E40D81BEEFE2F0034DE85 /* DXPopover.m */,
 			);
 			path = DXPopover;
+			sourceTree = "<group>";
+		};
+		943E40FD1BF198830034DE85 /* FacebookImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				943E40FE1BF198830034DE85 /* OLAlbumViewController.h */,
+				943E40FF1BF198830034DE85 /* OLAlbumViewController.m */,
+				943E41001BF198830034DE85 /* OLAlbumViewController.xib */,
+				943E41011BF198830034DE85 /* OLFacebookAlbum.h */,
+				943E41021BF198830034DE85 /* OLFacebookAlbum.m */,
+				943E41031BF198830034DE85 /* OLFacebookAlbumRequest.h */,
+				943E41041BF198830034DE85 /* OLFacebookAlbumRequest.m */,
+				943E41051BF198830034DE85 /* OLFacebookImage.h */,
+				943E41061BF198830034DE85 /* OLFacebookImage.m */,
+				943E41071BF198830034DE85 /* OLFacebookImagePickerCell.h */,
+				943E41081BF198830034DE85 /* OLFacebookImagePickerCell.m */,
+				943E410B1BF198830034DE85 /* OLFacebookImagePickerController.h */,
+				943E410C1BF198830034DE85 /* OLFacebookImagePickerController.m */,
+				943E410D1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.h */,
+				943E410E1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.m */,
+				943E410F1BF198830034DE85 /* OLPhotoViewController.h */,
+				943E41101BF198830034DE85 /* OLPhotoViewController.m */,
+				943E41111BF198830034DE85 /* OLPhotoViewController.xib */,
+				943E41121BF198830034DE85 /* UIImageView+FacebookFadeIn.h */,
+				943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */,
+			);
+			path = FacebookImagePicker;
 			sourceTree = "<group>";
 		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
@@ -2332,11 +2391,13 @@
 				89B290171B499275002741DE /* fs_chat_bubble@2x.png in Resources */,
 				94354C971BDC13760048C6CD /* WEEmptyTableCell.xib in Resources */,
 				942FA4F91B2F1B0E0050C3E3 /* image6.jpg in Resources */,
+				943E411E1BF198830034DE85 /* OLPhotoViewController.xib in Resources */,
 				948E8FB01B3C3A4C002556D0 /* Info-OSX.plist in Resources */,
 				9441B4E61B89AE6A002EBEEE /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				942FA44C1B2F10E90050C3E3 /* recent_blank@2x.png in Resources */,
 				94CFB07D1B837DF300F681D8 /* audio_record.png in Resources */,
 				9441B4F21B89AE6A002EBEEE /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				943E41151BF198830034DE85 /* OLAlbumViewController.xib in Resources */,
 				89F5D5441BE3879D00E8EF66 /* WEReviewCell.xib in Resources */,
 				942FA4991B2F10E90050C3E3 /* Info.plist in Resources */,
 				9441B4ED1B89AE6A002EBEEE /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
@@ -2402,6 +2463,7 @@
 				940242A91BD9E00B00CE8E45 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */,
 				940242581BD9DE9600CE8E45 /* emoji.m in Sources */,
 				9478BF8E1B440AB800F3D91D /* CurrentAssistCell.swift in Sources */,
+				943E411D1BF198830034DE85 /* OLPhotoViewController.m in Sources */,
 				94DED7C91B3EF144002B9F3B /* ImagePickerCollectionView.swift in Sources */,
 				94DED7C61B3EF144002B9F3B /* AnimationController.swift in Sources */,
 				94B6559A1B7CFE390091CE98 /* ProfilePhoneSetting.swift in Sources */,
@@ -2414,6 +2476,7 @@
 				9478BF891B440AB800F3D91D /* CurrentFavorCell.swift in Sources */,
 				945E88EB1B89AAE600124816 /* RecentView.m in Sources */,
 				89B0A5441B48590200B0226B /* JTSSimpleImageDownloader.m in Sources */,
+				943E411B1BF198830034DE85 /* OLFacebookImagePickerController.m in Sources */,
 				9441B4DC1B89AE6A002EBEEE /* JSQMediaItem.m in Sources */,
 				89F53B0A1B5C2ADD00F0A2A2 /* SwiftSpinner.swift in Sources */,
 				942FA4681B2F10E90050C3E3 /* IDMPhoto.m in Sources */,
@@ -2487,16 +2550,19 @@
 				893B79651B52E0A600019CF7 /* CurrentAssistantCell.swift in Sources */,
 				9418B97F1BE1401F007F2296 /* WECurrentImageView.swift in Sources */,
 				942FA45D1B2F10E90050C3E3 /* AFURLRequestSerialization.m in Sources */,
+				943E411C1BF198830034DE85 /* OLFacebookPhotosForAlbumRequest.m in Sources */,
 				9441B4D81B89AE6A002EBEEE /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				9441B4E31B89AE6A002EBEEE /* JSQMessagesCollectionView.m in Sources */,
 				9402425A1BD9DE9600CE8E45 /* image.m in Sources */,
 				898DEBC61B62146B003881B9 /* MIBadgeLabel.swift in Sources */,
+				943E41181BF198830034DE85 /* OLFacebookImage.m in Sources */,
 				94884A9F1B41C9D400EB7E5B /* TabBarController.swift in Sources */,
 				9441B4DA1B89AE6A002EBEEE /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
 				942FA45E1B2F10E90050C3E3 /* AFURLResponseSerialization.m in Sources */,
 				948E8FB91B3DD8EC002556D0 /* LLARingSpinnerView.m in Sources */,
 				94BCF4E81B55A2BC007406F3 /* LocationPicker.swift in Sources */,
 				94CFB0391B837B3300F681D8 /* UIImage+WebP.m in Sources */,
+				943E41161BF198830034DE85 /* OLFacebookAlbum.m in Sources */,
 				89B290111B498ECB002741DE /* UIImage+FSExtension.m in Sources */,
 				89EBA35C1B5FF2FB0011D528 /* CarbonSwipeRefresh.m in Sources */,
 				948286211BD59E430087BC39 /* MessageHandler.swift in Sources */,
@@ -2521,6 +2587,7 @@
 				89594C231B3ACCFE00A8CF8B /* YALFoldingTabBarController.m in Sources */,
 				94BB08191B532C9700D2492B /* HTTPRequestSerializer.swift in Sources */,
 				94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */,
+				943E41171BF198830034DE85 /* OLFacebookAlbumRequest.m in Sources */,
 				948E8FB11B3C3A4C002556D0 /* SwiftyJSON.swift in Sources */,
 				94CFB0331B837B3300F681D8 /* SDWebImageDownloaderOperation.m in Sources */,
 				9441B4E41B89AE6A002EBEEE /* JSQMessagesCollectionViewCell.m in Sources */,
@@ -2574,6 +2641,7 @@
 				890ADEBE1BEC9CB1009D6E83 /* UserDefault.swift in Sources */,
 				9441B4EE1B89AE6A002EBEEE /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				940242561BD9DE9600CE8E45 /* common.m in Sources */,
+				943E411F1BF198830034DE85 /* UIImageView+FacebookFadeIn.m in Sources */,
 				89B0A5451B48590200B0226B /* UIApplication+JTSImageViewController.m in Sources */,
 				89594C251B3ACCFE00A8CF8B /* YALFoldingTabBar.m in Sources */,
 				9402427C1BD9DEA300CE8E45 /* MapView.m in Sources */,
@@ -2585,6 +2653,7 @@
 				89594C221B3ACCFE00A8CF8B /* YALAnimatingTabBarConstants.m in Sources */,
 				942FA41F1B2F10E90050C3E3 /* AudioManager.swift in Sources */,
 				94B08EDD1B5DA9C5007784AB /* FBBoundingBox.swift in Sources */,
+				943E41141BF198830034DE85 /* OLAlbumViewController.m in Sources */,
 				9402427E1BD9DEA300CE8E45 /* ChatView.m in Sources */,
 				89E57F1D1B57F3FD00983D1A /* WECustomize.swift in Sources */,
 				940242AB1BD9E00B00CE8E45 /* DGActivityIndicatorView.m in Sources */,
@@ -2612,6 +2681,7 @@
 				940242A11BD9E00B00CE8E45 /* DGActivityIndicatorDoubleBounceAnimation.m in Sources */,
 				940242541BD9DE9600CE8E45 /* audio.m in Sources */,
 				942FA4581B2F10E90050C3E3 /* AFHTTPRequestOperationManager.m in Sources */,
+				943E41191BF198830034DE85 /* OLFacebookImagePickerCell.m in Sources */,
 				942FA4251B2F10E90050C3E3 /* Image.swift in Sources */,
 				94BCF4E71B55A2BC007406F3 /* LocationCell.swift in Sources */,
 				947EE5C71BCFBA21001A6AF3 /* WETagCollectionCell.swift in Sources */,

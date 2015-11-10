@@ -281,13 +281,17 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         
         if self.images.count != 0 {
             for image in images {
-                let data = NSData(data: UIImagePNGRepresentation(image))
+                let data = image.mediumQualityJPEGNSData
+                if data.length > 10000000 {
+                    println("file size too big")
+                    break
+                }
                 fileImage = PFFile(name: "picture.png", data: data)
                 fileImage.saveInBackgroundWithBlock { (success : Bool, error : NSError?) -> Void in
                     if success {
                         println("Image success")
                     } else {
-                        println("error" )
+                        println("error")
                     }
                 }
                 var imageObject = PFObject(className: Constants.Image.Name)

@@ -4364,6 +4364,7 @@
                                                 <constraint firstItem="isy-QC-M06" firstAttribute="leading" secondItem="dY3-W4-C4c" secondAttribute="trailing" constant="8" id="90W-Xj-wFg">
                                                     <variation key="widthClass=compact" constant="22"/>
                                                 </constraint>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Yg7-Th-nA9" secondAttribute="bottom" constant="-15" id="Aiy-gx-Osp"/>
                                                 <constraint firstItem="Pd3-Hd-9RT" firstAttribute="centerY" secondItem="4yK-Cm-0QU" secondAttribute="centerY" id="Co7-ef-jfy"/>
                                                 <constraint firstItem="9k2-S8-aqp" firstAttribute="top" secondItem="4yK-Cm-0QU" secondAttribute="bottom" constant="8" symbolic="YES" id="IwA-p2-8HL"/>
                                                 <constraint firstItem="Pd3-Hd-9RT" firstAttribute="width" secondItem="Nau-8c-vje" secondAttribute="width" id="Kpu-OO-U8g"/>
@@ -4371,7 +4372,6 @@
                                                 <constraint firstItem="9k2-S8-aqp" firstAttribute="height" secondItem="hBZ-mI-FoF" secondAttribute="height" id="PWy-gf-9dQ"/>
                                                 <constraint firstItem="7y5-82-IEI" firstAttribute="width" secondItem="jd3-fm-zo7" secondAttribute="width" id="R3G-pa-12q"/>
                                                 <constraint firstItem="jd3-fm-zo7" firstAttribute="top" secondItem="Nau-8c-vje" secondAttribute="bottom" constant="8" symbolic="YES" id="REy-pq-9Fs"/>
-                                                <constraint firstItem="dY3-W4-C4c" firstAttribute="top" secondItem="Yg7-Th-nA9" secondAttribute="bottom" id="UTV-z2-IhT"/>
                                                 <constraint firstAttribute="centerX" secondItem="dY3-W4-C4c" secondAttribute="centerX" multiplier="3.7:1" constant="136" id="VYk-iQ-g9M">
                                                     <variation key="widthClass=compact" constant="0.0"/>
                                                 </constraint>
@@ -4393,9 +4393,6 @@
                                                 <constraint firstItem="4yK-Cm-0QU" firstAttribute="height" secondItem="9k2-S8-aqp" secondAttribute="height" id="k2O-v0-RG5"/>
                                                 <constraint firstItem="bPy-YJ-rdT" firstAttribute="centerX" secondItem="Pd3-Hd-9RT" secondAttribute="centerX" id="k3o-9e-DvP"/>
                                                 <constraint firstItem="Nau-8c-vje" firstAttribute="width" secondItem="jd3-fm-zo7" secondAttribute="width" id="khD-5w-wY7"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Yg7-Th-nA9" secondAttribute="bottom" constant="334" id="o9b-2Q-PfI">
-                                                    <variation key="widthClass=compact" constant="-15"/>
-                                                </constraint>
                                                 <constraint firstItem="4yK-Cm-0QU" firstAttribute="centerX" secondItem="9k2-S8-aqp" secondAttribute="centerX" id="oe7-t7-roY"/>
                                                 <constraint firstItem="7y5-82-IEI" firstAttribute="centerX" secondItem="jd3-fm-zo7" secondAttribute="centerX" id="pzS-7G-yh1"/>
                                                 <constraint firstItem="isy-QC-M06" firstAttribute="leading" secondItem="Pd3-Hd-9RT" secondAttribute="leading" constant="25" id="qbX-z1-0JU">
@@ -4413,7 +4410,7 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="VYk-iQ-g9M"/>
-                                                    <exclude reference="o9b-2Q-PfI"/>
+                                                    <exclude reference="Aiy-gx-Osp"/>
                                                     <exclude reference="YoY-Po-V96"/>
                                                     <exclude reference="qbX-z1-0JU"/>
                                                     <exclude reference="zgt-wI-n7F"/>
@@ -4421,9 +4418,8 @@
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="constraints">
-                                                    <exclude reference="UTV-z2-IhT"/>
                                                     <include reference="VYk-iQ-g9M"/>
-                                                    <include reference="o9b-2Q-PfI"/>
+                                                    <include reference="Aiy-gx-Osp"/>
                                                     <include reference="YoY-Po-V96"/>
                                                     <include reference="qbX-z1-0JU"/>
                                                     <include reference="zgt-wI-n7F"/>

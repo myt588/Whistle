@@ -74,12 +74,12 @@ void SendPushNotification2(NSArray *members, NSString *text, NSString *type)
     
     PFQuery *queryInstallation = [PFInstallation query];
     [queryInstallation whereKey:PF_INSTALLATION_USER matchesQuery:query];
-    if ([type isEqual: @"chat"])    [queryInstallation whereKey:@"chat" equalTo: @"true"];
-    if ([type isEqual: @"whistle"]) [queryInstallation whereKey:@"whistle" equalTo: @"true"];
+    if ([type isEqual: @"chat"])    [queryInstallation whereKey:@"chat" equalTo: @YES];
+    if ([type isEqual: @"whistle"]) [queryInstallation whereKey:@"whistle" equalTo: @YES];
     
     PFPush *push = [[PFPush alloc] init];
     [push setQuery:queryInstallation];
-    [push setData:@{@"alert":message, @"sound":@"default", @"badge":@"Increment"}];
+    [push setData:@{@"alert":message, @"sound":@"default", @"badge":@"Increment", @"type":type}];
     [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (error != nil)

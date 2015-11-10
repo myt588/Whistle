@@ -26,7 +26,7 @@ class LoginView: UIViewController
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
     
-    let permissions = ["public_profile", "user_friends", "email", "user_photos"]
+    let permissions = ["public_profile", "user_friends", "email", "user_photos", "user_location"]
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Initializations

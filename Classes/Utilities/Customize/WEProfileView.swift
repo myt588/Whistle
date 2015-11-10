@@ -37,6 +37,7 @@ class WEProfileView: UIImageView
     init(user: PFUser, userInteraction: Bool)
     {
         super.init(image: UIImage(named: "clusterSmall"))
+        self.contentMode = UIViewContentMode.ScaleAspectFill
         if userInteraction
         {
             self.userInteractionEnabled = true

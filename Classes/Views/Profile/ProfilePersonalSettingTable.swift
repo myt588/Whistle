@@ -14,7 +14,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class ProfilePersonalSettingTable: UITableViewController, UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
@@ -30,8 +30,8 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
-    private var imagePicker                                 = UIImagePickerController()
     private var user                                        : PFUser!
+    private var facebookPicker                              = OLFacebookImagePickerController()
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Initializations
@@ -40,7 +40,7 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewDidLoad()
-        imagePicker.delegate = self
+        facebookPicker.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,6 +66,7 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
     {
         self.portrait.loadImage(user)
         self.portrait.useDefault = true
+        self.portrait.canTap = false
         self.nameKeyLabel.text = user[Constants.User.Nickname] as? String
         if let gender = user[Constants.User.Gender] as? Int {
             switch gender
@@ -89,54 +90,6 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
         }
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    // START: - Photo Picker
-    //----------------------------------------------------------------------------------------------------------
-    func pickPhoto()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        let alert = WEAlertController(title: "Photo", message: "select photo source", style: .ActionSheet)
-        alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
-        alert.addAction(SimpleAlert.Action(title: "Camera", style: .Default) { action in
-            self.shootPhoto()
-            })
-        alert.addAction(SimpleAlert.Action(title: "Photo Library", style: .Default) { action in
-            self.photoFromLibrary()
-            })
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    // Start Photo Library
-    //----------------------------------------------------------------------------------------------------------
-    func photoFromLibrary()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        imagePicker.allowsEditing = true
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        presentViewController(imagePicker, animated: true, completion: nil)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    // take a picture, check if we have a camera first.
-    //----------------------------------------------------------------------------------------------------------
-    func shootPhoto()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-            imagePicker.cameraCaptureMode = .Photo
-            presentViewController(imagePicker, animated: true, completion: nil)
-        } else {
-            JSSAlertView().danger(self, title: "No Camera", text: "Sorry, this device has no camera", buttonText: "ok")
-        }
-    }
-    //----------------------------------------------------------------------------------------------------------
-    // END: - Photo Picker
-    //----------------------------------------------------------------------------------------------------------
-        
     //----------------------------------------------------------------------------------------------------------
     func genderAlert()
     //----------------------------------------------------------------------------------------------------------
@@ -172,60 +125,14 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Delegates
-    //----------------------------------------------------------------------------------------------------------
-    // What to do when the picker returns with a photo
-    //----------------------------------------------------------------------------------------------------------
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
-    //----------------------------------------------------------------------------------------------------------
-    {
-        var chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
-        self.portrait.contentMode = UIViewContentMode.ScaleAspectFit
-        self.portrait.image = Image.cropToSquare(image: chosenImage)
-        dismissViewControllerAnimated(true, completion: nil)
-        if let user = PFUser.currentUser() {
-            var picture = Image.resizeImage(chosenImage, width: 300, height: 300)
-            var thumbnail = Image.resizeImage(chosenImage, width: 60, height: 60)
-            var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
-            filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
-                if let error = error {
-                    ParseErrorHandler.handleParseError(error)
-                    TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
-                }
-            }
-            var fileThumbnail = PFFile(name: "thumbnail.jpg", data: NSData(data: thumbnail.mediumQualityJPEGNSData))
-            fileThumbnail.saveInBackgroundWithBlock({ (success, error) -> Void in
-                if let error = error {
-                    ParseErrorHandler.handleParseError(error)
-                    TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
-                }
-            })
-            user[Constants.User.Portrait] = filePicture
-            user[Constants.User.Thumbnail] = fileThumbnail
-            user.saveInBackgroundWithBlock({ (success, error) -> Void in
-                if success {
-                    println("saved successfully")
-                } else {
-                    println("network error")
-                }
-            })
-        } else {
-            println("current user error")
-        }
-    }
-    
-    //What to do if the image picker cancels.
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
+    // #Mark: Delegates
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return indexPath
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 1 {
-            pickPhoto()
+            self.presentViewController(facebookPicker, animated: true, completion: nil)
         }
         if indexPath.row == 4 {
             genderAlert()
@@ -235,6 +142,60 @@ class ProfilePersonalSettingTable: UITableViewController, UIImagePickerControlle
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-
+    func facebookImagePicker(imagePicker: OLFacebookImagePickerController!, didFailWithError error: NSError!) {
+        println(error)
+    }
+    
+    func facebookImagePicker(imagePicker: OLFacebookImagePickerController!, didFinishPickingImages images: [AnyObject]!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func facebookImagePickerDidCancelPickingImages(imagePicker: OLFacebookImagePickerController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func facebookImagePicker(imagePicker: OLFacebookImagePickerController!, didSelectImage image: OLFacebookImage!) {
+        requestFacebookPicture(image.fullURL.absoluteString!)
+    }
+    
+    func requestFacebookPicture(url: String)
+    {
+        ImageLoader.sharedLoader.imageForUrl(url, completionHandler:{(image: UIImage?, url: String) in
+            if let image = image {
+                self.processFacebookImage(image)
+            } else {
+                println("image download failed")
+            }
+        })
+    }
+    
+    func processFacebookImage(image: UIImage) {
+        var picture = Image.resizeImage(Image.cropToSquare(image: image), width: 300, height: 300)
+        var thumbnail = Image.resizeImage(image, width: 60, height: 60)
+        var filePicture = PFFile(name: "portrait.jpg", data: NSData(data: picture.mediumQualityJPEGNSData))
+        filePicture.saveInBackgroundWithBlock { (success, error) -> Void in
+            if let error = error {
+                ParseErrorHandler.handleParseError(error)
+                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+            }
+        }
+        var fileThumbnail = PFFile(name: "thumbnail.jpg", data: NSData(data: thumbnail.mediumQualityJPEGNSData))
+        fileThumbnail.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if let error = error {
+                ParseErrorHandler.handleParseError(error)
+                TSMessage.showNotificationWithTitle("", subtitle: "Failed saving image in the background", type: TSMessageNotificationType.Error)
+            }
+        })
+        user[Constants.User.Portrait] = filePicture
+        user[Constants.User.Thumbnail] = fileThumbnail
+        user.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                println("saved successfully")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                println("network error")
+            }
+        })
+    }
     
 }

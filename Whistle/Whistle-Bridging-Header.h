@@ -39,4 +39,8 @@
 #import "ProgressHUD.h"
 #import "utilities.h"
 #import "BlockedView.h"
+
+#import "OLFacebookImagePickerController.h"
+#import "OLFacebookImage.h"
+#import "UIImageView+WebCache.h"
 #endif

@@ -148,7 +148,7 @@ class CurrentCell: UITableViewCell
                 self.portraitView.image = nil
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
-                self.confirmButtonConfig("Waiting For Assistance", action: nil)
+                self.confirmButtonConfig(MessageName.Favor0.rawValue, action: nil)
             case 1:                                         // Has Takers
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.portraitView.image = UIImage(named: "user_photo")
@@ -163,7 +163,7 @@ class CurrentCell: UITableViewCell
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
                         self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
-                        self.confirmButtonConfig("Pick Your Assistant", action: nil)
+                        self.confirmButtonConfig(MessageName.Favor1.rawValue, action: nil)
                     } else {
                         println("network error")
                     }
@@ -173,13 +173,13 @@ class CurrentCell: UITableViewCell
                     self.cancelButton.hidden = true
                 }
                 if status == 2 {
-                    self.confirmButtonConfig("Assistance Received", action: "whistlerAccepted")
+                    self.confirmButtonConfig(MessageName.Favor2.rawValue, action: "whistlerAccepted")
                 }
                 if status == 4 {
-                    self.confirmButtonConfig("Favor is Complete", action: nil)
+                    self.confirmButtonConfig(MessageName.Favor4.rawValue, action: nil)
                 }
                 if status == 5 {
-                    self.confirmButtonConfig("Favor is Cancelled", action: nil)
+                    self.confirmButtonConfig(MessageName.Favor5.rawValue, action: nil)
                 }
                 self.reviewButton.enabled = true
                 self.reviewButton.favor = favor
@@ -197,7 +197,7 @@ class CurrentCell: UITableViewCell
         if let favor = favor {
             self.favor = favor
             self.row = row
-            self.confirmButtonConfig("Interest Delivered", action: nil)
+            self.confirmButtonConfig(MessageName.CurrentInterest.rawValue, action: nil)
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
             if let price = favor[Constants.Favor.Price] as? Int {
@@ -212,7 +212,7 @@ class CurrentCell: UITableViewCell
             self.row = row
             let status = favor[Constants.Favor.Status] as! Int
         
-            self.confirmButtonConfig("Time To Assist", action: nil)
+            self.confirmButtonConfig(MessageName.Assist.rawValue, action: nil)
             
             self.reviewButton.enabled = true
             self.reviewButton.favor = favor
@@ -226,7 +226,7 @@ class CurrentCell: UITableViewCell
     
     func bindAssistant(pivot: PFObject?) {
         if let pivot = pivot {
-            self.confirmButtonConfig("Would you help me?", action: nil)
+            self.confirmButtonConfig(MessageName.AssistantHire.rawValue, action: nil)
             bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser)
             timeElapsedLabel.text = pivot.updatedAt?.relativeTime
             if let price = pivot[Constants.FavorUserPivotTable.Price] as? Int {
@@ -282,7 +282,7 @@ class CurrentCell: UITableViewCell
     func cancel()
     {
         if let vc = self.vc {
-            let alert = WEAlertController(title: "Cancel", message: "Are you certain?", style: .Alert)
+            let alert = WEAlertController(title: "Cancel", message: MessageName.CancelFavor.rawValue , style: .Alert)
             alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
             alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
                 if let favor = self.favor {
@@ -306,7 +306,7 @@ class CurrentCell: UITableViewCell
     func assistantDelivered()
     {
         if let vc = self.vc {
-            let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
+            let alert = WEAlertController(title: "Confirm", message: MessageName.AcceptAssist.rawValue, style: .Alert)
             alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
             alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
                 if let favor = self.favor {
@@ -329,7 +329,7 @@ class CurrentCell: UITableViewCell
     
     func whistlerAccepted() {
         if let vc = self.vc {
-            let alert = WEAlertController(title: "Confirm", message: "Are you sure that your favor is successfully delivered", style: .Alert)
+            let alert = WEAlertController(title: "Confirm", message: MessageName.AcceptAssist.rawValue, style: .Alert)
             alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
             alert.addAction(SimpleAlert.Action(title: "OK", style: .OK) { action in
                 if let favor = self.favor {
