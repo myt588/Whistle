@@ -162,8 +162,8 @@ class CurrentCell: UITableViewCell
                         self.portraitView.image = nil
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
-                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
-                        self.confirmButtonConfig(MessageName.Favor1.rawValue, action: nil)
+//                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
+//                        self.confirmButtonConfig(MessageName.Favor1.rawValue, action: nil)
                     } else {
                         println("network error")
                     }

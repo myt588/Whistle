@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OLAlbumViewController.h"
 
 @class OLFacebookImagePickerController;
 @class OLFacebookImage;
@@ -39,5 +40,8 @@
  Holds the currently user selected images in the picker UI. Setting this property will result in the corresponding images in the picker UI updating.
  */
 @property (nonatomic, copy) NSArray/*<OLFacebookImage>*/ *selected;
+
+@property (nonatomic, strong) OLAlbumViewController *albumVC;
+
 
 @end

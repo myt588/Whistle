@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OLPhotoViewController.h"
 
 @class OLAlbumViewController;
 @class OLFacebookImage;
@@ -22,4 +23,5 @@
 @interface OLAlbumViewController : UIViewController
 @property (nonatomic, weak) id<OLAlbumViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray/*<OLFacebookImage>*/ *selected;
+@property (nonatomic, strong) OLPhotoViewController *photoViewController;
 @end

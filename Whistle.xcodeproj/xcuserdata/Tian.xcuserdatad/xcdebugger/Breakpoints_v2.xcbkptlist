@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Utilities/Customize/WEProfileView.swift"
-            timestampString = "468821750.333172"
+            timestampString = "468911518.655567"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "tapped()"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Utilities/Customize/WEProfileView.swift"
-            timestampString = "468821750.333172"
+            timestampString = "468911518.655567"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "presentImageView(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -552,7 +552,7 @@
                   moduleName = "Whistle"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Tian/Downloads/Whistle/Classes/Views/Login/LoginView.swift"
-                  timestampString = "468822422.796831"
+                  timestampString = "468911685.798457"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
@@ -567,7 +567,7 @@
                   moduleName = "Whistle"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Tian/Downloads/Whistle/Classes/Views/Login/LoginView.swift"
-                  timestampString = "468822422.797025"
+                  timestampString = "468911685.798771"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
@@ -622,6 +622,22 @@
             startingLineNumber = "101"
             endingLineNumber = "101"
             landmarkName = "requestFacebook(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Classes/Views/Favor/NewFavorTable.swift"
+            timestampString = "468911026.820974"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "send(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

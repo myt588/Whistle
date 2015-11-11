@@ -142,8 +142,9 @@ class ProfileView: UIViewController
         self.nameLabel.text = "  \(name!)  "
 
         self.portraitView.loadImage(user)
-        self.portraitView.canTap = false
+        self.portraitView.canTap = true
         self.portraitView.useDefault = true
+        self.portraitView.fullScreen = true
         self.bgView.loadImage(user)
         self.bgView.style = .Dark
         

@@ -207,6 +207,14 @@
 		943E411D1BF198830034DE85 /* OLPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41101BF198830034DE85 /* OLPhotoViewController.m */; };
 		943E411E1BF198830034DE85 /* OLPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 943E41111BF198830034DE85 /* OLPhotoViewController.xib */; };
 		943E411F1BF198830034DE85 /* UIImageView+FacebookFadeIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */; };
+		943E41321BF2F0780034DE85 /* CGGeometry+RSKImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41221BF2F0780034DE85 /* CGGeometry+RSKImageCropper.m */; };
+		943E41331BF2F0780034DE85 /* RSKImageCropperStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 943E41241BF2F0780034DE85 /* RSKImageCropperStrings.bundle */; };
+		943E41341BF2F0780034DE85 /* RSKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41271BF2F0780034DE85 /* RSKImageCropViewController.m */; };
+		943E41351BF2F0780034DE85 /* RSKImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41291BF2F0780034DE85 /* RSKImageScrollView.m */; };
+		943E41361BF2F0780034DE85 /* RSKInternalUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E412B1BF2F0780034DE85 /* RSKInternalUtility.m */; };
+		943E41371BF2F0780034DE85 /* RSKTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E412D1BF2F0780034DE85 /* RSKTouchView.m */; };
+		943E41381BF2F0780034DE85 /* UIApplication+RSKImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E412F1BF2F0780034DE85 /* UIApplication+RSKImageCropper.m */; };
+		943E41391BF2F0780034DE85 /* UIImage+RSKImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 943E41311BF2F0780034DE85 /* UIImage+RSKImageCropper.m */; };
 		9441B4401B89AD1A002EBEEE /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B43F1B89AD1A002EBEEE /* NavigationController.m */; };
 		9441B4C81B89AE6A002EBEEE /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */; };
 		9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441B46F1B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m */; };
@@ -670,6 +678,23 @@
 		943E41111BF198830034DE85 /* OLPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OLPhotoViewController.xib; sourceTree = "<group>"; };
 		943E41121BF198830034DE85 /* UIImageView+FacebookFadeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+FacebookFadeIn.h"; sourceTree = "<group>"; };
 		943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+FacebookFadeIn.m"; sourceTree = "<group>"; };
+		943E41211BF2F0780034DE85 /* CGGeometry+RSKImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CGGeometry+RSKImageCropper.h"; sourceTree = "<group>"; };
+		943E41221BF2F0780034DE85 /* CGGeometry+RSKImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CGGeometry+RSKImageCropper.m"; sourceTree = "<group>"; };
+		943E41231BF2F0780034DE85 /* RSKImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSKImageCropper.h; sourceTree = "<group>"; };
+		943E41241BF2F0780034DE85 /* RSKImageCropperStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RSKImageCropperStrings.bundle; sourceTree = "<group>"; };
+		943E41251BF2F0780034DE85 /* RSKImageCropViewController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSKImageCropViewController+Protected.h"; sourceTree = "<group>"; };
+		943E41261BF2F0780034DE85 /* RSKImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSKImageCropViewController.h; sourceTree = "<group>"; };
+		943E41271BF2F0780034DE85 /* RSKImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSKImageCropViewController.m; sourceTree = "<group>"; };
+		943E41281BF2F0780034DE85 /* RSKImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSKImageScrollView.h; sourceTree = "<group>"; };
+		943E41291BF2F0780034DE85 /* RSKImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSKImageScrollView.m; sourceTree = "<group>"; };
+		943E412A1BF2F0780034DE85 /* RSKInternalUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSKInternalUtility.h; sourceTree = "<group>"; };
+		943E412B1BF2F0780034DE85 /* RSKInternalUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSKInternalUtility.m; sourceTree = "<group>"; };
+		943E412C1BF2F0780034DE85 /* RSKTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSKTouchView.h; sourceTree = "<group>"; };
+		943E412D1BF2F0780034DE85 /* RSKTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSKTouchView.m; sourceTree = "<group>"; };
+		943E412E1BF2F0780034DE85 /* UIApplication+RSKImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+RSKImageCropper.h"; sourceTree = "<group>"; };
+		943E412F1BF2F0780034DE85 /* UIApplication+RSKImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+RSKImageCropper.m"; sourceTree = "<group>"; };
+		943E41301BF2F0780034DE85 /* UIImage+RSKImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RSKImageCropper.h"; sourceTree = "<group>"; };
+		943E41311BF2F0780034DE85 /* UIImage+RSKImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RSKImageCropper.m"; sourceTree = "<group>"; };
 		9441B43E1B89AD1A002EBEEE /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		9441B43F1B89AD1A002EBEEE /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		9441B46C1B89AE6A002EBEEE /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -1652,6 +1677,7 @@
 		942FA33E1B2F10E90050C3E3 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				943E41201BF2F0780034DE85 /* RSKImageCropper */,
 				943E40FD1BF198830034DE85 /* FacebookImagePicker */,
 				943E40D61BEEFE2F0034DE85 /* DXPopover */,
 				940242851BD9E00B00CE8E45 /* DGActivityIndicatorView */,
@@ -1902,6 +1928,30 @@
 				943E41131BF198830034DE85 /* UIImageView+FacebookFadeIn.m */,
 			);
 			path = FacebookImagePicker;
+			sourceTree = "<group>";
+		};
+		943E41201BF2F0780034DE85 /* RSKImageCropper */ = {
+			isa = PBXGroup;
+			children = (
+				943E41211BF2F0780034DE85 /* CGGeometry+RSKImageCropper.h */,
+				943E41221BF2F0780034DE85 /* CGGeometry+RSKImageCropper.m */,
+				943E41231BF2F0780034DE85 /* RSKImageCropper.h */,
+				943E41241BF2F0780034DE85 /* RSKImageCropperStrings.bundle */,
+				943E41251BF2F0780034DE85 /* RSKImageCropViewController+Protected.h */,
+				943E41261BF2F0780034DE85 /* RSKImageCropViewController.h */,
+				943E41271BF2F0780034DE85 /* RSKImageCropViewController.m */,
+				943E41281BF2F0780034DE85 /* RSKImageScrollView.h */,
+				943E41291BF2F0780034DE85 /* RSKImageScrollView.m */,
+				943E412A1BF2F0780034DE85 /* RSKInternalUtility.h */,
+				943E412B1BF2F0780034DE85 /* RSKInternalUtility.m */,
+				943E412C1BF2F0780034DE85 /* RSKTouchView.h */,
+				943E412D1BF2F0780034DE85 /* RSKTouchView.m */,
+				943E412E1BF2F0780034DE85 /* UIApplication+RSKImageCropper.h */,
+				943E412F1BF2F0780034DE85 /* UIApplication+RSKImageCropper.m */,
+				943E41301BF2F0780034DE85 /* UIImage+RSKImageCropper.h */,
+				943E41311BF2F0780034DE85 /* UIImage+RSKImageCropper.m */,
+			);
+			path = RSKImageCropper;
 			sourceTree = "<group>";
 		};
 		9441B43D1B89AD1A002EBEEE /* Application */ = {
@@ -2416,6 +2466,7 @@
 				94DED7CE1B3EF144002B9F3B /* Info.plist in Resources */,
 				942FA44D1B2F10E90050C3E3 /* settings_blank@2x.png in Resources */,
 				9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */,
+				943E41331BF2F0780034DE85 /* RSKImageCropperStrings.bundle in Resources */,
 				9402427D1BD9DEA300CE8E45 /* MapView.xib in Resources */,
 				942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */,
 				942FA4501B2F10E90050C3E3 /* terms.html in Resources */,
@@ -2486,6 +2537,7 @@
 				942FA4641B2F10E90050C3E3 /* UIImageView+AFNetworking.m in Sources */,
 				9441B4CE1B89AE6A002EBEEE /* UIImage+JSQMessages.m in Sources */,
 				89B0A5421B48590200B0226B /* JTSImageInfo.m in Sources */,
+				943E41351BF2F0780034DE85 /* RSKImageScrollView.m in Sources */,
 				94BB081B1B532C9700D2492B /* HTTPSecurity.swift in Sources */,
 				94B655991B7CFE390091CE98 /* ProfileEditSingleView.swift in Sources */,
 				940242531BD9DE9600CE8E45 /* report.m in Sources */,
@@ -2530,6 +2582,7 @@
 				89B0A5411B48590200B0226B /* JTSAnimatedGIFUtility.m in Sources */,
 				89594C201B3ACCFE00A8CF8B /* CAAnimation+YALTabBarViewAnimations.m in Sources */,
 				893B79691B52E86300019CF7 /* WEBlurImageView.swift in Sources */,
+				943E41321BF2F0780034DE85 /* CGGeometry+RSKImageCropper.m in Sources */,
 				89EBA35F1B5FF3880011D528 /* CurrentView.swift in Sources */,
 				942FA49D1B2F10E90050C3E3 /* MapManager.swift in Sources */,
 				940242521BD9DE9600CE8E45 /* recent.m in Sources */,
@@ -2589,8 +2642,10 @@
 				94F2669E1BCDA1E700914F58 /* WECalloutView.swift in Sources */,
 				943E41171BF198830034DE85 /* OLFacebookAlbumRequest.m in Sources */,
 				948E8FB11B3C3A4C002556D0 /* SwiftyJSON.swift in Sources */,
+				943E41371BF2F0780034DE85 /* RSKTouchView.m in Sources */,
 				94CFB0331B837B3300F681D8 /* SDWebImageDownloaderOperation.m in Sources */,
 				9441B4E41B89AE6A002EBEEE /* JSQMessagesCollectionViewCell.m in Sources */,
+				943E41341BF2F0780034DE85 /* RSKImageCropViewController.m in Sources */,
 				94F266B81BCF353A00914F58 /* FavorDetailTable.swift in Sources */,
 				94CFB03B1B837B3300F681D8 /* UIImageView+WebCache.m in Sources */,
 				94DED7CC1B3EF144002B9F3B /* ImagePreviewTableViewCell.swift in Sources */,
@@ -2618,6 +2673,7 @@
 				9441B4EA1B89AE6A002EBEEE /* JSQMessagesInputToolbar.m in Sources */,
 				9478BFA11B45110300F3D91D /* FavorView.swift in Sources */,
 				893DDA151B51614600659436 /* ProfileSettingTable.swift in Sources */,
+				943E41391BF2F0780034DE85 /* UIImage+RSKImageCropper.m in Sources */,
 				94CFB03A1B837B3300F681D8 /* UIImageView+HighlightedWebCache.m in Sources */,
 				9402424E1BD9DE9600CE8E45 /* group.m in Sources */,
 				942FA4201B2F10E90050C3E3 /* AudioPlayer.swift in Sources */,
@@ -2646,6 +2702,7 @@
 				89594C251B3ACCFE00A8CF8B /* YALFoldingTabBar.m in Sources */,
 				9402427C1BD9DEA300CE8E45 /* MapView.m in Sources */,
 				9402427F1BD9DEA300CE8E45 /* AudioMediaItem.m in Sources */,
+				943E41361BF2F0780034DE85 /* RSKInternalUtility.m in Sources */,
 				89F53AF91B5A2D9300F0A2A2 /* TSBlurView.m in Sources */,
 				9441B4CD1B89AE6A002EBEEE /* UIDevice+JSQMessages.m in Sources */,
 				944AE4501BDA0123008B7964 /* ProfileView.swift in Sources */,
@@ -2679,6 +2736,7 @@
 				942FA49A1B2F10E90050C3E3 /* JSQSystemSoundPlayer.m in Sources */,
 				94B08EDE1B5DA9C5007784AB /* FBClusteringManager.swift in Sources */,
 				940242A11BD9E00B00CE8E45 /* DGActivityIndicatorDoubleBounceAnimation.m in Sources */,
+				943E41381BF2F0780034DE85 /* UIApplication+RSKImageCropper.m in Sources */,
 				940242541BD9DE9600CE8E45 /* audio.m in Sources */,
 				942FA4581B2F10E90050C3E3 /* AFHTTPRequestOperationManager.m in Sources */,
 				943E41191BF198830034DE85 /* OLFacebookImagePickerCell.m in Sources */,

@@ -207,11 +207,12 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                 
                 self.bannerView.hidden                              = false
                 
+                self.tableView?.setTopMargin1()
+                
                 }, completion: {
                     (finished: Bool) -> Void in
                     self.displayerMode                              = 1
                     self.isAnimatingDisplay                         = false
-                    self.tableView?.setTopMargin1()
                     self.tableView?.scrollToTop()
             })
         case 1:
@@ -251,12 +252,12 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                     self.portraitViewNewTopConstraint.active        = true
                     
                     self.tableView?.setTopMargin2()
-                    self.tableView?.scrollToTop()
                     
                     }, completion: {
                         (finished: Bool) -> Void in
                         self.displayerMode                          = 2
                         self.isAnimatingDisplay                     = false
+                        self.tableView?.scrollToTop()
                         
                 })
             }
@@ -274,13 +275,13 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
                 self.tableTopToMapConstraint.active                 = true
                 
                 self.tableView?.setTopMargin1()
-                self.tableView?.scrollToTop()
                 
                 }, completion: {
                     (finished: Bool) -> Void in
                     self.displayerMode                              = 1
                     self.isAnimatingDisplay                         = false
                     self.canExpand                                  = true
+                    self.tableView?.scrollToTop()
             })
             
         default:

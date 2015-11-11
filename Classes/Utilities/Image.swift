@@ -10,18 +10,6 @@ import UIKit
 
 class Image: NSObject {
     
-//    func init(chosenImage: UIImage, size: CGFloat){
-//        let imageView = UIImageView(image: chosenImage)
-//        imageView.contentMode = .ScaleAspectFit
-//        imageView.frame = CGRectMake(0, 0, size, size)
-//        
-//        let delete = UIButton()
-//        let deleteImage = UIImage(named: "help_photo_delete")
-//        delete.frame = CGRectMake(0, 0, deleteImage!.size.height, deleteImage!.size.width)
-//        delete.setImage(deleteImage, forState: UIControlState.Normal)
-//        imageView.addSubview(delete)
-//    }
-    
     static func cropToSquare(image originalImage: UIImage) -> UIImage {
         // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
         let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!

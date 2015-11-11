@@ -286,7 +286,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
                     println("file size too big")
                     break
                 }
-                fileImage = PFFile(name: "picture.png", data: data)
+                fileImage = PFFile(name: "picture.jpg", data: data)
                 fileImage.saveInBackgroundWithBlock { (success : Bool, error : NSError?) -> Void in
                     if success {
                         println("Image success")
@@ -308,14 +308,21 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
         favor[Constants.Favor.Status] = 0
         favor[Constants.Favor.CreatedBy] = PFUser.currentUser()
         
+        ProgressHUD.show("Posting Favor...", interaction: false)
+        self.view.userInteractionEnabled = false
+        
         favor.saveInBackgroundWithBlock {
             (success : Bool, error : NSError?) -> Void in
             if (success) {
+                ProgressHUD.dismiss()
+                self.view.userInteractionEnabled = true
                 self.dismissViewControllerAnimated(true, completion: nil)
                 MessageHandler.message(MessageName.FavorPosted)
                 NSNotificationCenter.defaultCenter().postNotificationName("currentLocationFound", object: nil)
             } else {
                 ParseErrorHandler.handleParseError(error)
+                ProgressHUD.dismiss()
+                self.view.userInteractionEnabled = true
             }
         }
         

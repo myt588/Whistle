@@ -20,6 +20,7 @@ class WEProfileView: UIImageView
     var isThumbnail: Bool = false
     var imageView: UIImageView!
     var borderWidth: CGFloat = 3
+    var fullScreen: Bool = false
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -110,6 +111,16 @@ class WEProfileView: UIImageView
         
         if let base = UIApplication.topViewController()
         {
+            if fullScreen
+            {
+                var imageInfo = JTSImageInfo()
+                imageInfo.image = self.imageView.image
+                imageInfo.referenceRect = base.view.frame
+                imageInfo.referenceView = base.view
+                var imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
+                imageViewer.showFromViewController(base, transition: JTSImageViewControllerTransition._FromOriginalPosition)
+                return
+            }
             var vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileOthersView") as! ProfileOthersView
             vc.user = self.user
             base.navigationController?.pushViewController(vc, animated: true)

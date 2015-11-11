@@ -14,7 +14,7 @@ import Parse
 
 
 //----------------------------------------------------------------------------------------------------------
-class ProfilePersonalSettingTable: UITableViewController, UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate
+class ProfilePersonalSettingTable: UITableViewController, UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate, RSKImageCropViewControllerDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
@@ -158,11 +158,22 @@ class ProfilePersonalSettingTable: UITableViewController, UINavigationController
         requestFacebookPicture(image.fullURL.absoluteString!)
     }
     
+    func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController!) {
+        self.facebookPicker.popViewControllerAnimated(true)
+        println(self.facebookPicker.albumVC.photoViewController.selected)
+    }
+    
+    func imageCropViewController(controller: RSKImageCropViewController!, didCropImage croppedImage: UIImage!, usingCropRect cropRect: CGRect) {
+        processFacebookImage(croppedImage)
+    }
+    
     func requestFacebookPicture(url: String)
     {
         ImageLoader.sharedLoader.imageForUrl(url, completionHandler:{(image: UIImage?, url: String) in
             if let image = image {
-                self.processFacebookImage(image)
+                let imageCropVC = RSKImageCropViewController(image: image, cropMode: RSKImageCropMode.Square)
+                imageCropVC.delegate = self
+                self.facebookPicker.pushViewController(imageCropVC, animated: true)
             } else {
                 println("image download failed")
             }
@@ -191,7 +202,8 @@ class ProfilePersonalSettingTable: UITableViewController, UINavigationController
         user.saveInBackgroundWithBlock({ (success, error) -> Void in
             if success {
                 println("saved successfully")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.facebookPicker.popToRootViewControllerAnimated(false)
+                self.facebookPicker.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 println("network error")
             }

@@ -146,6 +146,9 @@ class ProfileRateTable: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if reviews.count == 0 {
+            return 
+        }
         if let base = UIApplication.topViewController()
         {
             let vc = base.storyboard?.instantiateViewControllerWithIdentifier("ProfileReviewDetailView") as! ProfileReviewDetailView

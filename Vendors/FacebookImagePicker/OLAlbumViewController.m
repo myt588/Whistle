@@ -9,7 +9,6 @@
 #import "OLAlbumViewController.h"
 #import "OLFacebookAlbumRequest.h"
 #import "OLFacebookAlbum.h"
-#import "OLPhotoViewController.h"
 #import "UIImageView+FacebookFadeIn.h"
 
 static const NSUInteger kAlbumPreviewImageSize = 78;
@@ -64,7 +63,6 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIView *loadingFooter;
-@property (nonatomic, strong) OLPhotoViewController *photoViewController;
 @property (nonatomic, strong) NSError *getAlbumError;
 
 @end

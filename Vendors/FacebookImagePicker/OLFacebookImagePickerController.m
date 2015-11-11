@@ -7,11 +7,10 @@
 //
 
 #import "OLFacebookImagePickerController.h"
-#import "OLAlbumViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
+
 @interface OLFacebookImagePickerController () <OLAlbumViewControllerDelegate>
-@property (nonatomic, strong) OLAlbumViewController *albumVC;
 @property (assign, nonatomic) BOOL haveSeenViewDidAppear;
 @end
 

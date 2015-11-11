@@ -83,8 +83,8 @@ static UIColor *disabledColor;
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    self.selectedDisabledOverlayView.hidden = !selected;
-    self.checkImageView.hidden = !selected;
+    //self.selectedDisabledOverlayView.hidden = !selected;
+    //self.checkImageView.hidden = !selected;
 }
 
 @end

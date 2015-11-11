@@ -581,12 +581,13 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 self.bannerView.hidden                              = false
                 
                 self.toggleButtonAppear()
+                self.tableView?.setTopMargin1()
                 
                 }, completion: {
                     (finished: Bool) -> Void in
                     self.displayerMode                              = 1
                     self.isAnimatingDisplay                         = false
-                    self.tableView?.setTopMargin1()
+                    
                     self.tableView?.scrollToTop()
             })
         case 1:
@@ -628,14 +629,14 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.portraitViewNewTopConstraint.active        = true
                     
                     self.tableView?.setTopMargin2()
-                    self.tableView?.scrollToTop()
+//                    self.tableView?.scrollToTop()
                     self.toggleButtonHidden()
                     
                     }, completion: {
                         (finished: Bool) -> Void in
                         self.displayerMode                          = 2
                         self.isAnimatingDisplay                     = false
-                        
+                        self.tableView?.scrollToTop()
                 })
             }
         case 2:
@@ -660,6 +661,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.displayerMode                              = 1
                     self.isAnimatingDisplay                         = false
                     self.canExpand                                  = true
+                    
             })
             
         default:

@@ -43,4 +43,6 @@
 #import "OLFacebookImagePickerController.h"
 #import "OLFacebookImage.h"
 #import "UIImageView+WebCache.h"
+#import "RSKImageCropViewController.h"
+
 #endif
