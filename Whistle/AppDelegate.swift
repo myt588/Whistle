@@ -9,6 +9,7 @@ import UIKit
 import Bolts
 import Parse
 import Firebase
+import ParseUI
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -42,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont(name: "AbrahamLincoln", size: 20)!], forState: UIControlState.Normal)
+        
+        PFImageView()
         
         
         // Firebase.defaultConfig().persistenceEnabled = true
@@ -110,7 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
-        installation.saveInBackground()
+        installation.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+        
+            } else {
+                ParseErrorHandler.handleParseError(error)
+            }
+        }
         
         PFPush.subscribeToChannelInBackground("", block: { (succeeded: Bool, error: NSError?) -> Void in
             if succeeded {

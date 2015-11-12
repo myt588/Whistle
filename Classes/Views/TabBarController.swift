@@ -12,17 +12,17 @@ class TabBarController : YALFoldingTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "nearby_icon"),
+        let item1 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "tab_map"),
             leftItemImage: nil,
             rightItemImage: UIImage(named: "tab_new"))
-        let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "settings_icon"),
+        let item2 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "tab_current"),
             leftItemImage: nil,
             rightItemImage: nil)
         self.leftBarItems = [item1, item2]
-        let item3 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "chats_icon"),
+        let item3 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "tab_chat"),
             leftItemImage: nil,
             rightItemImage: nil)
-        let item4 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "profile_icon"),
+        let item4 : YALTabBarItem = YALTabBarItem(itemImage: UIImage(named: "tab_profile"),
             leftItemImage: nil,
             rightItemImage: nil)
         self.rightBarItems = [item3, item4]

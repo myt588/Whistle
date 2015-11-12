@@ -35,6 +35,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     @IBOutlet weak var circularProgress                     : KYCircularProgress!
     @IBOutlet weak var progressLabel                        : UILabel!
     @IBOutlet weak var tagCollectionView                    : WETagCollectionView!
+    @IBOutlet weak var rightTabButtonPlaceHolder            : UIView!
     //----------------------------------------------------------------------------------------------------------
     // Table
     //----------------------------------------------------------------------------------------------------------
@@ -89,6 +90,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var isSearchHidden                              = true
     //----------------------------------------------------------------------------------------------------------
     private var canExpand                                   = true
+    private var isCenteredOnUser                            = false
     
     var favors: NSMutableArray = NSMutableArray()
     var tags: [PFObject] = [PFObject]()
@@ -117,7 +119,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         addGestures()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadScene", name: "loadFavors", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "calloutSelected:", name: "calloutSelected", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "currentLocationFound", name: "currentLocationFound", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFavors", name: "currentLocationFound", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "actionCleanup", name: NOTIFICATION_USER_LOGGED_OUT, object: nil)
     }
     
@@ -136,9 +138,18 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         if PFUser.currentUser() != nil
         {
             loadTagView()
-        } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            if appDelegate.posted {
+                if isCenteredOnUser {
+                    PostNotification("loadFavors")
+                } else {
+                    updateFavors()
+                }
+            }
+        }
+        else
+        {
+            ParseErrorHandler.LoginUser(self)
         }
     }
     
@@ -148,6 +159,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         configShapes()
         if !didLayoutSubviews {
+            self.showTutorial()
             //--------------------------------------------------------------------------------------------------
             // Setup Defaults
             //--------------------------------------------------------------------------------------------------
@@ -182,15 +194,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         index = 0
     }
     
-    func currentLocationFound()
+    func updateFavors()
     {
-        if PFUser.currentUser() != nil
-        {
+        if let user = PFUser.currentUser() {
+            println("location found")
             centerMapOnUser()
             loadFavors(tagNames)
-        } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
         }
     }
     
@@ -370,10 +379,12 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             sunglassImagView.hidden = true
             gifLabelImageView.hidden = false
             interestButton.userInteractionEnabled = true
+            self.showInterestTutorial(0)
         } else {
             sunglassImagView.hidden = false
             gifLabelImageView.hidden = true
             interestButton.userInteractionEnabled = false
+            self.showInterestTutorial(1)
             bounceView(interestButton)
         }
     }
@@ -440,6 +451,8 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.tagCollectionView.tags.append(Tag(selected: false, isLocked: false, textContent: name))
                 }
                 self.tagCollectionView.reloadData()
+            } else {
+                ParseErrorHandler.handleParseError(error)
             }
         }
     }
@@ -629,7 +642,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                     self.portraitViewNewTopConstraint.active        = true
                     
                     self.tableView?.setTopMargin2()
-//                    self.tableView?.scrollToTop()
                     self.toggleButtonHidden()
                     
                     }, completion: {
@@ -676,6 +688,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     {
         mapView.delegate                                            = self
         mapView.rotateEnabled                                       = false
+        mapView.pitchEnabled                                        = false
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -687,6 +700,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
         let regionRadius: CLLocationDistance                        = 200
         let coordinateRegion                                        = MKCoordinateRegionMakeWithDistance(location, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
+        isCenteredOnUser = true
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -934,6 +948,16 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
             let newFavorTableView = navigation.visibleViewController as! NewFavorTable
             newFavorTableView.tags = tags
         }
+    }
+    
+    func showTutorial() {
+        var tutorial = WETutorial()
+        tutorial.favorViewTutorial(view, tagBar: tagCollectionView, rightTabButton: rightTabButtonPlaceHolder)
+    }
+    
+    func showInterestTutorial(status: Int) {
+        var tutorial = WETutorial()
+        tutorial.interestTutorial(view, status: status)
     }
 }
 

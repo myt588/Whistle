@@ -35,34 +35,23 @@ class ParseErrorHandler {
         }
     }
     
+    class func LoginUser(vc: UIViewController) {
+        var viewController = vc.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+        vc.presentViewController(viewController, animated: true, completion: nil)
+    }
+    
     private class func handleInvalidSessionTokenError() {
         println("invalid session token error")
-            //--------------------------------------
-            // Option 1: Show a message asking the user to log out and log back in.
-            //--------------------------------------
-            // If the user needs to finish what they were doing, they have the opportunity to do so.
-            //
-            // let alertView = UIAlertView(
-            //   title: "Invalid Session",
-            //   message: "Session is no longer valid, please log out and log in again.",
-            //   delegate: nil,
-            //   cancelButtonTitle: "Not Now",
-            //   otherButtonTitles: "OK"
-            // )
-            // alertView.show()
-            
-            //--------------------------------------
-            // Option #2: Show login screen so user can re-authenticate.
-            //--------------------------------------
-            // You may want this if the logout button is inaccessible in the UI.
-            //
-            // let presentingViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-            // let logInViewController = PFLogInViewController()
-            // presentingViewController?.presentViewController(logInViewController, animated: true, completion: nil)
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        var viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-        let rootViewController = UIApplication.rootViewController()
-        rootViewController!.presentViewController(viewController, animated: true, completion: nil)
+        
+        if let base = UIApplication.topViewController() {
+            let alert = WEAlertController(title: "Invalid Session", message: "Session is no longer valid, please log out and log in again.", style: .Alert)
+            alert.addAction(SimpleAlert.Action(title: "Log out", style: .OK) { action in
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                var viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+                base.presentViewController(viewController, animated: true, completion: nil)
+            })
+            base.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     private class func handleTimeOutError() {

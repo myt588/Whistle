@@ -46,6 +46,9 @@ class ProfileSettingTable: UITableViewController
         configLooks()
         whistleNofitySwitch.addTarget(self, action: "whistleNotifySwitch:", forControlEvents: UIControlEvents.ValueChanged)
         chatNotifySwitch.addTarget(self, action: "chatNotifySwitch:", forControlEvents: UIControlEvents.ValueChanged)
+        let installation = PFInstallation.currentInstallation()
+        UserDefault.saveBool(PF_DEFAULT_CHAT_SWITCH, value: installation["chat"] as! Bool)
+        UserDefault.saveBool(PF_DEFAULT_WHISTLE_SWITCH, value: installation["whistle"] as! Bool)
         chatNotifySwitch.setOn(UserDefault.getBool(PF_DEFAULT_CHAT_SWITCH), animated: false)
         whistleNofitySwitch.setOn(UserDefault.getBool(PF_DEFAULT_WHISTLE_SWITCH), animated: false)
     }

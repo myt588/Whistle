@@ -38,9 +38,7 @@ class ProfileView: UIViewController
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - Variables
-    //----------------------------------------------------------------------------------------------------------
-    private var blurView                                        = UIVisualEffectView()
-    private var blurImage                                       = UIImageView()
+    //----------------------------------------------------------------------------------------------------------s
     private var containerViewOriginalFrame                      = CGRectZero
     private var didLayoutSubviews                               = false
     //----------------------------------------------------------------------------------------------------------
@@ -54,15 +52,10 @@ class ProfileView: UIViewController
         super.viewDidLoad()
         configLooks()
         addGesture()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         if let user = PFUser.currentUser() {
             self.bindData(user)
         } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
+            ParseErrorHandler.LoginUser(self)
         }
     }
 
@@ -72,14 +65,7 @@ class ProfileView: UIViewController
     {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.translucent         = true
-        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false
-        
-        if let user = PFUser.currentUser() {
-            self.bindData(user)
-        } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
-        }
+        (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -145,8 +131,9 @@ class ProfileView: UIViewController
         self.portraitView.canTap = true
         self.portraitView.useDefault = true
         self.portraitView.fullScreen = true
-        self.bgView.loadImage(user)
         self.bgView.style = .Dark
+        self.bgView.loadImage(user)
+        self.bgView.addBlur()
         
         
         if let status = user[Constants.User.Status] as? String {

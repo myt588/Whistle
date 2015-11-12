@@ -98,8 +98,7 @@ class FavorDetailView: UIViewController, MKMapViewDelegate, YALTabBarInteracting
             tableView!.bindData(favor)
             changeDisplayMode(1)
         } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
+            ParseErrorHandler.LoginUser(self)
         }
     }
     

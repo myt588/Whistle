@@ -124,3 +124,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 #define     PF_DEFAULT_WHISTLE_SWITCH           @"WhistleSwitch"
 #define     PF_DEFAULT_CHAT_SWITCH              @"ChatSwitch"
+#define     PF_DEFAULT_SETTING_LOADED           @"SettingLoaded"

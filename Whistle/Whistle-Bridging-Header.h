@@ -45,4 +45,6 @@
 #import "UIImageView+WebCache.h"
 #import "RSKImageCropViewController.h"
 
+#import "DXPopover.h"
+
 #endif

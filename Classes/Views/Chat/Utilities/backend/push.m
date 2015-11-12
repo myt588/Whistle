@@ -16,6 +16,7 @@
 #import "PFUser+Util.h"
 
 #import "push.h"
+#import "Whistle-Swift.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 void ParsePushUserAssign(void)
@@ -23,6 +24,8 @@ void ParsePushUserAssign(void)
 {
 	PFInstallation *installation = [PFInstallation currentInstallation];
 	installation[PF_INSTALLATION_USER] = [PFUser currentUser];
+    installation[@"whistle"] = @YES;
+    installation[@"chat"] = @YES;
 	[installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
 		if (error != nil) NSLog(@"ParsePushUserAssign save error.");

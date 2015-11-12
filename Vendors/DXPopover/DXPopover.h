@@ -110,6 +110,11 @@ typedef NS_ENUM(NSUInteger, DXPopoverMaskType) {
     withContentView:(UIView *)contentView
              inView:(UIView *)containerView;
 
+- (void)showAtPoint:(CGPoint)point
+     popoverPostion:(DXPopoverPosition)position
+           withText:(NSAttributedString *)abs
+             inView:(UIView *)containerView;
+
 /**
  *  Lazy show API        The show point will be caluclated for you, try it!
  *

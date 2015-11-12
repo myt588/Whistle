@@ -105,9 +105,9 @@ class CurrentAssistantTable: UITableViewController
     //----------------------------------------------------------------------------------------------------------
     {
         let currentCell = tableView.dequeueReusableCellWithIdentifier("CurrentCell", forIndexPath: indexPath) as! CurrentCell
+        currentCell.table = self
+        currentCell.favor = favor
         currentCell.bindAssistant(pivots[indexPath.row] as? PFObject)
-        currentCell.confirmButton.tag = indexPath.row
-        currentCell.confirmButton.addTarget(self, action: "hire:", forControlEvents: .TouchUpInside)
         return currentCell
     }
     
@@ -115,31 +115,4 @@ class CurrentAssistantTable: UITableViewController
         return 300
     }
     
-    //----------------------------------------------------------------------------------------------------------
-    func hire(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if let pivot = pivots[sender.tag] as? PFObject {
-            if let user = pivot[Constants.FavorUserPivotTable.Takers] as? PFUser {
-                favor[Constants.Favor.AssistedBy] = user
-                favor[Constants.Favor.Status] = 2
-                if let ownerPrice = favor[Constants.Favor.Price] as? Int {
-                    if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
-                        if ownerPrice != takerPrice {
-                            favor[Constants.Favor.Price] = takerPrice
-                        }
-                    }
-                }
-                favor.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    if success {
-                        SendPushNotification2([user.objectId!], "Has hired you", "whislte")
-                        self.navigationController?.popViewControllerAnimated(true)
-                        MessageHandler.message(MessageName.Hired)
-                    } else {
-                        ParseErrorHandler.handleParseError(error)
-                    }
-                })
-            }
-        }
-    }
 }

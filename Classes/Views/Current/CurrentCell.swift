@@ -41,9 +41,11 @@ class CurrentCell: UITableViewCell
     @IBOutlet weak var midView                              : UIView!
     @IBOutlet weak var botView                              : UIView!
     
-    private var favor                                       : PFObject!
     private var row                                         : Int!
+    private var pivot                                       : PFObject!
+    var favor                                               : PFObject!
     var vc                                                  : CurrentSwitcher?
+    var table                                               : CurrentAssistantTable?
     
     private var timer                                       : NSTimer?
     
@@ -64,6 +66,7 @@ class CurrentCell: UITableViewCell
         self.confirmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.portraitView.isWaiting = true
         self.timer?.invalidate()
+        self.blurImage.addBlur()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -93,15 +96,6 @@ class CurrentCell: UITableViewCell
         
         backgroundColor = UIColor.clearColor()
         
-//        var topBorder = UIView(frame: CGRectMake(0, 0, blurImage.frame.size.width, 20))
-//        topBorder.backgroundColor = UIColor.redColor()
-//        blurImage.addSubview(topBorder)
-        
-//        midView.backgroundColor = UIColorFromHex(0x261724, alpha: 0.35)
-//        var darkBlurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-//        darkBlurView.frame = midView.bounds
-//        midView.insertSubview(darkBlurView, atIndex: 0)
-        
         midView.layer.shadowOffset = CGSize(width: 0, height: -3.5)
         midView.layer.shadowOpacity = 0.85
         
@@ -130,7 +124,16 @@ class CurrentCell: UITableViewCell
 //        gifIconImageView.layer.shadowOffset = CGSizeMake(5, 5)
 //        gifIconImageView.layer.shadowRadius = 5
 //        gifIconImageView.layer.shadowOpacity = 0.65
-        
+
+
+//        var topBorder = UIView(frame: CGRectMake(0, 0, blurImage.frame.size.width, 20))
+//        topBorder.backgroundColor = UIColor.redColor()
+//        blurImage.addSubview(topBorder)
+
+//        midView.backgroundColor = UIColorFromHex(0x261724, alpha: 0.35)
+//        var darkBlurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+//        darkBlurView.frame = midView.bounds
+//        midView.insertSubview(darkBlurView, atIndex: 0)
     }
     
     func bindFavor(favor : PFObject?, row: Int)
@@ -149,6 +152,8 @@ class CurrentCell: UITableViewCell
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.confirmButtonConfig(MessageName.Favor0.rawValue, action: nil)
+                var tutorial = WETutorial()
+                tutorial.waitForAssistantTutorial(self)
             case 1:                                         // Has Takers
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.portraitView.image = UIImage(named: "user_photo")
@@ -160,6 +165,8 @@ class CurrentCell: UITableViewCell
                         self.coutLabel.hidden = false
                         self.coutLabel.text = "\(count)"
                         self.portraitView.image = nil
+                        var tutorial = WETutorial()
+                        tutorial.pickAssistantTutorial(self)
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
 //                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
@@ -174,6 +181,8 @@ class CurrentCell: UITableViewCell
                 }
                 if status == 2 {
                     self.confirmButtonConfig(MessageName.Favor2.rawValue, action: "whistlerAccepted")
+                    var tutorial = WETutorial()
+                    tutorial.confirmButtonTutorial(self)
                 }
                 if status == 4 {
                     self.confirmButtonConfig(MessageName.Favor4.rawValue, action: nil)
@@ -226,7 +235,8 @@ class CurrentCell: UITableViewCell
     
     func bindAssistant(pivot: PFObject?) {
         if let pivot = pivot {
-            self.confirmButtonConfig(MessageName.AssistantHire.rawValue, action: nil)
+            self.pivot = pivot
+            self.confirmButtonConfig(MessageName.AssistantHire.rawValue, action: "hire")
             bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser)
             timeElapsedLabel.text = pivot.updatedAt?.relativeTime
             if let price = pivot[Constants.FavorUserPivotTable.Price] as? Int {
@@ -347,6 +357,34 @@ class CurrentCell: UITableViewCell
                 }
                 })
             vc.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    func hire()
+    //----------------------------------------------------------------------------------------------------------
+    {
+        if let table = self.table {
+            if let user = pivot[Constants.FavorUserPivotTable.Takers] as? PFUser {
+                favor[Constants.Favor.AssistedBy] = user
+                favor[Constants.Favor.Status] = 2
+                if let ownerPrice = favor[Constants.Favor.Price] as? Int {
+                    if let takerPrice = pivot[Constants.FavorUserPivotTable.Price] as? Int {
+                        if ownerPrice != takerPrice {
+                            favor[Constants.Favor.Price] = takerPrice
+                        }
+                    }
+                }
+                favor.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    if success {
+                        SendPushNotification2([user.objectId!], "Has hired you", "whislte")
+                        table.navigationController?.popViewControllerAnimated(true)
+                        MessageHandler.message(MessageName.Hired)
+                    } else {
+                        ParseErrorHandler.handleParseError(error)
+                    }
+                })
+            }
         }
     }
     

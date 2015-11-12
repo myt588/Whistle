@@ -11,12 +11,13 @@ import Parse
 import UIKit
 
 //----------------------------------------------------------------------------------------------------------
-class WEBlurImageView: PFImageView
+class WEBlurImageView: UIView
 //----------------------------------------------------------------------------------------------------------
 {
     var user: PFUser?
     var imageView: UIImageView!
     var style: UIBlurEffectStyle! = .Light
+    var blurView: UIVisualEffectView!
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -25,12 +26,16 @@ class WEBlurImageView: PFImageView
     {
         super.init(coder: aDecoder)
         self.backgroundColor = UIColor.clearColor()
+        self.imageView = UIImageView(frame: self.frame)
+        self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        self.imageView.clipsToBounds = true
+        self.addSubview(imageView)
     }
     
-    init(user: PFUser)
-    {
-        super.init(image: UIImage(named: "user_photo"))
-        loadImage(user)
+    func addBlur() {
+        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
+        self.blurView.frame = self.frame
+        self.imageView.addSubview(blurView)
     }
     
     func loadImage(user: PFUser)
@@ -53,16 +58,8 @@ class WEBlurImageView: PFImageView
     }
     
     func presentImageView(image: UIImage) {
-        imageView = UIImageView(frame: self.frame)
-        imageView.image = image
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.userInteractionEnabled = true
-        imageView.clipsToBounds = true
-        self.addSubview(imageView)
-        var darkBlur = UIBlurEffect(style: style)
-        var blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = self.frame
-        imageView.addSubview(blurView)
+        self.imageView.image = image
+        self.imageView.frame = self.frame
     }
     
 }

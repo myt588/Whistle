@@ -60,7 +60,7 @@
     _isiOS7 = ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending);
     self.arrowSize = CGSizeMake(11.0, 9.0);
     self.cornerRadius = 5.0;
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85];
     self.animationIn = 0.4;
     self.animationOut = 0.3;
     self.animationSpring = YES;
@@ -172,7 +172,7 @@
     UIColor *maskColor;
     switch (self.maskType) {
         case DXPopoverMaskTypeBlack:
-            maskColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+            maskColor = [UIColor colorWithWhite:0.0 alpha:0];
             break;
         case DXPopoverMaskTypeNone: {
             maskColor = [UIColor clearColor];
@@ -206,7 +206,30 @@
     }
 
     self.contentViewFrame = contentFrame;
+    
+    // add darkblurview to contentView
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.containerView.bounds;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.containerView insertSubview:blurEffectView atIndex:0];
+    
     [self show];
+}
+
+- (void)showAtPoint:(CGPoint)point
+     popoverPostion:(DXPopoverPosition)position
+           withText:(NSAttributedString *)abs
+             inView:(UIView *)containerView {
+    UILabel *textLabel = [UILabel new];
+    textLabel.numberOfLines = 0;
+    textLabel.attributedText = abs;
+    textLabel.textColor = [UIColor whiteColor];
+    [textLabel sizeToFit];
+    textLabel.backgroundColor = [UIColor clearColor];
+    self.contentInset = UIEdgeInsetsMake(12.0, 15.0, 12.0, 15.0);
+    [self showAtPoint:point popoverPostion:position withContentView:textLabel inView:containerView];
 }
 
 - (void)showAtView:(UIView *)atView
@@ -327,9 +350,10 @@
 - (void)showAtView:(UIView *)atView withText:(NSAttributedString *)abs inView:(UIView *)container {
     UILabel *textLabel = [UILabel new];
     textLabel.attributedText = abs;
+    textLabel.textColor = [UIColor whiteColor];
     [textLabel sizeToFit];
     textLabel.backgroundColor = [UIColor clearColor];
-    self.contentInset = UIEdgeInsetsMake(3.0, 3.0, 3.0, 3.0);
+    self.contentInset = UIEdgeInsetsMake(12.0, 15.0, 12.0, 15.0);
     [self showAtView:atView withContentView:textLabel inView:container];
 }
 

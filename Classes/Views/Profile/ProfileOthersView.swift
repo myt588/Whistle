@@ -37,8 +37,6 @@ class ProfileOthersView: UIViewController
     
     // MARK: - Variables
     //----------------------------------------------------------------------------------------------------------
-    private var blurView                                        = UIVisualEffectView()
-    private var blurImage                                       = UIImageView()
     private var containerViewOriginalFrame                      = CGRectZero
     private var didLayoutSubviews                               = false
     //----------------------------------------------------------------------------------------------------------
@@ -55,7 +53,6 @@ class ProfileOthersView: UIViewController
         if let child = childViewControllers.first as? ProfileRateTable {
             child.user = self.user
         }
-        
         configLooks()
         configNavBar()
     }
@@ -154,8 +151,9 @@ class ProfileOthersView: UIViewController
         self.portraitView.canTap = true
         self.portraitView.useDefault = true
         self.portraitView.fullScreen = true
-        self.bgView.loadImage(user)
         self.bgView.style = .Dark
+        self.bgView.loadImage(user)
+        self.bgView.addBlur()
         
         if let status = user[Constants.User.Status] as? String {
             self.lineLabel.text = status

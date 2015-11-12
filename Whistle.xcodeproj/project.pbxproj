@@ -270,6 +270,7 @@
 		944CFC5F1BE1BA1900A84DE8 /* FavorDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */; };
 		944CFC651BE1C71400A84DE8 /* CurrentRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC631BE1C71400A84DE8 /* CurrentRateView.swift */; };
 		944CFC661BE1C71400A84DE8 /* CurrentReportTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944CFC641BE1C71400A84DE8 /* CurrentReportTable.swift */; };
+		944F437B1BF5458C00C6BED3 /* WETutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944F437A1BF5458C00C6BED3 /* WETutorial.swift */; };
 		945E88EA1B89AAE600124816 /* RecentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E71B89AAE600124816 /* RecentCell.m */; };
 		945E88EB1B89AAE600124816 /* RecentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945E88E91B89AAE600124816 /* RecentView.m */; };
 		945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */; };
@@ -794,6 +795,7 @@
 		944CFC5E1BE1BA1900A84DE8 /* FavorDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavorDetailView.swift; sourceTree = "<group>"; };
 		944CFC631BE1C71400A84DE8 /* CurrentRateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentRateView.swift; sourceTree = "<group>"; };
 		944CFC641BE1C71400A84DE8 /* CurrentReportTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentReportTable.swift; sourceTree = "<group>"; };
+		944F437A1BF5458C00C6BED3 /* WETutorial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WETutorial.swift; sourceTree = "<group>"; };
 		945E88E61B89AAE600124816 /* RecentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentCell.h; sourceTree = "<group>"; };
 		945E88E71B89AAE600124816 /* RecentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentCell.m; sourceTree = "<group>"; };
 		945E88E81B89AAE600124816 /* RecentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentView.h; sourceTree = "<group>"; };
@@ -1536,6 +1538,7 @@
 				942FA2F01B2F10E90050C3E3 /* Audio */,
 				942FA2F81B2F10E90050C3E3 /* HelperMethods.swift */,
 				94C4A1491B809AB5005AC537 /* HelperClasses.swift */,
+				944F437A1BF5458C00C6BED3 /* WETutorial.swift */,
 				94C4A1471B8093FE005AC537 /* Extensions.swift */,
 				9478BFA21B45113B00F3D91D /* UIViewBorder.swift */,
 				942FA2F91B2F10E90050C3E3 /* Image.swift */,
@@ -2695,6 +2698,7 @@
 				9402424D1BD9DE9600CE8E45 /* blocked.m in Sources */,
 				9441B4D71B89AE6A002EBEEE /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				890ADEBE1BEC9CB1009D6E83 /* UserDefault.swift in Sources */,
+				944F437B1BF5458C00C6BED3 /* WETutorial.swift in Sources */,
 				9441B4EE1B89AE6A002EBEEE /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				940242561BD9DE9600CE8E45 /* common.m in Sources */,
 				943E411F1BF198830034DE85 /* UIImageView+FacebookFadeIn.m in Sources */,

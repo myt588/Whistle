@@ -170,6 +170,9 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     {
         super.viewWillAppear(true)
+        if PFUser.currentUser() == nil {
+            ParseErrorHandler.LoginUser(self)
+        }
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -318,7 +321,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
                 self.view.userInteractionEnabled = true
                 self.dismissViewControllerAnimated(true, completion: nil)
                 MessageHandler.message(MessageName.FavorPosted)
-                NSNotificationCenter.defaultCenter().postNotificationName("currentLocationFound", object: nil)
+                PostNotification("currentLocationFound")
             } else {
                 ParseErrorHandler.handleParseError(error)
                 ProgressHUD.dismiss()

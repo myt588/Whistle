@@ -177,6 +177,7 @@ class LoginView: UIViewController
                 ParseErrorHandler.handleParseError(error)
             }
         }
+        PostNotification(NOTIFICATION_USER_LOGGED_IN)
         performSegueWithIdentifier("Login_To_Root", sender: self)
     }
 }

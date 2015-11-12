@@ -47,16 +47,6 @@ class CurrentView: UIViewController, CarbonTabSwipeDelegate
         tabSwipe.setIndicatorHeight(3)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let user = PFUser.currentUser() {
-            
-        } else {
-            var viewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-            self.presentViewController(viewController, animated: true, completion: nil)
-        }
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         (self.tabBarController as! YALFoldingTabBarController).tabBarView.hidden = false

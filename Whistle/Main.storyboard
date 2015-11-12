@@ -267,14 +267,6 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-pk-Tfo" userLabel="bg" customClass="WEBlurImageView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="417"/>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="wjN-pk-Tfo" secondAttribute="height" multiplier="600:229" id="Ve5-gV-Btt"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Ve5-gV-Btt"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="ZM3-fh-dcr" userLabel="Portrait" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="125" y="64" width="125" height="125"/>
@@ -355,7 +347,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="  Total Spent  $12  " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukl-y9-dah" customClass="WEFontContent" customModule="Whistle" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="  Total Spent  $12  " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukl-y9-dah" customClass="WEFontContent" customModule="Whistle" customModuleProvider="target">
                                         <rect key="frame" x="251" y="6" width="124" height="24"/>
                                         <animations/>
                                         <constraints>
@@ -3221,7 +3213,7 @@
                                     <segue destination="vwB-oy-Xnz" kind="embed" identifier="FavorViewContainer" id="Cr0-f1-cZ8"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gF-y8-kuu" userLabel="Portrait View">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6gF-y8-kuu" userLabel="Portrait View">
                                 <rect key="frame" x="-380" y="283" width="375" height="100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgv-k5-C2v" userLabel="interestView">
@@ -3376,7 +3368,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="iOe-Mx-XFV" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="iOe-Mx-XFV" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
                                         <rect key="frame" x="50" y="0.0" width="100" height="100"/>
                                         <animations/>
                                         <constraints>
@@ -3582,6 +3574,26 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svK-xw-1PY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="188" id="trI-JJ-yTa">
+                                        <variation key="widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="trI-JJ-yTa"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="trI-JJ-yTa"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3617,6 +3629,9 @@
                             </constraint>
                             <constraint firstItem="Q0S-pj-kuP" firstAttribute="width" secondItem="Q0S-pj-kuP" secondAttribute="height" multiplier="1:1" id="a4N-eD-l1l"/>
                             <constraint firstItem="Q0S-pj-kuP" firstAttribute="leading" secondItem="UFc-yo-AJD" secondAttribute="trailing" constant="8" id="aHw-oU-3Ud"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="svK-xw-1PY" secondAttribute="trailing" constant="5" id="aNP-Ue-Ilm">
+                                <variation key="widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstItem="Q0S-pj-kuP" firstAttribute="centerY" secondItem="UFc-yo-AJD" secondAttribute="centerY" id="cqT-M0-ynK"/>
                             <constraint firstItem="Q0S-pj-kuP" firstAttribute="width" secondItem="Q0S-pj-kuP" secondAttribute="height" multiplier="1:1" id="d2v-Cw-APb"/>
                             <constraint firstItem="srH-fy-2Ks" firstAttribute="top" secondItem="bcb-0e-rkg" secondAttribute="bottom" id="fPE-kK-1wk"/>
@@ -3637,8 +3652,12 @@
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="bcb-0e-rkg" secondAttribute="centerX" id="pFg-ih-uNt"/>
+                            <constraint firstItem="svK-xw-1PY" firstAttribute="width" secondItem="svK-xw-1PY" secondAttribute="height" multiplier="1:1" id="qcX-qL-aL0"/>
                             <constraint firstAttribute="width" secondItem="bcb-0e-rkg" secondAttribute="width" id="qvn-za-AsS"/>
                             <constraint firstAttribute="centerX" secondItem="9Ry-FE-pcA" secondAttribute="centerX" id="rvo-vS-87N"/>
+                            <constraint firstItem="srH-fy-2Ks" firstAttribute="top" secondItem="svK-xw-1PY" secondAttribute="bottom" constant="28" id="swb-d1-H5K">
+                                <variation key="widthClass=compact" constant="15"/>
+                            </constraint>
                             <constraint firstItem="TxA-jS-6FS" firstAttribute="top" secondItem="AWi-Fj-6Vi" secondAttribute="bottom" constant="-145" id="tZn-qU-2Ps"/>
                             <constraint firstItem="UFc-yo-AJD" firstAttribute="leading" secondItem="uAF-Xs-gVw" secondAttribute="trailing" constant="48" id="u6K-bc-TXl">
                                 <variation key="widthClass=compact" constant="8"/>
@@ -3655,52 +3674,60 @@
                             <mask key="subviews">
                                 <exclude reference="AWi-Fj-6Vi"/>
                                 <exclude reference="uAF-Xs-gVw"/>
+                                <exclude reference="svK-xw-1PY"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="JzF-8u-5GI"/>
                                 <exclude reference="h67-bc-GhR"/>
                                 <exclude reference="uoe-bP-uE5"/>
-                                <exclude reference="jRG-Ax-zo4"/>
                                 <exclude reference="m7d-1h-oG3"/>
                                 <exclude reference="tZn-qU-2Ps"/>
                                 <exclude reference="mR1-LE-tXi"/>
+                                <exclude reference="jRG-Ax-zo4"/>
                                 <exclude reference="VLp-aW-Zug"/>
                                 <exclude reference="fRt-h4-M0D"/>
+                                <exclude reference="YRZ-F7-iF1"/>
+                                <exclude reference="ZFb-2a-iUK"/>
+                                <exclude reference="nvI-V4-wbh"/>
+                                <exclude reference="u6K-bc-TXl"/>
                                 <exclude reference="1Dl-xi-iFT"/>
                                 <exclude reference="Ehk-kV-VGe"/>
                                 <exclude reference="a4N-eD-l1l"/>
                                 <exclude reference="aHw-oU-3Ud"/>
                                 <exclude reference="d2v-Cw-APb"/>
-                                <exclude reference="YRZ-F7-iF1"/>
-                                <exclude reference="ZFb-2a-iUK"/>
-                                <exclude reference="nvI-V4-wbh"/>
-                                <exclude reference="u6K-bc-TXl"/>
                                 <exclude reference="I8j-t4-jri"/>
                                 <exclude reference="ii9-BK-bep"/>
                                 <exclude reference="JIO-gy-CHj"/>
                                 <exclude reference="Z2n-RM-Pj9"/>
+                                <exclude reference="swb-d1-H5K"/>
+                                <exclude reference="aNP-Ue-Ilm"/>
+                                <exclude reference="qcX-qL-aL0"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="AWi-Fj-6Vi"/>
                                 <include reference="uAF-Xs-gVw"/>
+                                <include reference="svK-xw-1PY"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="JzF-8u-5GI"/>
                                 <include reference="h67-bc-GhR"/>
                                 <include reference="uoe-bP-uE5"/>
-                                <include reference="jRG-Ax-zo4"/>
                                 <exclude reference="m7d-1h-oG3"/>
                                 <exclude reference="tZn-qU-2Ps"/>
-                                <include reference="1Dl-xi-iFT"/>
-                                <include reference="Ehk-kV-VGe"/>
-                                <include reference="aHw-oU-3Ud"/>
+                                <include reference="jRG-Ax-zo4"/>
                                 <exclude reference="LWF-Wq-eEY"/>
                                 <include reference="YRZ-F7-iF1"/>
                                 <include reference="ZFb-2a-iUK"/>
                                 <exclude reference="nvI-V4-wbh"/>
                                 <include reference="u6K-bc-TXl"/>
+                                <include reference="1Dl-xi-iFT"/>
+                                <include reference="Ehk-kV-VGe"/>
+                                <include reference="aHw-oU-3Ud"/>
+                                <include reference="swb-d1-H5K"/>
+                                <include reference="aNP-Ue-Ilm"/>
+                                <include reference="qcX-qL-aL0"/>
                             </mask>
                         </variation>
                     </view>
@@ -3731,6 +3758,7 @@
                         <outlet property="portraitViewTopConstraint" destination="y8y-A6-XJZ" id="KwP-3K-BhF"/>
                         <outlet property="progressLabel" destination="AJL-tM-QwX" id="FL5-ZM-05A"/>
                         <outlet property="refreshButton" destination="UFc-yo-AJD" id="v3T-LL-gnZ"/>
+                        <outlet property="rightTabButtonPlaceHolder" destination="svK-xw-1PY" id="0ec-D6-Vgs"/>
                         <outlet property="sunglassImagView" destination="7ct-i2-fJi" id="ncu-xd-dSe"/>
                         <outlet property="tableTopToLayoutConstraint" destination="JIO-gy-CHj" id="uoz-I7-Xyk"/>
                         <outlet property="tableTopToMapConstraint" destination="xRb-YB-qq5" id="2sQ-SS-PmK"/>
@@ -4977,14 +5005,6 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6CG-Oa-ocI" userLabel="bg" customClass="WEBlurImageView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="417"/>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="6CG-Oa-ocI" secondAttribute="height" multiplier="600:229" id="cXg-4Q-Yp6"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="cXg-4Q-Yp6"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" image="user_photo" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-a8-kXF" userLabel="Portrait" customClass="WEProfileView" customModule="Whistle" customModuleProvider="target">
                                 <rect key="frame" x="125" y="64" width="125" height="125"/>
@@ -7127,6 +7147,8 @@
                                                     <exclude reference="btS-kx-Gde"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="7W8-wr-kvK"/>
+                                                    <exclude reference="N86-kW-qjw"/>
                                                     <exclude reference="4ib-28-HEc"/>
                                                     <exclude reference="IJb-L8-3K4"/>
                                                     <exclude reference="KEN-m9-dRP"/>
@@ -7134,6 +7156,8 @@
                                                     <exclude reference="3ZF-AX-SAA"/>
                                                     <exclude reference="vNc-Zj-fFR"/>
                                                     <exclude reference="Hfl-A2-DBG"/>
+                                                    <exclude reference="Q4z-nO-6rv"/>
+                                                    <exclude reference="WFr-Py-Uaq"/>
                                                     <exclude reference="Fz8-1k-qal"/>
                                                     <exclude reference="IFy-Qj-vX6"/>
                                                     <exclude reference="VsM-R0-QYO"/>
@@ -7142,10 +7166,6 @@
                                                     <exclude reference="Irb-qE-Dls"/>
                                                     <exclude reference="PYj-L1-14z"/>
                                                     <exclude reference="iZP-Vz-MwR"/>
-                                                    <exclude reference="7W8-wr-kvK"/>
-                                                    <exclude reference="N86-kW-qjw"/>
-                                                    <exclude reference="Q4z-nO-6rv"/>
-                                                    <exclude reference="WFr-Py-Uaq"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -7153,6 +7173,8 @@
                                                     <include reference="btS-kx-Gde"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="7W8-wr-kvK"/>
+                                                    <include reference="N86-kW-qjw"/>
                                                     <include reference="4ib-28-HEc"/>
                                                     <include reference="IJb-L8-3K4"/>
                                                     <include reference="KEN-m9-dRP"/>
@@ -7160,6 +7182,8 @@
                                                     <include reference="3ZF-AX-SAA"/>
                                                     <include reference="vNc-Zj-fFR"/>
                                                     <include reference="Hfl-A2-DBG"/>
+                                                    <include reference="Q4z-nO-6rv"/>
+                                                    <include reference="WFr-Py-Uaq"/>
                                                     <include reference="Fz8-1k-qal"/>
                                                     <include reference="IFy-Qj-vX6"/>
                                                     <include reference="VsM-R0-QYO"/>
@@ -7168,10 +7192,6 @@
                                                     <include reference="Irb-qE-Dls"/>
                                                     <include reference="PYj-L1-14z"/>
                                                     <include reference="iZP-Vz-MwR"/>
-                                                    <include reference="7W8-wr-kvK"/>
-                                                    <include reference="N86-kW-qjw"/>
-                                                    <include reference="Q4z-nO-6rv"/>
-                                                    <include reference="WFr-Py-Uaq"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -8149,8 +8169,8 @@
         <image name="waiting" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Cr0-f1-cZ8"/>
         <segue reference="Mvx-8i-boF"/>
-        <segue reference="736-M1-MnA"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.9882352941176471" green="0.79607843137254897" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
