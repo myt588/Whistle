@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		890ADEB81BEC8B5F009D6E83 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = 890ADEB71BEC8B5F009D6E83 /* a.gif */; };
 		890ADEBE1BEC9CB1009D6E83 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */; };
-		890D5D861B60149C00DFD609 /* WESlideTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D5D851B60149C00DFD609 /* WESlideTransition.swift */; };
 		891160AD1B7900B5005D3995 /* MXPullDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 891160AC1B7900B5005D3995 /* MXPullDownMenu.m */; };
 		893B79631B52E09300019CF7 /* CurrentAssistantTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */; };
 		893B79651B52E0A600019CF7 /* CurrentAssistantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893B79641B52E0A600019CF7 /* CurrentAssistantCell.swift */; };
@@ -369,7 +368,6 @@
 /* Begin PBXFileReference section */
 		890ADEB71BEC8B5F009D6E83 /* a.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = a.gif; sourceTree = "<group>"; };
 		890ADEBD1BEC9CB1009D6E83 /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
-		890D5D851B60149C00DFD609 /* WESlideTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WESlideTransition.swift; sourceTree = "<group>"; };
 		891160AB1B7900B5005D3995 /* MXPullDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXPullDownMenu.h; sourceTree = "<group>"; };
 		891160AC1B7900B5005D3995 /* MXPullDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXPullDownMenu.m; sourceTree = "<group>"; };
 		893B79621B52E09300019CF7 /* CurrentAssistantTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentAssistantTable.swift; sourceTree = "<group>"; };
@@ -1193,7 +1191,6 @@
 				94BB08081B5329BB00D2492B /* WEAnnotationView.swift */,
 				89E57F1C1B57F3FD00983D1A /* WECustomize.swift */,
 				89F53AA81B57FB8700F0A2A2 /* WEVoiceBubble.swift */,
-				890D5D851B60149C00DFD609 /* WESlideTransition.swift */,
 				8944259D1B7B2DA700B3716C /* WERecentButtonsView.swift */,
 				89D1C9161BD3409900F284D9 /* WEFontCustomize.swift */,
 				94354C961BDC13760048C6CD /* WEEmptyTableCell.xib */,
@@ -2550,7 +2547,6 @@
 				942FA4601B2F10E90050C3E3 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				942FA49B1B2F10E90050C3E3 /* JSSAlertView.swift in Sources */,
 				9441B4C91B89AE6A002EBEEE /* JSQSystemSoundPlayer+JSQMessages.m in Sources */,
-				890D5D861B60149C00DFD609 /* WESlideTransition.swift in Sources */,
 				9441B4CF1B89AE6A002EBEEE /* UIView+JSQMessages.m in Sources */,
 				945F7C941B81E896006F0626 /* ProfileRegionPicker.swift in Sources */,
 				94BB081A1B532C9700D2492B /* HTTPResponseSerializer.swift in Sources */,

@@ -26,16 +26,27 @@ enum MessageName : String {
     case NeedReason = "Please specify your reason"
     case NeedRate = "Please specify your rate"
     case Blocked = "Successfully blocked"
-    case Favor0 = "Waiting For Assistance"
-    case Favor1 = "Pick Your Assistant"
-    case Favor2 = "Assistance Received"
+    case Favor0 = "Waiting for assistants"
+    case Favor1 = "Choose an assistant"
+    case Favor2 = "I was assisted!"
     case Favor4 = "Favor is Complete"
     case Favor5 = "Favor is Cancelled"
-    case CurrentInterest = "Interest Delivered"
-    case Assist = "Time To Assist"
-    case AssistantHire = "Would you help me?"
-    case CancelFavor = "Are you certain?"
-    case AcceptAssist = "Are you sure that your favor is successfully delivered"
+    case CurrentInterest = "I want to assist!"
+    case Assist = "Assist!"
+    case AssistantHire = "Choose this assistant"
+    case CancelFavor = "Confirm to cancel this favor?"
+    case AcceptAssist = "Confirm assistance received?"
+    case Assisted = "Assistance Complete"
+    case AssistCancel = "Assistance Denied"
+    case ReviewTextHeader = "Please leave a review"
+    case ReportTextHeader = "Please pick your reason"
+    case ReportReason1 = "Payment Incomplete"
+    case ReportReason2 = "Illegal item involved"
+    case ReportReason3 = "Assistance has not been received"
+    case ReportReason4 = "Personal harassment"
+    case ReportReason5 = "Possible Scam"
+    case ReportReason6 = "Violent content"
+    
 }
 
 
@@ -82,9 +93,9 @@ class MessageHandler {
         case MessageName.HaveReviewed:
             showMessage("Error", subtitle: name.rawValue, type: .Error)
         case MessageName.NeedReason:
-            showMessage("Error", subtitle: name.rawValue, type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.NeedRate:
-            showMessage("Error", subtitle: name.rawValue, type: .Error)
+            showMessage("Error", subtitle: name.rawValue, type: .Error, vc: vc)
         case MessageName.Blocked:
             showMessage("Success", subtitle: name.rawValue, type: .Success, vc: vc)
         default:

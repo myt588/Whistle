@@ -57,6 +57,8 @@
 #define		PF_INSTALLATION_CLASS_NAME			@"_Installation"		//	Class name
 #define		PF_INSTALLATION_OBJECTID			@"objectId"				//	String
 #define		PF_INSTALLATION_USER				@"user"					//	Pointer to User Class
+#define     PF_INSTALLATION_CHAT                @"chat"
+#define     PF_INSTALLATION_WHISTLE             @"whistle"
 //-----------------------------------------------------------------------
 #define		PF_USER_CLASS_NAME					@"_User"				//	Class name
 #define		PF_USER_OBJECTID					@"objectId"				//	String
@@ -125,3 +127,5 @@
 #define     PF_DEFAULT_WHISTLE_SWITCH           @"WhistleSwitch"
 #define     PF_DEFAULT_CHAT_SWITCH              @"ChatSwitch"
 #define     PF_DEFAULT_SETTING_LOADED           @"SettingLoaded"
+
+

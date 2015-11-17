@@ -86,7 +86,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
     private var didLayoutSubviews                           = false
     private var canSwipeIndex                               = true
     //----------------------------------------------------------------------------------------------------------
-    private var transitionOperator                          = WESlideTransition()
     private var isSearchHidden                              = true
     //----------------------------------------------------------------------------------------------------------
     private var canExpand                                   = true
@@ -305,7 +304,7 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                         favor.saveInBackgroundWithBlock({ (success, error) -> Void in
                             if success {
                                 let user = favor[Constants.Favor.CreatedBy] as! PFUser
-                                SendPushNotification2([user.objectId!], "Has interested in your favor", "whislte")
+                                SendPushNotification2([user.objectId!], "Has interested in your favor", PF_INSTALLATION_WHISTLE)
                                 self.addFriend(user)
                             } else {
                                 ParseErrorHandler.handleParseError(error)

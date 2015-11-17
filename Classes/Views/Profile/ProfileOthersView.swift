@@ -152,8 +152,8 @@ class ProfileOthersView: UIViewController
         self.portraitView.useDefault = true
         self.portraitView.fullScreen = true
         self.bgView.style = .Dark
+        self.bgView.needBlurView = true
         self.bgView.loadImage(user)
-        self.bgView.addBlur()
         
         if let status = user[Constants.User.Status] as? String {
             self.lineLabel.text = status

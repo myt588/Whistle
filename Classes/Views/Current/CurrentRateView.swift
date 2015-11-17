@@ -13,6 +13,7 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var countLabel: WEContentLabel!
+    @IBOutlet weak var textLabel: WEFontHeader!
     
     @IBOutlet weak var star1: WETintImageView!
     @IBOutlet weak var star2: WETintImageView!
@@ -57,6 +58,8 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     func configLooks() {
         view.backgroundColor                            = Constants.Color.Background
         
+        textLabel.text                                  = MessageName.ReviewTextHeader.rawValue
+        
         textView.delegate                               = self
         textView.backgroundColor                        = Constants.Color.ContentBackground
         textView.textContainerInset                     = UIEdgeInsetsMake(10, 8, 10, 8)
@@ -88,7 +91,7 @@ class CurrentRateView: UIViewController, UITextViewDelegate {
     
     func submit() {
         if rating == 0 {
-            MessageHandler.message(MessageName.NeedRate)
+            MessageHandler.message(MessageName.NeedRate, vc: self.navigationController)
             return
         }
         if let favor = self.favor {

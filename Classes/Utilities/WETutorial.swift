@@ -22,6 +22,12 @@ class WETutorial {
     private var pickAssistantText = NSAttributedString(string: "Tap to pick an assistant")
     private var confirmButtonText = NSAttributedString(string: "Confirm only after help is delivered")
     
+    private var popover = DXPopover()
+    
+    func dismiss() {
+        popover.dismiss()
+    }
+    
     
     // MARK: - Favor View
     
@@ -58,7 +64,7 @@ class WETutorial {
         
         var waitForAssistantPopover = DXPopover()
         var atPoint = CGPointMake(CGRectGetMidX(inView.frame), CGRectGetMidY(inView.frame) + 25)
-        waitForAssistantPopover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Down, withText: waitForAssistantText, inView: inView)
+        popover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Down, withText: waitForAssistantText, inView: inView)
         
         UserDefault.saveBool("waitForAssistantTutorial", value: true)
     }
@@ -68,16 +74,15 @@ class WETutorial {
         
         var pickAssistantPopover = DXPopover()
         var atPoint = CGPointMake(CGRectGetMidX(inView.frame), CGRectGetMidY(inView.frame) + 25)
-        pickAssistantPopover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Down, withText: pickAssistantText, inView: inView)
+        popover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Down, withText: pickAssistantText, inView: inView)
         UserDefault.saveBool("pickAssistantTutorial", value: true)
     }
     
     func confirmButtonTutorial(inView: UIView) {
         if UserDefault.getBool("confirmButtonTutorial") { return }
         
-        var confirmButtonPopover = DXPopover()
         var atPoint = CGPointMake(20, CGRectGetMidY(inView.frame) + 55)
-        confirmButtonPopover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Up, withText: confirmButtonText, inView: inView)
+        popover.showAtPoint(atPoint, popoverPostion: DXPopoverPosition.Up, withText: confirmButtonText, inView: inView)
         UserDefault.saveBool("confirmButtonTutorial", value: true)
     }
 }

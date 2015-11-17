@@ -92,8 +92,10 @@ class WEProfileView: UIImageView
                     imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
                         if let data = data
                         {
+                            dispatch_async(dispatch_get_main_queue()) {
                             let image = UIImage(data: data)
                             self.presentImageView(image!)
+                            }
                         } else {
                             ParseErrorHandler.handleParseError(error)
                         }

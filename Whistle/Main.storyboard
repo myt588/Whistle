@@ -5926,6 +5926,7 @@
                         <outlet property="star3" destination="Nmv-Ue-OGi" id="brB-cX-GUS"/>
                         <outlet property="star4" destination="9gf-VA-61K" id="oDZ-xd-Pju"/>
                         <outlet property="star5" destination="eCf-b8-4hA" id="jh8-ec-6KN"/>
+                        <outlet property="textLabel" destination="uOJ-9r-N7b" id="TWa-8s-Pgl"/>
                         <outlet property="textView" destination="5k5-cI-OBs" id="EiG-23-iam"/>
                     </connections>
                 </viewController>
@@ -5937,7 +5938,7 @@
         <scene sceneID="oAv-PH-pDw">
             <objects>
                 <tableViewController storyboardIdentifier="ReportTable" id="8qW-PY-ea6" customClass="CurrentReoprtTable" customModule="Whistle" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ThW-vz-MUv" customClass="WETable" customModule="Whistle" customModuleProvider="target">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ThW-vz-MUv" customClass="WETable" customModule="Whistle" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -6960,6 +6961,13 @@
                         <outlet property="checkMark5" destination="pjA-6W-LII" id="Nga-6C-yrt"/>
                         <outlet property="checkMark6" destination="QLf-Q0-0xD" id="kA8-fZ-MNs"/>
                         <outlet property="countLabel" destination="iy4-ot-Wbg" id="JkM-wJ-87c"/>
+                        <outlet property="headerTextLabel" destination="PFp-EE-mr8" id="gxz-1o-qB3"/>
+                        <outlet property="reason1" destination="cob-Kb-H4u" id="nc0-DZ-tvf"/>
+                        <outlet property="reason2" destination="iqo-qk-adg" id="SVQ-js-JOB"/>
+                        <outlet property="reason3" destination="OkG-fj-W9Z" id="OhM-jX-Du2"/>
+                        <outlet property="reason4" destination="kGN-fx-nrx" id="Ae8-em-nJJ"/>
+                        <outlet property="reason5" destination="1UF-b4-QEz" id="gaA-OJ-qrn"/>
+                        <outlet property="reason6" destination="sry-Iy-4MA" id="lHp-B8-i8h"/>
                         <outlet property="textView" destination="c3V-v9-XNG" id="WrM-72-uuz"/>
                     </connections>
                 </tableViewController>

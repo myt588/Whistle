@@ -140,8 +140,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func notificationHandler() {
         let tabBarController = self.window?.rootViewController as! TabBarController
-        if type == "chat"        { tabBarController.selectedIndex = 2 }
-        if type == "whistle"     { tabBarController.selectedIndex = 1 }
+        if type == PF_INSTALLATION_CHAT        { tabBarController.selectedIndex = 2 }
+        if type == PF_INSTALLATION_WHISTLE     { tabBarController.selectedIndex = 1 }
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

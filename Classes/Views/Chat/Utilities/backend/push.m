@@ -58,7 +58,7 @@ void SendPushNotification1(NSString *groupId, NSString *text)
 			NSDictionary *recent = [recents firstObject];
 			if (recent != nil)
 			{
-				SendPushNotification2(recent[@"members"], text, @"chat");
+				SendPushNotification2(recent[@"members"], text, PF_INSTALLATION_CHAT);
 			}
 		}
 	}];
@@ -77,8 +77,8 @@ void SendPushNotification2(NSArray *members, NSString *text, NSString *type)
     
     PFQuery *queryInstallation = [PFInstallation query];
     [queryInstallation whereKey:PF_INSTALLATION_USER matchesQuery:query];
-    if ([type isEqual: @"chat"])    [queryInstallation whereKey:@"chat" equalTo: @YES];
-    if ([type isEqual: @"whistle"]) [queryInstallation whereKey:@"whistle" equalTo: @YES];
+    if ([type isEqual: PF_INSTALLATION_CHAT])    [queryInstallation whereKey:PF_INSTALLATION_CHAT equalTo: @YES];
+    if ([type isEqual: PF_INSTALLATION_WHISTLE]) [queryInstallation whereKey:PF_INSTALLATION_WHISTLE equalTo: @YES];
     
     PFPush *push = [[PFPush alloc] init];
     [push setQuery:queryInstallation];

@@ -16,11 +16,23 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
     @IBOutlet weak var checkMark4: WETintImageView!
     @IBOutlet weak var checkMark5: WETintImageView!
     @IBOutlet weak var checkMark6: WETintImageView!
+    
     @IBOutlet weak var textView: WETextView!
     @IBOutlet weak var countLabel: WEFontIndicator!
+    @IBOutlet weak var headerTextLabel: WEFontHeader!
+    
+    @IBOutlet weak var reason1: WEFontContent!
+    @IBOutlet weak var reason2: WEFontContent!
+    @IBOutlet weak var reason3: WEFontContent!
+    @IBOutlet weak var reason4: WEFontContent!
+    @IBOutlet weak var reason5: WEFontContent!
+    @IBOutlet weak var reason6: WEFontContent!
+    
     
     var favor: PFObject?
     var checkmarks = [WETintImageView]()
+    var reasons = [WEFontContent]()
+    var selectedIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +41,16 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
         var leftButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action:"cancel")
         self.navigationItem.leftBarButtonItem = leftButton
         self.title = "Report"
-
+        
+        self.headerTextLabel.text = MessageName.ReportTextHeader.rawValue
+        self.reason1.text = MessageName.ReportReason1.rawValue
+        self.reason2.text = MessageName.ReportReason2.rawValue
+        self.reason3.text = MessageName.ReportReason3.rawValue
+        self.reason4.text = MessageName.ReportReason4.rawValue
+        self.reason5.text = MessageName.ReportReason5.rawValue
+        self.reason6.text = MessageName.ReportReason6.rawValue
+        
+        reasons = [reason1, reason2, reason3, reason4, reason5, reason6]
         checkmarks = [checkMark1, checkMark2, checkMark3, checkMark4, checkMark5, checkMark6]
         textView.delegate = self
         textView.backgroundColor = Constants.Color.ContentBackground
@@ -42,6 +63,7 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
         switch indexPath.row {
         case 2...7:
             toggleCheckmark(indexPath.row - 2)
+            selectedIndex = indexPath.row - 2
         default:
             return
         }
@@ -62,8 +84,8 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
     }
     
     func submit() {
-        if textView.text == "" {
-            MessageHandler.message(MessageName.NeedReason)
+        if textView.text == "" && selectedIndex == nil{
+            MessageHandler.message(MessageName.NeedReason, vc: self.navigationController)
             return
         }
         if let favor = self.favor {
@@ -72,7 +94,7 @@ class CurrentReoprtTable: UITableViewController, UITextViewDelegate {
                 userReport[Constants.UserReportPivotTable.From] = PFUser.currentUser()
                 userReport[Constants.UserReportPivotTable.To] = user
                 userReport[Constants.UserReportPivotTable.Because] = favor
-                userReport[Constants.UserReportPivotTable.Reason] = textView.text
+                userReport[Constants.UserReportPivotTable.Reason] = reasons[selectedIndex!].text! + textView.text
                 userReport.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
                         MessageHandler.message(MessageName.Reported)

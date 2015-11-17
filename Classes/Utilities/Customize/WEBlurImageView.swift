@@ -18,6 +18,8 @@ class WEBlurImageView: UIView
     var imageView: UIImageView!
     var style: UIBlurEffectStyle! = .Light
     var blurView: UIVisualEffectView!
+    var shade: UIView!
+    var needBlurView: Bool = false
     
     // MARK: - Init
     //----------------------------------------------------------------------------------------------------------
@@ -34,8 +36,19 @@ class WEBlurImageView: UIView
     
     func addBlur() {
         self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        self.blurView.frame = self.frame
+        self.blurView.frame = imageView.frame
         self.imageView.addSubview(blurView)
+    }
+    
+    func addShade() {
+        shade = UIView(frame: self.frame)
+        shade.alpha = 0.35765
+        shade.backgroundColor = UIColor.grayColor()
+        self.imageView.addSubview(shade)
+    }
+    
+    func removeShade() {
+        shade.removeFromSuperview()
     }
     
     func loadImage(user: PFUser)
@@ -48,8 +61,10 @@ class WEBlurImageView: UIView
             imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if let data = data
                 {
+                    dispatch_async(dispatch_get_main_queue()) {
                     let image = UIImage(data: data)
                     self.presentImageView(image!)
+                    }
                 } else {
                     ParseErrorHandler.handleParseError(error)
                 }
@@ -60,6 +75,9 @@ class WEBlurImageView: UIView
     func presentImageView(image: UIImage) {
         self.imageView.image = image
         self.imageView.frame = self.frame
+        if needBlurView {
+            self.addBlur()
+        }
     }
     
 }

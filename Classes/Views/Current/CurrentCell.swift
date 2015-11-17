@@ -43,6 +43,9 @@ class CurrentCell: UITableViewCell
     
     private var row                                         : Int!
     private var pivot                                       : PFObject!
+    private var pickAssistantTutorial                       = WETutorial()
+    private var waitAssistantTutorial                       = WETutorial()
+    private var confirmButtonTutorial                       = WETutorial()
     var favor                                               : PFObject!
     var vc                                                  : CurrentSwitcher?
     var table                                               : CurrentAssistantTable?
@@ -59,14 +62,16 @@ class CurrentCell: UITableViewCell
         configLooks()
         self.timeElapsedLabel.text = ""
         self.nameLabel.text = ""
-        self.chatButton.enabled = false
+        self.chatButton.enabled = true
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
         self.cancelButton.hidden = true
         self.confirmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.portraitView.isWaiting = true
         self.timer?.invalidate()
-        self.blurImage.addBlur()
+        self.pickAssistantTutorial.dismiss()
+        self.waitAssistantTutorial.dismiss()
+        self.confirmButtonTutorial.dismiss()
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -76,15 +81,15 @@ class CurrentCell: UITableViewCell
         self.timeElapsedLabel.text = ""
         self.coutLabel.text = ""
         self.cancelButton.hidden = true
-        self.chatButton.enabled = false
+        self.chatButton.enabled = true
         self.reviewButton.enabled = false
         self.shareButton.enabled = true
         self.confirmButton.backgroundColor = UIColor.clearColor()
-        if self.portraitView.subviews.count == 1 {
-            self.portraitView.subviews.first?.removeFromSuperview()
-        }
         self.portraitView.isWaiting = true
         self.timer?.invalidate()
+        self.pickAssistantTutorial.dismiss()
+        self.waitAssistantTutorial.dismiss()
+        self.confirmButtonTutorial.dismiss()
     }
     
     // MARK: - Functions
@@ -93,25 +98,26 @@ class CurrentCell: UITableViewCell
     //----------------------------------------------------------------------------------------------------------
     {
         contentView.clipsToBounds = true
-        
         backgroundColor = UIColor.clearColor()
+        blurImage.addShade()
+//        blurImage.addBlur()
         
-        midView.layer.shadowOffset = CGSize(width: 0, height: -3.5)
-        midView.layer.shadowOpacity = 0.85
-        
-        botView.layer.shadowOffset = CGSize(width: 0, height: -2.5)
-        botView.layer.shadowOpacity = 0.65
-        
-        portraitView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        portraitView.layer.shadowOpacity = 0.65
-        
+//        midView.layer.shadowOffset = CGSize(width: 0, height: -3.5)
+//        midView.layer.shadowOpacity = 0.85
+//        
+//        botView.layer.shadowOffset = CGSize(width: 0, height: -2.5)
+//        botView.layer.shadowOpacity = 0.65
+//        
+//        portraitView.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        portraitView.layer.shadowOpacity = 0.65
+//
         botView.backgroundColor = Constants.Color.ContentBackground.colorWithAlphaComponent(0.3)
         confirmButton.backgroundColor = UIColor.clearColor()
         confirmButton.layer.shadowColor = UIColor.blackColor().CGColor
         confirmButton.layer.shadowOffset = CGSizeMake(5, 5)
         confirmButton.layer.shadowRadius = 5
         confirmButton.layer.shadowOpacity = 1.0
-        
+//
         coutLabel.textColor = UIColor.whiteColor()
         coutLabel.layer.shadowColor = UIColor.blackColor().CGColor
         coutLabel.layer.shadowOffset = CGSizeMake(5, 5)
@@ -146,27 +152,34 @@ class CurrentCell: UITableViewCell
             let status = favor[Constants.Favor.Status] as! Int
             switch status {
             case 0:                                         // No Takers
+                self.chatButton.enabled = false
                 self.coutLabel.hidden = false
                 self.coutLabel.text = "?"
+                if self.portraitView.subviews.count == 1 {
+                    self.portraitView.subviews.first?.removeFromSuperview()
+                }
                 self.portraitView.image = nil
                 self.portraitView.canTap = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
                 self.confirmButtonConfig(MessageName.Favor0.rawValue, action: nil)
-                var tutorial = WETutorial()
-                tutorial.waitForAssistantTutorial(self)
+                self.waitAssistantTutorial.waitForAssistantTutorial(self)
             case 1:                                         // Has Takers
+                self.chatButton.enabled = false
                 self.blurImage.loadImage(PFUser.currentUser()!)
-                self.portraitView.image = UIImage(named: "user_photo")
+                if self.portraitView.subviews.count == 1 {
+                    self.portraitView.subviews.first?.removeFromSuperview()
+                }
+                self.portraitView.image = nil
                 self.portraitView.canTap = false
                 let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
                 query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
+                query.cachePolicy = PFCachePolicy.CacheThenNetwork
                 query.countObjectsInBackgroundWithBlock({ (count, error) -> Void in
                     if error == nil {
                         self.coutLabel.hidden = false
                         self.coutLabel.text = "\(count)"
                         self.portraitView.image = nil
-                        var tutorial = WETutorial()
-                        tutorial.pickAssistantTutorial(self)
+                        self.pickAssistantTutorial.pickAssistantTutorial(self)
                         var tap = UITapGestureRecognizer(target: self, action: "showTakers")
                         self.coutLabel.addGestureRecognizer(tap)
 //                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "bounceCountLabel", userInfo: nil, repeats: true)
@@ -181,8 +194,7 @@ class CurrentCell: UITableViewCell
                 }
                 if status == 2 {
                     self.confirmButtonConfig(MessageName.Favor2.rawValue, action: "whistlerAccepted")
-                    var tutorial = WETutorial()
-                    tutorial.confirmButtonTutorial(self)
+                    confirmButtonTutorial.confirmButtonTutorial(self)
                 }
                 if status == 4 {
                     self.confirmButtonConfig(MessageName.Favor4.rawValue, action: nil)
@@ -220,9 +232,14 @@ class CurrentCell: UITableViewCell
             self.favor = favor
             self.row = row
             let status = favor[Constants.Favor.Status] as! Int
-        
-            self.confirmButtonConfig(MessageName.Assist.rawValue, action: nil)
-            
+            switch status {
+            case 4:
+                self.confirmButtonConfig(MessageName.Assisted.rawValue, action: nil)
+            case 5:
+                self.confirmButtonConfig(MessageName.AssistCancel.rawValue, action: nil)
+            default:
+                self.confirmButtonConfig(MessageName.Assist.rawValue, action: nil)
+            }
             self.reviewButton.enabled = true
             self.reviewButton.favor = favor
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
@@ -252,7 +269,6 @@ class CurrentCell: UITableViewCell
                 if let user = user as? PFUser
                 {
                     var name = user[Constants.User.Nickname] as? String
-                    self.chatButton.enabled = true
                     self.chatButton.user = user
                     self.coutLabel.hidden = true
                     self.nameLabel.text = "\(name!)"
@@ -377,7 +393,7 @@ class CurrentCell: UITableViewCell
                 }
                 favor.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
-                        SendPushNotification2([user.objectId!], "Has hired you", "whislte")
+                        SendPushNotification2([user.objectId!], "Has hired you", PF_INSTALLATION_WHISTLE)
                         table.navigationController?.popViewControllerAnimated(true)
                         MessageHandler.message(MessageName.Hired)
                     } else {
