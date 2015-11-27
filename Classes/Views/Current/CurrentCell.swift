@@ -171,6 +171,7 @@ class CurrentCell: UITableViewCell
                 }
                 self.portraitView.image = nil
                 self.portraitView.canTap = false
+                self.confirmButtonConfig(MessageName.Favor1.rawValue, action: nil)
                 let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
                 query.whereKey(Constants.FavorUserPivotTable.Favor, equalTo: favor)
                 query.cachePolicy = PFCachePolicy.CacheThenNetwork

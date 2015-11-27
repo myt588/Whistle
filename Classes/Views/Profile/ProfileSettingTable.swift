@@ -183,16 +183,25 @@ class ProfileSettingTable: UITableViewController
             let blockedView = BlockedView()
             self.navigationController?.pushViewController(blockedView, animated: true)
         }
-        if indexPath.row == 11 {
-            PFUser.logOutInBackgroundWithBlock { (error) -> Void in
-                if let error = error {
-                    println("log out failed, \(error)")
-                } else {
-                    PostNotification(NOTIFICATION_USER_LOGGED_OUT)
-                    var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
-                    self.presentViewController(viewController, animated: true, completion: nil)
+        if indexPath.row == 16 {
+            let webView = ProfileWebView()
+            self.navigationController?.pushViewController(webView, animated: true)
+        }
+        if indexPath.row == 17 {
+            let alert = WEAlertController(title: "Logout", message: "Confirm Logout Action", style: .Alert)
+            alert.addAction(SimpleAlert.Action(title: "Cancel", style: .Cancel))
+            alert.addAction(SimpleAlert.Action(title: "Log out", style: .OK) { action in
+                PFUser.logOutInBackgroundWithBlock { (error) -> Void in
+                    if let error = error {
+                        println("log out failed, \(error)")
+                    } else {
+                        PostNotification(NOTIFICATION_USER_LOGGED_OUT)
+                        var viewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginView
+                        self.presentViewController(viewController, animated: true, completion: nil)
+                    }
                 }
-            }
+            })
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 

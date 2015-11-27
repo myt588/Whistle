@@ -45,11 +45,11 @@ class ProfileFavorCell: UITableViewCell
     override func prepareForReuse()
     //----------------------------------------------------------------------------------------------------------
     {
-        dateLabel.text = ""
-        nameWhistledLabel.text = ""
-        nameAssistedLabel.text = ""
-        priceLeftLabel.text = ""
-        priceRightLabel.text = ""
+//        dateLabel.text = ""
+//        nameWhistledLabel.text = ""
+//        nameAssistedLabel.text = ""
+//        priceLeftLabel.text = ""
+//        priceRightLabel.text = ""
         dotBottom.hidden = true
         portrait.hidden = false
         line.hidden = false
@@ -99,6 +99,8 @@ class ProfileFavorCell: UITableViewCell
                     assistant.fetchIfNeededInBackgroundWithBlock({ (assistant, error) -> Void in
                         if let assistant = assistant as? PFUser
                         {
+                            self.nameAssistedLabel.text = ""
+                            self.priceLeftLabel.text = ""
                             self.portrait.loadImage(assistant)
                             self.nameWhistledLabel.text = assistant[Constants.User.Nickname] as? String
                             self.priceRightLabel.text = "Spent $\(favor[Constants.Favor.Price] as! Int)"
@@ -106,6 +108,8 @@ class ProfileFavorCell: UITableViewCell
                         }
                     })
                 } else { // Earn
+                    self.priceRightLabel.text = ""
+                    self.nameWhistledLabel.text = ""
                     self.portrait.loadImage(whislter)
                     self.nameAssistedLabel.text = whislter[Constants.User.Nickname] as? String
                     self.priceLeftLabel.text = "$\(favor[Constants.Favor.Price] as! Int) Earned"

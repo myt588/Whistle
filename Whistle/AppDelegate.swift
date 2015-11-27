@@ -159,12 +159,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             type = userInfo["type"] as! String
             notificationHandler()
-            //                let tabBarController = self.window?.rootViewController as! TabBarController
-            //                tabBarController.selectedIndex = 2
-            //                let nav = tabBarController.selectedViewController as! UINavigationController
-            //                let groupId = userInfo["groupId"] as! String
-            //                let chatView = ChatView(with: groupId)
-            //                nav.pushViewController(chatView, animated: true)
         }
     }
     
@@ -195,8 +189,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 }
             })
         }
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
+        if NotificationHandler.checkNotificationType(UIUserNotificationType.Badge) {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+        }
     }
     
     //MARK: Location manager methods

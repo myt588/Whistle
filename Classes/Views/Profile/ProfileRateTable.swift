@@ -64,6 +64,7 @@ class ProfileRateTable: UITableViewController {
         query.includeKey(Constants.UserReviewPivotTable.From)
         query.whereKey(Constants.UserReviewPivotTable.To, equalTo: self.user!)
         query.orderByDescending(Constants.Favor.UpdatedAt)
+        query.cachePolicy = PFCachePolicy.CacheThenNetwork
         query.limit = 5
         return query
     }

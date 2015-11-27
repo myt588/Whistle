@@ -105,6 +105,8 @@
 		9418B9751BE0A713007F2296 /* WEPrizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9418B9741BE0A713007F2296 /* WEPrizeView.xib */; };
 		9418B9771BE0A721007F2296 /* WEPrizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B9761BE0A721007F2296 /* WEPrizeView.swift */; };
 		9418B97F1BE1401F007F2296 /* WECurrentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */; };
+		942AB0851BFBD0DF0083B313 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942AB0841BFBD0DF0083B313 /* NotificationHandler.swift */; };
+		942AB0871BFBE34A0083B313 /* ProfileWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942AB0861BFBE34A0083B313 /* ProfileWebView.swift */; };
 		942FA2CB1B2F0FED0050C3E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */; };
 		942FA2D21B2F0FED0050C3E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D11B2F0FED0050C3E3 /* Images.xcassets */; };
 		942FA2D51B2F0FED0050C3E3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942FA2D31B2F0FED0050C3E3 /* LaunchScreen.xib */; };
@@ -531,6 +533,8 @@
 		9418B9741BE0A713007F2296 /* WEPrizeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEPrizeView.xib; sourceTree = "<group>"; };
 		9418B9761BE0A721007F2296 /* WEPrizeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEPrizeView.swift; sourceTree = "<group>"; };
 		9418B97E1BE1401F007F2296 /* WECurrentImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WECurrentImageView.swift; sourceTree = "<group>"; };
+		942AB0841BFBD0DF0083B313 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		942AB0861BFBE34A0083B313 /* ProfileWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileWebView.swift; path = Classes/Views/Profile/ProfileWebView.swift; sourceTree = SOURCE_ROOT; };
 		942FA2C51B2F0FED0050C3E3 /* Whistle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whistle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942FA2C91B2F0FED0050C3E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942FA2CA1B2F0FED0050C3E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1541,6 +1545,7 @@
 				942FA2F91B2F10E90050C3E3 /* Image.swift */,
 				94B653E71B6384860091CE98 /* ParseErrorHandler.swift */,
 				948286201BD59E430087BC39 /* MessageHandler.swift */,
+				942AB0841BFBD0DF0083B313 /* NotificationHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2150,6 +2155,7 @@
 				89F5D5411BE3879D00E8EF66 /* WEReviewCell.swift */,
 				89F5D5421BE3879D00E8EF66 /* WEReviewCell.xib */,
 				945F7C931B81E896006F0626 /* ProfileRegionPicker.swift */,
+				942AB0861BFBE34A0083B313 /* ProfileWebView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -2536,6 +2542,7 @@
 				89B0A5461B48590200B0226B /* UIImage+JTSImageEffects.m in Sources */,
 				942FA4641B2F10E90050C3E3 /* UIImageView+AFNetworking.m in Sources */,
 				9441B4CE1B89AE6A002EBEEE /* UIImage+JSQMessages.m in Sources */,
+				942AB0871BFBE34A0083B313 /* ProfileWebView.swift in Sources */,
 				89B0A5421B48590200B0226B /* JTSImageInfo.m in Sources */,
 				943E41351BF2F0780034DE85 /* RSKImageScrollView.m in Sources */,
 				94BB081B1B532C9700D2492B /* HTTPSecurity.swift in Sources */,
@@ -2569,6 +2576,7 @@
 				940242571BD9DE9600CE8E45 /* converter.m in Sources */,
 				944CFC5F1BE1BA1900A84DE8 /* FavorDetailView.swift in Sources */,
 				942FA49E1B2F10E90050C3E3 /* OneShotLocationManager.swift in Sources */,
+				942AB0851BFBD0DF0083B313 /* NotificationHandler.swift in Sources */,
 				89755A021B407F0A00D31E2F /* ProfileChangeStatusTable.swift in Sources */,
 				89F53B051B5A32FE00F0A2A2 /* AMTumblrHud.m in Sources */,
 				9441B4E01B89AE6A002EBEEE /* JSQPhotoMediaItem.m in Sources */,
