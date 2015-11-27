@@ -103,7 +103,7 @@ class ProfileFavorCell: UITableViewCell
                             self.priceLeftLabel.text = ""
                             self.portrait.loadImage(assistant)
                             self.nameWhistledLabel.text = assistant[Constants.User.Nickname] as? String
-                            self.priceRightLabel.text = "Spent $\(favor[Constants.Favor.Price] as! Int)"
+                            self.priceRightLabel.text = ""
                             var file = assistant[Constants.User.Portrait] as! PFFile
                         }
                     })
@@ -112,7 +112,7 @@ class ProfileFavorCell: UITableViewCell
                     self.nameWhistledLabel.text = ""
                     self.portrait.loadImage(whislter)
                     self.nameAssistedLabel.text = whislter[Constants.User.Nickname] as? String
-                    self.priceLeftLabel.text = "$\(favor[Constants.Favor.Price] as! Int) Earned"
+                    self.priceLeftLabel.text = ""
                 }
             }
         })

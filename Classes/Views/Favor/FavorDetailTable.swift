@@ -21,21 +21,7 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
 //----------------------------------------------------------------------------------------------------------
 {
     // MARK: - IBOutlets
-    
-    //----------------------------------------------------------------------------------------------------------
-    // Price
-    //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var priceIcon                                    : UIImageView!
-    @IBOutlet weak var priceLine                                    : UIView!
-    @IBOutlet weak var priceHeader                                  : UILabel!
-    @IBOutlet weak var dollarLabel                                  : UILabel!
-    @IBOutlet weak var priceLabel                                   : UILabel!
-    @IBOutlet weak var plus1Button                                  : UIButton!
-    @IBOutlet weak var plus5Button                                  : UIButton!
-    @IBOutlet weak var plus10Button                                 : UIButton!
-    @IBOutlet weak var clearButton                                  : UIButton!
-    @IBOutlet weak var signButton                                   : UIButton!
-    //----------------------------------------------------------------------------------------------------------
+
     // Rewards
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var rewardIcon                                   : UIImageView!
@@ -100,25 +86,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     var pointNow : CGPoint?
     var delegate : FavorDetailScrollDelegate?
     
-    private var currentPrice : Int {
-        get {
-            if let price = priceLabel.text!.toInt() {
-                return price
-            }
-            return 0
-        }
-        
-        set(newPrice) {
-            let limit = 999
-            if newPrice > limit {
-                priceLabel.text = "\(limit)"
-            }
-            if newPrice < -limit {
-                priceLabel.text = "\(-limit)"
-            }
-        }
-    }
-    
     // MARK: - Initializations
     //----------------------------------------------------------------------------------------------------------
     override func viewDidLoad()
@@ -142,7 +109,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     override func viewDidLayoutSubviews()
     //----------------------------------------------------------------------------------------------------------
     {
-        configShape()
         self.favorLabel.numberOfLines = 0
         self.favorLabel.sizeToFit()
         self.rewardLabel.numberOfLines = 0
@@ -150,65 +116,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
         self.addressLabel.numberOfLines = 0
         self.addressLabel.sizeToFit()
     }
-    
-    
-    // MARK: - IBActions
-    @IBAction func addOrSub(sender: UIButton) {
-        bounceView(sender)
-        if sender.titleLabel!.text == "-" {
-            sender.setTitle("+", forState: .Normal)
-            willAdd = true
-        } else {
-            sender.setTitle("-", forState: .Normal)
-            willAdd = false
-        }
-        
-    }
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func modifyPrice(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        tableView.bringSubviewToFront(sender)
-        bounceView(sender)
-        bounceView(priceLabel)
-        if willAdd {
-            switch sender.titleLabel!.text! {
-            case "C":
-                let price = favor[Constants.Favor.Price] as! Int
-                priceLabel.text = "\(price)"
-            case "10":
-                priceLabel.text = "\(priceLabel.text!.toInt()! + 10)"
-            case "5":
-                priceLabel.text = "\(priceLabel.text!.toInt()! + 5)"
-            case "1":
-                priceLabel.text = "\(priceLabel.text!.toInt()! + 1)"
-            default:
-                return
-            }
-        } else {
-            switch sender.titleLabel!.text! {
-            case "C":
-                let price = favor[Constants.Favor.Price] as! Int
-                priceLabel.text = "\(price)"
-            case "10":
-                priceLabel.text = "\(priceLabel.text!.toInt()! - 10)"
-            case "5":
-                priceLabel.text = "\(priceLabel.text!.toInt()! - 5)"
-            case "1":
-                priceLabel.text = "\(priceLabel.text!.toInt()! - 1)"
-            default:
-                return
-            }
-        }
-        
-        if let price = priceLabel.text!.toInt() {
-            currentPrice = price
-        } else {
-            currentPrice = 0
-        }
-        
-    }
-    
     
     // MARK: - User Interactions
     //----------------------------------------------------------------------------------------------------------
@@ -266,37 +173,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
                 self.noReward = true
             }
             
-            if let price = favor[Constants.Favor.Price] as? Int {
-                // if bidId exists means user have interested on this before
-                if let bidId = NSUserDefaults.standardUserDefaults().stringForKey(favor.objectId!) {
-                    let query = PFQuery(className: Constants.FavorUserPivotTable.Name)
-                    //query.fromLocalDatastore()
-                    query.getObjectInBackgroundWithId(bidId, block: { (object, error) -> Void in
-                        dispatch_async(dispatch_get_main_queue()) {
-                            if let object = object {
-                                if object[Constants.FavorUserPivotTable.Active] as! Bool {
-                                    if let bidPrice = object[Constants.FavorUserPivotTable.Price] as? Int {
-                                        //println("1")
-                                        self.priceLabel.text = "\(bidPrice)"
-                                    } else {
-                                        //println("2")
-                                        self.priceLabel.text = "\(price)"
-                                    }
-                                } else {
-                                    //println("3")
-                                    self.priceLabel.text = "\(price)"
-                                }
-                            } else {
-                                ParseErrorHandler.handleParseError(error)
-                            }
-                        }
-                    })
-                } else {
-                    //println("4")
-                    self.priceLabel.text = "\(price)"
-                }
-            }
-            
             noImage = true
             images = [UIImage]()
             configImageViews()
@@ -346,19 +222,6 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
             }
         }
         tableView.setContentOffset(CGPointMake(0, -self.tableView.contentInset.top), animated: true)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func configShape()
-    //----------------------------------------------------------------------------------------------------------
-    {
-        var buttonList = [plus1Button, plus5Button, plus10Button, clearButton]
-        for element in buttonList {
-            element.layer.borderColor                               = UIColor.whiteColor().CGColor
-            element.layer.borderWidth                               = 0.3
-            element.layer.cornerRadius                              = element.layer.frame.height/2
-            element.setTitleColor(Constants.Color.CellText, forState: .Normal)
-        }
     }
     
     //----------------------------------------------------------------------------------------------------------
@@ -417,18 +280,16 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     {
         switch section {
         case 0:
-            return 1
-        case 1:
             return noReward ? 0 : 1
-        case 2:
+        case 1:
             return noContent ? 0 : 1
+        case 2:
+            return 1
         case 3:
-            return 1
-        case 4:
             return noImage ? 0 : 1
-        case 5:
+        case 4:
             return 1
-        case 6:
+        case 5:
             return 1
         default:
             return 0
@@ -440,15 +301,13 @@ class FavorDetailTable: UITableViewController, UIScrollViewDelegate
     //----------------------------------------------------------------------------------------------------------
     {
         switch indexPath.section {
-        case 0:                                                     // Price
-            return 85
-        case 1:                                                     // Reward
+        case 0:                                                     // Reward
             return calculateHeightForString(rewardLabel.text!) + 85
-        case 2:                                                     // Favor
+        case 1:                                                     // Favor
             return calculateHeightForString(favorLabel.text!) + 85
-        case 3:                                                     // Address
+        case 2:                                                     // Address
             return calculateHeightForString(addressLabel.text!) + 85
-        case 4:                                                     // Images
+        case 3:                                                     // Images
             var rows: CGFloat?
             switch images.count {
             case 0:

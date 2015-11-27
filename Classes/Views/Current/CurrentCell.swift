@@ -24,7 +24,6 @@ class CurrentCell: UITableViewCell
     @IBOutlet weak var portraitView                         : WECurrentImageView!
     @IBOutlet weak var nameLabel                            : UILabel!
     @IBOutlet weak var timeElapsedLabel                     : UILabel!
-    @IBOutlet weak var prizeView                            : WEPrizeView!
     @IBOutlet weak var coutLabel                            : UILabel!
     @IBOutlet weak var blurImage                            : WEBlurImageView!
     @IBOutlet weak var gifImageView                         : UIImageView!
@@ -209,9 +208,6 @@ class CurrentCell: UITableViewCell
                 bindData(user as? PFUser)
             }
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
-            if let price = favor[Constants.Favor.Price] as? Int {
-                self.prizeView.bindData(price)
-            }
         }
     }
     
@@ -222,9 +218,6 @@ class CurrentCell: UITableViewCell
             self.confirmButtonConfig(MessageName.CurrentInterest.rawValue, action: nil)
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
-            if let price = favor[Constants.Favor.Price] as? Int {
-                self.prizeView.bindData(price)
-            }
         }
     }
     
@@ -245,9 +238,6 @@ class CurrentCell: UITableViewCell
             self.reviewButton.favor = favor
             bindData(favor[Constants.Favor.CreatedBy] as? PFUser)
             timeElapsedLabel.text = favor.updatedAt?.relativeTime
-            if let price = favor[Constants.Favor.Price] as? Int {
-                self.prizeView.bindData(price)
-            }
         }
     }
     
@@ -257,9 +247,6 @@ class CurrentCell: UITableViewCell
             self.confirmButtonConfig(MessageName.AssistantHire.rawValue, action: "hire")
             bindData(pivot[Constants.FavorUserPivotTable.Takers] as? PFUser)
             timeElapsedLabel.text = pivot.updatedAt?.relativeTime
-            if let price = pivot[Constants.FavorUserPivotTable.Price] as? Int {
-                self.prizeView.bindData(price)
-            }
         }
     }
     

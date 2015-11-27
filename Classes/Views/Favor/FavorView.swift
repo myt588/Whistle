@@ -292,11 +292,6 @@ class FavorView: UIViewController, MKMapViewDelegate, YALTabBarInteracting, UIGe
                 relationTable[Constants.FavorUserPivotTable.Takers] = PFUser.currentUser()
                 relationTable[Constants.FavorUserPivotTable.Favor] = favor
                 relationTable[Constants.FavorUserPivotTable.Active] = true
-                if self.tableView?.priceLabel.text?.toInt() != favor[Constants.Favor.Price] as? Int {
-                    relationTable[Constants.FavorUserPivotTable.Price] = self.tableView?.priceLabel.text?.toInt()
-                } else {
-                    relationTable[Constants.FavorUserPivotTable.Price] = favor[Constants.Favor.Price] as? Int
-                }
                 relationTable.saveInBackgroundWithBlock({ (success, error) -> Void in
                     if success {
                         MessageHandler.message(MessageName.Interested)

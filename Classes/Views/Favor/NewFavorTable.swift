@@ -66,19 +66,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var rewardCharCountLabel                     : UILabel!
     @IBOutlet weak var rewardTextView                           : UITextView!
     //----------------------------------------------------------------------------------------------------------
-    // Price
-    //----------------------------------------------------------------------------------------------------------
-    @IBOutlet weak var priceIcon                                : UIImageView!
-    @IBOutlet weak var priceLine                                : UIView!
-    @IBOutlet weak var priceHeader                              : UILabel!
-    @IBOutlet weak var plus1Button                              : UIButton!
-    @IBOutlet weak var plus5Button                              : UIButton!
-    @IBOutlet weak var plus10Button                             : UIButton!
-    @IBOutlet weak var clearButton                              : UIButton!
-    @IBOutlet weak var dollarLabel                              : UILabel!
-    @IBOutlet weak var priceTextField                           : UITextField!
-    @IBOutlet weak var priceBackView                            : UIView!
-    //----------------------------------------------------------------------------------------------------------
     // Photos
     //----------------------------------------------------------------------------------------------------------
     @IBOutlet weak var photosIcon                               : UIImageView!
@@ -132,22 +119,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     private var isaudioViewHidden                               : Bool = true
     { didSet { tableView.reloadData() } }
     //----------------------------------------------------------------------------------------------------------
-
-    private var currentPrice : Int {
-        get {
-            if let price = priceTextField.text.toInt() {
-                return price
-            }
-            return 0
-        }
-        
-        set(newPrice) {
-            let limit = 999
-            if newPrice > limit {
-                priceTextField.text = "\(limit)"
-            }
-        }
-    }
     
     // MARK: - Initialzations
     //----------------------------------------------------------------------------------------------------------
@@ -256,8 +227,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             favor[Constants.Favor.Reward] = self.rewardTextView.text
         }
         
-        favor[Constants.Favor.Price] = self.priceTextField.text != "" ? self.priceTextField.text.toInt() : 0
-        
         if let audio = audioManager.audioWithName(name) {
             audioOrText = true
             let fileAudio = PFFile(name: "Recording.m4a", data: audio)
@@ -342,33 +311,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     //----------------------------------------------------------------------------------------------------------
     
     //----------------------------------------------------------------------------------------------------------
-    // START: - Location
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func privacyButtonTapped(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if sender.titleLabel?.text == "  Public" {
-            fadeOutView(sender, 0.5)
-            sender.setTitle("  Friends", forState: UIControlState.Normal)
-            sender.setImage(UIImage(named: "favor_new_friends_only"), forState: .Normal)
-            sender.tintColor = Constants.Color.Background
-            fadeInView(sender, 0.5)
-        } else {
-            fadeOutView(sender, 0.5)
-            sender.setTitle("  Public", forState: UIControlState.Normal)
-            sender.setImage(UIImage(named: "favor_new_public"), forState: .Normal)
-            sender.tintColor = Constants.Color.Background
-            fadeInView(sender, 0.5)
-        }
-        let origImage                               = sender.imageView?.image
-        let tintedImage                             = origImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        sender.setImage(tintedImage, forState: .Normal)
-    }
-    //----------------------------------------------------------------------------------------------------------
-    // END: - Location
-    //----------------------------------------------------------------------------------------------------------
-    
-    //----------------------------------------------------------------------------------------------------------
     // START: - Audio
     //----------------------------------------------------------------------------------------------------------
     @IBAction func deleteAudioButtonTapped(sender: UIButton)
@@ -419,53 +361,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
     }
     //----------------------------------------------------------------------------------------------------------
     // END: - Favor
-    //----------------------------------------------------------------------------------------------------------
-    
-    //----------------------------------------------------------------------------------------------------------
-    // START: - Price
-    //----------------------------------------------------------------------------------------------------------
-    @IBAction func modifyPrice(sender: UIButton)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        bounceView(sender)
-        bounceView(priceTextField)
-        switch sender.titleLabel!.text! {
-        case "C":
-            priceTextField.text = ""
-            priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 15)
-        case "10":
-            if priceTextField.text == "" {
-                priceTextField.text = "10"
-            } else {
-                priceTextField.text = "\(priceTextField.text!.toInt()! + 10)"
-            }
-            priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-        case "5":
-            if priceTextField.text == "" {
-                priceTextField.text = "5"
-            } else {
-                priceTextField.text = "\(priceTextField.text!.toInt()! + 5)"
-            }
-            priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-        case "1":
-            if priceTextField.text == "" {
-                priceTextField.text = "1"
-            } else {
-                priceTextField.text = "\(priceTextField.text!.toInt()! + 1)"
-            }
-            priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-        default:
-            return
-        }
-        
-        if let price = priceTextField.text.toInt() {
-            currentPrice = price
-        } else {
-            currentPrice = 0
-        }
-    }
-    //----------------------------------------------------------------------------------------------------------
-    // END: - Price
     //----------------------------------------------------------------------------------------------------------
     
     // MARK: - User Interactions
@@ -579,12 +474,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             element.setTitleColor(Constants.Color.Main2, forState: .Normal)
         }
         
-        priceTextField.delegate                                     = self
-        dollarLabel.textColor                                       = Constants.Color.ContentBackground
-        priceTextField.textColor                                    = Constants.Color.Background
-        priceTextField.font                                         = UIFont(name: priceTextField.font.fontName, size: 15)
-        priceBackView.layer.backgroundColor                         = Constants.Color.CellText.CGColor
-        
         imageViews = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, photo9]
         for element in imageViews {
             element.layer.borderColor                               = Constants.Color.ContentBackground.CGColor
@@ -632,16 +521,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             element.setImage(tintedImage, forState: .Normal)
             element.tintColor                                      = Constants.Color.Main2
         }
-        
-        var priceButtonList = [plus1Button, plus5Button, plus10Button, clearButton]
-        for element in priceButtonList {
-            element.layer.borderColor                               = Constants.Color.Border.CGColor
-            element.layer.borderWidth                               = 0.3
-            element.layer.cornerRadius                              = element.layer.frame.height/2
-            element.setTitleColor(Constants.Color.CellText, forState: .Normal)
-        }
-        
-        priceBackView.layer.cornerRadius                            = priceTextField.layer.frame.height/2
         
         if imageNum == 0 {
             addPhotoButton.layer.frame = imageViews[imageNum].layer.frame
@@ -826,9 +705,7 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             return favorContentIsHidden ? 80 : 250
         case 4:                                             // Reward
             return rewardContentIsHidden ? 80 : 250
-        case 5:                                             // Price
-            return 100
-        case 6:                                             // Photos
+        case 5:                                             // Photos
             var rows: CGFloat?
             switch imageNum {
             case 0...2:
@@ -907,31 +784,6 @@ class NewFavorTable: UITableViewController, UIImagePickerControllerDelegate, UIN
             }
         }
         return true
-    }
-
-    //----------------------------------------------------------------------------------------------------------
-    func textFieldDidBeginEditing(textField: UITextField)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 19)
-    }
-    
-    //----------------------------------------------------------------------------------------------------------
-    func textFieldDidEndEditing(textField: UITextField)
-    //----------------------------------------------------------------------------------------------------------
-    {
-        if textField.text == "" {
-            priceTextField.font = UIFont(name: priceTextField.font.fontName, size: 15)
-        }
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let num: Int = count(textField.text)
-        if num - range.length + count(string) > 3 {
-            return false
-        } else {
-            return true
-        }
     }
     
     //----------------------------------------------------------------------------------------------------------

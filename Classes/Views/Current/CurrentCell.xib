@@ -48,37 +48,24 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhc-Og-QbU" userLabel="Prize View" customClass="WEPrizeView" customModule="Whistle" customModuleProvider="target">
-                                        <rect key="frame" x="429" y="0.0" width="53" height="38"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Vhc-Og-QbU" secondAttribute="height" multiplier="7:5" id="5YD-Hc-lY2"/>
-                                            <constraint firstAttribute="height" constant="38" id="BCU-Ep-ZyU"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Vhc-Og-QbU" firstAttribute="height" secondItem="MY6-Ue-Kzy" secondAttribute="height" multiplier="1:2" id="HUp-fA-OLI"/>
                                     <constraint firstItem="4fc-sQ-PE1" firstAttribute="centerY" secondItem="LwD-lp-wuC" secondAttribute="centerY" id="Igx-WB-NZQ"/>
                                     <constraint firstAttribute="trailing" secondItem="LwD-lp-wuC" secondAttribute="trailing" constant="8" id="Tx3-ww-J7Q"/>
                                     <constraint firstItem="4fc-sQ-PE1" firstAttribute="leading" secondItem="MY6-Ue-Kzy" secondAttribute="leading" constant="8" id="WMB-Lt-RVc"/>
-                                    <constraint firstItem="Vhc-Og-QbU" firstAttribute="top" secondItem="MY6-Ue-Kzy" secondAttribute="top" id="Wco-gO-xxl"/>
                                     <constraint firstItem="4fc-sQ-PE1" firstAttribute="bottom" secondItem="LwD-lp-wuC" secondAttribute="bottom" id="Yoh-HJ-frP"/>
                                     <constraint firstAttribute="bottom" secondItem="LwD-lp-wuC" secondAttribute="bottom" constant="5" id="hrp-cN-epq"/>
                                     <constraint firstAttribute="height" constant="75" id="kax-tD-7Xw"/>
                                     <constraint firstAttribute="height" constant="125" id="kjs-aC-9gl"/>
-                                    <constraint firstItem="Vhc-Og-QbU" firstAttribute="trailing" secondItem="LwD-lp-wuC" secondAttribute="trailing" id="y7B-RI-MFw"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="kax-tD-7Xw"/>
                                         <exclude reference="Igx-WB-NZQ"/>
                                         <exclude reference="hrp-cN-epq"/>
-                                        <exclude reference="HUp-fA-OLI"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -258,7 +245,6 @@
                 <outlet property="midView" destination="MY6-Ue-Kzy" id="l9H-Rm-Ixd"/>
                 <outlet property="nameLabel" destination="4fc-sQ-PE1" id="JUi-5r-l01"/>
                 <outlet property="portraitView" destination="od2-lI-nVI" id="4ly-Mf-1tq"/>
-                <outlet property="prizeView" destination="Vhc-Og-QbU" id="lL9-Tt-r7A"/>
                 <outlet property="reviewButton" destination="f2z-Hb-r8A" id="41s-GS-ZIC"/>
                 <outlet property="shareButton" destination="Qkz-xi-IhA" id="YSC-kV-4kn"/>
                 <outlet property="timeElapsedLabel" destination="LwD-lp-wuC" id="OAI-At-4gB"/>
